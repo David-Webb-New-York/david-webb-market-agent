@@ -1,0 +1,13 @@
+{
+  "name": "david-webb-market-agent",
+  "version": "1.0.0",
+  "description": "Agent that searches the web for David Webb secondary market listings and pricing",
+  "main": "agent.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node agent.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
