@@ -128,6 +128,101 @@ function computeStats(pieces) {
   };
 }
 
+// ---------- week-over-week trends (deterministic; not model-generated) ----------
+
+function buildTrendSeries(maxPoints = 12) {
+  return listSnapshots()
+    .slice(-maxPoints)
+    .map((file) => {
+      const st = computeStats(loadSnapshot(file));
+      return {
+        date: file.replace(/\.json$/, ""),
+        total: st.total,
+        priced: st.priced,
+        median: st.overallMedian,
+        max: st.overallMax,
+      };
+    });
+}
+
+function niceCeil(value, step) {
+  return Math.max(step, Math.ceil((value * 1.15) / step) * step);
+}
+
+function renderTrends(series) {
+  if (series.length === 0) return "";
+  const money = (n) => (n === null || n === undefined ? "n/a" : "$" + n.toLocaleString("en-US"));
+
+  const table = [
+    "| Scan | Pieces | Priced | Median | Max |",
+    "|---|---|---|---|---|",
+    ...series.map((s) => `| ${s.date} | ${s.total} | ${s.priced} | ${money(s.median)} | ${money(s.max)} |`),
+  ].join("\n");
+
+  const xaxis = series.map((s) => `"${s.date}"`).join(", ");
+  const totals = series.map((s) => s.total);
+  const priced = series.map((s) => s.priced);
+  const medians = series.map((s) => s.median || 0);
+  const piecesTop = niceCeil(Math.max(...totals, ...priced, 1), 10);
+  const medianTop = niceCeil(Math.max(...medians, 1), 5000);
+
+  // Mermaid xychart-beta renders natively on GitHub. The table above is the
+  // fallback if a viewer does not support the chart.
+  const chartPieces = [
+    "```mermaid",
+    "xychart-beta",
+    '    title "Pieces per scan (bar = total, line = priced)"',
+    `    x-axis [${xaxis}]`,
+    `    y-axis "Pieces" 0 --> ${piecesTop}`,
+    `    bar [${totals.join(", ")}]`,
+    `    line [${priced.join(", ")}]`,
+    "```",
+  ].join("\n");
+
+  const chartMedian = [
+    "```mermaid",
+    "xychart-beta",
+    '    title "Median listed price per scan (USD)"',
+    `    x-axis [${xaxis}]`,
+    `    y-axis "USD" 0 --> ${medianTop}`,
+    `    line [${medians.join(", ")}]`,
+    "```",
+  ].join("\n");
+
+  return ["## Week-over-week trends", "", table, "", chartPieces, "", chartMedian, ""].join("\n");
+}
+
+// Defensively remove any trends heading + placeholder the model may still emit,
+// so the deterministic section (inserted below) is the only one.
+function stripModelTrends(report) {
+  const lines = report.split("\n");
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (/^#{2,4}\s+.*week-over-week\s+trends/i.test(lines[i])) {
+      i++;
+      while (
+        i < lines.length &&
+        (lines[i].trim() === "" || /automated|inserted here|chart|data table|placeholder/i.test(lines[i]))
+      ) {
+        i++;
+      }
+      i--; // let the loop's increment land on the next real line
+      continue;
+    }
+    out.push(lines[i]);
+  }
+  return out.join("\n");
+}
+
+function insertAfterH1(report, section) {
+  if (!section) return report;
+  const cleaned = stripModelTrends(report);
+  const m = cleaned.match(/^# .*$/m);
+  if (!m) return section + "\n\n" + cleaned;
+  const end = m.index + m[0].length;
+  return cleaned.slice(0, end) + "\n\n" + section + cleaned.slice(end);
+}
+
 // ---------- Claude ----------
 
 async function callClaude({ system, user, maxTokens = 4000 }) {
@@ -167,24 +262,28 @@ source), and any notable change vs the previous scan. Keep it under 1500 charact
 
 ===REPORT_MD===
 A polished Markdown report a principal would actually read. Include:
-- an H1 title with the scan date and a one-paragraph executive summary,
+- an H1 title with the scan date and a one-paragraph executive summary that references the
+  week-over-week trend (use the provided TREND SERIES for direction and magnitude),
 - a "Price ranges by category" Markdown table (category, count, priced, min, median, max) using
   the provided numbers verbatim, formatting prices as USD with thousands separators,
 - a "Notable pieces" section highlighting the standout listings with their source and a link,
 - an "Asking vs. auction" note contrasting dealer asking prices with any hammer/estimate results,
 - a short "Data-quality caveats" note (asking prices are retail-resale comps, auction hammer
   excludes buyer's premium, occasional miscategorization).
-Prices must match the provided stats; do not invent figures.`;
+Prices must match the provided stats; do not invent figures.
+Do NOT build your own trend charts or scan-over-scan tables, and do NOT add a "Week-over-week
+trends" heading, placeholder, or note anywhere — that entire section is inserted automatically
+right after your H1 title. Begin your report body with a "## Executive Summary" section.`;
 
-function buildUserPrompt(date, stats, prevSummary) {
+function buildUserPrompt(date, stats, trendSeries) {
   return [
     `Latest scan date: ${date}`,
     ``,
     `PRE-COMPUTED STATS (JSON):`,
     JSON.stringify(stats, null, 2),
     ``,
-    `PREVIOUS SCAN SUMMARY (JSON, may be null):`,
-    JSON.stringify(prevSummary, null, 2),
+    `TREND SERIES across recent scans (oldest -> newest; use for week-over-week commentary):`,
+    JSON.stringify(trendSeries, null, 2),
   ].join("\n");
 }
 
@@ -284,23 +383,12 @@ async function generate() {
   const date = latestFile.replace(/\.json$/, "");
   const pieces = loadSnapshot(latestFile);
   const stats = computeStats(pieces);
-
-  let prevSummary = null;
-  if (snaps.length >= 2) {
-    const prev = computeStats(loadSnapshot(snaps[snaps.length - 2]));
-    prevSummary = {
-      date: snaps[snaps.length - 2].replace(/\.json$/, ""),
-      total: prev.total,
-      priced: prev.priced,
-      overallMedian: prev.overallMedian,
-      overallMax: prev.overallMax,
-    };
-  }
+  const trendSeries = buildTrendSeries();
 
   console.log(`Analyzing ${date}: ${stats.total} pieces (${stats.priced} priced)...`);
   const text = await callClaude({
     system: ANALYST_SYSTEM,
-    user: buildUserPrompt(date, stats, prevSummary),
+    user: buildUserPrompt(date, stats, trendSeries),
     maxTokens: 4000,
   });
   const { slack, report } = splitSections(text);
@@ -309,10 +397,13 @@ async function generate() {
     process.exit(1);
   }
 
+  // Insert the deterministic (accurate) trend charts right after the H1 title.
+  const reportWithTrends = insertAfterH1(report, renderTrends(trendSeries));
+
   fs.mkdirSync(REPORTS_DIR, { recursive: true });
   const reportPath = path.join(REPORTS_DIR, `${date}.md`);
-  fs.writeFileSync(reportPath, report + "\n");
-  fs.writeFileSync(path.join(REPORTS_DIR, "latest.md"), report + "\n");
+  fs.writeFileSync(reportPath, reportWithTrends + "\n");
+  fs.writeFileSync(path.join(REPORTS_DIR, "latest.md"), reportWithTrends + "\n");
 
   const payload = buildSlackPayload(date, stats, slack);
   fs.writeFileSync(payloadPath(date), JSON.stringify(payload, null, 2));
