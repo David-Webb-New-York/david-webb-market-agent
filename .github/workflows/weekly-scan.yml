@@ -16,10 +16,14 @@ jobs:
       - run: npm install
 
       # 1. Run the market scan (web search + Claude extraction -> CSV + snapshot)
+      #    Cost controls (see agent.js):
+      #      WEB_SEARCH_MAX_USES caps web searches per query (biggest cost lever).
+      #      Set INCLUDE_OPTIONAL_QUERIES=1 here for an occasional deeper sweep.
       - name: Scan secondary market
         run: node agent.js
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          WEB_SEARCH_MAX_USES: '3'
 
       # 2. Generate the written report + Slack payload from the latest snapshot
       - name: Generate report
