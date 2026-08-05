@@ -25,13 +25,17 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           WEB_SEARCH_MAX_USES: '3'
 
-      # 2. Generate the written report + Slack payload from the latest snapshot
+      # 2. Rebuild the deduplicated library (silver layer) from all snapshots
+      - name: Rebuild library
+        run: node library.js
+
+      # 3. Generate the written report + Slack payload from the latest snapshot
       - name: Generate report
         run: node analyze.js --generate
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      # 3. Commit + push data and report so the Slack links resolve
+      # 4. Commit + push data, library, and report so the Slack links resolve
       - name: Commit results
         run: |
           git config user.name "market-agent"
@@ -40,7 +44,7 @@ jobs:
           git commit -m "Weekly market scan $(date +%F)" || echo "No changes to commit"
           git push
 
-      # 4. Notify Slack (#secondary-market) with report + CSV links (Pattern A + B)
+      # 5. Notify Slack (#secondary-market) with report + CSV links (Pattern A + B)
       - name: Notify Slack
         run: node analyze.js --notify
         env:
