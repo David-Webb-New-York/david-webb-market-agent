@@ -114,12 +114,19 @@ function appendRowsToCsv(rows) {
   fs.appendFileSync(CSV_PATH, lines.join("\n") + "\n");
 }
 
-/**
- * Calls Claude with the web_search tool for a single query, asking it to
- * return structured JSON of any David Webb pieces + prices it finds.
- */
-async function runQuery(query) {
-  const systemPrompt = `You are a market research assistant for David Webb, a luxury jewelry house.
+const PIECE_FIELDS = [
+  "piece_name",
+  "category",
+  "era_or_year",
+  "materials_gemstones",
+  "asking_or_hammer_price",
+  "price_type",
+  "source_site",
+  "listing_url",
+  "notes"
+];
+
+const SYSTEM_PROMPT = `You are a market research assistant for David Webb, a luxury jewelry house.
 You will be given a search query. Use web search to find CURRENT listings or recent auction
 results for David Webb jewelry pieces matching that query.
 
@@ -128,22 +135,26 @@ For each distinct piece you find (max 8), extract:
 - category: bracelet, ring, earrings, brooch, necklace, other
 - era_or_year: approximate era/year if stated (e.g. "1960s", "circa 1970"), else ""
 - materials_gemstones: brief description (e.g. "18k gold, enamel, diamonds")
-- asking_or_hammer_price: numeric price in USD, no symbols or commas
+- asking_or_hammer_price: numeric price in USD, no symbols or commas (use 0 if unknown)
 - price_type: "asking" (dealer listing) or "hammer" (auction result) or "estimate" (auction estimate)
 - source_site: domain name (e.g. "1stdibs.com", "sothebys.com")
 - listing_url: direct URL to the listing if available, else ""
 - notes: anything notable (condition, provenance, signature details)
 
-Respond with ONLY a JSON array of objects with exactly these fields. No markdown fences, no preamble.
-If you find nothing relevant, respond with an empty array: []`;
+CRITICAL OUTPUT RULES:
+- Your FINAL message must be ONLY a valid JSON array. Nothing else.
+- Do not write explanations, summaries, or sentences like "Based on..." before or after the JSON.
+- Do not wrap the JSON in markdown fences.
+- If you find nothing relevant, output exactly: []`;
 
+async function callClaude({ messages, tools, maxTokens = 4000 }) {
   const body = {
     model: "claude-sonnet-4-6",
-    max_tokens: 4000,
-    system: systemPrompt,
-    messages: [{ role: "user", content: `Search query: ${query}` }],
-    tools: [{ type: "web_search_20250305", name: "web_search" }]
+    max_tokens: maxTokens,
+    system: SYSTEM_PROMPT,
+    messages
   };
+  if (tools) body.tools = tools;
 
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -157,30 +168,182 @@ If you find nothing relevant, respond with an empty array: []`;
 
   if (!res.ok) {
     const errText = await res.text();
-    console.error(`  API error for query "${query}": ${res.status} ${errText}`);
-    return [];
+    throw new Error(`API ${res.status}: ${errText}`);
   }
 
-  const data = await res.json();
+  return res.json();
+}
 
-  // Collect all text blocks (final answer may span multiple text blocks
-  // after tool use turns)
-  const textBlocks = data.content
-    .filter((block) => block.type === "text")
-    .map((block) => block.text)
-    .join("\n");
+function stripCodeFences(text) {
+  return String(text || "")
+    .replace(/```(?:json)?\s*/gi, "")
+    .replace(/```/g, "")
+    .trim();
+}
 
-  const cleaned = textBlocks.replace(/```json|```/g, "").trim();
+/**
+ * Pull a JSON array out of model text that may include prose or fences.
+ * Tries full parse, then first-to-last bracket slice, then balanced scan.
+ */
+function extractJsonArray(text) {
+  const cleaned = stripCodeFences(text);
+  if (!cleaned) return null;
 
   try {
     const parsed = JSON.parse(cleaned);
-    if (!Array.isArray(parsed)) return [];
-    return parsed;
+    if (Array.isArray(parsed)) return parsed;
+  } catch (_) {
+    /* continue */
+  }
+
+  const start = cleaned.indexOf("[");
+  const end = cleaned.lastIndexOf("]");
+  if (start !== -1 && end > start) {
+    const slice = cleaned.slice(start, end + 1);
+    try {
+      const parsed = JSON.parse(slice);
+      if (Array.isArray(parsed)) return parsed;
+    } catch (_) {
+      /* continue */
+    }
+  }
+
+  // Balanced-bracket scan for the first array that parses
+  for (let i = 0; i < cleaned.length; i++) {
+    if (cleaned[i] !== "[") continue;
+    let depth = 0;
+    let inString = false;
+    let escape = false;
+    for (let j = i; j < cleaned.length; j++) {
+      const ch = cleaned[j];
+      if (inString) {
+        if (escape) escape = false;
+        else if (ch === "\\") escape = true;
+        else if (ch === '"') inString = false;
+        continue;
+      }
+      if (ch === '"') inString = true;
+      else if (ch === "[") depth++;
+      else if (ch === "]") {
+        depth--;
+        if (depth === 0) {
+          try {
+            const parsed = JSON.parse(cleaned.slice(i, j + 1));
+            if (Array.isArray(parsed)) return parsed;
+          } catch (_) {
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  return null;
+}
+
+function parsePiecesFromResponse(data) {
+  const textBlocks = (data.content || [])
+    .filter((block) => block.type === "text")
+    .map((block) => block.text)
+    .filter(Boolean);
+
+  if (textBlocks.length === 0) return { pieces: null, raw: "" };
+
+  // Prefer the last text block (often the final answer after tool use),
+  // then earlier blocks, then the combined text.
+  const candidates = [
+    textBlocks[textBlocks.length - 1],
+    ...textBlocks.slice(0, -1).reverse(),
+    textBlocks.join("\n")
+  ];
+
+  for (const candidate of candidates) {
+    const pieces = extractJsonArray(candidate);
+    if (pieces) return { pieces, raw: candidate };
+  }
+
+  return { pieces: null, raw: textBlocks.join("\n") };
+}
+
+function normalizePieces(pieces) {
+  if (!Array.isArray(pieces)) return [];
+  return pieces
+    .filter((p) => p && typeof p === "object")
+    .map((p) => {
+      const row = {};
+      for (const field of PIECE_FIELDS) {
+        row[field] = p[field] ?? "";
+      }
+      return row;
+    });
+}
+
+/**
+ * Ask Claude once more (no web search) to turn prose into the JSON array.
+ */
+async function recoverJsonFromProse(query, rawText) {
+  const data = await callClaude({
+    maxTokens: 4000,
+    messages: [
+      {
+        role: "user",
+        content:
+          `The research notes below were collected for this search query:\n` +
+          `Search query: ${query}\n\n` +
+          `Research notes:\n${rawText.slice(0, 12000)}\n\n` +
+          `Convert them into the required JSON array of David Webb pieces. ` +
+          `Output ONLY the JSON array (or [] if nothing usable).`
+      }
+    ]
+  });
+
+  const { pieces } = parsePiecesFromResponse(data);
+  return pieces;
+}
+
+/**
+ * Calls Claude with the web_search tool for a single query, asking it to
+ * return structured JSON of any David Webb pieces + prices it finds.
+ */
+async function runQuery(query) {
+  let data;
+  try {
+    data = await callClaude({
+      messages: [
+        {
+          role: "user",
+          content:
+            `Search query: ${query}\n\n` +
+            `After searching, respond with ONLY a JSON array of matching pieces ` +
+            `(max 8), using the required fields. No prose.`
+        }
+      ],
+      tools: [{ type: "web_search_20250305", name: "web_search" }]
+    });
   } catch (err) {
-    console.error(`  Failed to parse JSON for query "${query}":`, err.message);
-    console.error("  Raw response:", cleaned.slice(0, 500));
+    console.error(`  API error for query "${query}": ${err.message}`);
     return [];
   }
+
+  let { pieces, raw } = parsePiecesFromResponse(data);
+
+  if (!pieces) {
+    console.warn(`  Non-JSON reply for "${query}"; attempting recovery...`);
+    try {
+      pieces = await recoverJsonFromProse(query, raw);
+    } catch (err) {
+      console.error(`  Recovery API error for "${query}": ${err.message}`);
+      pieces = null;
+    }
+  }
+
+  if (!pieces) {
+    console.error(`  Failed to parse JSON for query "${query}"`);
+    console.error("  Raw response:", stripCodeFences(raw).slice(0, 500));
+    return [];
+  }
+
+  return normalizePieces(pieces);
 }
 
 async function main() {
