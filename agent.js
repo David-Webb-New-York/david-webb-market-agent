@@ -30,9 +30,12 @@ const SNAPSHOT_DIR = path.join(OUTPUT_DIR, "snapshots");
 const CSV_PATH = path.join(OUTPUT_DIR, "david-webb-market-data.csv");
 
 // ---- Search queries to run each pass ----
-// Edit this list to add/remove categories or sources.
-const QUERIES = [
-  // Category / iconic piece scans
+// CORE_QUERIES are the queries that historically return results and drive
+// essentially all of the collected data: 1stDibs category scans, iconic named
+// pieces, and the major auction houses (Sotheby's, Christie's, Phillips).
+// These run every pass.
+const CORE_QUERIES = [
+  // Category / iconic piece scans (1stDibs)
   "David Webb bracelet for sale 1stDibs price",
   "David Webb ring for sale 1stDibs price",
   "David Webb earrings for sale 1stDibs price",
@@ -42,15 +45,22 @@ const QUERIES = [
   "David Webb frog bracelet price",
   "David Webb cross pendant price",
 
-  // Auction houses
+  // Major auction houses
   "David Webb jewelry auction result Sotheby's sothebys.com",
   "David Webb jewelry auction result Christie's christies.com",
-  "David Webb jewelry auction result Phillips phillips.com",
+  "David Webb jewelry auction result Phillips phillips.com"
+];
+
+// OPTIONAL_QUERIES are dealer/auction-specific probes that have historically
+// returned little or nothing (most David Webb dealer inventory already surfaces
+// via the 1stDibs scans above). They are OFF by default to keep per-run cost
+// down — each query is a full multi-search API call. Set INCLUDE_OPTIONAL_QUERIES=1
+// for an occasional deeper sweep, and promote any dealer that starts yielding
+// results up into CORE_QUERIES.
+const OPTIONAL_QUERIES = [
   "David Webb jewelry auction result Doyle doyle.com",
   "David Webb jewelry auction result Rago ragoarts.com",
   "David Webb jewelry auction result Heritage ha.com",
-
-  // Dealers & marketplaces
   "David Webb jewelry for sale oakgem.com price",
   "David Webb jewelry for sale thebackvault.com price",
   "David Webb jewelry for sale vestiairecollective.com price",
@@ -78,6 +88,22 @@ const QUERIES = [
   "David Webb jewelry for sale schiffmans.com price",
   "David Webb jewelry for sale macklowegallery.com price"
 ];
+
+// Cost controls (all optional; defaults preserve normal behavior):
+//   INCLUDE_OPTIONAL_QUERIES=1   also run the low-yield OPTIONAL_QUERIES
+//   MAX_QUERIES=<n>              only run the first n queries (handy for cheap test runs)
+//   WEB_SEARCH_MAX_USES=<n>      cap web searches per query (fewer searches = lower cost)
+const INCLUDE_OPTIONAL = /^(1|true|yes)$/i.test(process.env.INCLUDE_OPTIONAL_QUERIES || "");
+let QUERIES = INCLUDE_OPTIONAL ? [...CORE_QUERIES, ...OPTIONAL_QUERIES] : [...CORE_QUERIES];
+
+const MAX_QUERIES = parseInt(process.env.MAX_QUERIES || "", 10);
+if (Number.isFinite(MAX_QUERIES) && MAX_QUERIES > 0) QUERIES = QUERIES.slice(0, MAX_QUERIES);
+
+const WEB_SEARCH_MAX_USES = parseInt(process.env.WEB_SEARCH_MAX_USES || "", 10);
+const WEB_SEARCH_TOOL = { type: "web_search_20250305", name: "web_search" };
+if (Number.isFinite(WEB_SEARCH_MAX_USES) && WEB_SEARCH_MAX_USES > 0) {
+  WEB_SEARCH_TOOL.max_uses = WEB_SEARCH_MAX_USES;
+}
 
 const CSV_HEADER = [
   "date_pulled",
@@ -318,7 +344,7 @@ async function runQuery(query) {
             `(max 8), using the required fields. No prose.`
         }
       ],
-      tools: [{ type: "web_search_20250305", name: "web_search" }]
+      tools: [WEB_SEARCH_TOOL]
     });
   } catch (err) {
     console.error(`  API error for query "${query}": ${err.message}`);

@@ -2,7 +2,9 @@ name: Weekly David Webb Market Scan
 on:
   schedule:
     - cron: '0 13 * * 1'  # Monday 8am ET
-  workflow_dispatch: {}
+  workflow_dispatch: {}     # lets you also trigger manually from GitHub UI
+permissions:
+  contents: write           # allow the job to commit scan data back to the repo
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -12,12 +14,35 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: node agent.js
+
+      # 1. Run the market scan (web search + Claude extraction -> CSV + snapshot)
+      #    Cost controls (see agent.js):
+      #      WEB_SEARCH_MAX_USES caps web searches per query (biggest cost lever).
+      #      Set INCLUDE_OPTIONAL_QUERIES=1 here for an occasional deeper sweep.
+      - name: Scan secondary market
+        run: node agent.js
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      - run: |
+          WEB_SEARCH_MAX_USES: '3'
+
+      # 2. Generate the written report + Slack payload from the latest snapshot
+      - name: Generate report
+        run: node analyze.js --generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # 3. Commit + push data and report so the Slack links resolve
+      - name: Commit results
+        run: |
           git config user.name "market-agent"
           git config user.email "agent@davidwebb.local"
           git add output/
-          git commit -m "Weekly market scan $(date +%F)" || echo "No changes"
+          git commit -m "Weekly market scan $(date +%F)" || echo "No changes to commit"
           git push
+
+      # 4. Notify Slack (#secondary-market) with report + CSV links (Pattern A + B)
+      - name: Notify Slack
+        run: node analyze.js --notify
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          REPORT_LINK_BRANCH: ${{ github.ref_name }}

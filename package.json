@@ -5,7 +5,9 @@
   "main": "agent.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node agent.js"
+    "start": "node agent.js",
+    "scan": "node agent.js",
+    "analyze": "node analyze.js"
   },
   "engines": {
     "node": ">=18"
