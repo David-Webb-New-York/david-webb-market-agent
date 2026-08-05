@@ -32,16 +32,51 @@ const CSV_PATH = path.join(OUTPUT_DIR, "david-webb-market-data.csv");
 // ---- Search queries to run each pass ----
 // Edit this list to add/remove categories or sources.
 const QUERIES = [
+  // Category / iconic piece scans
   "David Webb bracelet for sale 1stDibs price",
   "David Webb ring for sale 1stDibs price",
   "David Webb earrings for sale 1stDibs price",
   "David Webb brooch for sale 1stDibs price",
   "David Webb necklace for sale 1stDibs price",
   "David Webb zebra bracelet auction result price",
-  "David Webb Sotheby's jewelry auction result",
-  "David Webb Christie's jewelry auction result",
   "David Webb frog bracelet price",
-  "David Webb cross pendant price"
+  "David Webb cross pendant price",
+
+  // Auction houses
+  "David Webb jewelry auction result Sotheby's sothebys.com",
+  "David Webb jewelry auction result Christie's christies.com",
+  "David Webb jewelry auction result Phillips phillips.com",
+  "David Webb jewelry auction result Doyle doyle.com",
+  "David Webb jewelry auction result Rago ragoarts.com",
+  "David Webb jewelry auction result Heritage ha.com",
+
+  // Dealers & marketplaces
+  "David Webb jewelry for sale oakgem.com price",
+  "David Webb jewelry for sale thebackvault.com price",
+  "David Webb jewelry for sale vestiairecollective.com price",
+  "David Webb jewelry for sale jamesedition.com price",
+  "David Webb jewelry for sale rubylane.com price",
+  "David Webb jewelry for sale fredleighton.com price",
+  "David Webb jewelry for sale kentshire.com price",
+  "David Webb jewelry for sale doyledoyle.com price",
+  "David Webb jewelry for sale fdgallery.com price",
+  "David Webb jewelry for sale ericoriginals.com price",
+  "David Webb jewelry for sale saidiansons.com price",
+  "David Webb jewelry for sale robinsonsjewelers.com price",
+  "David Webb jewelry for sale legacyvintagejewels.com price",
+  "David Webb jewelry for sale louismartin.com price",
+  "David Webb jewelry for sale yafasignedjewels.com price",
+  "David Webb jewelry for sale circajewels.com price",
+  "David Webb jewelry for sale abrandtandson.com price",
+  "David Webb jewelry for sale wilsonsestatejewelry.com price",
+  "David Webb jewelry for sale langantiques.com price",
+  "David Webb jewelry for sale estatediamondjewelry.com price",
+  "David Webb jewelry for sale frankpollakandsons.com price",
+  "David Webb jewelry for sale rtjewelers.com price",
+  "David Webb jewelry for sale alexcooper.com price",
+  "David Webb jewelry for sale syl-leeantiques.com price",
+  "David Webb jewelry for sale schiffmans.com price",
+  "David Webb jewelry for sale macklowegallery.com price"
 ];
 
 const CSV_HEADER = [
