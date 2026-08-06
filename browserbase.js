@@ -40,7 +40,7 @@ async function withPage(fn, { sessionOpts = {} } = {}) {
 
 // Navigate to `url`, wait for JS to settle, and return the rendered HTML, page
 // title, common embedded state blobs, and (optionally) captured JSON responses.
-async function renderAndExtract(url, { waitMs = 8000, captureJson = false } = {}) {
+async function renderAndExtract(url, { waitMs = 8000, captureJson = false, sessionOpts = {} } = {}) {
   return withPage(async (page) => {
     const jsonResponses = [];
     if (captureJson) {
@@ -76,7 +76,7 @@ async function renderAndExtract(url, { waitMs = 8000, captureJson = false } = {}
       })
       .catch(() => ({}));
     return { title, html, state, jsonResponses };
-  });
+  }, { sessionOpts });
 }
 
 module.exports = { withPage, renderAndExtract, hasCreds };

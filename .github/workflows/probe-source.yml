@@ -1,0 +1,43 @@
+name: Probe Source (Browserbase)
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: 'URL to render and inspect (e.g. a search/results page)'
+        required: true
+        type: string
+      proxies:
+        description: 'Use Browserbase proxies (paid plan; needed for Cloudflare-blocked sites)'
+        type: boolean
+        default: false
+      wait_ms:
+        description: 'Render wait time in ms before capturing state'
+        type: string
+        default: '8000'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Probe URL
+        run: node bb-probe.js "${{ inputs.url }}" ${{ inputs.proxies == 'true' && '--proxies' || '' }} --wait=${{ inputs.wait_ms }}
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+      - name: Print findings to job log
+        if: always()
+        run: node print-probe-findings.js
+      - name: Upload probe output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: probe-output
+          path: probe-output/
+          retention-days: 14
+          if-no-files-found: warn
