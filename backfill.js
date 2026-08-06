@@ -23,10 +23,6 @@
 const store = require("./history-store");
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
-if (!API_KEY) {
-  console.error("Missing ANTHROPIC_API_KEY. Run: export ANTHROPIC_API_KEY=sk-ant-...");
-  process.exit(1);
-}
 
 const WEB_SEARCH_MAX_USES = parseInt(process.env.WEB_SEARCH_MAX_USES || "5", 10);
 const MAX_PIECES_PER_QUERY = parseInt(process.env.MAX_PIECES_PER_QUERY || "20", 10);
@@ -169,37 +165,50 @@ async function runQuery(query) {
   return pieces.filter((p) => p && typeof p === "object").map(normalizeRecord);
 }
 
-async function main() {
-  const today = new Date().toISOString().slice(0, 10);
-  const map = store.loadStore();
-  const before = map.size;
-
-  console.log(`David Webb historical auction backfill — ${today}`);
-  console.log(`${QUERIES.length} query(ies); web_search max_uses=${WEB_SEARCH_MAX_USES}; existing records=${before}\n`);
-
+// Collect LLM web-search results into the shared store `map`. Returns { added }.
+async function collect(map, { today } = {}) {
+  if (!API_KEY) throw new Error("Missing ANTHROPIC_API_KEY (required for the LLM web-search sweep).");
+  const day = today || new Date().toISOString().slice(0, 10);
   let added = 0;
   for (const query of QUERIES) {
     console.log(`Searching: ${query}`);
     const results = await runQuery(query);
     console.log(`  -> ${results.length} lot(s)`);
     for (const r of results) {
-      if (store.upsert(map, r, { source: "web-search", today })) added++;
+      if (store.upsert(map, r, { source: "web-search", today: day })) added++;
     }
     await new Promise((res) => setTimeout(res, 500));
   }
+  return { added };
+}
+
+async function main() {
+  if (!API_KEY) {
+    console.error("Missing ANTHROPIC_API_KEY. Run: export ANTHROPIC_API_KEY=sk-ant-...");
+    process.exit(1);
+  }
+  const map = store.loadStore();
+  const before = map.size;
+  console.log(`David Webb historical auction backfill — ${new Date().toISOString().slice(0, 10)}`);
+  console.log(`${QUERIES.length} query(ies); web_search max_uses=${WEB_SEARCH_MAX_USES}; existing records=${before}\n`);
+
+  const { added } = await collect(map);
 
   if (DRY_RUN) {
     console.log(`\n[DRY RUN] Would write ${map.size} records (${added} new). Files not modified.`);
     return;
   }
-
   const total = store.writeStore(map);
   console.log(`\nDone. ${added} new lot(s) added; ${total} total historical records.`);
   console.log(`JSON: ${store.HISTORY_JSON}`);
   console.log(`CSV:  ${store.HISTORY_CSV}`);
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err.message || err);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err) => {
+    console.error("Fatal error:", err.message || err);
+    process.exit(1);
+  });
+}
+
+module.exports = { collect };

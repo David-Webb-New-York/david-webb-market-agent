@@ -10,7 +10,8 @@
     "library": "node library.js",
     "analyze": "node analyze.js",
     "backfill": "node backfill.js",
-    "import:rago": "node import-rago.js"
+    "import:rago": "node import-rago.js",
+    "import:all": "node import-all.js"
   },
   "engines": {
     "node": ">=18"
