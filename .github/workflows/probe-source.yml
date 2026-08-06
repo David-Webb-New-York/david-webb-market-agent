@@ -1,5 +1,17 @@
 name: Probe Source (Browserbase)
+# Two ways to trigger:
+#  1. workflow_dispatch — only usable via the GitHub UI/API once this file is
+#     merged to the default branch (a GitHub limitation: workflow_dispatch
+#     targets aren't listed/dispatchable until they exist on the default
+#     branch, even though the run itself can target another ref).
+#  2. push to probe-request.json — works on ANY branch immediately (push
+#     triggers evaluate the workflow file as of the pushed commit, no
+#     default-branch registration needed), so this is how a feature branch
+#     drives probes before merging. Edit probe-request.json and push.
 on:
+  push:
+    paths:
+      - 'probe-request.json'
   workflow_dispatch:
     inputs:
       url:
@@ -25,8 +37,25 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      - name: Resolve inputs
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            {
+              echo "url=${{ inputs.url }}"
+              echo "proxies=${{ inputs.proxies }}"
+              echo "wait_ms=${{ inputs.wait_ms }}"
+            } >> "$GITHUB_OUTPUT"
+          else
+            node -e '
+              const fs = require("fs");
+              const r = require("./probe-request.json");
+              fs.appendFileSync(process.env.GITHUB_OUTPUT,
+                `url=${r.url}\nproxies=${!!r.proxies}\nwait_ms=${r.wait_ms || 8000}\n`);
+            '
+          fi
       - name: Probe URL
-        run: node bb-probe.js "${{ inputs.url }}" ${{ inputs.proxies == 'true' && '--proxies' || '' }} --wait=${{ inputs.wait_ms }}
+        run: node bb-probe.js "${{ steps.resolve.outputs.url }}" ${{ steps.resolve.outputs.proxies == 'true' && '--proxies' || '' }} --wait=${{ steps.resolve.outputs.wait_ms }}
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
