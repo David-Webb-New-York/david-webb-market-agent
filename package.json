@@ -9,7 +9,8 @@
     "scan": "node agent.js",
     "library": "node library.js",
     "analyze": "node analyze.js",
-    "backfill": "node backfill.js"
+    "backfill": "node backfill.js",
+    "import:rago": "node import-rago.js"
   },
   "engines": {
     "node": ">=18"

@@ -1,33 +1,26 @@
 #!/usr/bin/env node
 /**
- * David Webb Secondary Market — Historical Auction Backfill
- * ---------------------------------------------------------
- * A ONE-TIME (or occasional) pass that builds a historical record of PAST
- * David Webb auction results — the sales history our weekly "current listings"
- * scan does not reach. It targets the auction aggregators (LiveAuctioneers,
- * Invaluable, Barnebys) and the houses directly (Sotheby's, Christie's,
- * Phillips, Bonhams, Doyle, Rago, Heritage, Freeman's|Hindman).
+ * David Webb Secondary Market — Historical Auction Backfill (LLM web search)
+ * --------------------------------------------------------------------------
+ * A broad, fuzzy pass that uses Claude + web search to find PAST David Webb
+ * auction results across many houses/aggregators at once. It is good for wide
+ * coverage but NOT exhaustive per source (a web search returns only the top
+ * snippets). For complete coverage of a specific source, prefer a structured
+ * importer such as import-rago.js.
  *
- * This is intentionally SEPARATE from the active-listings library:
- *   - output/david-webb-library.{json,csv}          = active dealer listings (from weekly scans)
- *   - output/david-webb-auction-history.{json,csv}  = past sold/estimated auction lots (this script)
- * Together they form the full "library". Both are natural Fabric sources.
- *
- * It is safe to re-run: results are merged/deduped into the history file (keyed
- * by listing URL, else house+lot+sale_date+name), so a later, broader pass just
- * extends the record.
+ * Results merge into the shared auction-history dataset (see history-store.js):
+ *   output/david-webb-auction-history.{json,csv}
  *
  * SETUP:  export ANTHROPIC_API_KEY=sk-ant-...   then:  node backfill.js
  *
  * COST CONTROLS (env):
  *   MAX_QUERIES=<n>            only run the first n queries (use 1 for a cheap test)
- *   WEB_SEARCH_MAX_USES=<n>    web searches per query (default 5 — archives need digging)
+ *   WEB_SEARCH_MAX_USES=<n>    web searches per query (default 5)
  *   MAX_PIECES_PER_QUERY=<n>   cap pieces requested per query (default 20)
  *   BACKFILL_DRY_RUN=1         call the API but do NOT write the history files
  */
 
-const fs = require("fs");
-const path = require("path");
+const store = require("./history-store");
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 if (!API_KEY) {
@@ -35,16 +28,10 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-const OUTPUT_DIR = path.join(__dirname, "output");
-const HISTORY_JSON = path.join(OUTPUT_DIR, "david-webb-auction-history.json");
-const HISTORY_CSV = path.join(OUTPUT_DIR, "david-webb-auction-history.csv");
-
 const WEB_SEARCH_MAX_USES = parseInt(process.env.WEB_SEARCH_MAX_USES || "5", 10);
 const MAX_PIECES_PER_QUERY = parseInt(process.env.MAX_PIECES_PER_QUERY || "20", 10);
 const DRY_RUN = /^(1|true|yes)$/i.test(process.env.BACKFILL_DRY_RUN || "");
 
-// Rago is first so a MAX_QUERIES=1 test directly probes the example the library
-// is meant to capture (Rago has many past David Webb lots).
 const HISTORY_QUERIES = [
   "David Webb jewelry auction results Rago ragoarts.com sold price lot",
   "David Webb jewelry sold auction results liveauctioneers.com",
@@ -67,26 +54,6 @@ const HISTORY_QUERIES = [
 let QUERIES = [...HISTORY_QUERIES];
 const MAX_QUERIES = parseInt(process.env.MAX_QUERIES || "", 10);
 if (Number.isFinite(MAX_QUERIES) && MAX_QUERIES > 0) QUERIES = QUERIES.slice(0, MAX_QUERIES);
-
-const HISTORY_FIELDS = [
-  "piece_name",
-  "category",
-  "era_or_year",
-  "materials_gemstones",
-  "price_type",
-  "sold_price",
-  "estimate_low",
-  "estimate_high",
-  "currency_note",
-  "sale_date",
-  "auction_house",
-  "sale_name",
-  "lot_number",
-  "listing_url",
-  "notes",
-];
-
-const CSV_HEADER = ["id", ...HISTORY_FIELDS, "first_captured"];
 
 const SYSTEM_PROMPT = `You are a jewelry auction historian building a record of PAST David Webb auction results.
 Given a search query, use web search to find COMPLETED/PAST auction lots for David Webb jewelry
@@ -114,8 +81,6 @@ CRITICAL OUTPUT RULES:
 - No prose, no markdown fences, no "Based on..." text.
 - Only include PAST/COMPLETED auction lots (not current dealer listings for sale).
 - If you find nothing relevant, output exactly: []`;
-
-// ---------- Claude + JSON extraction (same robust approach as agent.js) ----------
 
 async function callClaude({ messages, tools, maxTokens = 4000 }) {
   const body = { model: "claude-sonnet-4-6", max_tokens: maxTokens, system: SYSTEM_PROMPT, messages };
@@ -167,68 +132,13 @@ function parsePieces(data) {
 
 function normalizeRecord(p) {
   const rec = {};
-  for (const f of HISTORY_FIELDS) rec[f] = p[f] ?? "";
-  // Coerce numeric fields
+  for (const f of store.HISTORY_FIELDS) rec[f] = p[f] ?? "";
   for (const f of ["sold_price", "estimate_low", "estimate_high"]) {
     const n = Number(rec[f]);
     rec[f] = Number.isFinite(n) && n > 0 ? n : "";
   }
-  if (!rec.auction_house && rec.source_site) rec.auction_house = rec.source_site;
   return rec;
 }
-
-// ---------- dedup key + merge ----------
-
-function normalizeUrl(u) {
-  if (!u) return "";
-  const raw = String(u).trim();
-  try {
-    const url = new URL(raw);
-    return (url.host + url.pathname).toLowerCase().replace(/\/+$/, "");
-  } catch (_) {
-    return raw.toLowerCase().replace(/[?#].*$/, "").replace(/\/+$/, "");
-  }
-}
-
-function recordKey(r) {
-  const url = normalizeUrl(r.listing_url);
-  if (url) return "url:" + url;
-  const house = (r.auction_house || "").toLowerCase().trim();
-  const lot = String(r.lot_number || "").toLowerCase().trim();
-  const date = String(r.sale_date || "").trim();
-  const name = (r.piece_name || "").toLowerCase().replace(/\s+/g, " ").trim();
-  return `meta:${house}|${lot}|${date}|${name}`;
-}
-
-function loadExisting() {
-  if (!fs.existsSync(HISTORY_JSON)) return new Map();
-  try {
-    const arr = JSON.parse(fs.readFileSync(HISTORY_JSON, "utf8"));
-    return new Map(arr.map((r) => [r.id || recordKey(r), r]));
-  } catch (_) {
-    return new Map();
-  }
-}
-
-function csvEscape(val) {
-  if (val === null || val === undefined) return "";
-  const str = String(val).replace(/"/g, '""');
-  return /[",\n]/.test(str) ? `"${str}"` : str;
-}
-
-function writeOutputs(map) {
-  const records = [...map.values()].sort(
-    (a, b) => (Number(b.sold_price) || 0) - (Number(a.sold_price) || 0)
-  );
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
-  fs.writeFileSync(HISTORY_JSON, JSON.stringify(records, null, 2) + "\n");
-  const lines = [CSV_HEADER.join(",")];
-  for (const r of records) lines.push(CSV_HEADER.map((c) => csvEscape(r[c])).join(","));
-  fs.writeFileSync(HISTORY_CSV, lines.join("\n") + "\n");
-  return records.length;
-}
-
-// ---------- run ----------
 
 async function runQuery(query) {
   const tool = { type: "web_search_20250305", name: "web_search" };
@@ -261,8 +171,8 @@ async function runQuery(query) {
 
 async function main() {
   const today = new Date().toISOString().slice(0, 10);
-  const store = loadExisting();
-  const before = store.size;
+  const map = store.loadStore();
+  const before = map.size;
 
   console.log(`David Webb historical auction backfill — ${today}`);
   console.log(`${QUERIES.length} query(ies); web_search max_uses=${WEB_SEARCH_MAX_USES}; existing records=${before}\n`);
@@ -273,29 +183,20 @@ async function main() {
     const results = await runQuery(query);
     console.log(`  -> ${results.length} lot(s)`);
     for (const r of results) {
-      const key = recordKey(r);
-      if (store.has(key)) {
-        const merged = { ...store.get(key), ...r };
-        merged.id = key;
-        merged.first_captured = store.get(key).first_captured || today;
-        store.set(key, merged);
-      } else {
-        store.set(key, { id: key, ...r, first_captured: today });
-        added++;
-      }
+      if (store.upsert(map, r, { source: "web-search", today })) added++;
     }
     await new Promise((res) => setTimeout(res, 500));
   }
 
   if (DRY_RUN) {
-    console.log(`\n[DRY RUN] Would write ${store.size} records (${added} new). Files not modified.`);
+    console.log(`\n[DRY RUN] Would write ${map.size} records (${added} new). Files not modified.`);
     return;
   }
 
-  const total = writeOutputs(store);
+  const total = store.writeStore(map);
   console.log(`\nDone. ${added} new lot(s) added; ${total} total historical records.`);
-  console.log(`JSON: ${HISTORY_JSON}`);
-  console.log(`CSV:  ${HISTORY_CSV}`);
+  console.log(`JSON: ${store.HISTORY_JSON}`);
+  console.log(`CSV:  ${store.HISTORY_CSV}`);
 }
 
 main().catch((err) => {
