@@ -1,5 +1,6 @@
 {
   "url": "https://www.liveauctioneers.com/price-result/?keyword=david+webb",
   "proxies": false,
-  "wait_ms": 12000
+  "wait_ms": 12000,
+  "note": "fresh run after Actions incident recovery"
 }
