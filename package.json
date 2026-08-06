@@ -8,7 +8,8 @@
     "start": "node agent.js",
     "scan": "node agent.js",
     "library": "node library.js",
-    "analyze": "node analyze.js"
+    "analyze": "node analyze.js",
+    "backfill": "node backfill.js"
   },
   "engines": {
     "node": ">=18"
