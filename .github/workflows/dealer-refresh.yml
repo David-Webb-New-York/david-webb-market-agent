@@ -1,0 +1,41 @@
+name: Weekly Dealer Listings Refresh
+# Structured, free (no API key) sweep of estate-jeweler / dealer inventory
+# (Shopify /products.json, WooCommerce Store API, ...) into
+# output/david-webb-dealer-listings.*. Sibling to history-refresh.yml.
+#
+# Also push-triggered on changes to the importer code itself so a feature
+# branch can verify a new/edited adapter runs cleanly against the real
+# internet before merging (see probe-source.yml for why push, not just
+# workflow_dispatch, is needed pre-merge).
+on:
+  schedule:
+    - cron: '30 13 * * 1'  # Monday 8:30am ET (30 min after weekly-scan.yml)
+  workflow_dispatch: {}
+  push:
+    paths:
+      - 'import-dealers.js'
+      - 'import-shopify.js'
+      - 'import-woocommerce.js'
+      - 'dealer-store.js'
+      - '.github/workflows/dealer-refresh.yml'
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Import dealer listings
+        run: node import-dealers.js
+      - name: Commit results
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "market-agent"
+          git config user.email "agent@davidwebb.local"
+          git add output/
+          git commit -m "Dealer listings refresh $(date +%F)" || echo "No changes to commit"
+          git push

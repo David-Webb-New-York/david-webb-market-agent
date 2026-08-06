@@ -12,7 +12,7 @@
     "backfill": "node backfill.js",
     "import:rago": "node import-rago.js",
     "import:all": "node import-all.js",
-    "import:dealers": "node import-shopify.js",
+    "import:dealers": "node import-dealers.js",
     "bb:probe": "node bb-probe.js"
   },
   "engines": {

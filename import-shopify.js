@@ -29,11 +29,27 @@ const store = require("./dealer-store");
 const USER_AGENT =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 
-// Estate jewelers / dealers known (or likely, per HANDOFF §7.3 OPTIONAL_QUERIES)
-// to run on Shopify. Add more here as they're confirmed — probing a new
-// domain is just `curl https://<domain>/products.json?limit=1`.
+// Estate jewelers / dealers confirmed to run on Shopify, via
+// scan-dealer-domains.js sweeping agent.js's OPTIONAL_QUERIES domain list
+// (see .github/workflows/scan-dealers.yml run history). A confirmed Shopify
+// store is registered here even if its first few products didn't happen to
+// mention "David Webb" — collect() below paginates the FULL catalog, and
+// Yafa itself needed that (a 5-item sample would have missed all 22 pieces).
 const DEALERS = [
   { shop: "yafasignedjewels.com", dealer: "Yafa Signed Jewels", currency: "USD" },
+  { shop: "thebackvault.com", dealer: "The Back Vault", currency: "USD" },
+  { shop: "ericoriginals.com", dealer: "Eric Originals & Antiques", currency: "USD" },
+  { shop: "saidiansons.com", dealer: "Saidian & Sons", currency: "USD" },
+  { shop: "oakgem.com", dealer: "Oak Gem", currency: "USD" },
+  { shop: "kentshire.com", dealer: "Kentshire", currency: "USD" },
+  { shop: "doyledoyle.com", dealer: "Doyle & Doyle", currency: "USD" },
+  { shop: "robinsonsjewelers.com", dealer: "Robinson's Jewelers", currency: "USD" },
+  { shop: "legacyvintagejewels.com", dealer: "Legacy Vintage Jewels", currency: "USD" },
+  { shop: "louismartin.com", dealer: "Louis Martin", currency: "USD" },
+  { shop: "abrandtandson.com", dealer: "A. Brandt + Son", currency: "USD" },
+  { shop: "wilsonsestatejewelry.com", dealer: "Wilson's Estate Jewelry", currency: "USD" },
+  { shop: "schiffmans.com", dealer: "Schiffman's", currency: "USD" },
+  { shop: "macklowegallery.com", dealer: "Macklowe Gallery", currency: "USD" },
 ];
 
 const PAGE_LIMIT = 250;
