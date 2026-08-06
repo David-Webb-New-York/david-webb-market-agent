@@ -8,9 +8,17 @@
     "start": "node agent.js",
     "scan": "node agent.js",
     "library": "node library.js",
-    "analyze": "node analyze.js"
+    "analyze": "node analyze.js",
+    "backfill": "node backfill.js",
+    "import:rago": "node import-rago.js",
+    "import:all": "node import-all.js",
+    "bb:probe": "node bb-probe.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@browserbasehq/sdk": "^2.16.0",
+    "playwright-core": "^1.62.1"
   }
 }

@@ -1,0 +1,36 @@
+name: Monthly Auction History Refresh
+on:
+  schedule:
+    - cron: '0 14 1 * *'   # 1st of each month, 9am ET
+  workflow_dispatch:
+    inputs:
+      with_llm:
+        description: 'Also run the LLM web-search sweep (costs ~$3-6; needs ANTHROPIC_API_KEY)'
+        type: boolean
+        default: false
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+
+      # Structured importers are free (no API). Add --with-llm only on manual
+      # dispatch when the broad (paid) web-search sweep is wanted.
+      - name: Import auction history
+        run: node import-all.js ${{ (github.event_name == 'workflow_dispatch' && inputs.with_llm) && '--with-llm' || '' }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit history
+        run: |
+          git config user.name "market-agent"
+          git config user.email "agent@davidwebb.local"
+          git add output/
+          git commit -m "Auction history refresh $(date +%F)" || echo "No changes to commit"
+          git push
