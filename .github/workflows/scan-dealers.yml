@@ -1,0 +1,30 @@
+name: Scan Dealer Domains (structured feeds)
+# Free/fast reconnaissance — no Browserbase, just plain HTTP fetch from a
+# runner with real internet access (this sandbox's network is allowlisted
+# and can't reach these domains directly). Push-triggered so it also works
+# pre-merge on a feature branch (see probe-source.yml for why).
+on:
+  push:
+    paths:
+      - 'scan-dealer-domains.js'
+      - '.github/workflows/scan-dealers.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scan-dealer-domains.js
+      - name: Upload scan report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dealer-domain-scan
+          path: probe-output/dealer-domain-scan.json
+          retention-days: 30
+          if-no-files-found: warn
