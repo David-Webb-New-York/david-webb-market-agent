@@ -26,10 +26,10 @@ Target consumers: Excel / Power BI / Microsoft Fabric (bronze = raw CSV, silver 
 
 | Branch | Status | Contents |
 | --- | --- | --- |
-| `main` | Live | Weekly scan, cost controls, analyze+Slack, trend charts, library layer (PRs #4–#6 merged) |
-| `cursor/historical-backfill-0e2f` | **Open [PR #7](https://github.com/David-Webb-New-York/david-webb-market-agent/pull/7)** | Historical backfill, Rago importer, shared history store, `import-all`, Browserbase integration |
+| `main` | Live | Weekly scan, cost controls, analyze+Slack, trend charts, library layer, historical backfill, Rago importer, shared history store, `import-all`, Browserbase integration (PRs #4–#7 merged) |
+| `claude/immediate-next-work-i15bgw` | In progress (this session) | Estate-jeweler dealer layer: `import-shopify.js` + `dealer-store.js` (§9 P0) |
 
-**Action for Claude Code:** Continue work on PR #7 (or merge it into `main` first if the user prefers a clean base). Do **not** recreate deleted branches `cursor/setup-dev-environment-0e2f` or `cursor/slack-claude-report-pipeline-0e2f` (already merged).
+**Action for Claude Code:** PR #7 is merged; `main` is the current base. Do **not** recreate deleted branches `cursor/setup-dev-environment-0e2f`, `cursor/slack-claude-report-pipeline-0e2f`, or `cursor/historical-backfill-0e2f` (already merged).
 
 GitHub tip for the user: merging a PR from Cursor’s UI *is* the GitHub merge — no second merge on github.com. After merge, delete the feature branch.
 
@@ -63,6 +63,8 @@ backfill.js              # Broad LLM historical auction sweep (collect(map) adap
 import-rago.js           # Complete Rago structured importer (free HTTP)
 import-all.js            # Orchestrator: structured importers + optional --with-llm
 history-store.js         # Shared auction-history load/dedupe/write
+import-shopify.js        # Dealer layer: Shopify /products.json importer (Yafa + registry); also collectAll()
+dealer-store.js          # Shared dealer-listings load/dedupe/write (first_seen/last_seen/status)
 browserbase.js           # Browserbase + Playwright helper
 bb-probe.js              # Probe a URL in Browserbase; dump embedded state / XHRs
 .cursor/environment.json # Cloud env: { "install": "npm install" } — Cursor-specific
@@ -74,6 +76,7 @@ output/
   snapshots/YYYY-MM-DD.json       # Per-run raw results
   david-webb-library.{json,csv}   # Deduped active catalog (silver)
   david-webb-auction-history.*    # Past auction lots (Rago 85 committed on PR #7)
+  david-webb-dealer-listings.*    # Estate-jeweler for-sale inventory (Shopify importer; Yafa first)
   reports/YYYY-MM-DD.md           # Claude-written report + Mermaid charts
 ```
 
@@ -87,6 +90,7 @@ npm run analyze       # analyze.js
 npm run backfill      # LLM historical sweep
 npm run import:rago   # Rago only (free)
 npm run import:all    # structured (+ optional -- --with-llm)
+npm run import:dealers # Shopify dealer layer, all registered dealers (free)
 npm run bb:probe -- "https://..."
 ```
 
@@ -112,6 +116,12 @@ Weekly workflow sets `WEB_SEARCH_MAX_USES=3`.
 - Shared store: `history-store.js` (all importers upsert into the same files)
 
 Do **not** force sold lots into the active library; they are different entities. A combined Fabric/Claude view can come later.
+
+### C) Dealer listings (estate-jeweler for-sale inventory)
+- `output/david-webb-dealer-listings.{json,csv}`
+- Third track, separate from both A and B: for-sale inventory scraped directly from a dealer’s own structured feed (e.g. Shopify `/products.json`), not from the weekly LLM scan and not an auction result.
+- Fields: `piece_name`, `category`, `era_or_year`, `materials_gemstones`, `price_type` (`asking`), `asking_price`, `currency_note`, `dealer`, `listing_url`, `sku`, `notes`, plus lifecycle `first_seen`/`last_seen`/`times_seen`/`status` (`active`|`inactive`) — same lifecycle shape as the library (A), so it can be unioned with it later for a combined view.
+- Shared store: `dealer-store.js`. Adapter: `import-shopify.js` (`collect(map, {shop, dealer, currency})` for one dealer, `collectAll(map)` for every dealer in its `DEALERS` registry). Resolves §13’s open question: dealer inventory gets its **own layer**, not forced into the active library or auction history.
 
 ---
 
@@ -197,10 +207,10 @@ Optional-query list (still in `agent.js` `OPTIONAL_QUERIES`) includes dealers su
 User’s last direction: upgrade done; **don’t lose estate jewelers**; continue auctioneer coverage via Browserbase.
 
 ### P0 — Estate jewelers (user-flagged)
-1. Build `import-shopify.js` (or `import-yafa.js` first) using `/{products.json}` (+ pagination `/products.json?page=N&limit=250`).
-2. Map products → history or a **dealer-listings** store (decide: active library vs separate dealer CSV — recommend feeding **active library** / a dealer layer since these are for-sale, not past auction hammers).
-3. Probe other `OPTIONAL_QUERIES` domains for Shopify / Squarespace / public JSON; build adapters for the ones that expose feeds.
-4. For non-Shopify dealers, use Browserbase + `bb-probe` the same way as LiveAuctioneers.
+1. ✅ **Done** — `import-shopify.js` + `dealer-store.js` built (this session), using `/products.json` with `page`/`limit=250` pagination, registered `DEALERS` list starting with Yafa Signed Jewels. Feeds a **new dealer layer** (`output/david-webb-dealer-listings.*`), not the active library or auction history — see §5C. Unit-tested locally against a mocked Shopify response (filtering, category/era inference, price updates, inactive-marking all verified) — logic is solid.
+   - **Not yet verified against the live site.** This Claude Code web-environment’s network egress is allowlisted and does not include `yafasignedjewels.com` (`fetch` → `403 Host not in allowlist`). Needs a first live run from an environment with open/broad egress (local machine, GitHub Actions, or the previous Cursor/Browserbase environment) — `npm run import:dealers` or `node import-shopify.js yafasignedjewels.com "Yafa Signed Jewels"` — to confirm Yafa’s actual product JSON shape matches what was assumed (esp. `tags` format, whether `body_html` reliably contains material/era info, and real product count vs. the ~22 found via the earlier curl probe).
+2. Probe other `OPTIONAL_QUERIES` domains for Shopify / Squarespace / public JSON; add confirmed ones to `DEALERS` in `import-shopify.js` (each is just `curl https://<domain>/products.json?limit=1`).
+3. For non-Shopify dealers, use Browserbase + `bb-probe` the same way as LiveAuctioneers.
 
 ### P1 — Aggregators (highest auction ROI)
 1. With Browserbase (+ proxies), find LiveAuctioneers **sold / price-results** URL or UI path (default search is upcoming only).
@@ -281,9 +291,9 @@ Notify runs **after** git push in CI so links resolve. Payload written to `outpu
 
 ## 13. Open questions / decisions for the user
 
-- Should estate-jeweler inventory live in the **active library**, a new **dealer listings** file, or both?
+- ~~Should estate-jeweler inventory live in the active library, a new dealer listings file, or both?~~ **Decided this session:** new dealer layer (`output/david-webb-dealer-listings.*`, §5C) — kept separate since these are for-sale prices from a single dealer's own feed, not LLM-scan sightings or auction hammers. Revisit "both" (a combined view) once there's more than one source feeding it.
 - Approve Browserbase proxy spend + continued per-site adapter work vs. also pursuing licensed data (artnet)?
-- Merge PR #7 now vs. after first LiveAuctioneers/Shopify importer lands?
+- PR #7 is merged into `main`. Next PR (this session's Shopify/dealer-layer work) — merge when ready.
 
 ---
 
