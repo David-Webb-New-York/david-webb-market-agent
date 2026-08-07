@@ -1,0 +1,7 @@
+{
+  "base_url": "https://www.doyle.com",
+  "term": "david webb",
+  "selectors": "input.search-st,input[placeholder*='lot' i],input[type='search']",
+  "open_selectors": "",
+  "wait_ms": 10000
+}

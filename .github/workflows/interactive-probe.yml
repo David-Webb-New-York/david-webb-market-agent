@@ -1,0 +1,81 @@
+name: Interactive Probe (Browserbase)
+# Like probe-source.yml, but simulates typing into a site's own search box
+# and pressing Enter instead of relying on a URL query param -- for sites
+# where a guessed `?param=value` renders the page shell but never triggers
+# the real client-side search (confirmed on Christie's, Doyle).
+on:
+  push:
+    paths:
+      - 'interactive-probe-request.json'
+      - 'bb-interactive-probe.js'
+      - 'browserbase.js'
+      - '.github/workflows/interactive-probe.yml'
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Base URL to navigate to (site homepage or a page with a search box)'
+        required: true
+        type: string
+      term:
+        description: 'Search term to type'
+        required: true
+        type: string
+      selectors:
+        description: 'Comma-separated CSS selectors to try for the search input'
+        required: true
+        type: string
+      open_selectors:
+        description: 'Comma-separated CSS selectors for an optional "open search" trigger'
+        type: string
+        default: ''
+      wait_ms:
+        description: 'Wait time in ms after pressing Enter'
+        type: string
+        default: '8000'
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Resolve inputs
+        id: resolve
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            {
+              echo "base_url=${{ inputs.base_url }}"
+              echo "term=${{ inputs.term }}"
+              echo "selectors=${{ inputs.selectors }}"
+              echo "open_selectors=${{ inputs.open_selectors }}"
+              echo "wait_ms=${{ inputs.wait_ms }}"
+            } >> "$GITHUB_OUTPUT"
+          else
+            node -e '
+              const fs = require("fs");
+              const r = require("./interactive-probe-request.json");
+              fs.appendFileSync(process.env.GITHUB_OUTPUT,
+                `base_url=${r.base_url}\nterm=${r.term}\nselectors=${r.selectors}\nopen_selectors=${r.open_selectors || ""}\nwait_ms=${r.wait_ms || 8000}\n`);
+            '
+          fi
+      - name: Interactive probe
+        run: |
+          node bb-interactive-probe.js "${{ steps.resolve.outputs.base_url }}" "${{ steps.resolve.outputs.term }}" \
+            --selectors="${{ steps.resolve.outputs.selectors }}" \
+            ${{ steps.resolve.outputs.open_selectors != '' && format('--open-selectors={0}', steps.resolve.outputs.open_selectors) || '' }} \
+            --wait=${{ steps.resolve.outputs.wait_ms }}
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+      - name: Upload probe output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: interactive-probe-output
+          path: probe-output/
+          retention-days: 14
+          if-no-files-found: warn
