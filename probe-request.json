@@ -1,6 +1,6 @@
 {
-  "url": "https://www.phillips.com/search?q=david%20webb",
+  "url": "https://www.freemanshindman.com/search?q=david+webb",
   "proxies": false,
   "wait_ms": 10000,
-  "note": "Task #5: first probe of Phillips this session. import-all.js currently lists it as 'SPA shell, results via JS' from an earlier (pre-this-session) investigation, never re-verified with current tooling. Trying without proxies first since it wasn't previously flagged as Cloudflare-blocked; URL is an educated guess."
+  "note": "Task #5: first probe of Freeman's/Hindman this session. import-all.js currently lists it as 'Nuxt app, results via API' from an earlier (pre-this-session) investigation, never re-verified with current tooling. Freeman's and Hindman merged; trying freemanshindman.com as the current combined-entity domain. Trying without proxies first since it wasn't previously flagged as Cloudflare-blocked; URL is an educated guess."
 }
