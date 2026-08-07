@@ -11,6 +11,7 @@ on:
       - 'plain-fetch-request.txt'
       - 'plain-post-request.json'
       - 'plain-post-request-2.json'
+      - 'plain-post-request-3.json'
 permissions:
   contents: read
 jobs:
@@ -38,3 +39,6 @@ jobs:
       - name: POST test 2 (Invaluable catResults, alternate index)
         if: hashFiles('plain-post-request-2.json') != ''
         run: node plain-post-test.js "https://www.invaluable.com/catResults" plain-post-request-2.json
+      - name: POST test 3 (Bonhams Typesense search-proxy replay)
+        if: hashFiles('plain-post-request-3.json') != ''
+        run: node plain-post-test.js "https://api01.bonhams.com/search-proxy/multi_search?use_cache=true&enable_lazy_filter=true" plain-post-request-3.json

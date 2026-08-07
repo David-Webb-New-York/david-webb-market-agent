@@ -1,0 +1,1 @@
+{"searches":[{"collection":"lots","exclude_fields":"footnotes,catalogDesc","filter_by":"(status:=[`NEW`])","facet_by":"department.name,country.name,price.GBPHighEstimate,price.GBPLowEstimate","query_by":"lotId,title,catalogDesc,footnotes","sort_by":"ranking:desc","page":1,"per_page":45,"max_facet_values":300,"q":"david webb"}]}
