@@ -75,11 +75,17 @@ function extractInlineWindowVars(html, names) {
       }
     }
     if (end === -1) continue;
-    const jsonText = html.slice(braceStart, end + 1);
+    const rawText = html.slice(braceStart, end + 1);
+    // This is a JS object literal dumped into the page, not strict JSON —
+    // `undefined` (unlike `null`) isn't valid JSON and breaks JSON.parse.
+    // Confirmed via an actual parse error on LiveAuctioneers
+    // ("errorMessage":undefined); only fixing what's been observed to
+    // actually occur, not guessing at every possible JS-literal quirk.
+    const jsonText = rawText.replace(/:(\s*)undefined\b/g, ":$1null");
     try {
-      found[name] = { ok: true, value: JSON.parse(jsonText), bytes: jsonText.length };
+      found[name] = { ok: true, value: JSON.parse(jsonText), bytes: rawText.length };
     } catch (e) {
-      found[name] = { ok: false, error: e.message, bytes: jsonText.length };
+      found[name] = { ok: false, error: e.message, bytes: rawText.length };
     }
   }
   return found;
