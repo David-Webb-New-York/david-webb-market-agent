@@ -2,5 +2,5 @@
   "url": "https://www.liveauctioneers.com/search/?keyword=david+webb",
   "proxies": false,
   "wait_ms": 12000,
-  "note": "breakthrough: HTML deep-dive found <script>window.__data={...}</script> inline in the raw HTML with real David Webb lots (lotNumber, sellerName, shortDescription, salePrice, lowBidEstimate) -- page.evaluate() found it empty (client hydration likely clears it), so extracting directly from static HTML via a balanced-brace scan instead. Re-probing to get the full extracted __data + all matched lot-like objects to see the complete field shape and check for a sold-vs-upcoming distinguishing field."
+  "note": "re-probe with undefined-token sanitization fix: window.__data extraction found the right 84686-byte boundary but JSON.parse failed on a bare `undefined` token (not valid JSON, only null is) -- now sanitized before parsing. Should finally yield the full parsed __data + matched lot-like objects."
 }
