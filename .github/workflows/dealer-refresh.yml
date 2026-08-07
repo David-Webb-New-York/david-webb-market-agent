@@ -64,7 +64,12 @@ jobs:
           date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/data/generated-at.txt
       - name: Deploy database GUI (Vercel)
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN" --cwd docs
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "VERCEL_TOKEN not set -- skipping GUI deploy (data import above still succeeded)."
+            exit 0
+          fi
+          npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN" --cwd docs
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
