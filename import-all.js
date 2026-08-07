@@ -56,7 +56,7 @@ const SOURCES = [
   { name: "Christie's", method: "api.christies.com (key-gated)", status: "web-search-only" },
   { name: "Phillips", method: "SPA shell, results via JS", status: "web-search-only" },
   { name: "Doyle", method: "SPA shell, results via JS", status: "web-search-only" },
-  { name: "Heritage (ha.com)", method: "403 (bot-blocked)", status: "web-search-only" },
+  { name: "Heritage (ha.com)", method: "DataDome device-check challenge (geo.captcha-delivery.com iframe), survives Browserbase proxies", status: "web-search-only" },
   { name: "Freeman's / Hindman", method: "Nuxt app, results via API", status: "web-search-only" },
 ];
 
