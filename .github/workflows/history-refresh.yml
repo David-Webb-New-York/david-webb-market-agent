@@ -16,6 +16,10 @@ on:
         description: 'Also run the LLM web-search sweep (costs ~$3-6; needs ANTHROPIC_API_KEY)'
         type: boolean
         default: false
+      christies_max_pages:
+        description: 'Christie''s: how many 20-lot search-result pages to fetch (~101 total for "david webb"; each page is its own Browserbase session). Default 10 for routine runs; set to 101 for an exhaustive one-time baseline.'
+        type: string
+        default: '10'
   push:
     paths:
       - 'import-liveauctioneers.js'
@@ -23,6 +27,7 @@ on:
       - 'import-bonhams.js'
       - 'import-sothebys.js'
       - 'import-rago.js'
+      - 'import-christies.js'
       - 'inline-state.js'
       - 'browserbase.js'
       - 'history-store.js'
@@ -44,11 +49,12 @@ jobs:
       # (costs a Browserbase session). --with-llm only on manual dispatch when
       # the broad (paid) web-search sweep is wanted.
       - name: Import auction history
-        run: node import-all.js --with-browserbase ${{ (github.event_name == 'workflow_dispatch' && inputs.with_llm) && '--with-llm' || '' }}
+        run: node import-all.js --with-browserbase --christies-max-pages="$CHRISTIES_MAX_PAGES" ${{ (github.event_name == 'workflow_dispatch' && inputs.with_llm) && '--with-llm' || '' }}
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CHRISTIES_MAX_PAGES: ${{ (github.event_name == 'workflow_dispatch' && inputs.christies_max_pages) || '10' }}
 
       - name: Upload auction history (for pre-merge inspection)
         if: always()

@@ -29,6 +29,7 @@ const liveauctioneers = require("./import-liveauctioneers");
 const invaluable = require("./import-invaluable");
 const bonhams = require("./import-bonhams");
 const sothebys = require("./import-sothebys");
+const christies = require("./import-christies");
 const backfill = require("./backfill");
 
 // Per-source status from direct investigation of each site's search page.
@@ -61,8 +62,10 @@ const SOURCES = [
   { name: "Barnebys", method: "2 wrong URL guesses (404 both times: ?q=, ?query=); real search route not yet found", status: "web-search-only" },
   {
     name: "Christie's",
-    method: "confirmed 2015 real David Webb past lots exist (count-client API) via UI-interaction probing, but the listing API (search-client) 404s on both cold and in-browser fetch -- likely needs a request header not yet captured",
-    status: "web-search-only",
+    method:
+      "search-client always 404s cold (even with real headers -- a browser-only WAF/fingerprint signal, not a missing header); a fresh Browserbase page load direct to the real tab=sold_lots URL DOES trigger it though. ~2015 total matches at 20/page (~101 pages) -- weekly run caps to CHRISTIES_MAX_PAGES (default 10, sortby=relevance so not date-ordered -- can miss low-relevance new lots, a real accepted limitation); run with a large maxPages once for an exhaustive baseline.",
+    status: "browserbase",
+    collect: christies.collect,
   },
   { name: "Phillips", method: "site down for maintenance across 3 probes today (real branded outage page, no bot-block) -- retry later, not blocked", status: "web-search-only" },
   {
@@ -101,10 +104,21 @@ async function main() {
   }
 
   // 1b) Browserbase-backed importers (real, but cost a session per run).
+  // Christie's alone takes a maxPages override -- its ~101-page result set
+  // is too large to page through every routine run (see SOURCES above), so
+  // a normal weekly run caps it while a one-time baseline backfill can pass
+  // a much larger value.
+  const christiesMaxPagesArg = process.argv.find((a) => a.startsWith("--christies-max-pages="));
+  const christiesMaxPages = christiesMaxPagesArg
+    ? parseInt(christiesMaxPagesArg.split("=")[1], 10)
+    : process.env.CHRISTIES_MAX_PAGES
+    ? parseInt(process.env.CHRISTIES_MAX_PAGES, 10)
+    : 10;
   if (withBrowserbase) {
     for (const src of SOURCES.filter((s) => s.status === "browserbase")) {
       try {
-        const r = await src.collect(map, { today });
+        const opts = src.name === "Christie's" ? { today, maxPages: christiesMaxPages } : { today };
+        const r = await src.collect(map, opts);
         const detail = typeof r === "number" ? `${r} lots` : `${r.processed} lots (${r.pages} pages${r.truncated ? ", TRUNCATED" : ""})`;
         summary.push([src.name, "browserbase", detail]);
       } catch (err) {
