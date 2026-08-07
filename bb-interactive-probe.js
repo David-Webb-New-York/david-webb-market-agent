@@ -81,8 +81,17 @@ async function main() {
   // Session-option shape differs per backend (see browserbase.js/steel.js
   // for the confirmed-real option names). Steel: `useProxy` for its own
   // residential proxy network, `dimensions` for viewport (steel-sdk docs).
-  const sessionOpts =
-    backendName === "steel" ? { useProxy: !noProxies } : { proxies: !noProxies };
+  // For Steel specifically, only set `useProxy` when actually requesting
+  // it (matching bb-probe.js's proven-working pattern) rather than always
+  // passing an explicit true/false -- a live test found passing an
+  // explicit `useProxy: false` produced a DNS resolution failure
+  // (net::ERR_NAME_NOT_RESOLVED) that omitting the key entirely didn't.
+  const sessionOpts = {};
+  if (backendName === "steel") {
+    if (!noProxies) sessionOpts.useProxy = true;
+  } else {
+    sessionOpts.proxies = !noProxies;
+  }
   if (viewport) {
     if (backendName === "steel") sessionOpts.dimensions = viewport;
     else sessionOpts.browserSettings = { viewport };
