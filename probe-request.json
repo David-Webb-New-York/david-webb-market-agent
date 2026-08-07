@@ -1,6 +1,6 @@
 {
-  "url": "https://www.doyle.com/search?q=david+webb",
+  "url": "https://www.doyle.com/auction/search?q=david+webb",
   "proxies": false,
   "wait_ms": 10000,
-  "note": "Re-probe: first Doyle attempt (/auctions/search?query=) rendered a real 398KB page titled just 'Auction Details' (a generic auction landing page, not search results) with zero 'david webb' occurrences and zero search API XHRs -- wrong URL path, not blocked (site uses Akamai Bot Manager + reCAPTCHA per CookieYes audit data, but neither was triggered). Trying the shorter '/search?q=' path this time."
+  "note": "Re-probe: /search?q= turned out to be Doyle's generic site/blog search (CMS pages, zero lot data) -- but its search box carries data-url=\"/auction/search\", a real attribute pointing at what looks like the actual lot-search AJAX endpoint. Trying that path directly now as the third and (for now) final Doyle attempt."
 }
