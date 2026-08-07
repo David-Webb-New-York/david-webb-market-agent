@@ -28,6 +28,7 @@ const rago = require("./import-rago");
 const liveauctioneers = require("./import-liveauctioneers");
 const invaluable = require("./import-invaluable");
 const bonhams = require("./import-bonhams");
+const sothebys = require("./import-sothebys");
 const backfill = require("./backfill");
 
 // Per-source status from direct investigation of each site's search page.
@@ -51,13 +52,26 @@ const SOURCES = [
     status: "browserbase",
     collect: bonhams.collect,
   },
-  { name: "Barnebys", method: "Next.js app, results via API", status: "web-search-only" },
-  { name: "Sotheby's", method: "SPA + API, GET redirects to JS app", status: "web-search-only" },
-  { name: "Christie's", method: "api.christies.com (key-gated)", status: "web-search-only" },
-  { name: "Phillips", method: "SPA shell, results via JS", status: "web-search-only" },
-  { name: "Doyle", method: "SPA shell, results via JS", status: "web-search-only" },
+  {
+    name: "Sotheby's",
+    method: "structured (Algolia search API, plain fetch with a public search-only key extracted from the site's own embedded config)",
+    status: "structured",
+    collect: sothebys.collect,
+  },
+  { name: "Barnebys", method: "wrong URL guessed (404); real search path not yet found", status: "web-search-only" },
+  {
+    name: "Christie's",
+    method: "page renders fine (no block), but no query param tried (?entry=, ?query=) populates results or fires a search API -- likely needs real UI interaction, not a URL param",
+    status: "web-search-only",
+  },
+  { name: "Phillips", method: "unclear -- first attempt looked like an error/block page, being re-investigated", status: "web-search-only" },
+  {
+    name: "Doyle",
+    method: "3 URL attempts (generic search, /auctions/search, /auction/search) all missed real lot data -- either wrong endpoint or needs UI interaction",
+    status: "web-search-only",
+  },
   { name: "Heritage (ha.com)", method: "DataDome device-check challenge (geo.captcha-delivery.com iframe), survives Browserbase proxies", status: "web-search-only" },
-  { name: "Freeman's / Hindman", method: "Nuxt app, results via API", status: "web-search-only" },
+  { name: "Freeman's / Hindman", method: "real page rendered (freemanshindman.com) but query never populated, zero search API XHRs -- wrong URL path", status: "web-search-only" },
 ];
 
 async function main() {
