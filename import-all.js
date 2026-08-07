@@ -58,20 +58,20 @@ const SOURCES = [
     status: "structured",
     collect: sothebys.collect,
   },
-  { name: "Barnebys", method: "wrong URL guessed (404); real search path not yet found", status: "web-search-only" },
+  { name: "Barnebys", method: "2 wrong URL guesses (404 both times: ?q=, ?query=); real search route not yet found", status: "web-search-only" },
   {
     name: "Christie's",
-    method: "page renders fine (no block), but no query param tried (?entry=, ?query=) populates results or fires a search API -- likely needs real UI interaction, not a URL param",
+    method: "confirmed 2015 real David Webb past lots exist (count-client API) via UI-interaction probing, but the listing API (search-client) 404s on both cold and in-browser fetch -- likely needs a request header not yet captured",
     status: "web-search-only",
   },
-  { name: "Phillips", method: "site was down for maintenance at probe time (real branded outage page, no bot-block) -- retry later, not blocked", status: "web-search-only" },
+  { name: "Phillips", method: "site down for maintenance across 3 probes today (real branded outage page, no bot-block) -- retry later, not blocked", status: "web-search-only" },
   {
     name: "Doyle",
-    method: "3 URL attempts (generic search, /auctions/search, /auction/search) all missed real lot data -- either wrong endpoint or needs UI interaction",
+    method: "6 attempts (3 URL guesses + 3 interactive) all missed -- real search input exists but is hidden in an unopened dropdown; open-trigger not yet identified",
     status: "web-search-only",
   },
   { name: "Heritage (ha.com)", method: "DataDome device-check challenge (geo.captcha-delivery.com iframe), survives Browserbase proxies", status: "web-search-only" },
-  { name: "Freeman's / Hindman", method: "real page rendered (freemanshindman.com) but query never populated, zero search API XHRs -- wrong URL path", status: "web-search-only" },
+  { name: "Freeman's / Hindman", method: "2 wrong URL guesses (?q=, ?query=): real page renders but query never populates, zero search API XHRs", status: "web-search-only" },
 ];
 
 async function main() {
