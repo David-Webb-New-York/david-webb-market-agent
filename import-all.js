@@ -26,23 +26,29 @@
 const store = require("./history-store");
 const rago = require("./import-rago");
 const liveauctioneers = require("./import-liveauctioneers");
+const invaluable = require("./import-invaluable");
 const backfill = require("./backfill");
 
 // Per-source status from direct investigation of each site's search page.
 const SOURCES = [
   { name: "Rago", method: "structured (Inertia data-page JSON)", status: "structured", collect: rago.collect },
   {
+    name: "Invaluable",
+    method: "structured (Algolia catResults POST replayed with plain fetch, no Browserbase needed)",
+    status: "structured",
+    collect: invaluable.collect,
+  },
+  {
     name: "LiveAuctioneers",
     method: "Incapsula-protected; window.__data extracted from Browserbase-rendered HTML",
     status: "browserbase",
     collect: liveauctioneers.collect,
   },
-  { name: "Invaluable", method: "Algolia-loaded results (no data in shell)", status: "web-search-only" },
   { name: "Barnebys", method: "Next.js app, results via API", status: "web-search-only" },
   { name: "Sotheby's", method: "SPA + API, GET redirects to JS app", status: "web-search-only" },
   { name: "Christie's", method: "api.christies.com (key-gated)", status: "web-search-only" },
   { name: "Phillips", method: "SPA shell, results via JS", status: "web-search-only" },
-  { name: "Bonhams", method: "Cloudflare 403 (bot-blocked)", status: "web-search-only" },
+  { name: "Bonhams", method: "reachable w/ Browserbase proxies; Typesense API found (api01.bonhams.com/search-proxy/multi_search) but no adapter yet", status: "web-search-only" },
   { name: "Doyle", method: "SPA shell, results via JS", status: "web-search-only" },
   { name: "Heritage (ha.com)", method: "403 (bot-blocked)", status: "web-search-only" },
   { name: "Freeman's / Hindman", method: "Nuxt app, results via API", status: "web-search-only" },
