@@ -24,12 +24,16 @@ Target consumers: Excel / Power BI / Microsoft Fabric (bronze = raw CSV, silver 
 
 ## 2. Branch / PR state (as of handoff)
 
-| Branch | Status | Contents |
-| --- | --- | --- |
-| `main` | Live | Weekly scan, cost controls, analyze+Slack, trend charts, library layer, historical backfill, Rago importer, shared history store, `import-all`, Browserbase integration (PRs #4–#7 merged) |
-| `claude/immediate-next-work-i15bgw` | In progress (this session) | Estate-jeweler dealer layer (`import-shopify.js`+`dealer-store.js`, §9 P0); LiveAuctioneers Browserbase importer + Invaluable free structured importer (`import-liveauctioneers.js`, `import-invaluable.js`, `inline-state.js`, §9 P1); Bonhams proxies+search-API confirmed, adapter not yet built (§9 P2) |
+`claude/immediate-next-work-i15bgw` was fast-forward merged into `main` on 2026-08-07 (commit `e8b0d52`) — everything below is now live on `main`: estate-jeweler dealer layer (`import-shopify.js`/`import-woocommerce.js`/`dealer-store.js`, §9 P0), LiveAuctioneers/Invaluable/Bonhams/Sotheby's auction-history importers (§9 P1/P2), and the interactive-probing tooling built while investigating the remaining houses.
 
-**Action for Claude Code:** PR #7 is merged; `main` is the current base. Do **not** recreate deleted branches `cursor/setup-dev-environment-0e2f`, `cursor/slack-claude-report-pipeline-0e2f`, or `cursor/historical-backfill-0e2f` (already merged).
+**Baseline run (2026-08-07, both committed directly to `main` via `workflow_dispatch`):**
+- `history-refresh.yml` → commit `54e33a5`: **1,244 auction-history records** (Rago 85, Invaluable 140, Sotheby's 1000 [Algolia's own cap], LiveAuctioneers 73/2 pages, Bonhams 1).
+- `dealer-refresh.yml` → commit `97285a4`: **1,397 dealer listings** across 16 dealers (raised Shopify per-dealer page cap to 100/25,000 products for this run — see `import-shopify.js`).
+- Both workflows' cron schedules (Monday ~8:00-8:30am ET, staggered — see `weekly-scan.yml`, `history-refresh.yml`, `dealer-refresh.yml`) are now live on `main` and will run as incremental add-on refreshes going forward, since the baseline history is already in place and `upsert()` dedups by URL/identity key.
+- Note: on the first baseline attempt, `dealer-refresh.yml`'s push was rejected (`git push` race with the concurrent `history-refresh.yml` commit landing on `main` first) — not a code bug, just two workflow_dispatch runs pushing to the same branch near-simultaneously. Retried cleanly. Worth knowing if a future manual double-dispatch does the same.
+- Robinson's Jewelers and Schiffman's (both huge general-antiques catalogs, 0 David Webb matches in every scan so far) hit transient Shopify 429/500 errors partway through their catalogs on both baseline attempts, at different pages each time — external API flakiness at that catalog depth, not a bug. Total count unaffected since neither has shown any real David Webb matches.
+
+**Action for Claude Code:** `main` is the current base; the feature branch above is merged and can be deleted. Do **not** recreate deleted branches `cursor/setup-dev-environment-0e2f`, `cursor/slack-claude-report-pipeline-0e2f`, or `cursor/historical-backfill-0e2f` (already merged).
 
 GitHub tip for the user: merging a PR from Cursor’s UI *is* the GitHub merge — no second merge on github.com. After merge, delete the feature branch.
 
@@ -141,7 +145,8 @@ Do **not** force sold lots into the active library; they are different entities.
 | Sotheby's historical import | **Real, verified live**: free (no Browserbase) Algolia search, **1,000 lots** — largest single source this session, real hammer/sold prices (§9 P1) |
 | Bonhams historical import | **Real, verified live**: Browserbase-captured Typesense search API, 1 lot (honestly limited by an unresolved `status` filter) (§9 P2) |
 | Heritage (ha.com) | Confirmed blocked by a named vendor (DataDome device-check challenge), not a mystery — documented, not pursued further (§9 P2) |
-| Total auction-history records | **1,332** (up from 85 at session start), verified live via `history-refresh.yml` |
+| Total auction-history records | **1,244**, committed to `main` as the 2026-08-07 baseline (commit `54e33a5`) |
+| Total dealer listings | **1,397**, committed to `main` as the 2026-08-07 baseline (commit `97285a4`) |
 | Cost review | 29/40 original queries never returned data; moved to `OPTIONAL_QUERIES` |
 
 ### Cost numbers (measured)
