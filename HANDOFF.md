@@ -27,7 +27,7 @@ Target consumers: Excel / Power BI / Microsoft Fabric (bronze = raw CSV, silver 
 | Branch | Status | Contents |
 | --- | --- | --- |
 | `main` | Live | Weekly scan, cost controls, analyze+Slack, trend charts, library layer, historical backfill, Rago importer, shared history store, `import-all`, Browserbase integration (PRs #4–#7 merged) |
-| `claude/immediate-next-work-i15bgw` | In progress (this session) | Estate-jeweler dealer layer (`import-shopify.js`+`dealer-store.js`, §9 P0); LiveAuctioneers Browserbase importer (`import-liveauctioneers.js`+`inline-state.js`, §9 P1) |
+| `claude/immediate-next-work-i15bgw` | In progress (this session) | Estate-jeweler dealer layer (`import-shopify.js`+`dealer-store.js`, §9 P0); LiveAuctioneers Browserbase importer + Invaluable free structured importer (`import-liveauctioneers.js`, `import-invaluable.js`, `inline-state.js`, §9 P1); Bonhams proxies+search-API confirmed, adapter not yet built (§9 P2) |
 
 **Action for Claude Code:** PR #7 is merged; `main` is the current base. Do **not** recreate deleted branches `cursor/setup-dev-environment-0e2f`, `cursor/slack-claude-report-pipeline-0e2f`, or `cursor/historical-backfill-0e2f` (already merged).
 
@@ -253,11 +253,21 @@ User’s last direction: upgrade done; **don’t lose estate jewelers**; continu
    - Wired into `.github/workflows/history-refresh.yml` (now weekly, `--with-browserbase` gates the Browserbase-costing sources) with a push-trigger on the importer files for pre-merge verification, same pattern as `dealer-refresh.yml`.
    - **Verified end-to-end against the live internet** (2026-08-07, `history-refresh.yml` run `31139385926`): `Rago 85 lots + LiveAuctioneers 94 lots (3 pages) = 179 total historical records`, real dollar amounts and lot numbers, not synthetic.
    - Not yet done: `materials_gemstones`/`era_or_year` are left blank (not cleanly available as structured fields — `shortDescription` has prose but extracting would require guessing).
-2. Invaluable (Algolia — capture network JSON in probe). Not started.
+2. **Invaluable — ✅ Done, `import-invaluable.js` built and registered as a "structured" (free, no Browserbase) source in `import-all.js`.**
+   - Confirmed via Browserbase probe (2026-08-07): the search page POSTs to `https://www.invaluable.com/catResults` with a captured, real Algolia multi-index request body (`{"requests":[{"indexName":"upcoming_lots_prod","params":{...,"query":"david webb","page":0,"hitsPerPage":96,...}}],"isCatalogPageRequest":false}`) and gets back a standard Algolia envelope: `results[0].{hits[], nbHits, page, nbPages, hitsPerPage}` (confirmed real values: `nbHits:133, nbPages:2, hitsPerPage:96`).
+   - **Critical finding: this same POST replays successfully with a bare Node `fetch()` — 200 status, real data, no cookies/session/Browserbase required** (`plain-post-test.js`, new general-purpose POST-replay diagnostic tool, sibling to `plain-fetch-test.js`). So Invaluable gets a free structured adapter like Rago, not a costly Browserbase one.
+   - Real hit field shape (confirmed, not guessed): `lotNumber, lotRef, estimateHigh, estimateLow, currentBid, bidCount, priceResult, houseName, saleType, dateTimeUTCUnix, currencyCode, currencySymbol, lotTitle, objectID, _highlightResult.lotDescription.value` (full plain-text description, HTML-highlight-tagged — adapter strips the tags).
+   - **Known limitation:** the index name `upcoming_lots_prod` (and `priceResult:0` on every observed hit) implies this only covers not-yet-sold lots. A single guessed sibling index `past_lots_prod` returned a 504 Gateway Timeout (inconclusive — not pursued further to avoid guessing index names). No confirmed `listing_url` pattern either (no anchor href was ever captured pointing to a lot detail page) — left blank rather than guessed.
+   - **Verified end-to-end** inside the full `import-all.js --with-browserbase` orchestrator run (not just standalone) via `history-refresh.yml` on 2026-08-07.
 
 ### P2 — Houses
-- Proxies on: Bonhams, Heritage.
-- SPA probes: Doyle, Phillips, Christie’s API, Freeman’s/Hindman.
+- **Bonhams — proxies confirmed working, real search API found, but no adapter built yet.**
+  - Browserbase + proxies (paid plan) reach Bonhams cleanly now that the `sessionOpts`-forwarding bug is fixed — confirmed via a real probe: title `"Bonhams : Search"`, 638KB of genuine Next.js app HTML, no Cloudflare block.
+  - First attempt (`?search_term=david+webb`) didn't actually populate the search — the real backend call (`POST https://api01.bonhams.com/search-proxy/multi_search`, a Typesense-backed API) received an empty `"q":""` and returned generic site-wide facet counts. Second attempt (`?q=david+webb`, matching Typesense's own param name) worked — `"q":"david webb"` flowed through and returned a real David-Webb-matching hit (Skinner/Bonhams lot 28190-114, "DAVID WEBB: A PAIR OF 18K GOLD GEM-SET EARCLIPS", full field shape captured: `auctionId, lotId, lotNo, price.{GBPHighEstimate,GBPLowEstimate,estimateHigh,estimateLow,hammerPremium,hammerPrice}, currency, department, image, slug, status, styledDescription, title`).
+  - Request body: `{"searches":[{"collection":"lots","filter_by":"(status:=[\`NEW\`])","query_by":"lotId,title,catalogDesc,footnotes","page":1,"per_page":45,"q":"<term>"}]}`. **Not yet determined:** whether plain `fetch()` (no Browserbase) can replay this POST like Invaluable's did, and what `status` values beyond `NEW` exist (needed for full/historical coverage — the one hit found had `hammerPrice:0.0` despite `auctionStatus:"FINISHED"`, so `status:NEW` looks like a "currently listed" filter, not "unsold vs sold").
+  - Next step: `plain-post-test.js` against `api01.bonhams.com/search-proxy/multi_search` to check Browserbase-free reachability, then investigate `status` filter values before building `import-bonhams.js`.
+- Heritage: still Cloudflare-blocked, not re-tested with proxies yet this session.
+- SPA probes: Doyle, Phillips, Christie’s API, Freeman’s/Hindman. Not started.
 - Expect partial success on Sotheby’s/Christie’s; keep LLM sweep as fallback.
 
 ### P3 — Product polish
