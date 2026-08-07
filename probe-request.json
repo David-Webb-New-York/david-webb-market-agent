@@ -1,6 +1,6 @@
 {
-  "url": "https://www.barnebys.com/search?query=david+webb",
+  "url": "https://www.freemanshindman.com/search?query=david+webb",
   "proxies": false,
   "wait_ms": 10000,
-  "note": "Re-probe: /search?q= was a clean 404 (confirmed real app, working /api/auth/check endpoint, just a wrong path/param). Trying '?query=' this time -- that exact param name worked for Sotheby's, though Bonhams needed 'q' instead, so there's no universal winner across sites; this is a distinct untried guess, not a repeat."
+  "note": "Re-probe: /search?q= rendered a real 185KB page but zero 'david webb' occurrences and zero search API XHRs (search never executed). Trying '?query=' this time -- distinct untried guess (worked for Sotheby's, though not universal across sites)."
 }
