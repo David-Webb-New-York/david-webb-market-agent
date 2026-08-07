@@ -21,6 +21,7 @@ on:
       - '.github/workflows/dealer-refresh.yml'
 permissions:
   contents: write
+  actions: write # to dispatch pages-deploy.yml after committing new data
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -51,3 +52,11 @@ jobs:
           git add output/
           git commit -m "Dealer listings refresh $(date +%F)" || echo "No changes to commit"
           git push
+
+      # See history-refresh.yml for why this can't just be pages-deploy.yml's
+      # own push trigger (GITHUB_TOKEN-authored pushes don't cascade).
+      - name: Deploy database GUI
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: gh workflow run pages-deploy.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

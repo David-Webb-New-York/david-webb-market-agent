@@ -1,0 +1,43 @@
+name: Deploy Database GUI (GitHub Pages)
+# Publishes docs/ (the searchable David Webb secondary-market database GUI)
+# to GitHub Pages, packaging in the latest committed output/*.json each
+# time so the site always reflects the most recent history-refresh.yml /
+# dealer-refresh.yml commit. Runs after either of those commits new data,
+# after any edit to the site itself, or on demand.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'output/david-webb-auction-history.json'
+      - 'output/david-webb-dealer-listings.json'
+      - 'docs/**'
+      - '.github/workflows/pages-deploy.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package latest data into the site
+        run: |
+          mkdir -p docs/data
+          cp output/david-webb-auction-history.json docs/data/auction-history.json
+          cp output/david-webb-dealer-listings.json docs/data/dealer-listings.json
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/data/generated-at.txt
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+      - id: deployment
+        uses: actions/deploy-pages@v4

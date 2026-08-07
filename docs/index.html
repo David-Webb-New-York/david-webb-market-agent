@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>David Webb Secondary Market Database</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>David Webb Secondary Market Database</h1>
+      <div id="last-updated" class="last-updated">Loading…</div>
+    </div>
+  </header>
+
+  <main>
+    <section id="stats" class="stats-bar" aria-live="polite"></section>
+
+    <section class="controls">
+      <input id="search" type="search" placeholder="Search piece, source, materials, notes…" aria-label="Search" />
+
+      <select id="filter-type" aria-label="Record type">
+        <option value="">All records</option>
+        <option value="auction">Auction (historic)</option>
+        <option value="dealer">Dealer (current listings)</option>
+      </select>
+
+      <select id="filter-status" aria-label="Status">
+        <option value="">Any status</option>
+      </select>
+
+      <select id="filter-source" aria-label="Source">
+        <option value="">All sources</option>
+      </select>
+
+      <select id="filter-category" aria-label="Category">
+        <option value="">All categories</option>
+      </select>
+
+      <button id="clear-filters" type="button">Clear filters</button>
+    </section>
+
+    <section class="table-wrap">
+      <table id="results-table">
+        <thead>
+          <tr>
+            <th data-sort="date" class="sortable">Date</th>
+            <th data-sort="piece_name" class="sortable">Piece</th>
+            <th data-sort="source" class="sortable">Source</th>
+            <th data-sort="price" class="sortable num">Price</th>
+            <th data-sort="estimate" class="num">Estimate</th>
+            <th data-sort="status" class="sortable">Status</th>
+            <th>Listing</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+      <p id="empty-state" class="empty-state" hidden>No records match these filters.</p>
+    </section>
+
+    <section id="pagination" class="pagination"></section>
+  </main>
+
+  <footer>
+    <p>
+      Data refreshed weekly via GitHub Actions from auction houses and estate-jeweler dealers.
+      Auction records reflect the most recent scrape; sold prices and estimates are as published by the source.
+    </p>
+  </footer>
+
+  <div id="detail-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" data-close aria-label="Close">×</button>
+      <h2 id="modal-title"></h2>
+      <dl id="modal-body" class="modal-fields"></dl>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

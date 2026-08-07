@@ -37,6 +37,7 @@ on:
       - '.github/workflows/history-refresh.yml'
 permissions:
   contents: write
+  actions: write # to dispatch pages-deploy.yml after committing new data
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -78,3 +79,13 @@ jobs:
           git add output/
           git commit -m "Auction history refresh $(date +%F)" || echo "No changes to commit"
           git push
+
+      # A commit pushed with the default GITHUB_TOKEN does NOT trigger other
+      # workflows' `on: push` events (a deliberate GitHub anti-loop
+      # safeguard), so pages-deploy.yml's push trigger would otherwise never
+      # fire after this commit. Dispatch it explicitly instead.
+      - name: Deploy database GUI
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: gh workflow run pages-deploy.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
