@@ -1,0 +1,21 @@
+name: Christie's In-Browser Fetch Debug
+on:
+  push:
+    paths:
+      - 'christies-debug-fetch.js'
+      - '.github/workflows/christies-debug.yml'
+permissions:
+  contents: read
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: node christies-debug-fetch.js "david webb"
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
