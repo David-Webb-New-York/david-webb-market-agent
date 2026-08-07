@@ -1,6 +1,6 @@
 {
-  "url": "https://www.phillips.com/search?q=david%20webb",
+  "url": "https://www.barnebys.com/search?query=david+webb",
   "proxies": false,
   "wait_ms": 10000,
-  "note": "Retry: prior Phillips attempts hit a genuine, real, branded Phillips maintenance page ('We are currently working to bring our website back online') -- not a bot-block, not a wrong URL, just the site being down at probe time. Retrying now to see if it's back up."
+  "note": "Re-probe: /search?q= was a clean 404 (confirmed real app, working /api/auth/check endpoint, just a wrong path/param). Trying '?query=' this time -- that exact param name worked for Sotheby's, though Bonhams needed 'q' instead, so there's no universal winner across sites; this is a distinct untried guess, not a repeat."
 }
