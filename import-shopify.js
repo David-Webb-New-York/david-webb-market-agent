@@ -134,11 +134,23 @@ async function collect(map, { shop, dealer, currency, today } = {}) {
   let seen = 0;
   let matched = 0;
   let added = 0;
+  let truncated = false;
+  let lastFirstId = null;
   const seenIds = new Set();
 
   for (let page = 1; page <= MAX_PAGES; page++) {
     const products = await fetchPage(shop, page);
     if (products.length === 0) break;
+    // Shopify's legacy ?page= pagination sometimes stops advancing on very
+    // large catalogs and just re-serves the same page instead of erroring —
+    // detect that (same first product id as the previous page) rather than
+    // silently re-scanning duplicates until MAX_PAGES.
+    const firstId = products[0] && products[0].id;
+    if (firstId != null && firstId === lastFirstId) {
+      truncated = true;
+      break;
+    }
+    lastFirstId = firstId;
     seen += products.length;
     for (const p of products) {
       if (!isDavidWebb(p)) continue;
@@ -150,11 +162,12 @@ async function collect(map, { shop, dealer, currency, today } = {}) {
       if (isNew) added++;
     }
     if (products.length < PAGE_LIMIT) break;
+    if (page === MAX_PAGES) truncated = true;
     await new Promise((r) => setTimeout(r, 300));
   }
 
   store.markMissingInactive(map, seenIds, today || new Date().toISOString().slice(0, 10));
-  return { seen, matched, added };
+  return { seen, matched, added, truncated };
 }
 
 // Run every registered dealer. Returns per-dealer results.
@@ -194,7 +207,12 @@ async function main() {
   console.log("\nResults:");
   for (const r of results) {
     if (r.error) console.log(`  ${r.dealer.padEnd(24)} ERROR: ${r.error}`);
-    else console.log(`  ${r.dealer.padEnd(24)} ${r.seen} products scanned, ${r.matched} David Webb, ${r.added} new`);
+    else
+      console.log(
+        `  ${r.dealer.padEnd(24)} ${r.seen} products scanned, ${r.matched} David Webb, ${r.added} new${
+          r.truncated ? "  [TRUNCATED — pagination hit its cap or stalled, catalog not fully scanned]" : ""
+        }`
+      );
   }
   console.log(`\n${map.size - before} new record(s); ${total} total dealer listing(s).`);
   console.log(`JSON: ${store.LISTINGS_JSON}`);

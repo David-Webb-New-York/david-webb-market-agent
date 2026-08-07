@@ -26,12 +26,35 @@ async function main() {
 
   console.log("David Webb — importing all registered dealer sources\n");
 
+  // Match rate above this is suspicious for a single brand at a multi-brand
+  // dealer — print sample matched titles so an implausible count (a false
+  // positive in the title/vendor/tag filter) is visible right in the log
+  // instead of silently trusted.
+  const SUSPICIOUS_MATCH_RATE = 0.15;
+
   for (const { name, platform } of ADAPTERS) {
     console.log(`-- ${name} (${platform.DEALERS.length} dealer(s)) --`);
     const results = await platform.collectAll(map, { today });
     for (const r of results) {
-      if (r.error) console.log(`  ${r.dealer.padEnd(28)} ERROR: ${r.error}`);
-      else console.log(`  ${r.dealer.padEnd(28)} ${r.seen} scanned, ${r.matched} David Webb, ${r.added} new`);
+      if (r.error) {
+        console.log(`  ${r.dealer.padEnd(28)} ERROR: ${r.error}`);
+        continue;
+      }
+      console.log(
+        `  ${r.dealer.padEnd(28)} ${r.seen} scanned, ${r.matched} David Webb, ${r.added} new${
+          r.truncated ? "  [TRUNCATED]" : ""
+        }`
+      );
+      if (r.seen > 0 && r.matched / r.seen > SUSPICIOUS_MATCH_RATE) {
+        const sample = [...map.values()]
+          .filter((rec) => rec.dealer === r.dealer)
+          .slice(0, 8)
+          .map((rec) => rec.piece_name);
+        console.log(
+          `    ^ SUSPICIOUS match rate (${((r.matched / r.seen) * 100).toFixed(1)}%) — sample titles:`
+        );
+        for (const t of sample) console.log(`      - ${t}`);
+      }
     }
     console.log();
   }

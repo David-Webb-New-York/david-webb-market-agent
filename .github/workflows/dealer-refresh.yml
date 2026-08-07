@@ -32,6 +32,16 @@ jobs:
       - run: npm install
       - name: Import dealer listings
         run: node import-dealers.js
+      - name: Upload dealer listings (for pre-merge inspection)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dealer-listings
+          path: |
+            output/david-webb-dealer-listings.json
+            output/david-webb-dealer-listings.csv
+          retention-days: 14
+          if-no-files-found: warn
       - name: Commit results
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
