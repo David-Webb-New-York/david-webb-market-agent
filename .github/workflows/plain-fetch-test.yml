@@ -79,3 +79,6 @@ jobs:
       - name: Doyle search-results page -- is it server-rendered too?
         if: hashFiles('doyle-listing-shape.js') != ''
         run: node doyle-listing-shape.js "https://www.doyle.com/auction/search/?st=david+webb&c=1"
+      - name: Doyle collect() smoke test, bounded (3 pages, inside this job's 10min cap) -- verifies the fetch-timeout fix works and pagination doesn't hang
+        if: hashFiles('import-doyle.js') != ''
+        run: node import-doyle.js "david webb" 3
