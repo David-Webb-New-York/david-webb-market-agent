@@ -31,6 +31,84 @@ function slugFor(url) {
   }
 }
 
+// Some sites embed initial state as `<script>window.NAME = {...};</script>`
+// with a PLAIN script tag (no id/type) — invisible to page.evaluate() if the
+// app's own hydration reads and clears the global before we get to inspect
+// it (observed on LiveAuctioneers: window.__data is real in the raw HTML but
+// empty by the time our render wait elapses). Extract it directly from the
+// static HTML instead, with a proper balanced-brace/string-aware scan since
+// the JSON itself can contain nested braces.
+function extractInlineWindowVars(html, names) {
+  const found = {};
+  for (const name of names) {
+    const marker = `window.${name}=`;
+    const idx = html.indexOf(marker);
+    if (idx === -1) continue;
+    const searchFrom = idx + marker.length;
+    const braceStart = html.indexOf("{", searchFrom);
+    if (braceStart === -1 || braceStart - searchFrom > 5) continue; // must immediately follow the `=` (allow a little whitespace)
+    let depth = 0;
+    let inStr = false;
+    let strCh = "";
+    let esc = false;
+    let end = -1;
+    for (let i = braceStart; i < html.length; i++) {
+      const c = html[i];
+      if (inStr) {
+        if (esc) esc = false;
+        else if (c === "\\") esc = true;
+        else if (c === strCh) inStr = false;
+        continue;
+      }
+      if (c === '"' || c === "'") {
+        inStr = true;
+        strCh = c;
+        continue;
+      }
+      if (c === "{") depth++;
+      else if (c === "}") {
+        depth--;
+        if (depth === 0) {
+          end = i;
+          break;
+        }
+      }
+    }
+    if (end === -1) continue;
+    const jsonText = html.slice(braceStart, end + 1);
+    try {
+      found[name] = { ok: true, value: JSON.parse(jsonText), bytes: jsonText.length };
+    } catch (e) {
+      found[name] = { ok: false, error: e.message, bytes: jsonText.length };
+    }
+  }
+  return found;
+}
+
+// Recursively search a parsed state tree for objects that look like real
+// lot/item records (have both a lot-number-ish and a price-ish field),
+// rather than guessing a top-level path — state trees from Redux-hydrated
+// apps nest data under source-specific slice names we can't predict.
+function findLotLikeObjects(obj, pathStr, results, opts) {
+  if (results.length >= opts.maxResults || opts.visited.count >= opts.maxVisited) return;
+  if (obj == null || typeof obj !== "object") return;
+  opts.visited.count++;
+  if (!Array.isArray(obj)) {
+    const keys = Object.keys(obj);
+    const hasLot = keys.some((k) => /^lotnumber$/i.test(k));
+    const hasPrice = keys.some((k) => /^(saleprice|priceresult|soldprice|currentbid|lowbidestimate)$/i.test(k));
+    if (hasLot && hasPrice) {
+      results.push({ path: pathStr, value: obj });
+      return; // don't descend into a matched lot object
+    }
+  }
+  if (Array.isArray(obj)) {
+    obj.forEach((v, i) => findLotLikeObjects(v, `${pathStr}[${i}]`, results, opts));
+  } else {
+    for (const [k, v] of Object.entries(obj)) findLotLikeObjects(v, `${pathStr}.${k}`, results, opts);
+  }
+}
+
 async function main() {
   const url = process.argv[2];
   const useProxies = process.argv.includes("--proxies");
@@ -95,6 +173,41 @@ async function main() {
     stateSaved.push({ key: k, file, bytes: v.length });
   }
 
+  // Also extract inline `window.NAME = {...}` state directly from the raw
+  // HTML (see extractInlineWindowVars) — catches state that's real in the
+  // static markup but empty by the time page.evaluate() runs.
+  const inlineVars = extractInlineWindowVars(html, [
+    "__data",
+    "__PRELOADED_STATE__",
+    "__APOLLO_STATE__",
+    "__INITIAL_STATE__",
+    "__NUXT__",
+  ]);
+  const inlineVarsSummary = [];
+  const lotLikeObjects = [];
+  for (const [name, result] of Object.entries(inlineVars)) {
+    const file = `${slug}-inline-${name.replace(/\W/g, "")}.json`;
+    if (result.ok) {
+      fs.writeFileSync(path.join(OUT_DIR, file), JSON.stringify(result.value, null, 2));
+      inlineVarsSummary.push({
+        name,
+        bytes: result.bytes,
+        file,
+        topLevelKeys: Array.isArray(result.value) ? `array[${result.value.length}]` : Object.keys(result.value),
+      });
+      findLotLikeObjects(result.value, `window.${name}`, lotLikeObjects, {
+        maxResults: 8,
+        maxVisited: 200000,
+        visited: { count: 0 },
+      });
+    } else {
+      inlineVarsSummary.push({ name, error: result.error, bytes: result.bytes });
+    }
+  }
+  if (lotLikeObjects.length) {
+    fs.writeFileSync(path.join(OUT_DIR, `${slug}-lot-objects.json`), JSON.stringify(lotLikeObjects, null, 2));
+  }
+
   // Save EVERY captured JSON XHR response body (not just regex-matched
   // "candidates") so a single CI run yields enough raw material to design an
   // adapter without a second round trip. Capped to keep the artifact sane.
@@ -134,11 +247,25 @@ async function main() {
     jsonResponseCount: jsonResponses.length,
     jsonResponsesSaved: responsesIndex.length,
     candidateResponses: candidates,
+    inlineWindowVars: inlineVarsSummary,
+    lotLikeObjects,
   };
   fs.writeFileSync(path.join(OUT_DIR, `${slug}-summary.json`), JSON.stringify(summary, null, 2));
 
   console.log("\ncandidate JSON responses (matched lot/price signals):");
   for (const c of candidates) console.log(`  [${c.i}] ${c.bytes}b ${c.url.slice(0, 140)}`);
+
+  if (inlineVarsSummary.length) {
+    console.log("\ninline window vars found in raw HTML (not via page.evaluate):");
+    for (const v of inlineVarsSummary) {
+      if (v.error) console.log(`  window.${v.name}: PARSE ERROR (${v.bytes}b) — ${v.error}`);
+      else console.log(`  window.${v.name}: ${v.bytes}b, top-level keys: ${JSON.stringify(v.topLevelKeys).slice(0, 300)}`);
+    }
+  }
+  if (lotLikeObjects.length) {
+    console.log(`\nlot-like objects found (${lotLikeObjects.length}, full JSON in ${slug}-lot-objects.json):`);
+    for (const o of lotLikeObjects) console.log(`  ${o.path}`);
+  }
 
   console.log(`\nsaved: ${OUT_DIR}/${slug}.html, ${slug}-summary.json, ${responsesDir}/ (${responsesIndex.length} response bodies)`);
 }
