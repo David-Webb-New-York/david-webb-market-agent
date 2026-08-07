@@ -1,6 +1,6 @@
 {
-  "url": "https://www.christies.com/en/results?entry=david+webb",
-  "proxies": true,
+  "url": "https://www.barnebys.com/search?q=david+webb",
+  "proxies": false,
   "wait_ms": 10000,
-  "note": "Task #5: first probe of Christie's this session. import-all.js currently lists it as 'api.christies.com (key-gated)' from an earlier (pre-this-session) investigation, never re-verified with the current bb-probe.js tooling. URL is an educated guess based on common site conventions -- probing to find the real search API/URL pattern rather than assuming this is right."
+  "note": "Task #5: first probe of Barnebys this session (an auction aggregator/meta-search, similar to LiveAuctioneers/Invaluable). import-all.js currently lists it as 'Next.js app, results via API' from an earlier (pre-this-session) investigation, never re-verified with current tooling. Trying without proxies first since it wasn't previously flagged as Cloudflare-blocked; URL is an educated guess."
 }
