@@ -53,16 +53,23 @@ jobs:
       - run: npm install
       - name: Resolve inputs
         id: resolve
+        # Same class of bug as the "Interactive probe" step below: GitHub
+        # substitutes ${{ }} expressions into the run script TEXT before bash
+        # ever parses it, so a value containing a literal `"` (e.g. an
+        # html_grep term like `"label":"Sold`) breaks the surrounding quoted
+        # echo string regardless of how it's quoted -- confirmed via a live
+        # CI failure ("unexpected EOF while looking for matching `"'"). Inputs
+        # come in through env vars instead, which bash treats as opaque data.
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             {
-              echo "base_url=${{ inputs.base_url }}"
-              echo "term=${{ inputs.term }}"
-              echo "selectors=${{ inputs.selectors }}"
-              echo "open_selectors=${{ inputs.open_selectors }}"
-              echo "post_search_selectors=${{ inputs.post_search_selectors }}"
-              echo "html_grep=${{ inputs.html_grep }}"
-              echo "wait_ms=${{ inputs.wait_ms }}"
+              echo "base_url=$IN_BASE_URL"
+              echo "term=$IN_TERM"
+              echo "selectors=$IN_SELECTORS"
+              echo "open_selectors=$IN_OPEN_SELECTORS"
+              echo "post_search_selectors=$IN_POST_SEARCH_SELECTORS"
+              echo "html_grep=$IN_HTML_GREP"
+              echo "wait_ms=$IN_WAIT_MS"
             } >> "$GITHUB_OUTPUT"
           else
             node -e '
@@ -72,6 +79,15 @@ jobs:
                 `base_url=${r.base_url}\nterm=${r.term}\nselectors=${r.selectors}\nopen_selectors=${r.open_selectors || ""}\npost_search_selectors=${r.post_search_selectors || ""}\nhtml_grep=${r.html_grep || ""}\nwait_ms=${r.wait_ms || 8000}\n`);
             '
           fi
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          IN_BASE_URL: ${{ inputs.base_url }}
+          IN_TERM: ${{ inputs.term }}
+          IN_SELECTORS: ${{ inputs.selectors }}
+          IN_OPEN_SELECTORS: ${{ inputs.open_selectors }}
+          IN_POST_SEARCH_SELECTORS: ${{ inputs.post_search_selectors }}
+          IN_HTML_GREP: ${{ inputs.html_grep }}
+          IN_WAIT_MS: ${{ inputs.wait_ms }}
       - name: Interactive probe
         # Selectors can contain shell metacharacters (parens, quotes, commas
         # in :has-text('...')) -- interpolating GitHub expressions straight
