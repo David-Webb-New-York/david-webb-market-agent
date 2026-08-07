@@ -16,6 +16,7 @@ on:
       - 'plain-post-request-5.json'
       - 'plain-post-headers-sothebys.json'
       - 'phillips-listing-shape.js'
+      - 'doyle-listing-shape.js'
 permissions:
   contents: read
 jobs:
@@ -74,3 +75,6 @@ jobs:
       - name: Phillips listing markup shape (confirmed free plain-fetch source, need real card markup to build an adapter)
         if: hashFiles('phillips-listing-shape.js') != ''
         run: node phillips-listing-shape.js "https://www.phillips.com/Search?Search=david+webb"
+      - name: Doyle search-results page -- is it server-rendered too?
+        if: hashFiles('doyle-listing-shape.js') != ''
+        run: node doyle-listing-shape.js "https://www.doyle.com/auction/search/?st=david+webb&c=1"
