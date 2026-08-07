@@ -32,6 +32,10 @@ on:
         description: 'Comma-separated CSS selectors to click AFTER the search fires (e.g. a "Past lots" tab)'
         type: string
         default: ''
+      html_grep:
+        description: 'Comma-separated substrings to search for in the rendered HTML and print context around (for finding real selectors)'
+        type: string
+        default: ''
       wait_ms:
         description: 'Wait time in ms after pressing Enter'
         type: string
@@ -57,6 +61,7 @@ jobs:
               echo "selectors=${{ inputs.selectors }}"
               echo "open_selectors=${{ inputs.open_selectors }}"
               echo "post_search_selectors=${{ inputs.post_search_selectors }}"
+              echo "html_grep=${{ inputs.html_grep }}"
               echo "wait_ms=${{ inputs.wait_ms }}"
             } >> "$GITHUB_OUTPUT"
           else
@@ -64,7 +69,7 @@ jobs:
               const fs = require("fs");
               const r = require("./interactive-probe-request.json");
               fs.appendFileSync(process.env.GITHUB_OUTPUT,
-                `base_url=${r.base_url}\nterm=${r.term}\nselectors=${r.selectors}\nopen_selectors=${r.open_selectors || ""}\npost_search_selectors=${r.post_search_selectors || ""}\nwait_ms=${r.wait_ms || 8000}\n`);
+                `base_url=${r.base_url}\nterm=${r.term}\nselectors=${r.selectors}\nopen_selectors=${r.open_selectors || ""}\npost_search_selectors=${r.post_search_selectors || ""}\nhtml_grep=${r.html_grep || ""}\nwait_ms=${r.wait_ms || 8000}\n`);
             '
           fi
       - name: Interactive probe
@@ -78,6 +83,7 @@ jobs:
           ARGS=("$BASE_URL" "$TERM" "--selectors=$SELECTORS" "--wait=$WAIT_MS")
           if [ -n "$OPEN_SELECTORS" ]; then ARGS+=("--open-selectors=$OPEN_SELECTORS"); fi
           if [ -n "$POST_SEARCH_SELECTORS" ]; then ARGS+=("--post-search-selectors=$POST_SEARCH_SELECTORS"); fi
+          if [ -n "$HTML_GREP" ]; then ARGS+=("--html-grep=$HTML_GREP"); fi
           node bb-interactive-probe.js "${ARGS[@]}"
         env:
           BASE_URL: ${{ steps.resolve.outputs.base_url }}
@@ -85,6 +91,7 @@ jobs:
           SELECTORS: ${{ steps.resolve.outputs.selectors }}
           OPEN_SELECTORS: ${{ steps.resolve.outputs.open_selectors }}
           POST_SEARCH_SELECTORS: ${{ steps.resolve.outputs.post_search_selectors }}
+          HTML_GREP: ${{ steps.resolve.outputs.html_grep }}
           WAIT_MS: ${{ steps.resolve.outputs.wait_ms }}
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}

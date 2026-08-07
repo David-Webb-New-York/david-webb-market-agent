@@ -32,6 +32,7 @@ async function main() {
   const selectorsArg = process.argv.find((a) => a.startsWith("--selectors="));
   const openSelectorsArg = process.argv.find((a) => a.startsWith("--open-selectors="));
   const postSearchSelectorsArg = process.argv.find((a) => a.startsWith("--post-search-selectors="));
+  const htmlGrepArg = process.argv.find((a) => a.startsWith("--html-grep="));
   const waitArg = process.argv.find((a) => a.startsWith("--wait="));
   // CSS attribute selectors (e.g. input[placeholder*='lot' i]) contain their
   // own `=` characters -- splitting on every `=` in the arg truncates them.
@@ -40,11 +41,12 @@ async function main() {
   const searchSelectors = selectorsArg ? afterFirstEquals(selectorsArg).split(",") : [];
   const openTriggerSelectors = openSelectorsArg ? afterFirstEquals(openSelectorsArg).split(",") : [];
   const postSearchClickSelectors = postSearchSelectorsArg ? afterFirstEquals(postSearchSelectorsArg).split(",") : [];
+  const htmlGrepTerms = htmlGrepArg ? afterFirstEquals(htmlGrepArg).split(",").filter(Boolean) : [];
   const waitMs = waitArg ? parseInt(waitArg.split("=")[1], 10) : 8000;
 
   if (!baseUrl || !term || !searchSelectors.length) {
     console.error(
-      'usage: node bb-interactive-probe.js "<base-url>" "<term>" --selectors=sel1,sel2 [--open-selectors=sel] [--post-search-selectors=sel] [--wait=ms]'
+      'usage: node bb-interactive-probe.js "<base-url>" "<term>" --selectors=sel1,sel2 [--open-selectors=sel] [--post-search-selectors=sel] [--html-grep=term1,term2] [--wait=ms]'
     );
     process.exit(1);
   }
@@ -113,6 +115,29 @@ async function main() {
   if (lotLikeObjects.length) {
     console.log(`\nlot-like objects found (${lotLikeObjects.length}):`);
     for (const o of lotLikeObjects) console.log(`  ${o.path}`);
+  }
+
+  // Print raw HTML context around caller-specified substrings -- useful for
+  // finding the real markup/selector for an element that a guessed CSS
+  // selector list failed to match (e.g. a tab control), without needing to
+  // download the full HTML artifact separately.
+  if (htmlGrepTerms.length) {
+    console.log(`\nHTML context search (${htmlGrepTerms.length} term(s)):`);
+    const lowerHtml = html.toLowerCase();
+    for (const term of htmlGrepTerms) {
+      const needle = term.toLowerCase();
+      let idx = -1;
+      let count = 0;
+      while (count < 5) {
+        idx = lowerHtml.indexOf(needle, idx + 1);
+        if (idx === -1) break;
+        const start = Math.max(0, idx - 200);
+        console.log(`\n>>> "${term}" occurrence ${count + 1} (offset ${idx}):`);
+        console.log(html.slice(start, idx + 300));
+        count++;
+      }
+      if (count === 0) console.log(`\n>>> "${term}": not found in rendered HTML`);
+    }
   }
 
   const responsesDir = path.join(OUT_DIR, `${slug}-responses`);
