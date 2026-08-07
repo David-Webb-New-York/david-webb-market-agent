@@ -23,6 +23,23 @@ function assertCreds() {
   }
 }
 
+// Standard browser/HTTP-plumbing headers every request carries -- not
+// useful for finding a site's own custom auth header (e.g. an API
+// Management subscription key), just noise to filter out.
+const BORING_HEADER_RE =
+  /^(accept|accept-encoding|accept-language|cache-control|connection|content-length|content-type|cookie|host|origin|pragma|referer|sec-ch-ua|sec-ch-ua-mobile|sec-ch-ua-platform|sec-fetch-dest|sec-fetch-mode|sec-fetch-site|user-agent|priority|te)$/i;
+
+// Reduce a request's full header set down to the ones actually worth
+// looking at when reverse-engineering an API's auth requirement (custom
+// headers like a subscription/API key, not standard browser plumbing).
+function notableHeaders(allHeaders) {
+  const out = {};
+  for (const [k, v] of Object.entries(allHeaders || {})) {
+    if (!BORING_HEADER_RE.test(k)) out[k] = v;
+  }
+  return out;
+}
+
 // Open a session, hand a Playwright `page` to `fn`, always clean up.
 async function withPage(fn, { sessionOpts = {} } = {}) {
   assertCreds();
@@ -50,12 +67,14 @@ async function renderAndExtract(url, { waitMs = 8000, captureJson = false, sessi
           if (!/json/i.test(ct)) return;
           const body = await r.text();
           const req = r.request();
+          const headers = notableHeaders(await req.allHeaders().catch(() => ({})));
           jsonResponses.push({
             url: r.url(),
             bytes: body.length,
             body,
             method: req.method(),
             postData: req.postData() || null, // present for POST-body search APIs (e.g. Algolia-style endpoints with no query string)
+            headers, // non-boilerplate request headers (e.g. an API Management subscription key) -- see notableHeaders()
           });
         } catch (_) {}
       });
@@ -112,12 +131,14 @@ async function interactAndExtract(
           if (!/json/i.test(ct)) return;
           const body = await r.text();
           const req = r.request();
+          const headers = notableHeaders(await req.allHeaders().catch(() => ({})));
           jsonResponses.push({
             url: r.url(),
             bytes: body.length,
             body,
             method: req.method(),
             postData: req.postData() || null,
+            headers,
           });
         } catch (_) {}
       });

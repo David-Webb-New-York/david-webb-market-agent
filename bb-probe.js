@@ -91,15 +91,17 @@ async function main() {
   const responsesDir = path.join(OUT_DIR, `${slug}-responses`);
   fs.mkdirSync(responsesDir, { recursive: true });
 
-  // advancedStealth + verified + a spoofed OS are real, documented
-  // Browserbase session options (SessionCreateParams.browserSettings, see
+  // advancedStealth + a spoofed OS are real, documented Browserbase session
+  // options (SessionCreateParams.browserSettings, see
   // node_modules/@browserbasehq/sdk) specifically for fingerprint-based
   // anti-bot systems (DataDome, PerimeterX, etc.) -- distinct from
-  // `proxies`, which only addresses IP reputation. Never tried before
-  // Heritage's DataDome block was found; worth testing directly.
+  // `proxies`, which only addresses IP reputation. `verified` mode is
+  // Enterprise-plan-only (confirmed via a live 403 "Verified mode is only
+  // available on the Enterprise plan" -- the session was rejected before any
+  // page load), so it's deliberately omitted here.
   const sessionOpts = {};
   if (useProxies) sessionOpts.proxies = true;
-  if (useStealth) sessionOpts.browserSettings = { advancedStealth: true, verified: true, os: "windows" };
+  if (useStealth) sessionOpts.browserSettings = { advancedStealth: true, os: "windows" };
 
   console.log("probing:", url, useProxies ? "(proxies on)" : "", useStealth ? "(stealth on)" : "", `wait=${waitMs}ms`);
   const started = Date.now();
@@ -205,6 +207,7 @@ async function main() {
     // logs response bodies -- save the request body alongside so an adapter
     // can be built to replicate the real request, not guess its shape.
     if (r.postData) entry.postData = r.postData.length > 4000 ? r.postData.slice(0, 4000) + "...(truncated)" : r.postData;
+    if (r.headers && Object.keys(r.headers).length) entry.headers = r.headers; // non-boilerplate request headers (e.g. an API auth key)
     responsesIndex.push(entry);
   });
   fs.writeFileSync(path.join(responsesDir, "index.json"), JSON.stringify(responsesIndex, null, 2));
@@ -251,6 +254,7 @@ async function main() {
   for (const c of candidates) {
     console.log(`  [${c.i}] ${c.method || "GET"} ${c.bytes}b ${c.url.slice(0, 140)}`);
     if (c.postData) console.log(`      postData: ${c.postData.slice(0, 500)}`);
+    if (c.headers) console.log(`      notable headers: ${JSON.stringify(c.headers)}`);
     if (c.jsonShape) {
       if (c.jsonShape.arrays.length) console.log(`      arrays: ${JSON.stringify(c.jsonShape.arrays)}`);
       if (Object.keys(c.jsonShape.pagination).length) console.log(`      pagination fields: ${JSON.stringify(c.jsonShape.pagination)}`);

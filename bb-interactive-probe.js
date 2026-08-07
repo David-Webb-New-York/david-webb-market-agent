@@ -117,6 +117,7 @@ async function main() {
     const isCandidate = candidateRe.test(r.body) || (!isNoise && r.body.trim().length > 20 && /^[{[]/.test(r.body.trim()));
     console.log(`  [${i}]${isCandidate ? " CANDIDATE" : ""} ${r.method} ${r.bytes}b ${r.url.slice(0, 140)}`);
     if (r.postData) console.log(`      postData: ${r.postData.slice(0, 500)}`);
+    if (r.headers && Object.keys(r.headers).length) console.log(`      notable headers: ${JSON.stringify(r.headers)}`);
     if (isCandidate) console.log(`      body (first 1000b): ${r.body.slice(0, 1000)}`);
   });
 
