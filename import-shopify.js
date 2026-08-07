@@ -53,7 +53,7 @@ const DEALERS = [
 ];
 
 const PAGE_LIMIT = 250;
-const MAX_PAGES = 40; // safety cap (40 * 250 = 10,000 products)
+const MAX_PAGES = 100; // safety cap (100 * 250 = 25,000 products) -- raised from 40 (10,000) for the 2026-08-07 baseline run; 3 dealers with huge catalogs (Wilson's Estate Jewelry, Robinson's Jewelers, Schiffman's) hit the old cap
 
 function decodeEntities(s) {
   return String(s || "")
