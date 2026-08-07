@@ -134,7 +134,12 @@ Do **not** force sold lots into the active library; they are different entities.
 | Analyze + Slack | Live post to `#secondary-market` succeeded; report includes Mermaid WoW charts |
 | Library layer | 144 raw sightings → 100 unique pieces (validated) |
 | Rago historical import | **85/85 lots** via Inertia `data-page` JSON (free). Committed on PR #7 |
-| Browserbase | Auth works (`bb_` key + project UUID). Renders LiveAuctioneers. `bb-probe` works. Paid plan for proxies. |
+| Browserbase | Auth works (`bb_` key + project UUID). Paid plan; proxies confirmed working (Bonhams). |
+| Estate-jeweler dealer layer | **1,397 dealer listings** across 16 dealers (Shopify+WooCommerce), verified live (§9 P0) |
+| LiveAuctioneers historical import | **Real, verified live**: Browserbase-rendered `window.__data` extraction, confirmed pagination, 93 lots/3 pages in latest run (§9 P1) |
+| Invaluable historical import | **Real, verified live**: free (no Browserbase) Algolia POST replay, 133/133 lots (exact `nbHits` match) (§9 P1) |
+| Bonhams historical import | **Real, verified live**: Browserbase-captured Typesense search API, 1 lot (honestly limited by an unresolved `status` filter) (§9 P2) |
+| Heritage (ha.com) | Confirmed blocked by a named vendor (DataDome device-check challenge), not a mystery — documented, not pursued further (§9 P2) |
 | Cost review | 29/40 original queries never returned data; moved to `OPTIONAL_QUERIES` |
 
 ### Cost numbers (measured)
