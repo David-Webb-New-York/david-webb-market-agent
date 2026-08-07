@@ -6,8 +6,10 @@ on:
   push:
     paths:
       - 'plain-fetch-test.js'
+      - 'plain-post-test.js'
       - '.github/workflows/plain-fetch-test.yml'
       - 'plain-fetch-request.txt'
+      - 'plain-post-request.json'
 permissions:
   contents: read
 jobs:
@@ -26,4 +28,9 @@ jobs:
           else
             echo "url=https://www.liveauctioneers.com/search/?keyword=david+webb" >> "$GITHUB_OUTPUT"
           fi
-      - run: node plain-fetch-test.js "${{ steps.resolve.outputs.url }}"
+      - name: GET test
+        if: hashFiles('plain-fetch-request.txt') != ''
+        run: node plain-fetch-test.js "${{ steps.resolve.outputs.url }}"
+      - name: POST test (Invaluable catResults replay)
+        if: hashFiles('plain-post-request.json') != ''
+        run: node plain-post-test.js "https://www.invaluable.com/catResults" plain-post-request.json

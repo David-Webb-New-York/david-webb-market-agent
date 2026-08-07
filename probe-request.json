@@ -1,6 +1,6 @@
 {
-  "url": "https://www.bonhams.com/search/?search_term=david+webb",
+  "url": "https://www.bonhams.com/search/?q=david+webb",
   "proxies": true,
   "wait_ms": 10000,
-  "note": "Task #4: Bonhams was previously Cloudflare 403 on plain HTTP; never actually re-tested with Browserbase proxies since browserbase.js's sessionOpts-forwarding bug was fixed (it silently made --proxies a no-op before). User confirmed the account is upgraded to a paid Browserbase plan for proxy support. Search URL path (/search/?search_term=) is an educated guess based on common auction-house site conventions, not confirmed -- if this 404s or looks wrong, the real path needs to be found from Bonhams' own site (e.g. via their sitemap or homepage nav) rather than guessed again blindly."
+  "note": "Follow-up to the first Bonhams probe: proxies work end-to-end (real 'Bonhams : Search' page, 638KB HTML, no Cloudflare block -- confirmed by the sessionOpts fix). Found the real search API: POST https://api01.bonhams.com/search-proxy/multi_search (Typesense: collection=lots, query_by=lotId,title,catalogDesc,footnotes, q=<term>). But ?search_term=david+webb left q empty (\"q\":\"\") -- generic unfiltered results came back instead. Trying ?q=david+webb this time since that matches the Typesense param name seen in the actual XHR body; if this still leaves q empty, the param is likely set by a client-side search-box interaction rather than a URL param at all."
 }
