@@ -31,6 +31,13 @@
  * field, in this index). No confirmed `listing_url` pattern for Lot-type
  * items either (the site's Buy Now items DO have a real `url` field, but
  * that wasn't observed on a Lot-type hit) -- left blank rather than guessed.
+ * Algolia's standard search API refuses to page past position 1000
+ * (page * hitsPerPage >= 1000 returns nothing further) regardless of the
+ * real nbHits -- confirmed in practice: a live run returned exactly 1000
+ * lots. If Sotheby's has more than 1000 "david webb" Lot-type records, the
+ * remainder isn't reachable through this adapter as written; getting past
+ * that would need a different Algolia feature (e.g. a distinct/faceted
+ * query strategy to split the result set), not attempted here.
  *
  * Exposes `collect(map, opts)` for the orchestrator (import-all.js); also
  * runnable standalone: node import-sothebys.js ["david webb"]
