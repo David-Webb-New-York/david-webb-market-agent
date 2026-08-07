@@ -199,11 +199,21 @@ async function interactAndExtract(
     }
     await removeConsentOverlays();
 
+    // Belt-and-suspenders: OneTrust injects its overlay asynchronously
+    // (after its own geolocation lookup), so a fixed-point-in-time removal
+    // can race it -- confirmed live: the overlay was absent at the first
+    // removal check but present by the time the search-box click ran a few
+    // seconds later, blocking it identically to before. Every click below
+    // also passes `force: true`, which makes Playwright dispatch the click
+    // without checking whether another element visually covers the target --
+    // the correct, timing-independent fix for a "such-and-such intercepts
+    // pointer events" failure.
+
     for (const sel of openTriggerSelectors) {
       try {
         const el = page.locator(sel).first();
         if (await el.isVisible({ timeout: 1500 })) {
-          await el.click({ timeout: 3000 });
+          await el.click({ timeout: 3000, force: true });
           log.push(`clicked open-trigger: ${sel}`);
           await page.waitForTimeout(1000);
           break;
@@ -216,7 +226,7 @@ async function interactAndExtract(
       try {
         const el = page.locator(sel).first();
         if (await el.isVisible({ timeout: 1500 })) {
-          await el.click({ timeout: 3000 });
+          await el.click({ timeout: 3000, force: true });
           await el.fill(term, { timeout: 3000 });
           log.push(`typed into: ${sel}`);
           await page.waitForTimeout(300);
@@ -238,7 +248,7 @@ async function interactAndExtract(
       try {
         const el = page.locator(sel).first();
         if (await el.isVisible({ timeout: 1500 })) {
-          await el.click({ timeout: 3000 });
+          await el.click({ timeout: 3000, force: true });
           log.push(`clicked post-search: ${sel}`);
           await page.waitForTimeout(waitMs);
           break;
