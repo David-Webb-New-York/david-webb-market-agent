@@ -2,6 +2,6 @@
   "base_url": "https://www.doyle.com/search",
   "term": "david webb",
   "selectors": "input.search-st,input[placeholder*='lot' i],input[type='search']",
-  "open_selectors": "",
+  "open_selectors": "[data-target='#navbar-search'],[aria-controls='navbar-search'],.search-toggle,.navbar-search-toggle,a[href='#search'],.fa-search,.icon-search,button.search,a.search",
   "wait_ms": 10000
 }
