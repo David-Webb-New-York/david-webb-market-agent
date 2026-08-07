@@ -27,7 +27,7 @@ Target consumers: Excel / Power BI / Microsoft Fabric (bronze = raw CSV, silver 
 | Branch | Status | Contents |
 | --- | --- | --- |
 | `main` | Live | Weekly scan, cost controls, analyze+Slack, trend charts, library layer, historical backfill, Rago importer, shared history store, `import-all`, Browserbase integration (PRs #4–#7 merged) |
-| `claude/immediate-next-work-i15bgw` | In progress (this session) | Estate-jeweler dealer layer: `import-shopify.js` + `dealer-store.js` (§9 P0) |
+| `claude/immediate-next-work-i15bgw` | In progress (this session) | Estate-jeweler dealer layer (`import-shopify.js`+`dealer-store.js`, §9 P0); LiveAuctioneers Browserbase importer (`import-liveauctioneers.js`+`inline-state.js`, §9 P1) |
 
 **Action for Claude Code:** PR #7 is merged; `main` is the current base. Do **not** recreate deleted branches `cursor/setup-dev-environment-0e2f`, `cursor/slack-claude-report-pipeline-0e2f`, or `cursor/historical-backfill-0e2f` (already merged).
 
@@ -244,8 +244,16 @@ User’s last direction: upgrade done; **don’t lose estate jewelers**; continu
 3. For non-Shopify/WooCommerce dealers, use Browserbase + `bb-probe` the same way as LiveAuctioneers (§7.6).
 
 ### P1 — Aggregators (highest auction ROI)
-1. LiveAuctioneers: `/search/?keyword=david+webb` **does** render real content server-side (270 "david webb" mentions, 26 `salePrice`, 28 `lotNumber` occurrences confirmed via Browserbase probe on 2026-08-07) — but it is **not** in `window.__data` or any XHR response; earlier notes in this doc claiming `window.__data` were wrong (that finding was likely from a different URL/site state during the original Cursor investigation, or the frontend has changed since). The data appears to be server-inlined directly into the HTML. Investigation ongoing — see `probe-source.yml` / `bb-probe.js` (now does an HTML deep-dive — `<script>` tag inventory + context around signal occurrences — when this exact situation is detected) for the next probe's findings before writing an adapter. **Do not build `import-liveauctioneers.js` until the actual embedding mechanism and a sold-vs-upcoming distinguishing field are confirmed from real probe output** — guessing here already wasted one round (a guessed `/price-result/` URL turned out not to be a real route at all).
-2. Repeat for Invaluable (Algolia — capture network JSON in probe).
+1. **LiveAuctioneers — ✅ Done, `import-liveauctioneers.js` built and registered in `import-all.js`.**
+   - Confirmed via Browserbase probes on 2026-08-07 (not guessed): behind Incapsula bot-protection (`plain-fetch-test.js` proved a plain `fetch()` gets a 960-byte JS-challenge stub — Browserbase is required, not optional). `/search/?keyword=david+webb` server-embeds the full Redux state as `<script>window.__data={...}</script>`, but the app's own client hydration reads and clears that global before `page.evaluate()` can see it — `inline-state.js` extracts it directly from the raw rendered HTML instead (balanced-brace, string-aware scan).
+   - Real lot records live at `window.__data.itemSummary.byId.<itemId>`, found by structural shape (`findLotLikeObjects`) rather than a guessed path. Confirmed real field shape: `itemId, lotNumber, title, slug, slugWithLocation, catalogId, catalogTitle, sellerName, currency, salePrice, buyNowPrice, leadingBid, startPrice, lowBidEstimate, highBidEstimate, isSold, isPassed, isAvailable, saleStartTs` (unix seconds). Price fields are plain dollar amounts, not cents (cross-checked against realistic jewelry prices).
+   - Confirmed `listing_url` pattern via a real `<a href>` in the rendered HTML (not inferred from general site knowledge): `https://www.liveauctioneers.com/item/{itemId}_{slugWithLocation}`.
+   - Confirmed pagination: the site's own `catalogItems.pagination` Redux slice is always empty/unrelated, but `&page=N` on the search URL is real — a probe of `&page=2` returned a different `<title>` and genuinely different lots than page 1. `collect()` pages through `&page=N` until a page returns nothing new (capped at 25 pages as a safety backstop, not a real limit).
+   - The ~80KB `window.__data` blob can fail a whole-tree `JSON.parse` due to unrelated debug telemetry elsewhere in the tree (observed once: a serialized `Array.prototype` reference under `apiPerformanceStats`, nothing to do with lot data). `inline-state.js` now exposes `extractKeyObject()` so the adapter falls back to parsing just the `itemSummary` sub-object when the full blob fails — narrows the failure surface to data we actually need.
+   - Wired into `.github/workflows/history-refresh.yml` (now weekly, `--with-browserbase` gates the Browserbase-costing sources) with a push-trigger on the importer files for pre-merge verification, same pattern as `dealer-refresh.yml`.
+   - **Verified end-to-end against the live internet** (2026-08-07, `history-refresh.yml` run `31139385926`): `Rago 85 lots + LiveAuctioneers 94 lots (3 pages) = 179 total historical records`, real dollar amounts and lot numbers, not synthetic.
+   - Not yet done: `materials_gemstones`/`era_or_year` are left blank (not cleanly available as structured fields — `shortDescription` has prose but extracting would require guessing).
+2. Invaluable (Algolia — capture network JSON in probe). Not started.
 
 ### P2 — Houses
 - Proxies on: Bonhams, Heritage.

@@ -9,7 +9,7 @@ name: Weekly Auction History Refresh
 # why push, not just workflow_dispatch, is needed pre-merge).
 on:
   schedule:
-    - cron: '0 13 * * 1'   # Monday 8am ET (before dealer-refresh.yml)
+    - cron: '15 13 * * 1'  # Monday 8:15am ET (weekly-scan.yml runs 8:00, dealer-refresh.yml runs 8:30)
   workflow_dispatch:
     inputs:
       with_llm:
