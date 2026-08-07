@@ -1,6 +1,6 @@
 {
-  "url": "https://www.liveauctioneers.com/price-result/?keyword=david+webb",
+  "url": "https://www.liveauctioneers.com/search/?keyword=david+webb",
   "proxies": false,
   "wait_ms": 12000,
-  "note": "retry after user confirmed GitHub Actions incident should be resolved"
+  "note": "corrected URL: /price-result/ was a guess and returned nothing real (no david-webb text, no embedded state, only tracking XHRs). /search/ is the URL HANDOFF.md confirmed actually renders window.__data, just with upcoming-only (salePrice:0) results per prior investigation. Re-probing to inspect the real page for a sold/closed filter."
 }
