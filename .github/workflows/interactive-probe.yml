@@ -36,6 +36,14 @@ on:
         description: 'Comma-separated substrings to search for in the rendered HTML and print context around (for finding real selectors)'
         type: string
         default: ''
+      viewport:
+        description: 'Viewport size as WxH (e.g. 390x844) -- for mobile-only open-triggers (navbar hamburgers etc.) that are CSS-hidden at the default desktop viewport'
+        type: string
+        default: ''
+      no_proxies:
+        description: 'Disable Browserbase proxies for this run (some hosts fail a proxy CONNECT tunnel even though the target site itself is not blocking)'
+        type: boolean
+        default: false
       wait_ms:
         description: 'Wait time in ms after pressing Enter'
         type: string
@@ -69,6 +77,8 @@ jobs:
               echo "open_selectors=$IN_OPEN_SELECTORS"
               echo "post_search_selectors=$IN_POST_SEARCH_SELECTORS"
               echo "html_grep=$IN_HTML_GREP"
+              echo "viewport=$IN_VIEWPORT"
+              echo "no_proxies=$IN_NO_PROXIES"
               echo "wait_ms=$IN_WAIT_MS"
             } >> "$GITHUB_OUTPUT"
           else
@@ -76,7 +86,7 @@ jobs:
               const fs = require("fs");
               const r = require("./interactive-probe-request.json");
               fs.appendFileSync(process.env.GITHUB_OUTPUT,
-                `base_url=${r.base_url}\nterm=${r.term}\nselectors=${r.selectors}\nopen_selectors=${r.open_selectors || ""}\npost_search_selectors=${r.post_search_selectors || ""}\nhtml_grep=${r.html_grep || ""}\nwait_ms=${r.wait_ms || 8000}\n`);
+                `base_url=${r.base_url}\nterm=${r.term}\nselectors=${r.selectors}\nopen_selectors=${r.open_selectors || ""}\npost_search_selectors=${r.post_search_selectors || ""}\nhtml_grep=${r.html_grep || ""}\nviewport=${r.viewport || ""}\nno_proxies=${!!r.no_proxies}\nwait_ms=${r.wait_ms || 8000}\n`);
             '
           fi
         env:
@@ -87,6 +97,8 @@ jobs:
           IN_OPEN_SELECTORS: ${{ inputs.open_selectors }}
           IN_POST_SEARCH_SELECTORS: ${{ inputs.post_search_selectors }}
           IN_HTML_GREP: ${{ inputs.html_grep }}
+          IN_VIEWPORT: ${{ inputs.viewport }}
+          IN_NO_PROXIES: ${{ inputs.no_proxies }}
           IN_WAIT_MS: ${{ inputs.wait_ms }}
       - name: Interactive probe
         # Selectors can contain shell metacharacters (parens, quotes, commas
@@ -100,6 +112,8 @@ jobs:
           if [ -n "$OPEN_SELECTORS" ]; then ARGS+=("--open-selectors=$OPEN_SELECTORS"); fi
           if [ -n "$POST_SEARCH_SELECTORS" ]; then ARGS+=("--post-search-selectors=$POST_SEARCH_SELECTORS"); fi
           if [ -n "$HTML_GREP" ]; then ARGS+=("--html-grep=$HTML_GREP"); fi
+          if [ -n "$VIEWPORT" ]; then ARGS+=("--viewport=$VIEWPORT"); fi
+          if [ "$NO_PROXIES" = "true" ]; then ARGS+=("--no-proxies"); fi
           node bb-interactive-probe.js "${ARGS[@]}"
         env:
           BASE_URL: ${{ steps.resolve.outputs.base_url }}
@@ -108,6 +122,8 @@ jobs:
           OPEN_SELECTORS: ${{ steps.resolve.outputs.open_selectors }}
           POST_SEARCH_SELECTORS: ${{ steps.resolve.outputs.post_search_selectors }}
           HTML_GREP: ${{ steps.resolve.outputs.html_grep }}
+          VIEWPORT: ${{ steps.resolve.outputs.viewport }}
+          NO_PROXIES: ${{ steps.resolve.outputs.no_proxies }}
           WAIT_MS: ${{ steps.resolve.outputs.wait_ms }}
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}

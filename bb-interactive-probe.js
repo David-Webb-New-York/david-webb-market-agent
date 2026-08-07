@@ -35,6 +35,8 @@ async function main() {
   const postSearchSelectorsArg = process.argv.find((a) => a.startsWith("--post-search-selectors="));
   const htmlGrepArg = process.argv.find((a) => a.startsWith("--html-grep="));
   const waitArg = process.argv.find((a) => a.startsWith("--wait="));
+  const viewportArg = process.argv.find((a) => a.startsWith("--viewport="));
+  const noProxies = process.argv.includes("--no-proxies");
   // CSS attribute selectors (e.g. input[placeholder*='lot' i]) contain their
   // own `=` characters -- splitting on every `=` in the arg truncates them.
   // Only the first `=` (after "--selectors") delimits the flag from its value.
@@ -44,10 +46,22 @@ async function main() {
   const postSearchClickSelectors = postSearchSelectorsArg ? afterFirstEquals(postSearchSelectorsArg).split(",") : [];
   const htmlGrepTerms = htmlGrepArg ? afterFirstEquals(htmlGrepArg).split(",").filter(Boolean) : [];
   const waitMs = waitArg ? parseInt(waitArg.split("=")[1], 10) : 8000;
+  // A "navbar-toggle"/hamburger-style open-trigger that never even logs a
+  // click attempt (isVisible() silently false, no error) is a classic sign
+  // of a mobile-only control CSS-hidden at Browserbase's default (desktop)
+  // viewport width -- confirmed pattern on Doyle (class="navbar-toggle") and
+  // Barnebys (aria-hidden="true" on the same kind of toggle). --viewport
+  // lets a probe simulate a narrow/mobile viewport instead of guessing more
+  // desktop selectors.
+  let viewport = null;
+  if (viewportArg) {
+    const m = afterFirstEquals(viewportArg).match(/^(\d+)x(\d+)$/);
+    if (m) viewport = { width: parseInt(m[1], 10), height: parseInt(m[2], 10) };
+  }
 
   if (!baseUrl || !term || !searchSelectors.length) {
     console.error(
-      'usage: node bb-interactive-probe.js "<base-url>" "<term>" --selectors=sel1,sel2 [--open-selectors=sel] [--post-search-selectors=sel] [--html-grep=term1,term2] [--wait=ms]'
+      'usage: node bb-interactive-probe.js "<base-url>" "<term>" --selectors=sel1,sel2 [--open-selectors=sel] [--post-search-selectors=sel] [--html-grep=term1,term2] [--viewport=WxH] [--no-proxies] [--wait=ms]'
     );
     process.exit(1);
   }
@@ -61,13 +75,15 @@ async function main() {
 
   console.log("interactive probe:", baseUrl, "| term:", term, "| selectors:", searchSelectors, "| wait:", waitMs);
   const started = Date.now();
+  const sessionOpts = { proxies: !noProxies };
+  if (viewport) sessionOpts.browserSettings = { viewport };
   const { title, html, url, jsonResponses, interactionLog } = await bb
     .interactAndExtract(baseUrl, term, {
       searchSelectors,
       openTriggerSelectors,
       postSearchClickSelectors,
       waitMs,
-      sessionOpts: { proxies: true },
+      sessionOpts,
     })
     .catch((e) => {
       console.error("interact failed:", e.message);

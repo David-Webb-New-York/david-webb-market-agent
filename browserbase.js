@@ -40,6 +40,18 @@ function notableHeaders(allHeaders) {
   return out;
 }
 
+// A response worth capturing as a candidate API result: either a real
+// `application/json` content-type, or a URL matching a known non-JSON-
+// labeled data-route convention -- confirmed necessary on Phillips, whose
+// Remix resource routes (`/remix/api/action/search/makers.data`) return
+// real search-result data over HTTP 200 but don't set a "json" content-type,
+// so the content-type-only check silently missed the exact response an
+// adapter would need.
+function isCandidateApiResponse(url, contentType) {
+  if (/json/i.test(contentType || "")) return true;
+  return /\.data(\?|$)/i.test(url);
+}
+
 // Open a session, hand a Playwright `page` to `fn`, always clean up.
 async function withPage(fn, { sessionOpts = {} } = {}) {
   assertCreds();
@@ -64,7 +76,7 @@ async function renderAndExtract(url, { waitMs = 8000, captureJson = false, sessi
       page.on("response", async (r) => {
         try {
           const ct = r.headers()["content-type"] || "";
-          if (!/json/i.test(ct)) return;
+          if (!isCandidateApiResponse(r.url(), ct)) return;
           const body = await r.text();
           const req = r.request();
           const headers = notableHeaders(await req.allHeaders().catch(() => ({})));
@@ -141,7 +153,7 @@ async function interactAndExtract(
       page.on("response", async (r) => {
         try {
           const ct = r.headers()["content-type"] || "";
-          if (!/json/i.test(ct)) return;
+          if (!isCandidateApiResponse(r.url(), ct)) return;
           const body = await r.text();
           const req = r.request();
           const headers = notableHeaders(await req.allHeaders().catch(() => ({})));
