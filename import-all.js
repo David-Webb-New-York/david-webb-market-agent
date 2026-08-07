@@ -31,6 +31,7 @@ const bonhams = require("./import-bonhams");
 const sothebys = require("./import-sothebys");
 const christies = require("./import-christies");
 const phillips = require("./import-phillips");
+const doyle = require("./import-doyle");
 const backfill = require("./backfill");
 
 // Per-source status from direct investigation of each site's search page.
@@ -83,8 +84,9 @@ const SOURCES = [
   {
     name: "Doyle",
     method:
-      "real search input (input.search-st) and its open-trigger (button.search-navbar[data-target='#navbar-search'], a Bootstrap 4 mobile-only hamburger) both confirmed real -- at a mobile viewport the trigger finally clicks successfully, but the revealed input still doesn't match any selector afterward (unclear whether it's a different mobile-specific input, or a timing/animation issue). Near-miss, not pursued further this round.",
-    status: "web-search-only",
+      "structured (server-rendered search-results HTML, confirmed reachable via a plain cold fetch -- no Browserbase needed). The real search URL (/auction/search/?st=...) was only found via interactive UI probing (type + Enter; a guessed URL param never triggered it), but once known, cold-fetching it directly works. Real listing-card markup parsed directly, INCLUDING real sold/estimate prices shown right on the results page (unlike Phillips) -- no per-lot detail-page fetch needed for price data. No sale name/date appears in the card markup though, so those are left blank.",
+    status: "structured",
+    collect: doyle.collect,
   },
   {
     name: "Heritage (ha.com)",

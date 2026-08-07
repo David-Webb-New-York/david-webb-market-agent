@@ -29,6 +29,7 @@ on:
       - 'import-rago.js'
       - 'import-christies.js'
       - 'import-phillips.js'
+      - 'import-doyle.js'
       - 'inline-state.js'
       - 'browserbase.js'
       - 'history-store.js'
