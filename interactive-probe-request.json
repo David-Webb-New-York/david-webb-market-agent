@@ -1,7 +1,7 @@
 {
-  "base_url": "https://www.doyle.com",
+  "base_url": "https://www.christies.com",
   "term": "david webb",
-  "selectors": "input.search-st,input[placeholder*='lot' i],input[type='search']",
-  "open_selectors": "",
+  "selectors": "input[type='search'],input[placeholder*='search' i],input[aria-label*='search' i],#search-input,.search-input input,.chr-search input",
+  "open_selectors": "button[aria-label*='search' i],.icon-search,.search-toggle,.chr-search-icon,[data-testid*='search' i]",
   "wait_ms": 10000
 }
