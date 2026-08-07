@@ -15,6 +15,7 @@ const fs = require("fs");
 const path = require("path");
 const bb = require("./browserbase");
 const { extractInlineWindowVars, findLotLikeObjects } = require("./inline-state");
+const { summarizeJsonShape } = require("./json-shape");
 
 const OUT_DIR = path.join(__dirname, "probe-output");
 
@@ -158,8 +159,28 @@ async function main() {
     console.log(`  [${i}]${isCandidate ? " CANDIDATE" : ""} ${r.method} ${r.bytes}b ${r.url.slice(0, 140)}`);
     if (r.postData) console.log(`      postData: ${r.postData.slice(0, 500)}`);
     if (r.headers && Object.keys(r.headers).length) console.log(`      notable headers: ${JSON.stringify(r.headers)}`);
+    // Pagination fields (total_pages, nbHits, etc.) and array lengths live
+    // deep in often-huge bodies (58KB+ seen on Christie's) -- print the shape
+    // summary unconditionally for candidates so page-count/result-count is
+    // visible in the log without needing the full body or an artifact
+    // download (which can be blocked by network policy on some hosts).
+    const jsonShape = isCandidate ? summarizeJsonShape(r.body) : null;
+    if (jsonShape) {
+      if (jsonShape.arrays.length) console.log(`      arrays: ${JSON.stringify(jsonShape.arrays)}`);
+      if (Object.keys(jsonShape.pagination).length) console.log(`      pagination fields: ${JSON.stringify(jsonShape.pagination)}`);
+    }
     if (isCandidate) console.log(`      body (first 1000b): ${r.body.slice(0, 1000)}`);
-    fullIndex.push({ i, url: r.url, method: r.method, bytes: r.bytes, file, postData: r.postData || null, headers: r.headers || {}, isCandidate });
+    fullIndex.push({
+      i,
+      url: r.url,
+      method: r.method,
+      bytes: r.bytes,
+      file,
+      postData: r.postData || null,
+      headers: r.headers || {},
+      isCandidate,
+      jsonShape,
+    });
   });
   fs.writeFileSync(path.join(responsesDir, "index.json"), JSON.stringify(fullIndex, null, 2));
 
