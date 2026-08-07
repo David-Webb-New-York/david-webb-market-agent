@@ -1,0 +1,1 @@
+{"requests":[{"indexName":"bsp_dotcom_prod_en","query":"david webb","params":"filters=(type%3A%22Bid%22%20OR%20type%3A%22Buy%20Now%22%20OR%20type%3A%22Lot%22%20OR%20type%3A%22Private%20Sale%22%20OR%20type%3A%22Retail%22)%20AND%20available%3A%22true%22&numericFilters=%5B%5D&hitsPerPage=32&page=0&clickAnalytics=true&userToken="}]}

@@ -6,27 +6,33 @@
  * costly Browserbase-backed one (like LiveAuctioneers). See
  * plain-fetch-test.js for the GET equivalent.
  *
- * Usage: node plain-post-test.js <url> <json-body-file>
+ * Usage: node plain-post-test.js <url> <json-body-file> [extra-headers-file]
+ *   extra-headers-file: optional JSON file of {headerName: value} to merge in
+ *   (e.g. Algolia's x-algolia-api-key / x-algolia-application-id, sent as
+ *   headers rather than URL params or POST body by some client versions).
  */
 const fs = require("fs");
 const url = process.argv[2];
 const bodyFile = process.argv[3];
+const headersFile = process.argv[4];
 const UA =
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36";
 
 if (!url || !bodyFile) {
-  console.error("usage: node plain-post-test.js <url> <json-body-file>");
+  console.error("usage: node plain-post-test.js <url> <json-body-file> [extra-headers-file]");
   process.exit(1);
 }
 
 (async () => {
   const body = fs.readFileSync(bodyFile, "utf8");
+  const extraHeaders = headersFile ? JSON.parse(fs.readFileSync(headersFile, "utf8")) : {};
   const res = await fetch(url, {
     method: "POST",
     headers: {
       "User-Agent": UA,
       Accept: "application/json, text/plain, */*",
       "Content-Type": "application/json",
+      ...extraHeaders,
     },
     body,
   });

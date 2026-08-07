@@ -10,8 +10,10 @@ on:
       - '.github/workflows/plain-fetch-test.yml'
       - 'plain-fetch-request.txt'
       - 'plain-post-request.json'
-      - 'plain-post-request-2.json'
       - 'plain-post-request-3.json'
+      - 'plain-post-request-4.json'
+      - 'plain-post-request-5.json'
+      - 'plain-post-headers-sothebys.json'
 permissions:
   contents: read
 jobs:
@@ -36,9 +38,12 @@ jobs:
       - name: POST test (Invaluable catResults replay)
         if: hashFiles('plain-post-request.json') != ''
         run: node plain-post-test.js "https://www.invaluable.com/catResults" plain-post-request.json
-      - name: POST test 2 (Invaluable catResults, alternate index)
-        if: hashFiles('plain-post-request-2.json') != ''
-        run: node plain-post-test.js "https://www.invaluable.com/catResults" plain-post-request-2.json
       - name: POST test 3 (Bonhams Typesense search-proxy replay)
         if: hashFiles('plain-post-request-3.json') != ''
         run: node plain-post-test.js "https://api01.bonhams.com/search-proxy/multi_search?use_cache=true&enable_lazy_filter=true" plain-post-request-3.json
+      - name: POST test 4 (Sotheby's Algolia replay, confirmed Buy Now query, regression check)
+        if: hashFiles('plain-post-request-4.json') != ''
+        run: node plain-post-test.js "https://o28sy4q7wu-dsn.algolia.net/1/indexes/*/queries" plain-post-request-4.json plain-post-headers-sothebys.json
+      - name: POST test 5 (Sotheby's Algolia replay, type:Lot query -- real auction data?)
+        if: hashFiles('plain-post-request-5.json') != ''
+        run: node plain-post-test.js "https://o28sy4q7wu-dsn.algolia.net/1/indexes/*/queries" plain-post-request-5.json plain-post-headers-sothebys.json
