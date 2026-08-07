@@ -165,30 +165,39 @@ async function interactAndExtract(
     await page.waitForTimeout(2000);
 
     // Cookie-consent overlays (OneTrust and similar) render a full-page
-    // click-intercepting backdrop that silently times out any later click
-    // attempt without raising a clear error -- observed on Christie's
-    // ("locator.click: Timeout 3000ms exceeded" on a tab button that
-    // resolved correctly, root-caused via the error's own "intercepts
-    // pointer events" detail pointing at #onetrust-consent-sdk). Dismiss it
-    // upfront, best-effort, before any other interaction.
-    const consentDismissSelectors = [
-      "#onetrust-accept-btn-handler",
-      "button:has-text('Accept All')",
-      "button:has-text('Accept all')",
-      "[aria-label='Accept all']",
-      "[aria-label='Accept All']",
-    ];
-    for (const sel of consentDismissSelectors) {
+    // click-intercepting backdrop (a *separate* element from the accept
+    // button itself) that silently times out any later click without a
+    // clear error -- observed on Christie's, where a click-the-accept-button
+    // attempt never even matched (the button apparently wasn't present/
+    // visible in this flow) while the backdrop div was still there
+    // intercepting pointer events regardless ("locator.click: Timeout
+    // exceeded ... onetrust-pc-dark-filter ... intercepts pointer events" on
+    // an unrelated, correctly-resolved tab button). Removing the overlay
+    // nodes from the DOM outright sidesteps needing to find/click a specific
+    // accept button at all.
+    async function removeConsentOverlays() {
       try {
-        const el = page.locator(sel).first();
-        if (await el.isVisible({ timeout: 1500 })) {
-          await el.click({ timeout: 3000 });
-          log.push(`dismissed cookie-consent: ${sel}`);
-          await page.waitForTimeout(500);
-          break;
-        }
+        const removed = await page.evaluate(() => {
+          const selectors = [
+            "#onetrust-consent-sdk",
+            "#onetrust-pc-sdk",
+            "#onetrust-banner-sdk",
+            ".onetrust-pc-dark-filter",
+            "#onetrust-pc-dark-filter",
+          ];
+          let n = 0;
+          for (const sel of selectors) {
+            document.querySelectorAll(sel).forEach((el) => {
+              el.remove();
+              n++;
+            });
+          }
+          return n;
+        });
+        if (removed > 0) log.push(`removed ${removed} cookie-consent overlay node(s)`);
       } catch (_) {}
     }
+    await removeConsentOverlays();
 
     for (const sel of openTriggerSelectors) {
       try {
@@ -223,6 +232,7 @@ async function interactAndExtract(
     if (!typed) log.push("no search input matched any selector -- nothing typed");
 
     await page.waitForTimeout(waitMs);
+    await removeConsentOverlays(); // a fresh results page can re-render/re-trigger the overlay
 
     for (const sel of postSearchClickSelectors) {
       try {
