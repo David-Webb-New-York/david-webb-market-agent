@@ -227,7 +227,14 @@ async function interactAndExtract(
         if (await el.isVisible({ timeout: 1500 })) {
           await el.click({ timeout: 3000, force: true });
           log.push(`clicked open-trigger: ${sel}`);
-          await page.waitForTimeout(1000);
+          // A slide-in/drawer-style panel opened by this click can still be
+          // mid CSS-transition a second later -- observed live on Barnebys:
+          // the click registered, the target input resolved in the DOM, but
+          // Playwright's own click still failed with "Element is outside of
+          // the viewport" (a real bounding-box/position check, not the
+          // pointer-interception check `force` bypasses) even after its
+          // built-in scroll-into-view retry. Give the transition more room.
+          await page.waitForTimeout(2000);
           break;
         }
       } catch (_) {}
