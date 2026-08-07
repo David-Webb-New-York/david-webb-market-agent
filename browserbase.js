@@ -164,6 +164,32 @@ async function interactAndExtract(
     }
     await page.waitForTimeout(2000);
 
+    // Cookie-consent overlays (OneTrust and similar) render a full-page
+    // click-intercepting backdrop that silently times out any later click
+    // attempt without raising a clear error -- observed on Christie's
+    // ("locator.click: Timeout 3000ms exceeded" on a tab button that
+    // resolved correctly, root-caused via the error's own "intercepts
+    // pointer events" detail pointing at #onetrust-consent-sdk). Dismiss it
+    // upfront, best-effort, before any other interaction.
+    const consentDismissSelectors = [
+      "#onetrust-accept-btn-handler",
+      "button:has-text('Accept All')",
+      "button:has-text('Accept all')",
+      "[aria-label='Accept all']",
+      "[aria-label='Accept All']",
+    ];
+    for (const sel of consentDismissSelectors) {
+      try {
+        const el = page.locator(sel).first();
+        if (await el.isVisible({ timeout: 1500 })) {
+          await el.click({ timeout: 3000 });
+          log.push(`dismissed cookie-consent: ${sel}`);
+          await page.waitForTimeout(500);
+          break;
+        }
+      } catch (_) {}
+    }
+
     for (const sel of openTriggerSelectors) {
       try {
         const el = page.locator(sel).first();
