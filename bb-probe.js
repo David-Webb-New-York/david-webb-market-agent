@@ -24,6 +24,45 @@ const { extractInlineWindowVars, findLotLikeObjects } = require("./inline-state"
 
 const OUT_DIR = path.join(__dirname, "probe-output");
 
+// Cheap structural summary of a candidate JSON response: top-level keys, any
+// array field (walked up to 2 levels deep, since search APIs commonly wrap
+// results in an outer object/array), its length, and any sibling numeric
+// fields that look like pagination (nbHits, page, nbPages, hitsPerPage,
+// totalRecords, ...). Lets a probe report real hit-counts/pagination
+// evidence without dumping/guessing at the full (often huge) response body.
+const PAGINATION_KEY_RE = /^(nb|total|num)(hits|records|pages|results)$|^(page|hitsperpage|pagesize|perpage)$/i;
+function summarizeJsonShape(text) {
+  let obj;
+  try {
+    obj = JSON.parse(text);
+  } catch (_) {
+    return null;
+  }
+  const findArraysAndPagination = (node, depth) => {
+    if (node == null || typeof node !== "object" || depth > 2) return { arrays: [], pagination: {} };
+    const arrays = [];
+    const pagination = {};
+    const entries = Array.isArray(node) ? node.map((v, i) => [String(i), v]) : Object.entries(node);
+    for (const [k, v] of entries) {
+      if (Array.isArray(v)) arrays.push({ path: k, length: v.length });
+      else if (typeof v === "number" && PAGINATION_KEY_RE.test(k)) pagination[k] = v;
+    }
+    // Also look one level into the first object/array child (e.g. results[0].hits).
+    if (depth < 2) {
+      const firstChild = Array.isArray(node) ? node[0] : Object.values(node)[0];
+      if (firstChild && typeof firstChild === "object") {
+        const nested = findArraysAndPagination(firstChild, depth + 1);
+        for (const a of nested.arrays) arrays.push({ path: `[nested].${a.path}`, length: a.length });
+        Object.assign(pagination, nested.pagination);
+      }
+    }
+    return { arrays, pagination };
+  };
+  const topLevelKeys = Array.isArray(obj) ? `array[${obj.length}]` : Object.keys(obj);
+  const { arrays, pagination } = findArraysAndPagination(obj, 0);
+  return { topLevelKeys, arrays, pagination };
+}
+
 function slugFor(url) {
   try {
     return new URL(url).host.replace(/[^a-z0-9.]/gi, "_");
@@ -152,12 +191,18 @@ async function main() {
   const candidateRe = /david\s*webb|"(lots?|items?|hits?|results?|catalogs?|auctionlots?)"\s*:|salePrice|priceResult|estimate\b|hammer\b|soldPrice|lotNumber/i;
   const KNOWN_NOISE_HOSTS =
     /cookiebot|amplitude|sail-personalize|sail-track|openreplay|google-analytics|googletagmanager|doubleclick|facebook\.net|hotjar|segment\.(io|com)|mixpanel|fullstory|sentry\.io|bugsnag/i;
-  const candidates = responsesIndex.filter((r) => {
-    const body = fs.readFileSync(path.join(responsesDir, r.file), "utf8");
-    if (candidateRe.test(body)) return true;
-    const trimmed = body.trim();
-    return !KNOWN_NOISE_HOSTS.test(r.url) && trimmed.length > 20 && /^[{[]/.test(trimmed);
-  });
+  const candidates = responsesIndex
+    .filter((r) => {
+      const body = fs.readFileSync(path.join(responsesDir, r.file), "utf8");
+      if (candidateRe.test(body)) return true;
+      const trimmed = body.trim();
+      return !KNOWN_NOISE_HOSTS.test(r.url) && trimmed.length > 20 && /^[{[]/.test(trimmed);
+    })
+    .map((r) => {
+      const body = fs.readFileSync(path.join(responsesDir, r.file), "utf8");
+      const jsonShape = summarizeJsonShape(body);
+      return jsonShape ? { ...r, jsonShape } : r;
+    });
 
   const summary = {
     url,
@@ -176,7 +221,13 @@ async function main() {
   fs.writeFileSync(path.join(OUT_DIR, `${slug}-summary.json`), JSON.stringify(summary, null, 2));
 
   console.log("\ncandidate JSON responses (matched lot/price signals):");
-  for (const c of candidates) console.log(`  [${c.i}] ${c.bytes}b ${c.url.slice(0, 140)}`);
+  for (const c of candidates) {
+    console.log(`  [${c.i}] ${c.bytes}b ${c.url.slice(0, 140)}`);
+    if (c.jsonShape) {
+      if (c.jsonShape.arrays.length) console.log(`      arrays: ${JSON.stringify(c.jsonShape.arrays)}`);
+      if (Object.keys(c.jsonShape.pagination).length) console.log(`      pagination fields: ${JSON.stringify(c.jsonShape.pagination)}`);
+    }
+  }
 
   if (inlineVarsSummary.length) {
     console.log("\ninline window vars found in raw HTML (not via page.evaluate):");
