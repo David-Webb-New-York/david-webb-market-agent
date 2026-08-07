@@ -19,6 +19,8 @@ on:
   push:
     paths:
       - 'import-liveauctioneers.js'
+      - 'import-invaluable.js'
+      - 'import-bonhams.js'
       - 'import-rago.js'
       - 'inline-state.js'
       - 'browserbase.js'

@@ -27,6 +27,7 @@ const store = require("./history-store");
 const rago = require("./import-rago");
 const liveauctioneers = require("./import-liveauctioneers");
 const invaluable = require("./import-invaluable");
+const bonhams = require("./import-bonhams");
 const backfill = require("./backfill");
 
 // Per-source status from direct investigation of each site's search page.
@@ -44,11 +45,16 @@ const SOURCES = [
     status: "browserbase",
     collect: liveauctioneers.collect,
   },
+  {
+    name: "Bonhams",
+    method: "Typesense search-proxy behind an auth-gated nginx (401 on plain replay); captured from a Browserbase-rendered session instead",
+    status: "browserbase",
+    collect: bonhams.collect,
+  },
   { name: "Barnebys", method: "Next.js app, results via API", status: "web-search-only" },
   { name: "Sotheby's", method: "SPA + API, GET redirects to JS app", status: "web-search-only" },
   { name: "Christie's", method: "api.christies.com (key-gated)", status: "web-search-only" },
   { name: "Phillips", method: "SPA shell, results via JS", status: "web-search-only" },
-  { name: "Bonhams", method: "reachable w/ Browserbase proxies; Typesense API found (api01.bonhams.com/search-proxy/multi_search) but no adapter yet", status: "web-search-only" },
   { name: "Doyle", method: "SPA shell, results via JS", status: "web-search-only" },
   { name: "Heritage (ha.com)", method: "403 (bot-blocked)", status: "web-search-only" },
   { name: "Freeman's / Hindman", method: "Nuxt app, results via API", status: "web-search-only" },
