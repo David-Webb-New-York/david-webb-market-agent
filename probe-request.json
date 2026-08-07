@@ -1,6 +1,6 @@
 {
-  "url": "https://www.christies.com/en/search?query=david+webb",
-  "proxies": true,
+  "url": "https://www.doyle.com/search?q=david+webb",
+  "proxies": false,
   "wait_ms": 10000,
-  "note": "Re-probe: first Christie's attempt (?entry=david+webb) rendered a real 170KB page (title 'Past Auctions: Results, Sales, Price Realized | Christie's', no bot-block) but 'david webb' appeared zero times and no search API XHR fired -- wrong query param, not blocked. Trying '?query=' this time since that exact param name worked immediately for Sotheby's (title correctly became 'Results for \"david webb\"' on the first attempt there)."
+  "note": "Re-probe: first Doyle attempt (/auctions/search?query=) rendered a real 398KB page titled just 'Auction Details' (a generic auction landing page, not search results) with zero 'david webb' occurrences and zero search API XHRs -- wrong URL path, not blocked (site uses Akamai Bot Manager + reCAPTCHA per CookieYes audit data, but neither was triggered). Trying the shorter '/search?q=' path this time."
 }
