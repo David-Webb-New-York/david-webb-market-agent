@@ -1,6 +1,6 @@
 {
-  "url": "https://www.ha.com/search?keyword=david+webb",
+  "url": "https://www.sothebys.com/en/search?query=david%20webb",
   "proxies": true,
   "wait_ms": 10000,
-  "note": "Re-probe: first Heritage attempt returned only 3965 bytes titled just 'ha.com', zero signals, zero XHRs, zero embedded state -- looks like a bot-block interstitial or a shell that never initialized, unlike Bonhams' first attempt (real 638KB page, wrong query param but a real API found). bb-probe.js now prints the full raw HTML when it's under 10KB (too small to be a real page, but small enough to just show directly) so this run should reveal exactly what's actually being served instead of guessing whether it's a CAPTCHA, a redirect, or something else."
+  "note": "Task #5: first probe of Sotheby's this session. import-all.js currently lists it as 'SPA + API, GET redirects to JS app' from an earlier (pre-this-session) investigation, never re-verified with the current bb-probe.js tooling (inline window-var extraction, method+postData capture, jsonShape summarizer, tiny-HTML full dump). URL is an educated guess based on common site conventions -- probing to find the real search API/URL pattern rather than assuming this is right."
 }
