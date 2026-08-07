@@ -180,12 +180,24 @@ Optional-query list (still in `agent.js` `OPTIONAL_QUERIES`) includes dealers su
 
 ### 7.4 Browserbase gotchas
 - Free plan: **proxies return 402**. User upgraded (~$20/mo) — proxies should work; verify with a session `{ proxies: true }`.
-- LiveAuctioneers: intercept/parse `window.__data`; don’t assume a separate lots XHR.
-- Prefer: navigate → wait → read embedded state / capture JSON responses → map into `history-store` (same pattern as Rago).
+- ~~LiveAuctioneers: intercept/parse `window.__data`~~ — **corrected 2026-08-07**: a real Browserbase probe of `/search/?keyword=david+webb` found real content (270 "david webb" mentions, 26 `salePrice`, 28 `lotNumber`) but `window.__data` was empty — nothing was in any window global or XHR response. The data appears server-inlined directly in the HTML; don't trust this line's original claim, trust the next probe's actual findings instead (`bb-probe.js` now does an HTML deep-dive for exactly this situation).
+- Prefer: navigate → wait → read embedded state / capture JSON responses → map into `history-store` (same pattern as Rago). `browserbase.js`'s `renderAndExtract()` had a bug where `sessionOpts` (incl. `--proxies`) was never actually forwarded to the session — fixed 2026-08-06, verify proxy-gated sites (Bonhams/Heritage) with a fresh probe, not assumptions from before that fix.
 
 ### 7.5 Cursor-specific (ignore if on Claude Code)
 - Dashboard “Save environment” `[invalid_argument]` can be ignored: env is **repo-managed** via `.cursor/environment.json`.
 - Cursor secrets ≠ GitHub Actions secrets.
+
+### 7.6 Claude Code web sandbox can't reach target sites OR Browserbase — probe via CI instead
+This session's own network is allowlisted and blocks essentially everything except npm/pypi registries and the Anthropic API — `fetch` to any target site (`yafasignedjewels.com`, `api.browserbase.com`, even `githubstatus.com`) returns `403 Host not in allowlist`. This is **different** from the previous Cursor session, which had open egress.
+
+**Workaround, already built:** a CI-driven probing pipeline that runs on GitHub Actions runners (which have real internet):
+- `.github/workflows/probe-source.yml` — runs `bb-probe.js` against a URL via Browserbase, prints a structured summary + all captured JSON responses + embedded state to the job log (readable via `mcp__github__get_job_logs` without downloading artifacts), and uploads the full `probe-output/` as a build artifact for deep dives.
+- `.github/workflows/scan-dealers.yml` / `scan-dealer-domains.js` — free (no Browserbase) sweep of candidate dealer domains for a Shopify/Squarespace/WooCommerce feed.
+- `.github/workflows/dealer-refresh.yml` — runs `import-dealers.js` for real (weekly on schedule once merged to `main`; also push-triggered on the importer files themselves for pre-merge verification) and uploads results as an artifact.
+
+**Triggering pre-merge:** `workflow_dispatch` can't be dispatched via API/UI until a workflow file exists on the default branch (a real GitHub limitation, confirmed the hard way) — so all three workflows above are **also** `push`-triggered on specific file paths (`probe-request.json` for probes, the importer `.js` files + workflow file itself for dealer-refresh). To probe a new URL from a feature branch: edit `probe-request.json` (`{url, proxies, wait_ms}`) and push — do **not** just edit `bb-probe.js`/`print-probe-findings.js` and expect it to trigger, those aren't in the path filter, `probe-request.json` must also change.
+
+**GitHub Actions outage, 2026-08-06 ~15:52–~00:47 UTC (next day):** hit a genuine multi-hour GitHub-wide Actions incident (status.github.com confirmed: "capacity remains constrained... recovers gradually", webhook deliveries delayed) mid-session — jobs stuck `queued` forever with `runner_id: 0` / empty `runner_group_name`, then auto-cancelled by GitHub after exactly 15 minutes. Ruled out (in order tried): Browserbase-specific (no — a pure-HTTP workflow failed identically), our workflow YAML (no — same `runs-on: ubuntu-latest` had worked minutes earlier), Actions minutes (no — 4/2000 used), missing org billing (no — added, didn't help either). It was genuinely GitHub's outage; resolved on its own once GitHub's status page said so. If this happens again: check https://www.githubstatus.com/ (not reachable from this sandbox — ask the user to check and paste it) before assuming it's something in this repo.
 
 ---
 
@@ -206,16 +218,34 @@ Optional-query list (still in `agent.js` `OPTIONAL_QUERIES`) includes dealers su
 
 User’s last direction: upgrade done; **don’t lose estate jewelers**; continue auctioneer coverage via Browserbase.
 
-### P0 — Estate jewelers (user-flagged)
-1. ✅ **Done** — `import-shopify.js` + `dealer-store.js` built (this session), using `/products.json` with `page`/`limit=250` pagination, registered `DEALERS` list starting with Yafa Signed Jewels. Feeds a **new dealer layer** (`output/david-webb-dealer-listings.*`), not the active library or auction history — see §5C. Unit-tested locally against a mocked Shopify response (filtering, category/era inference, price updates, inactive-marking all verified) — logic is solid.
-   - **Not yet verified against the live site.** This Claude Code web-environment’s network egress is allowlisted and does not include `yafasignedjewels.com` (`fetch` → `403 Host not in allowlist`). Needs a first live run from an environment with open/broad egress (local machine, GitHub Actions, or the previous Cursor/Browserbase environment) — `npm run import:dealers` or `node import-shopify.js yafasignedjewels.com "Yafa Signed Jewels"` — to confirm Yafa’s actual product JSON shape matches what was assumed (esp. `tags` format, whether `body_html` reliably contains material/era info, and real product count vs. the ~22 found via the earlier curl probe).
-2. Probe other `OPTIONAL_QUERIES` domains for Shopify / Squarespace / public JSON; add confirmed ones to `DEALERS` in `import-shopify.js` (each is just `curl https://<domain>/products.json?limit=1`).
-3. For non-Shopify dealers, use Browserbase + `bb-probe` the same way as LiveAuctioneers.
+### P0 — Estate jewelers (user-flagged) — ✅ Done, verified live
+1. **Verified against the live internet** (2026-08-07, via `dealer-refresh.yml` on GitHub Actions — this sandbox's own network can't reach these sites, see §7.6). `import-shopify.js` + `import-woocommerce.js` + `dealer-store.js` + `import-dealers.js` orchestrator all confirmed working end-to-end. Real run: **1,397 David Webb dealer listings** across 15 registered dealers (13 Shopify + 2 WooCommerce), sample titles spot-checked and confirmed genuine (not false positives):
+   | Dealer | Scanned | David Webb | Notes |
+   |---|---|---|---|
+   | The Back Vault | 3,414 | **952** | Match rate 27.9% looked implausible at first — sample titles confirm it's real, they're a heavy David Webb specialist |
+   | Yafa Signed Jewels | 421 | 66 | Full pagination found 3x the ~22 an earlier 5-item sample suggested |
+   | Oak Gem | 1,410 | 114 | |
+   | Saidian & Sons | 1,381 | 90 | |
+   | Eric Originals & Antiques | 1,730 | 84 | |
+   | Wilson's Estate Jewelry | 10,000 | 38 | **[TRUNCATED]** — hit the 10,000-product pagination cap, real catalog is larger |
+   | Legacy Vintage Jewels | 619 | 14 | |
+   | Macklowe Gallery | 584 | 11 | |
+   | Fred Leighton (WooCommerce) | 1,376 | 8 | |
+   | Estate Diamond Jewelry (WooCommerce) | 2,604 | 7 | |
+   | Kentshire | 2,619 | 6 | |
+   | Louis Martin | 4,452 | 4 | |
+   | A. Brandt + Son | 3,375 | 3 | |
+   | Doyle & Doyle | 1,317 | 0 | |
+   | Robinson's Jewelers | 10,000 | 0 | **[TRUNCATED]** |
+   | Schiffman's | 10,000 | 0 | **[TRUNCATED]** |
+   - `import-shopify.js`/`import-woocommerce.js` now detect stalled pagination (Shopify's legacy `?page=` sometimes re-serves the same page instead of erroring on huge catalogs) and flag `truncated: true` rather than silently under/over-counting. Three dealers above hit the real `MAX_PAGES` cap (40 × 250) — their true catalogs exceed 10,000 products; raise `MAX_PAGES` in `import-shopify.js` if fuller coverage of those three specifically is wanted (costs more requests/CI time).
+   - `import-dealers.js` prints sample matched titles inline whenever a dealer's match rate exceeds 15%, so a bad title/vendor/tag filter is visible in the log immediately rather than silently trusted.
+2. Probe other `OPTIONAL_QUERIES` domains for Shopify / Squarespace / public JSON — `scan-dealer-domains.js` covers this cheaply (see §7.6); add confirmed Shopify/WooCommerce hits to the `DEALERS` array in `import-shopify.js`/`import-woocommerce.js`.
+3. For non-Shopify/WooCommerce dealers, use Browserbase + `bb-probe` the same way as LiveAuctioneers (§7.6).
 
 ### P1 — Aggregators (highest auction ROI)
-1. With Browserbase (+ proxies), find LiveAuctioneers **sold / price-results** URL or UI path (default search is upcoming only).
-2. Parse `window.__data` → upsert into auction history.
-3. Repeat for Invaluable (Algolia — capture network JSON in probe).
+1. LiveAuctioneers: `/search/?keyword=david+webb` **does** render real content server-side (270 "david webb" mentions, 26 `salePrice`, 28 `lotNumber` occurrences confirmed via Browserbase probe on 2026-08-07) — but it is **not** in `window.__data` or any XHR response; earlier notes in this doc claiming `window.__data` were wrong (that finding was likely from a different URL/site state during the original Cursor investigation, or the frontend has changed since). The data appears to be server-inlined directly into the HTML. Investigation ongoing — see `probe-source.yml` / `bb-probe.js` (now does an HTML deep-dive — `<script>` tag inventory + context around signal occurrences — when this exact situation is detected) for the next probe's findings before writing an adapter. **Do not build `import-liveauctioneers.js` until the actual embedding mechanism and a sold-vs-upcoming distinguishing field are confirmed from real probe output** — guessing here already wasted one round (a guessed `/price-result/` URL turned out not to be a real route at all).
+2. Repeat for Invaluable (Algolia — capture network JSON in probe).
 
 ### P2 — Houses
 - Proxies on: Bonhams, Heritage.
