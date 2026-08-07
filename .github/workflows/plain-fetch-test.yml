@@ -1,0 +1,29 @@
+name: Plain Fetch Test (no Browserbase)
+# One-off diagnostic: does a plain fetch() (real internet, no JS rendering)
+# see the same server-rendered data Browserbase sees? If yes, we can skip
+# Browserbase for sources where the data turns out to be server-rendered.
+on:
+  push:
+    paths:
+      - 'plain-fetch-test.js'
+      - '.github/workflows/plain-fetch-test.yml'
+      - 'plain-fetch-request.txt'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Resolve URL
+        id: resolve
+        run: |
+          if [ -f plain-fetch-request.txt ]; then
+            echo "url=$(cat plain-fetch-request.txt)" >> "$GITHUB_OUTPUT"
+          else
+            echo "url=https://www.liveauctioneers.com/search/?keyword=david+webb" >> "$GITHUB_OUTPUT"
+          fi
+      - run: node plain-fetch-test.js "${{ steps.resolve.outputs.url }}"
