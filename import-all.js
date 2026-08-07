@@ -30,6 +30,7 @@ const invaluable = require("./import-invaluable");
 const bonhams = require("./import-bonhams");
 const sothebys = require("./import-sothebys");
 const christies = require("./import-christies");
+const phillips = require("./import-phillips");
 const backfill = require("./backfill");
 
 // Per-source status from direct investigation of each site's search page.
@@ -59,7 +60,12 @@ const SOURCES = [
     status: "structured",
     collect: sothebys.collect,
   },
-  { name: "Barnebys", method: "2 wrong URL guesses (404 both times: ?q=, ?query=); real search route not yet found", status: "web-search-only" },
+  {
+    name: "Barnebys",
+    method:
+      "real search UI found (button[aria-label='Search'][aria-controls='mobile-search-panel'] reveals a bare unlabeled <input>, confirmed via interactive probing) but the input reliably fails Playwright's own actionability check (\"Element is outside of the viewport\") even after a mobile-width viewport + longer settle wait -- 3 attempts, a near-miss, not pursued further per project policy against indefinite guessing.",
+    status: "web-search-only",
+  },
   {
     name: "Christie's",
     method:
@@ -67,10 +73,17 @@ const SOURCES = [
     status: "browserbase",
     collect: christies.collect,
   },
-  { name: "Phillips", method: "site down for maintenance across 3 probes today (real branded outage page, no bot-block) -- retry later, not blocked", status: "web-search-only" },
+  {
+    name: "Phillips",
+    method:
+      "structured (server-rendered search-results HTML, confirmed reachable via a plain cold fetch -- no Browserbase needed; site was previously down for maintenance across 3 probes, since recovered). Real listing-card markup parsed directly (maker/title/sale name/sale date/listing URL); no price/estimate is shown on the results page itself, so those fields are left blank rather than guessed -- would need a per-lot detail-page fetch to add.",
+    status: "structured",
+    collect: phillips.collect,
+  },
   {
     name: "Doyle",
-    method: "6 attempts (3 URL guesses + 3 interactive) all missed -- real search input exists but is hidden in an unopened dropdown; open-trigger not yet identified",
+    method:
+      "real search input (input.search-st) and its open-trigger (button.search-navbar[data-target='#navbar-search'], a Bootstrap 4 mobile-only hamburger) both confirmed real -- at a mobile viewport the trigger finally clicks successfully, but the revealed input still doesn't match any selector afterward (unclear whether it's a different mobile-specific input, or a timing/animation issue). Near-miss, not pursued further this round.",
     status: "web-search-only",
   },
   {
@@ -79,7 +92,12 @@ const SOURCES = [
       "DataDome device-check challenge (geo.captcha-delivery.com iframe), survives Browserbase proxies; browserSettings.advancedStealth also 403s (\"Verified mode is only available on the Enterprise plan\" -- confirmed advancedStealth itself is Enterprise-gated on this account, not just the separate `verified` flag, since a retry with `verified` fully removed from the request payload got the identical 403). No remaining Browserbase lever without a plan upgrade.",
     status: "web-search-only",
   },
-  { name: "Freeman's / Hindman", method: "2 wrong URL guesses (?q=, ?query=): real page renders but query never populates, zero search API XHRs", status: "web-search-only" },
+  {
+    name: "Freeman's / Hindman",
+    method:
+      "real page renders for guessed query params but search never fires (2 attempts). A follow-up interactive-UI attempt hit a persistent net::ERR_TUNNEL_CONNECTION_FAILED at the Browserbase proxy layer, unchanged with proxies disabled too (3 attempts total) -- while sibling probes to other hosts succeeded through the same infrastructure in the same window, pointing at something host-specific (edge/WAF blocking Browserbase's egress, or a routing issue) rather than a general outage. Not resolved.",
+    status: "web-search-only",
+  },
 ];
 
 async function main() {
@@ -96,8 +114,9 @@ async function main() {
   // 1) Structured, complete importers (free, no API key/session cost).
   for (const src of SOURCES.filter((s) => s.status === "structured")) {
     try {
-      const n = await src.collect(map, { today });
-      summary.push([src.name, "structured", `${n} lots`]);
+      const r = await src.collect(map, { today });
+      const detail = typeof r === "number" ? `${r} lots` : `${r.processed} lots (${r.pages} pages${r.truncated ? ", TRUNCATED" : ""})`;
+      summary.push([src.name, "structured", detail]);
     } catch (err) {
       summary.push([src.name, "structured", `ERROR: ${err.message}`]);
     }

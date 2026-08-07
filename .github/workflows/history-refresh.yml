@@ -28,6 +28,7 @@ on:
       - 'import-sothebys.js'
       - 'import-rago.js'
       - 'import-christies.js'
+      - 'import-phillips.js'
       - 'inline-state.js'
       - 'browserbase.js'
       - 'history-store.js'
