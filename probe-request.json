@@ -1,6 +1,6 @@
 {
-  "url": "https://www.freemanshindman.com/search?q=david+webb",
+  "url": "https://www.phillips.com/search?q=david%20webb",
   "proxies": false,
   "wait_ms": 10000,
-  "note": "Task #5: first probe of Freeman's/Hindman this session. import-all.js currently lists it as 'Nuxt app, results via API' from an earlier (pre-this-session) investigation, never re-verified with current tooling. Freeman's and Hindman merged; trying freemanshindman.com as the current combined-entity domain. Trying without proxies first since it wasn't previously flagged as Cloudflare-blocked; URL is an educated guess."
+  "note": "Re-probe: first Phillips attempt got 34875 bytes titled 'Phillips Auction | We apologize for the inconvenience', zero signals, zero XHRs -- couldn't tell if bot-block or wrong URL since 34.8KB was just over the old 10KB full-HTML-dump threshold. Bumped TINY_HTML_THRESHOLD to 50000 in bb-probe.js so this run will actually show the raw content instead of leaving it a mystery."
 }

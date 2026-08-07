@@ -112,7 +112,7 @@ async function main() {
   // stubs, and minimal error shells are all typically well under this) is
   // small enough to just print in full -- no need for a second probe round
   // or an artifact download to see what actually came back.
-  const TINY_HTML_THRESHOLD = 10000;
+  const TINY_HTML_THRESHOLD = 50000;
   if (html.length < TINY_HTML_THRESHOLD) {
     console.log(`\n--- rendered HTML is only ${html.length}b (< ${TINY_HTML_THRESHOLD}b), printing in full ---`);
     console.log(html);
