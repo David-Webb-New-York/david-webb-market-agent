@@ -10,7 +10,59 @@
  * directly from static HTML sidesteps that race entirely.
  */
 
-// Extract `window.NAME = {...}` blobs directly from raw HTML text.
+// Find the first `{...}` balanced object at/after `fromIdx`, brace/string-aware
+// (so braces inside string values don't confuse depth counting). Returns
+// {start, end, text} or null.
+function findBalancedObject(text, fromIdx) {
+  const braceStart = text.indexOf("{", fromIdx);
+  if (braceStart === -1) return null;
+  let depth = 0;
+  let inStr = false;
+  let strCh = "";
+  let esc = false;
+  let end = -1;
+  for (let i = braceStart; i < text.length; i++) {
+    const c = text[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === "\\") esc = true;
+      else if (c === strCh) inStr = false;
+      continue;
+    }
+    if (c === '"' || c === "'") {
+      inStr = true;
+      strCh = c;
+      continue;
+    }
+    if (c === "{") depth++;
+    else if (c === "}") {
+      depth--;
+      if (depth === 0) {
+        end = i;
+        break;
+      }
+    }
+  }
+  if (end === -1) return null;
+  return { start: braceStart, end, text: text.slice(braceStart, end + 1) };
+}
+
+// A JS object literal dumped into a page isn't strict JSON — `undefined`
+// (unlike `null`) breaks JSON.parse. Confirmed via an actual parse error on
+// LiveAuctioneers ("errorMessage":undefined); only fixing what's been
+// observed to actually occur, not guessing at every possible JS-literal
+// quirk.
+function sanitizeJsLiteral(text) {
+  return text.replace(/:(\s*)undefined\b/g, ":$1null");
+}
+
+// Extract `window.NAME = {...}` blobs directly from raw HTML text. Returns,
+// per name, the raw (pre-parse) text alongside the parse result — a caller
+// can fall back to a more targeted extraction (see extractKeyObject) from
+// the raw text if the full blob fails to parse (observed on LiveAuctioneers:
+// unrelated debug telemetry elsewhere in the same tree, e.g. a serialized
+// `Array.prototype` reference, can break a whole-blob JSON.parse even though
+// the actual data we want is well-formed).
 function extractInlineWindowVars(html, names) {
   const found = {};
   for (const name of names) {
@@ -18,50 +70,35 @@ function extractInlineWindowVars(html, names) {
     const idx = html.indexOf(marker);
     if (idx === -1) continue;
     const searchFrom = idx + marker.length;
-    const braceStart = html.indexOf("{", searchFrom);
-    if (braceStart === -1 || braceStart - searchFrom > 5) continue; // must immediately follow the `=` (allow a little whitespace)
-    let depth = 0;
-    let inStr = false;
-    let strCh = "";
-    let esc = false;
-    let end = -1;
-    for (let i = braceStart; i < html.length; i++) {
-      const c = html[i];
-      if (inStr) {
-        if (esc) esc = false;
-        else if (c === "\\") esc = true;
-        else if (c === strCh) inStr = false;
-        continue;
-      }
-      if (c === '"' || c === "'") {
-        inStr = true;
-        strCh = c;
-        continue;
-      }
-      if (c === "{") depth++;
-      else if (c === "}") {
-        depth--;
-        if (depth === 0) {
-          end = i;
-          break;
-        }
-      }
-    }
-    if (end === -1) continue;
-    const rawText = html.slice(braceStart, end + 1);
-    // This is a JS object literal dumped into the page, not strict JSON —
-    // `undefined` (unlike `null`) isn't valid JSON and breaks JSON.parse.
-    // Confirmed via an actual parse error on LiveAuctioneers
-    // ("errorMessage":undefined); only fixing what's been observed to
-    // actually occur, not guessing at every possible JS-literal quirk.
-    const jsonText = rawText.replace(/:(\s*)undefined\b/g, ":$1null");
+    const obj = findBalancedObject(html, searchFrom);
+    if (!obj || obj.start - searchFrom > 5) continue; // must immediately follow the `=` (allow a little whitespace)
+    const rawText = obj.text;
+    const jsonText = sanitizeJsLiteral(rawText);
     try {
-      found[name] = { ok: true, value: JSON.parse(jsonText), bytes: rawText.length };
+      found[name] = { ok: true, value: JSON.parse(jsonText), bytes: rawText.length, rawText };
     } catch (e) {
-      found[name] = { ok: false, error: e.message, bytes: rawText.length };
+      found[name] = { ok: false, error: e.message, bytes: rawText.length, rawText };
     }
   }
   return found;
+}
+
+// Within a raw (possibly unparseable as a whole) JS-object-literal text,
+// find a `"keyName": {...}` occurrence and parse just that balanced
+// sub-object — narrowing the surface area for JS-literal quirks down to the
+// one slice we actually need, instead of the entire blob.
+function extractKeyObject(rawText, keyName) {
+  const marker = `"${keyName}":`;
+  const idx = rawText.indexOf(marker);
+  if (idx === -1) return { ok: false, error: `key "${keyName}" not found` };
+  const obj = findBalancedObject(rawText, idx + marker.length);
+  if (!obj) return { ok: false, error: `no balanced object found after "${keyName}"` };
+  const jsonText = sanitizeJsLiteral(obj.text);
+  try {
+    return { ok: true, value: JSON.parse(jsonText), bytes: obj.text.length };
+  } catch (e) {
+    return { ok: false, error: e.message, bytes: obj.text.length };
+  }
 }
 
 // Recursively search a parsed state tree for objects that look like real
@@ -88,4 +125,4 @@ function findLotLikeObjects(obj, pathStr, results, opts) {
   }
 }
 
-module.exports = { extractInlineWindowVars, findLotLikeObjects };
+module.exports = { findBalancedObject, sanitizeJsLiteral, extractInlineWindowVars, extractKeyObject, findLotLikeObjects };

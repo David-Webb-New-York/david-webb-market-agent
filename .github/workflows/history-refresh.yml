@@ -1,13 +1,30 @@
-name: Monthly Auction History Refresh
+name: Weekly Auction History Refresh
+# Runs every structured + Browserbase-backed auction-history importer
+# (Rago, LiveAuctioneers, ...) into output/david-webb-auction-history.*.
+# Sibling to dealer-refresh.yml.
+#
+# Also push-triggered on changes to the importer code itself so a feature
+# branch can verify a new/edited adapter runs cleanly against the real
+# internet (and real Browserbase) before merging (see probe-source.yml for
+# why push, not just workflow_dispatch, is needed pre-merge).
 on:
   schedule:
-    - cron: '0 14 1 * *'   # 1st of each month, 9am ET
+    - cron: '0 13 * * 1'   # Monday 8am ET (before dealer-refresh.yml)
   workflow_dispatch:
     inputs:
       with_llm:
         description: 'Also run the LLM web-search sweep (costs ~$3-6; needs ANTHROPIC_API_KEY)'
         type: boolean
         default: false
+  push:
+    paths:
+      - 'import-liveauctioneers.js'
+      - 'import-rago.js'
+      - 'inline-state.js'
+      - 'browserbase.js'
+      - 'history-store.js'
+      - 'import-all.js'
+      - '.github/workflows/history-refresh.yml'
 permissions:
   contents: write
 jobs:
@@ -20,14 +37,29 @@ jobs:
           node-version: 20
       - run: npm install
 
-      # Structured importers are free (no API). Add --with-llm only on manual
-      # dispatch when the broad (paid) web-search sweep is wanted.
+      # Structured importers are free; --with-browserbase adds LiveAuctioneers
+      # (costs a Browserbase session). --with-llm only on manual dispatch when
+      # the broad (paid) web-search sweep is wanted.
       - name: Import auction history
-        run: node import-all.js ${{ (github.event_name == 'workflow_dispatch' && inputs.with_llm) && '--with-llm' || '' }}
+        run: node import-all.js --with-browserbase ${{ (github.event_name == 'workflow_dispatch' && inputs.with_llm) && '--with-llm' || '' }}
         env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
+      - name: Upload auction history (for pre-merge inspection)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auction-history
+          path: |
+            output/david-webb-auction-history.json
+            output/david-webb-auction-history.csv
+          retention-days: 14
+          if-no-files-found: warn
+
       - name: Commit history
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
           git config user.name "market-agent"
           git config user.email "agent@davidwebb.local"

@@ -5,28 +5,38 @@
  * Runs every available data source into the single shared, deduplicated
  * auction-history dataset (output/david-webb-auction-history.{json,csv}).
  *
- * Sources fall into two buckets (see SOURCES below), based on the same
+ * Sources fall into three buckets (see SOURCES below), based on the same
  * investigation performed for Rago:
  *   - "structured": the site serves its full result set as embeddable data, so
  *     we import it directly, completely, and for free (no API key). Rago today.
- *   - "web-search-only": the site loads results via client-side APIs and/or
- *     blocks automated requests (Cloudflare / SPA / auth). These cannot be
- *     imported like Rago; they are covered (broadly, not exhaustively) by the
- *     LLM web-search sweep (backfill.js), included with --with-llm.
+ *   - "browserbase": the site blocks plain HTTP (bot protection) or only
+ *     renders results client-side, but a rendered-HTML extraction gets the
+ *     real data reliably. Costs a Browserbase session per run, so this bucket
+ *     only runs with --with-browserbase. LiveAuctioneers today.
+ *   - "web-search-only": no deterministic adapter yet (Cloudflare / SPA / auth
+ *     not yet cracked). Covered (broadly, not exhaustively) by the LLM
+ *     web-search sweep (backfill.js), included with --with-llm.
  *
  * Usage:
- *   node import-all.js               # structured sources only (free)
- *   node import-all.js --with-llm    # also run the LLM web-search sweep (costs ~$3-6, needs ANTHROPIC_API_KEY)
+ *   node import-all.js                    # structured sources only (free)
+ *   node import-all.js --with-browserbase # also run Browserbase-backed sources (costs a Browserbase session)
+ *   node import-all.js --with-llm         # also run the LLM web-search sweep (costs ~$3-6, needs ANTHROPIC_API_KEY)
  */
 
 const store = require("./history-store");
 const rago = require("./import-rago");
+const liveauctioneers = require("./import-liveauctioneers");
 const backfill = require("./backfill");
 
 // Per-source status from direct investigation of each site's search page.
 const SOURCES = [
   { name: "Rago", method: "structured (Inertia data-page JSON)", status: "structured", collect: rago.collect },
-  { name: "LiveAuctioneers", method: "JSON API behind auth/anti-bot (957-byte stub on GET)", status: "web-search-only" },
+  {
+    name: "LiveAuctioneers",
+    method: "Incapsula-protected; window.__data extracted from Browserbase-rendered HTML",
+    status: "browserbase",
+    collect: liveauctioneers.collect,
+  },
   { name: "Invaluable", method: "Algolia-loaded results (no data in shell)", status: "web-search-only" },
   { name: "Barnebys", method: "Next.js app, results via API", status: "web-search-only" },
   { name: "Sotheby's", method: "SPA + API, GET redirects to JS app", status: "web-search-only" },
@@ -39,6 +49,8 @@ const SOURCES = [
 ];
 
 async function main() {
+  const withBrowserbase =
+    process.argv.includes("--with-browserbase") || /^(1|true|yes)$/i.test(process.env.WITH_BROWSERBASE || "");
   const withLlm = process.argv.includes("--with-llm") || /^(1|true|yes)$/i.test(process.env.WITH_LLM || "");
   const today = new Date().toISOString().slice(0, 10);
   const map = store.loadStore();
@@ -47,13 +59,30 @@ async function main() {
 
   console.log("David Webb — importing all available auction-history sources\n");
 
-  // 1) Structured, complete importers.
+  // 1) Structured, complete importers (free, no API key/session cost).
   for (const src of SOURCES.filter((s) => s.status === "structured")) {
     try {
       const n = await src.collect(map, { today });
       summary.push([src.name, "structured", `${n} lots`]);
     } catch (err) {
       summary.push([src.name, "structured", `ERROR: ${err.message}`]);
+    }
+  }
+
+  // 1b) Browserbase-backed importers (real, but cost a session per run).
+  if (withBrowserbase) {
+    for (const src of SOURCES.filter((s) => s.status === "browserbase")) {
+      try {
+        const r = await src.collect(map, { today });
+        const detail = typeof r === "number" ? `${r} lots` : `${r.processed} lots (${r.pages} pages${r.truncated ? ", TRUNCATED" : ""})`;
+        summary.push([src.name, "browserbase", detail]);
+      } catch (err) {
+        summary.push([src.name, "browserbase", `ERROR: ${err.message}`]);
+      }
+    }
+  } else {
+    for (const src of SOURCES.filter((s) => s.status === "browserbase")) {
+      summary.push([src.name, "browserbase", "skipped (pass --with-browserbase to include)"]);
     }
   }
 
