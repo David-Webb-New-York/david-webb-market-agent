@@ -68,28 +68,35 @@ function main() {
       }
     }
 
-    // Deep-dive into the raw HTML when the page clearly has real content
-    // (e.g. "salePrice" appears in signalCounts) but nothing was captured as
-    // embedded state or a candidate XHR — the data is likely inline in a
-    // <script> tag our state-scraping doesn't recognize by name.
+    // Deep-dive into the raw HTML whenever it clearly has real content
+    // (e.g. "salePrice" appears in signalCounts) — regardless of whether
+    // *some* candidate XHR or embedded state was also found, since a found
+    // candidate can be unrelated (e.g. a different catalog/widget's API call)
+    // and still leave the actual signal's source unexplained. The data is
+    // often inline in a <script> tag our state-scraping doesn't recognize.
     const htmlFile = path.join(OUT_DIR, `${slug}.html`);
     const looksLikeRealData = Object.entries(summary.signalCounts || {}).some(
       ([k, v]) => v > 0 && !/david webb/i.test(k)
     );
-    if (looksLikeRealData && embeddedState.length === 0 && candidates.length === 0 && fs.existsSync(htmlFile)) {
+    if (looksLikeRealData && fs.existsSync(htmlFile)) {
       const html = fs.readFileSync(htmlFile, "utf8");
-      console.log(`\n--- HTML deep-dive: signals present but no embedded state/candidate XHR captured ---`);
+      console.log(`\n--- HTML deep-dive (signals present in the page) ---`);
       const scriptTags = [...html.matchAll(/<script\b([^>]*)>/gi)].map((m) => m[1].trim());
       const namedOrTyped = scriptTags.filter((attrs) => /\bid=|\btype=(?!"text\/javascript"|"application\/javascript")/i.test(attrs));
       console.log(`<script> tags: ${scriptTags.length} total, ${namedOrTyped.length} with an id or non-JS type:`);
       for (const attrs of namedOrTyped.slice(0, 30)) console.log(`  <script ${attrs}>`);
 
       for (const needle of ["salePrice", "lotNumber", "itemId"]) {
-        const idx = html.indexOf(needle);
-        if (idx === -1) continue;
-        const start = Math.max(0, idx - 150);
-        console.log(`\n>>> context around first "${needle}" (html offset ${idx}):`);
-        console.log(html.slice(start, idx + 250));
+        let idx = -1;
+        let count = 0;
+        while (count < 3) {
+          idx = html.indexOf(needle, idx + 1);
+          if (idx === -1) break;
+          const start = Math.max(0, idx - 150);
+          console.log(`\n>>> context around "${needle}" occurrence ${count + 1} (html offset ${idx}):`);
+          console.log(html.slice(start, idx + 250));
+          count++;
+        }
       }
     }
   }
