@@ -58,7 +58,8 @@ function main() {
     console.log(`\n--- candidate response bodies (${candidates.length}, truncated to ${BODY_PREVIEW_BYTES}b) ---`);
     for (const c of candidates) {
       const file = path.join(responsesDir, c.file);
-      console.log(`\n>>> [${c.i}] ${c.url}`);
+      console.log(`\n>>> [${c.i}] ${c.method || "GET"} ${c.url}`);
+      if (c.postData) console.log(`    postData: ${c.postData}`);
       if (fs.existsSync(file)) {
         const body = fs.readFileSync(file, "utf8");
         console.log(body.slice(0, BODY_PREVIEW_BYTES));

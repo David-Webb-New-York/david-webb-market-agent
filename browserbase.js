@@ -49,7 +49,14 @@ async function renderAndExtract(url, { waitMs = 8000, captureJson = false, sessi
           const ct = r.headers()["content-type"] || "";
           if (!/json/i.test(ct)) return;
           const body = await r.text();
-          jsonResponses.push({ url: r.url(), bytes: body.length, body });
+          const req = r.request();
+          jsonResponses.push({
+            url: r.url(),
+            bytes: body.length,
+            body,
+            method: req.method(),
+            postData: req.postData() || null, // present for POST-body search APIs (e.g. Algolia-style endpoints with no query string)
+          });
         } catch (_) {}
       });
     }
