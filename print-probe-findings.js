@@ -98,6 +98,29 @@ function main() {
           count++;
         }
       }
+
+      // Listing-URL evidence: for any lot-like objects we found (real itemId +
+      // slug values), search the raw HTML for an <a href="..."> that actually
+      // contains that itemId or slug, so the adapter's listing_url pattern is
+      // built from an observed anchor rather than guessed from general
+      // knowledge of the site's URL conventions.
+      const lots = summary.lotLikeObjects || [];
+      if (lots.length) {
+        console.log(`\n--- listing-URL evidence (searching HTML for anchors referencing known itemIds/slugs) ---`);
+        for (const lot of lots.slice(0, 3)) {
+          const v = lot.value || {};
+          const needles = [v.itemId, v.slug, v.slugWithLocation].filter(Boolean).map(String);
+          for (const needle of needles) {
+            const hrefRe = new RegExp(`href="([^"]*${needle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^"]*)"`, "i");
+            const m = html.match(hrefRe);
+            if (m) {
+              console.log(`  itemId=${v.itemId} needle="${needle}" -> href="${m[1]}"`);
+            } else {
+              console.log(`  itemId=${v.itemId} needle="${needle}" -> no matching href found in HTML`);
+            }
+          }
+        }
+      }
     }
   }
 }

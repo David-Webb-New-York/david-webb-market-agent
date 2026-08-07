@@ -2,5 +2,5 @@
   "url": "https://www.liveauctioneers.com/search/?keyword=david+webb",
   "proxies": false,
   "wait_ms": 12000,
-  "note": "re-probe with undefined-token sanitization fix: window.__data extraction found the right 84686-byte boundary but JSON.parse failed on a bare `undefined` token (not valid JSON, only null is) -- now sanitized before parsing. Should finally yield the full parsed __data + matched lot-like objects."
+  "note": "re-probe to confirm listing_url pattern: previous run found 8 real lot-like objects (window.__data.itemSummary.byId.<itemId>) with itemId/slug fields but the deep-dive never checked whether an <a href> in the rendered HTML actually contains those exact itemId/slug values. print-probe-findings.js now searches for that directly, so this run should tell us the real item-page URL pattern instead of guessing one from general site knowledge."
 }
