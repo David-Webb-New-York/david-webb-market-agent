@@ -36,6 +36,10 @@ jobs:
           cp output/david-webb-dealer-listings.json docs/data/dealer-listings.json
           date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/data/generated-at.txt
       - uses: actions/configure-pages@v5
+        with:
+          # Auto-enable Pages (Source: GitHub Actions) on first run instead
+          # of requiring a human to click it on in repo Settings first.
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs/
