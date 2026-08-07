@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'christies-debug-fetch.js'
+      - 'christies-lot-shape.js'
       - '.github/workflows/christies-debug.yml'
 permissions:
   contents: read
@@ -15,7 +16,13 @@ jobs:
         with:
           node-version: 20
       - run: npm install
-      - run: node christies-debug-fetch.js "david webb"
+      - name: In-browser fetch test (superseded -- kept as a regression check)
+        run: node christies-debug-fetch.js "david webb"
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+      - name: Dump full lot record shape (for building import-christies.js)
+        run: node christies-lot-shape.js "david webb" 1
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
