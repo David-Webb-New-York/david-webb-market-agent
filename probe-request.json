@@ -1,6 +1,6 @@
 {
-  "url": "https://www.barnebys.com/search?q=david+webb",
+  "url": "https://www.doyle.com/auctions/search?query=david+webb",
   "proxies": false,
   "wait_ms": 10000,
-  "note": "Task #5: first probe of Barnebys this session (an auction aggregator/meta-search, similar to LiveAuctioneers/Invaluable). import-all.js currently lists it as 'Next.js app, results via API' from an earlier (pre-this-session) investigation, never re-verified with current tooling. Trying without proxies first since it wasn't previously flagged as Cloudflare-blocked; URL is an educated guess."
+  "note": "Task #5: first probe of Doyle this session. import-all.js currently lists it as 'SPA shell, results via JS' from an earlier (pre-this-session) investigation, never re-verified with current tooling. Trying without proxies first since it wasn't previously flagged as Cloudflare-blocked; URL is an educated guess."
 }
