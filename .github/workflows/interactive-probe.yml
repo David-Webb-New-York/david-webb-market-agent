@@ -68,13 +68,24 @@ jobs:
             '
           fi
       - name: Interactive probe
+        # Selectors can contain shell metacharacters (parens, quotes, commas
+        # in :has-text('...')) -- interpolating GitHub expressions straight
+        # into the run script (as a prior version of this step did) lets bash
+        # parse them as syntax instead of literal text. Passing everything
+        # through env vars and building an argv array with "$VAR" keeps each
+        # value a single opaque string regardless of its contents.
         run: |
-          node bb-interactive-probe.js "${{ steps.resolve.outputs.base_url }}" "${{ steps.resolve.outputs.term }}" \
-            --selectors="${{ steps.resolve.outputs.selectors }}" \
-            ${{ steps.resolve.outputs.open_selectors != '' && format('--open-selectors={0}', steps.resolve.outputs.open_selectors) || '' }} \
-            ${{ steps.resolve.outputs.post_search_selectors != '' && format('--post-search-selectors={0}', steps.resolve.outputs.post_search_selectors) || '' }} \
-            --wait=${{ steps.resolve.outputs.wait_ms }}
+          ARGS=("$BASE_URL" "$TERM" "--selectors=$SELECTORS" "--wait=$WAIT_MS")
+          if [ -n "$OPEN_SELECTORS" ]; then ARGS+=("--open-selectors=$OPEN_SELECTORS"); fi
+          if [ -n "$POST_SEARCH_SELECTORS" ]; then ARGS+=("--post-search-selectors=$POST_SEARCH_SELECTORS"); fi
+          node bb-interactive-probe.js "${ARGS[@]}"
         env:
+          BASE_URL: ${{ steps.resolve.outputs.base_url }}
+          TERM: ${{ steps.resolve.outputs.term }}
+          SELECTORS: ${{ steps.resolve.outputs.selectors }}
+          OPEN_SELECTORS: ${{ steps.resolve.outputs.open_selectors }}
+          POST_SEARCH_SELECTORS: ${{ steps.resolve.outputs.post_search_selectors }}
+          WAIT_MS: ${{ steps.resolve.outputs.wait_ms }}
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
       - name: Upload probe output
