@@ -10,6 +10,7 @@ on:
       - '.github/workflows/plain-fetch-test.yml'
       - 'plain-fetch-request.txt'
       - 'plain-post-request.json'
+      - 'plain-post-request-2.json'
 permissions:
   contents: read
 jobs:
@@ -34,3 +35,6 @@ jobs:
       - name: POST test (Invaluable catResults replay)
         if: hashFiles('plain-post-request.json') != ''
         run: node plain-post-test.js "https://www.invaluable.com/catResults" plain-post-request.json
+      - name: POST test 2 (Invaluable catResults, alternate index)
+        if: hashFiles('plain-post-request-2.json') != ''
+        run: node plain-post-test.js "https://www.invaluable.com/catResults" plain-post-request-2.json
