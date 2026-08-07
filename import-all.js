@@ -64,7 +64,7 @@ const SOURCES = [
     method: "page renders fine (no block), but no query param tried (?entry=, ?query=) populates results or fires a search API -- likely needs real UI interaction, not a URL param",
     status: "web-search-only",
   },
-  { name: "Phillips", method: "unclear -- first attempt looked like an error/block page, being re-investigated", status: "web-search-only" },
+  { name: "Phillips", method: "site was down for maintenance at probe time (real branded outage page, no bot-block) -- retry later, not blocked", status: "web-search-only" },
   {
     name: "Doyle",
     method: "3 URL attempts (generic search, /auctions/search, /auction/search) all missed real lot data -- either wrong endpoint or needs UI interaction",
