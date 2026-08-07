@@ -28,6 +28,10 @@ on:
         description: 'Comma-separated CSS selectors for an optional "open search" trigger'
         type: string
         default: ''
+      post_search_selectors:
+        description: 'Comma-separated CSS selectors to click AFTER the search fires (e.g. a "Past lots" tab)'
+        type: string
+        default: ''
       wait_ms:
         description: 'Wait time in ms after pressing Enter'
         type: string
@@ -52,6 +56,7 @@ jobs:
               echo "term=${{ inputs.term }}"
               echo "selectors=${{ inputs.selectors }}"
               echo "open_selectors=${{ inputs.open_selectors }}"
+              echo "post_search_selectors=${{ inputs.post_search_selectors }}"
               echo "wait_ms=${{ inputs.wait_ms }}"
             } >> "$GITHUB_OUTPUT"
           else
@@ -59,7 +64,7 @@ jobs:
               const fs = require("fs");
               const r = require("./interactive-probe-request.json");
               fs.appendFileSync(process.env.GITHUB_OUTPUT,
-                `base_url=${r.base_url}\nterm=${r.term}\nselectors=${r.selectors}\nopen_selectors=${r.open_selectors || ""}\nwait_ms=${r.wait_ms || 8000}\n`);
+                `base_url=${r.base_url}\nterm=${r.term}\nselectors=${r.selectors}\nopen_selectors=${r.open_selectors || ""}\npost_search_selectors=${r.post_search_selectors || ""}\nwait_ms=${r.wait_ms || 8000}\n`);
             '
           fi
       - name: Interactive probe
@@ -67,6 +72,7 @@ jobs:
           node bb-interactive-probe.js "${{ steps.resolve.outputs.base_url }}" "${{ steps.resolve.outputs.term }}" \
             --selectors="${{ steps.resolve.outputs.selectors }}" \
             ${{ steps.resolve.outputs.open_selectors != '' && format('--open-selectors={0}', steps.resolve.outputs.open_selectors) || '' }} \
+            ${{ steps.resolve.outputs.post_search_selectors != '' && format('--post-search-selectors={0}', steps.resolve.outputs.post_search_selectors) || '' }} \
             --wait=${{ steps.resolve.outputs.wait_ms }}
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}

@@ -117,10 +117,23 @@ async function renderAndExtract(url, { waitMs = 8000, captureJson = false, sessi
 // match wins) for the search input itself. `openTriggerSelectors` (optional)
 // is a list tried BEFORE that, for a "click here to open search" icon/button
 // some sites hide the input behind.
+// `postSearchClickSelectors` (optional): after the search fires and results
+// settle, click the first visible match (e.g. a "Past lots" tab) -- for
+// sites whose default results view isn't the one we need (observed on
+// Christie's: search lands on "available_lots", a separate tab click is
+// needed to trigger the real is_past_lots=True request with its real
+// headers, which a guessed URL param never produced).
 async function interactAndExtract(
   baseUrl,
   term,
-  { searchSelectors = [], openTriggerSelectors = [], waitMs = 8000, captureJson = true, sessionOpts = {} } = {}
+  {
+    searchSelectors = [],
+    openTriggerSelectors = [],
+    postSearchClickSelectors = [],
+    waitMs = 8000,
+    captureJson = true,
+    sessionOpts = {},
+  } = {}
 ) {
   return withPage(async (page) => {
     const jsonResponses = [];
@@ -184,6 +197,21 @@ async function interactAndExtract(
     if (!typed) log.push("no search input matched any selector -- nothing typed");
 
     await page.waitForTimeout(waitMs);
+
+    for (const sel of postSearchClickSelectors) {
+      try {
+        const el = page.locator(sel).first();
+        if (await el.isVisible({ timeout: 1500 })) {
+          await el.click({ timeout: 3000 });
+          log.push(`clicked post-search: ${sel}`);
+          await page.waitForTimeout(waitMs);
+          break;
+        }
+      } catch (e) {
+        log.push(`post-search selector ${sel} failed: ${e.message}`);
+      }
+    }
+
     const title = await page.title().catch(() => "");
     const html = await page.content().catch(() => "");
     const url = page.url();

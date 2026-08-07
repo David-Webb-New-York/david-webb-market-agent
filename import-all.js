@@ -70,7 +70,12 @@ const SOURCES = [
     method: "6 attempts (3 URL guesses + 3 interactive) all missed -- real search input exists but is hidden in an unopened dropdown; open-trigger not yet identified",
     status: "web-search-only",
   },
-  { name: "Heritage (ha.com)", method: "DataDome device-check challenge (geo.captcha-delivery.com iframe), survives Browserbase proxies", status: "web-search-only" },
+  {
+    name: "Heritage (ha.com)",
+    method:
+      "DataDome device-check challenge (geo.captcha-delivery.com iframe), survives Browserbase proxies; browserSettings.advancedStealth also 403s (\"Verified mode is only available on the Enterprise plan\" -- confirmed advancedStealth itself is Enterprise-gated on this account, not just the separate `verified` flag, since a retry with `verified` fully removed from the request payload got the identical 403). No remaining Browserbase lever without a plan upgrade.",
+    status: "web-search-only",
+  },
   { name: "Freeman's / Hindman", method: "2 wrong URL guesses (?q=, ?query=): real page renders but query never populates, zero search API XHRs", status: "web-search-only" },
 ];
 
