@@ -2,5 +2,5 @@
   "url": "https://www.ha.com/search?keyword=david+webb",
   "proxies": true,
   "wait_ms": 10000,
-  "note": "Task #4 (second half): Heritage (ha.com) was previously a plain-HTTP 403 (bot-blocked); never re-tested with Browserbase proxies since the sessionOpts-forwarding fix. URL path (/search?keyword=) is an educated guess based on common site conventions, not confirmed -- given Bonhams needed 2 attempts to find the right query param name, expect this one might too; look for whatever real search API call actually fires (candidate XHRs, jsonShape/pagination fields) rather than assuming this URL/param is exactly right."
+  "note": "Re-probe: first Heritage attempt returned only 3965 bytes titled just 'ha.com', zero signals, zero XHRs, zero embedded state -- looks like a bot-block interstitial or a shell that never initialized, unlike Bonhams' first attempt (real 638KB page, wrong query param but a real API found). bb-probe.js now prints the full raw HTML when it's under 10KB (too small to be a real page, but small enough to just show directly) so this run should reveal exactly what's actually being served instead of guessing whether it's a CAPTCHA, a redirect, or something else."
 }
