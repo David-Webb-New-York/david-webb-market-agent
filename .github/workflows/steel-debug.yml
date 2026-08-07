@@ -1,0 +1,28 @@
+name: Steel.dev Connection Debug
+# One-off diagnostic: steel.js's first live probes both failed instantly
+# with a generic "Connection error." on two different target URLs -- this
+# isolates each step (SDK import, client construction, session creation,
+# CDP connect, page load) and prints full error detail instead of letting
+# it collapse into one generic message.
+on:
+  push:
+    paths:
+      - 'steel-debug.js'
+      - 'steel.js'
+      - '.github/workflows/steel-debug.yml'
+permissions:
+  contents: read
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Steel connection diagnostic
+        run: node steel-debug.js
+        env:
+          STEEL_API_KEY: ${{ secrets.STEEL_API_KEY }}
