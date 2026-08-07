@@ -37,6 +37,7 @@
  */
 
 const store = require("./history-store");
+const { fetchWithTimeout } = require("./fetch-with-timeout");
 
 const SOURCE = "phillips-site";
 const BASE = "https://www.phillips.com";
@@ -126,7 +127,7 @@ function mapItem(it) {
 }
 
 async function fetchPage(term, page) {
-  const res = await fetch(searchUrl(term, page), { headers: { "User-Agent": UA, Accept: "text/html" } });
+  const res = await fetchWithTimeout(searchUrl(term, page), { headers: { "User-Agent": UA, Accept: "text/html" } });
   if (!res.ok) throw new Error(`Phillips ${res.status} for page ${page}`);
   const html = await res.text();
   return parseListings(html);

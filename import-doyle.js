@@ -45,6 +45,7 @@
  */
 
 const store = require("./history-store");
+const { fetchWithTimeout } = require("./fetch-with-timeout");
 
 const SOURCE = "doyle-site";
 const BASE = "https://www.doyle.com";
@@ -137,7 +138,7 @@ function mapItem(it) {
 }
 
 async function fetchPage(term, page) {
-  const res = await fetch(searchUrl(term, page), { headers: { "User-Agent": UA, Accept: "text/html" } });
+  const res = await fetchWithTimeout(searchUrl(term, page), { headers: { "User-Agent": UA, Accept: "text/html" } });
   if (!res.ok) throw new Error(`Doyle ${res.status} for page ${page}`);
   const html = await res.text();
   return parseListings(html);
