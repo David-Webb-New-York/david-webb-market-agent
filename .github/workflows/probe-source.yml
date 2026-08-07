@@ -22,6 +22,10 @@ on:
         description: 'Use Browserbase proxies (paid plan; needed for Cloudflare-blocked sites)'
         type: boolean
         default: false
+      stealth:
+        description: 'Use Browserbase advanced stealth mode (fingerprint spoofing, for DataDome/PerimeterX-style bot detection)'
+        type: boolean
+        default: false
       wait_ms:
         description: 'Render wait time in ms before capturing state'
         type: string
@@ -44,6 +48,7 @@ jobs:
             {
               echo "url=${{ inputs.url }}"
               echo "proxies=${{ inputs.proxies }}"
+              echo "stealth=${{ inputs.stealth }}"
               echo "wait_ms=${{ inputs.wait_ms }}"
             } >> "$GITHUB_OUTPUT"
           else
@@ -51,11 +56,11 @@ jobs:
               const fs = require("fs");
               const r = require("./probe-request.json");
               fs.appendFileSync(process.env.GITHUB_OUTPUT,
-                `url=${r.url}\nproxies=${!!r.proxies}\nwait_ms=${r.wait_ms || 8000}\n`);
+                `url=${r.url}\nproxies=${!!r.proxies}\nstealth=${!!r.stealth}\nwait_ms=${r.wait_ms || 8000}\n`);
             '
           fi
       - name: Probe URL
-        run: node bb-probe.js "${{ steps.resolve.outputs.url }}" ${{ steps.resolve.outputs.proxies == 'true' && '--proxies' || '' }} --wait=${{ steps.resolve.outputs.wait_ms }}
+        run: node bb-probe.js "${{ steps.resolve.outputs.url }}" ${{ steps.resolve.outputs.proxies == 'true' && '--proxies' || '' }} ${{ steps.resolve.outputs.stealth == 'true' && '--stealth' || '' }} --wait=${{ steps.resolve.outputs.wait_ms }}
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}

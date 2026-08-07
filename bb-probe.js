@@ -74,10 +74,11 @@ function slugFor(url) {
 async function main() {
   const url = process.argv[2];
   const useProxies = process.argv.includes("--proxies");
+  const useStealth = process.argv.includes("--stealth");
   const waitArg = process.argv.find((a) => a.startsWith("--wait="));
   const waitMs = waitArg ? parseInt(waitArg.split("=")[1], 10) : 8000;
   if (!url) {
-    console.error('usage: node bb-probe.js "<url>" [--proxies] [--wait=ms]');
+    console.error('usage: node bb-probe.js "<url>" [--proxies] [--stealth] [--wait=ms]');
     process.exit(1);
   }
   if (!bb.hasCreds()) {
@@ -90,13 +91,23 @@ async function main() {
   const responsesDir = path.join(OUT_DIR, `${slug}-responses`);
   fs.mkdirSync(responsesDir, { recursive: true });
 
-  console.log("probing:", url, useProxies ? "(proxies on)" : "", `wait=${waitMs}ms`);
+  // advancedStealth + verified + a spoofed OS are real, documented
+  // Browserbase session options (SessionCreateParams.browserSettings, see
+  // node_modules/@browserbasehq/sdk) specifically for fingerprint-based
+  // anti-bot systems (DataDome, PerimeterX, etc.) -- distinct from
+  // `proxies`, which only addresses IP reputation. Never tried before
+  // Heritage's DataDome block was found; worth testing directly.
+  const sessionOpts = {};
+  if (useProxies) sessionOpts.proxies = true;
+  if (useStealth) sessionOpts.browserSettings = { advancedStealth: true, verified: true, os: "windows" };
+
+  console.log("probing:", url, useProxies ? "(proxies on)" : "", useStealth ? "(stealth on)" : "", `wait=${waitMs}ms`);
   const started = Date.now();
   const { title, html, state, jsonResponses } = await bb
     .renderAndExtract(url, {
       captureJson: true,
       waitMs,
-      sessionOpts: useProxies ? { proxies: true } : {},
+      sessionOpts,
     })
     .catch((e) => {
       console.error("render failed:", e.message);
