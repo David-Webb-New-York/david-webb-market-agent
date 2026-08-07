@@ -2,5 +2,5 @@
   "url": "https://www.liveauctioneers.com/price-result/?keyword=david+webb",
   "proxies": false,
   "wait_ms": 12000,
-  "note": "fresh run after Actions incident recovery"
+  "note": "retry after user confirmed GitHub Actions incident should be resolved"
 }

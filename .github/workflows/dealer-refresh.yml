@@ -1,4 +1,5 @@
 name: Weekly Dealer Listings Refresh
+# (retried after GitHub Actions incident on 2026-08-06 should be resolved)
 # Structured, free (no API key) sweep of estate-jeweler / dealer inventory
 # (Shopify /products.json, WooCommerce Store API, ...) into
 # output/david-webb-dealer-listings.*. Sibling to history-refresh.yml.
