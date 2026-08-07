@@ -7,6 +7,7 @@ on:
     paths:
       - 'plain-fetch-test.js'
       - 'plain-post-test.js'
+      - 'plain-json-get-test.js'
       - '.github/workflows/plain-fetch-test.yml'
       - 'plain-fetch-request.txt'
       - 'plain-post-request.json'
@@ -47,3 +48,9 @@ jobs:
       - name: POST test 5 (Sotheby's Algolia replay, type:Lot query -- real auction data?)
         if: hashFiles('plain-post-request-5.json') != ''
         run: node plain-post-test.js "https://o28sy4q7wu-dsn.algolia.net/1/indexes/*/queries" plain-post-request-5.json plain-post-headers-sothebys.json
+      - name: GET test 6 (Christie's count-client, regression check -- confirms 2015 past-lot matches)
+        if: hashFiles('plain-json-get-test.js') != ''
+        run: node plain-json-get-test.js "https://apim.christies.com/count-client?Keyword=david%20webb&LanguageCode=en&Categories=%5B%22UpcomingLot%22%2C%22PastLot%22%2C%22Story%22%5D"
+      - name: GET test 7 (Christie's search-client with is_past_lots=True -- real lot listing data?)
+        if: hashFiles('plain-json-get-test.js') != ''
+        run: node plain-json-get-test.js "https://apim.christies.com/search-client?keyword=david%20webb&page=1&is_past_lots=True&sortby=relevance&language=en&geocountrycode=US"
