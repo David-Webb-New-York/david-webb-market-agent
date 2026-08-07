@@ -26,6 +26,7 @@ jobs:
         run: node analyze.js --generate
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          REPORT_DATABASE_URL: ${{ vars.REPORT_DATABASE_URL }}
 
       - name: Commit report
         run: |
@@ -40,3 +41,4 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           REPORT_LINK_BRANCH: ${{ github.ref_name }}
+          REPORT_DATABASE_URL: ${{ vars.REPORT_DATABASE_URL }}

@@ -29,7 +29,9 @@
  *   GITHUB_REPOSITORY   e.g. "owner/repo" (auto-set in GitHub Actions)
  *   GITHUB_SERVER_URL   e.g. "https://github.com" (auto-set in GitHub Actions)
  *   REPORT_LINK_BRANCH  branch the committed links point at (default "main")
- *   REPORT_PAGES_URL    live database GUI URL (default the org's GitHub Pages URL)
+ *   REPORT_DATABASE_URL live database GUI URL (the Vercel deployment; set once
+ *                       known -- see history-refresh.yml's "Deploy database
+ *                       GUI" step for how it's deployed)
  */
 
 const fs = require("fs");
@@ -53,9 +55,7 @@ const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
 const REPO = process.env.GITHUB_REPOSITORY || "David-Webb-New-York/david-webb-market-agent";
 const SERVER = (process.env.GITHUB_SERVER_URL || "https://github.com").replace(/\/$/, "");
 const BRANCH = process.env.REPORT_LINK_BRANCH || "main";
-const PAGES_URL =
-  process.env.REPORT_PAGES_URL ||
-  `https://${REPO.split("/")[0].toLowerCase()}.github.io/${REPO.split("/")[1]}/`;
+const DATABASE_URL = process.env.REPORT_DATABASE_URL || "";
 
 // ---------- data loading ----------
 
@@ -391,7 +391,7 @@ function splitSections(text) {
 function links(date) {
   return {
     report: `${SERVER}/${REPO}/blob/${BRANCH}/output/reports/${date}.md`,
-    database: PAGES_URL,
+    database: DATABASE_URL || null,
     auctionCsv: `${SERVER}/${REPO}/raw/${BRANCH}/${path.relative(__dirname, HISTORY_CSV)}`,
     dealerCsv: `${SERVER}/${REPO}/raw/${BRANCH}/${path.relative(__dirname, LISTINGS_CSV)}`,
   };
@@ -400,6 +400,11 @@ function links(date) {
 function buildSlackPayload(date, stats, slackSummary) {
   const l = links(date);
   const money = (n) => (n === null || n === undefined ? "n/a" : "$" + n.toLocaleString("en-US"));
+  const linkParts = [
+    `*Report:* <${l.report}|View report>`,
+    l.database ? `*Live database:* <${l.database}|Search all listings>` : null,
+    `*CSVs:* <${l.auctionCsv}|Auctions> / <${l.dealerCsv}|Dealers>`,
+  ].filter(Boolean);
 
   return {
     text: `David Webb secondary-market report — ${date}`,
@@ -421,10 +426,7 @@ function buildSlackPayload(date, stats, slackSummary) {
       { type: "section", text: { type: "mrkdwn", text: slackSummary || "_No summary generated._" } },
       {
         type: "section",
-        text: {
-          type: "mrkdwn",
-          text: `*Report:* <${l.report}|View report>  ·  *Live database:* <${l.database}|Search all listings>  ·  *CSVs:* <${l.auctionCsv}|Auctions> / <${l.dealerCsv}|Dealers>`,
-        },
+        text: { type: "mrkdwn", text: linkParts.join("  ·  ") },
       },
       {
         type: "context",
