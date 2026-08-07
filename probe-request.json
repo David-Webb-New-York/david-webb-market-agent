@@ -1,6 +1,6 @@
 {
-  "url": "https://www.liveauctioneers.com/search/?keyword=david+webb&page=2",
+  "url": "https://www.invaluable.com/search?keyword=david+webb",
   "proxies": false,
   "wait_ms": 12000,
-  "note": "pagination check: confirmed listing_url pattern is /item/{itemId}_{slugWithLocation} (real anchor href, not guessed). Now testing whether &page=2 returns different itemIds than page 1 (page1 itemIds: 236817059, 236817274, 236819600, 236819767, 236819965, 236820169, 236820244, 236820345) -- catalogItems.pagination redux slice is unrelated/empty in every probe, so this is the only way to find out if ?page= paging actually works for search results."
+  "note": "First probe of Invaluable (task #3). import-all.js currently lists it as 'Algolia-loaded results (no data in shell)' from an earlier (pre-this-session) investigation, but that's never been re-verified with the current bb-probe.js tooling (inline window-var extraction, broadened XHR candidate regex, HTML deep-dive). Starting fresh: capture whatever real signals/candidates/embedded state show up for this URL before assuming Algolia or writing any adapter code."
 }
