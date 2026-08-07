@@ -107,8 +107,21 @@ async function main() {
   });
   fs.writeFileSync(path.join(responsesDir, "index.json"), JSON.stringify(responsesIndex, null, 2));
 
-  const candidateRe = /david webb|"(lots|items|hits|results|catalog)"|"(salePrice|priceResult|estimate|hammer)"/i;
-  const candidates = responsesIndex.filter((r) => candidateRe.test(fs.readFileSync(path.join(responsesDir, r.file), "utf8")));
+  // Broad on purpose: plural/casing variants ("catalogs" vs "catalog") and
+  // real backend APIs that don't happen to mention these exact keys have
+  // both caused missed candidates before. Any non-trivial JSON response from
+  // a host that isn't obviously 3rd-party analytics/tracking noise also
+  // counts — better to over-flag (bodies are truncated to 3KB in the log
+  // anyway) than silently miss the real endpoint.
+  const candidateRe = /david\s*webb|"(lots?|items?|hits?|results?|catalogs?|auctionlots?)"\s*:|salePrice|priceResult|estimate\b|hammer\b|soldPrice|lotNumber/i;
+  const KNOWN_NOISE_HOSTS =
+    /cookiebot|amplitude|sail-personalize|sail-track|openreplay|google-analytics|googletagmanager|doubleclick|facebook\.net|hotjar|segment\.(io|com)|mixpanel|fullstory|sentry\.io|bugsnag/i;
+  const candidates = responsesIndex.filter((r) => {
+    const body = fs.readFileSync(path.join(responsesDir, r.file), "utf8");
+    if (candidateRe.test(body)) return true;
+    const trimmed = body.trim();
+    return !KNOWN_NOISE_HOSTS.test(r.url) && trimmed.length > 20 && /^[{[]/.test(trimmed);
+  });
 
   const summary = {
     url,
