@@ -2,5 +2,5 @@
   "url": "https://www.liveauctioneers.com/search/?keyword=david+webb",
   "proxies": false,
   "wait_ms": 12000,
-  "note": "re-probe with broadened candidate-XHR detection + HTML deep-dive: last run confirmed /search/ renders real content (270 'david webb' mentions, 26 salePrice, 28 lotNumber) but nothing was captured as embedded state or a candidate XHR, so the data must be server-inlined in the HTML somewhere our previous instrumentation missed."
+  "note": "re-probe with fixed deep-dive gating: last run found a real backend API call (item-api-prod.liveauctioneers.com/.../catalogs) via the broadened candidate regex, but it was catalog-level metadata for an unrelated sale, not the source of the page's salePrice/lotNumber signals -- the deep-dive was wrongly skipped because a candidate existed. Now it always runs when real signals are present."
 }
