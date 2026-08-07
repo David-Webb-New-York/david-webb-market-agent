@@ -1,6 +1,6 @@
 {
-  "url": "https://www.liveauctioneers.com/search/?keyword=david+webb",
+  "url": "https://www.liveauctioneers.com/search/?keyword=david+webb&page=2",
   "proxies": false,
   "wait_ms": 12000,
-  "note": "re-probe to confirm listing_url pattern: previous run found 8 real lot-like objects (window.__data.itemSummary.byId.<itemId>) with itemId/slug fields but the deep-dive never checked whether an <a href> in the rendered HTML actually contains those exact itemId/slug values. print-probe-findings.js now searches for that directly, so this run should tell us the real item-page URL pattern instead of guessing one from general site knowledge."
+  "note": "pagination check: confirmed listing_url pattern is /item/{itemId}_{slugWithLocation} (real anchor href, not guessed). Now testing whether &page=2 returns different itemIds than page 1 (page1 itemIds: 236817059, 236817274, 236819600, 236819767, 236819965, 236820169, 236820244, 236820345) -- catalogItems.pagination redux slice is unrelated/empty in every probe, so this is the only way to find out if ?page= paging actually works for search results."
 }
