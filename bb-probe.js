@@ -15,13 +15,17 @@
  * Usage:  node bb-probe.js "https://www.liveauctioneers.com/search/?keyword=david+webb"
  *         node bb-probe.js <url> --proxies      (requires a paid Browserbase plan)
  *         node bb-probe.js <url> --wait=12000    (override render wait, ms)
+ *         node bb-probe.js <url> --backend=steel (use Steel.dev instead of Browserbase)
  */
 
 const fs = require("fs");
 const path = require("path");
-const bb = require("./browserbase");
 const { extractInlineWindowVars, findLotLikeObjects } = require("./inline-state");
 const { summarizeJsonShape } = require("./json-shape");
+
+const backendArg = process.argv.find((a) => a.startsWith("--backend="));
+const backendName = backendArg ? backendArg.split("=")[1] : "browserbase";
+const bb = require(backendName === "steel" ? "./steel" : "./browserbase");
 
 const OUT_DIR = path.join(__dirname, "probe-output");
 
@@ -40,11 +44,15 @@ async function main() {
   const waitArg = process.argv.find((a) => a.startsWith("--wait="));
   const waitMs = waitArg ? parseInt(waitArg.split("=")[1], 10) : 8000;
   if (!url) {
-    console.error('usage: node bb-probe.js "<url>" [--proxies] [--stealth] [--wait=ms]');
+    console.error('usage: node bb-probe.js "<url>" [--proxies] [--stealth] [--backend=steel] [--wait=ms]');
     process.exit(1);
   }
   if (!bb.hasCreds()) {
-    console.error("Missing BROWSERBASE_API_KEY / BROWSERBASE_PROJECT_ID (add them as secrets).");
+    console.error(
+      backendName === "steel"
+        ? "Missing STEEL_API_KEY (add it as a secret)."
+        : "Missing BROWSERBASE_API_KEY / BROWSERBASE_PROJECT_ID (add them as secrets)."
+    );
     process.exit(1);
   }
 
@@ -53,19 +61,31 @@ async function main() {
   const responsesDir = path.join(OUT_DIR, `${slug}-responses`);
   fs.mkdirSync(responsesDir, { recursive: true });
 
-  // advancedStealth + a spoofed OS are real, documented Browserbase session
-  // options (SessionCreateParams.browserSettings, see
-  // node_modules/@browserbasehq/sdk) specifically for fingerprint-based
-  // anti-bot systems (DataDome, PerimeterX, etc.) -- distinct from
-  // `proxies`, which only addresses IP reputation. `verified` mode is
-  // Enterprise-plan-only (confirmed via a live 403 "Verified mode is only
-  // available on the Enterprise plan" -- the session was rejected before any
-  // page load), so it's deliberately omitted here.
+  // Session-option shape differs per backend (confirmed real, not guessed,
+  // for each SDK -- see browserbase.js/steel.js). Browserbase:
+  // advancedStealth + a spoofed OS are documented browserSettings options
+  // for fingerprint-based anti-bot (DataDome, PerimeterX) -- `verified` mode
+  // is Enterprise-plan-only (confirmed via a live 403), so deliberately
+  // omitted. Steel: `useProxy` is its own residential proxy network;
+  // `solveCaptcha` is the closest analog to "stealth" in its session-create
+  // API (steel-sdk docs/examples).
   const sessionOpts = {};
-  if (useProxies) sessionOpts.proxies = true;
-  if (useStealth) sessionOpts.browserSettings = { advancedStealth: true, os: "windows" };
+  if (backendName === "steel") {
+    if (useProxies) sessionOpts.useProxy = true;
+    if (useStealth) sessionOpts.solveCaptcha = true;
+  } else {
+    if (useProxies) sessionOpts.proxies = true;
+    if (useStealth) sessionOpts.browserSettings = { advancedStealth: true, os: "windows" };
+  }
 
-  console.log("probing:", url, useProxies ? "(proxies on)" : "", useStealth ? "(stealth on)" : "", `wait=${waitMs}ms`);
+  console.log(
+    "probing:",
+    url,
+    `[backend=${backendName}]`,
+    useProxies ? "(proxies on)" : "",
+    useStealth ? "(stealth on)" : "",
+    `wait=${waitMs}ms`
+  );
   const started = Date.now();
   const { title, html, state, jsonResponses } = await bb
     .renderAndExtract(url, {

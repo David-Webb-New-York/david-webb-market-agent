@@ -26,6 +26,13 @@ on:
         description: 'Use Browserbase advanced stealth mode (fingerprint spoofing, for DataDome/PerimeterX-style bot detection)'
         type: boolean
         default: false
+      backend:
+        description: 'Cloud-browser backend to use'
+        type: choice
+        options:
+          - browserbase
+          - steel
+        default: browserbase
       wait_ms:
         description: 'Render wait time in ms before capturing state'
         type: string
@@ -50,6 +57,7 @@ jobs:
               echo "url=${{ inputs.url }}"
               echo "proxies=${{ inputs.proxies }}"
               echo "stealth=${{ inputs.stealth }}"
+              echo "backend=${{ inputs.backend }}"
               echo "wait_ms=${{ inputs.wait_ms }}"
             } >> "$GITHUB_OUTPUT"
           else
@@ -57,14 +65,15 @@ jobs:
               const fs = require("fs");
               const r = require("./probe-request.json");
               fs.appendFileSync(process.env.GITHUB_OUTPUT,
-                `url=${r.url}\nproxies=${!!r.proxies}\nstealth=${!!r.stealth}\nwait_ms=${r.wait_ms || 8000}\n`);
+                `url=${r.url}\nproxies=${!!r.proxies}\nstealth=${!!r.stealth}\nbackend=${r.backend || "browserbase"}\nwait_ms=${r.wait_ms || 8000}\n`);
             '
           fi
       - name: Probe URL
-        run: node bb-probe.js "${{ steps.resolve.outputs.url }}" ${{ steps.resolve.outputs.proxies == 'true' && '--proxies' || '' }} ${{ steps.resolve.outputs.stealth == 'true' && '--stealth' || '' }} --wait=${{ steps.resolve.outputs.wait_ms }}
+        run: node bb-probe.js "${{ steps.resolve.outputs.url }}" ${{ steps.resolve.outputs.proxies == 'true' && '--proxies' || '' }} ${{ steps.resolve.outputs.stealth == 'true' && '--stealth' || '' }} --backend=${{ steps.resolve.outputs.backend }} --wait=${{ steps.resolve.outputs.wait_ms }}
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+          STEEL_API_KEY: ${{ secrets.STEEL_API_KEY }}
       - name: Print findings to job log
         if: always()
         run: node print-probe-findings.js

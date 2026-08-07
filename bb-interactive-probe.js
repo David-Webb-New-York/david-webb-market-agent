@@ -13,9 +13,12 @@
  */
 const fs = require("fs");
 const path = require("path");
-const bb = require("./browserbase");
 const { extractInlineWindowVars, findLotLikeObjects } = require("./inline-state");
 const { summarizeJsonShape } = require("./json-shape");
+
+const backendArg = process.argv.find((a) => a.startsWith("--backend="));
+const backendName = backendArg ? backendArg.split("=")[1] : "browserbase";
+const bb = require(backendName === "steel" ? "./steel" : "./browserbase");
 
 const OUT_DIR = path.join(__dirname, "probe-output");
 
@@ -61,22 +64,29 @@ async function main() {
 
   if (!baseUrl || !term || !searchSelectors.length) {
     console.error(
-      'usage: node bb-interactive-probe.js "<base-url>" "<term>" --selectors=sel1,sel2 [--open-selectors=sel] [--post-search-selectors=sel] [--html-grep=term1,term2] [--viewport=WxH] [--no-proxies] [--wait=ms]'
+      'usage: node bb-interactive-probe.js "<base-url>" "<term>" --selectors=sel1,sel2 [--open-selectors=sel] [--post-search-selectors=sel] [--html-grep=term1,term2] [--viewport=WxH] [--no-proxies] [--backend=steel] [--wait=ms]'
     );
     process.exit(1);
   }
   if (!bb.hasCreds()) {
-    console.error("Missing BROWSERBASE_API_KEY / BROWSERBASE_PROJECT_ID.");
+    console.error(backendName === "steel" ? "Missing STEEL_API_KEY." : "Missing BROWSERBASE_API_KEY / BROWSERBASE_PROJECT_ID.");
     process.exit(1);
   }
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const slug = slugFor(baseUrl);
 
-  console.log("interactive probe:", baseUrl, "| term:", term, "| selectors:", searchSelectors, "| wait:", waitMs);
+  console.log("interactive probe:", baseUrl, `[backend=${backendName}]`, "| term:", term, "| selectors:", searchSelectors, "| wait:", waitMs);
   const started = Date.now();
-  const sessionOpts = { proxies: !noProxies };
-  if (viewport) sessionOpts.browserSettings = { viewport };
+  // Session-option shape differs per backend (see browserbase.js/steel.js
+  // for the confirmed-real option names). Steel: `useProxy` for its own
+  // residential proxy network, `dimensions` for viewport (steel-sdk docs).
+  const sessionOpts =
+    backendName === "steel" ? { useProxy: !noProxies } : { proxies: !noProxies };
+  if (viewport) {
+    if (backendName === "steel") sessionOpts.dimensions = viewport;
+    else sessionOpts.browserSettings = { viewport };
+  }
   const { title, html, url, jsonResponses, interactionLog } = await bb
     .interactAndExtract(baseUrl, term, {
       searchSelectors,
