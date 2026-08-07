@@ -32,7 +32,11 @@ async function main() {
   const selectorsArg = process.argv.find((a) => a.startsWith("--selectors="));
   const openSelectorsArg = process.argv.find((a) => a.startsWith("--open-selectors="));
   const waitArg = process.argv.find((a) => a.startsWith("--wait="));
-  const searchSelectors = selectorsArg ? selectorsArg.split("=")[1].split(",") : [];
+  // CSS attribute selectors (e.g. input[placeholder*='lot' i]) contain their
+  // own `=` characters -- splitting on every `=` in the arg truncates them.
+  // Only the first `=` (after "--selectors") delimits the flag from its value.
+  const afterFirstEquals = (arg) => (arg ? arg.slice(arg.indexOf("=") + 1) : "");
+  const searchSelectors = selectorsArg ? afterFirstEquals(selectorsArg).split(",") : [];
   const openTriggerSelectors = openSelectorsArg ? openSelectorsArg.split("=")[1].split(",") : [];
   const waitMs = waitArg ? parseInt(waitArg.split("=")[1], 10) : 8000;
 
