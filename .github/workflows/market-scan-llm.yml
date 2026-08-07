@@ -1,0 +1,45 @@
+name: Market Scan (LLM web search, manual)
+# Optional, manual-only. This is the ORIGINAL discovery mechanism (Claude +
+# web search, output/snapshots/*.json -> library.js's deduplicated
+# output/david-webb-library.json), from before history-refresh.yml and
+# dealer-refresh.yml existed as structured, free, much more reliable
+# sources for the same auction/dealer data.
+#
+# It's no longer part of the weekly report (see weekly-report.yml, which
+# reads output/david-webb-auction-history.json and
+# output/david-webb-dealer-listings.json instead) or on a cron schedule --
+# those structured sources cover the same ground more cheaply and
+# consistently. Kept around, dispatchable by hand, for the thing it's
+# still good at: an open-ended web sweep that might turn up a dealer or
+# source the structured importers don't know about yet.
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+
+      - name: Scan secondary market
+        run: node agent.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          WEB_SEARCH_MAX_USES: '3'
+
+      - name: Rebuild library
+        run: node library.js
+
+      - name: Commit results
+        run: |
+          git config user.name "market-agent"
+          git config user.email "agent@davidwebb.local"
+          git add output/
+          git commit -m "Manual LLM market scan $(date +%F)" || echo "No changes to commit"
+          git push

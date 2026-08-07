@@ -10,7 +10,7 @@ name: Weekly Dealer Listings Refresh
 # workflow_dispatch, is needed pre-merge).
 on:
   schedule:
-    - cron: '30 13 * * 1'  # Monday 8:30am ET (30 min after weekly-scan.yml)
+    - cron: '30 13 * * 1'  # Monday 8:30am ET (15 min after history-refresh.yml)
   workflow_dispatch: {}
   push:
     paths:
@@ -25,7 +25,7 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -58,5 +58,27 @@ jobs:
       - name: Deploy database GUI
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: gh workflow run pages-deploy.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # The weekly report (weekly-report.yml) needs BOTH this run's dealer
+      # data AND history-refresh.yml's auction data committed first --
+      # otherwise it's reading stale/partial data, which was the original
+      # bug (the old weekly-scan.yml posted to Slack at 8:00am, 15-30 min
+      # BEFORE these two refreshes even ran). This job is always the fast
+      # one (no paid Browserbase/Steel sessions), so it waits here for the
+      # same schedule's history-refresh.yml run to finish, then dispatches
+      # the report explicitly -- same GITHUB_TOKEN-doesn't-cascade reason
+      # as the pages-deploy dispatch above.
+      - name: Wait for auction-history refresh, then generate weekly report
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          for i in $(seq 1 40); do
+            status=$(gh run list --workflow=history-refresh.yml --branch=main --limit=1 --json status --jq '.[0].status')
+            echo "history-refresh.yml status: ${status:-unknown} (check $i/40)"
+            if [ "$status" = "completed" ]; then break; fi
+            sleep 60
+          done
+          gh workflow run weekly-report.yml --ref main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

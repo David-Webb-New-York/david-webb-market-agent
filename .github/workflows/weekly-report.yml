@@ -1,0 +1,42 @@
+name: Weekly Market Report
+# Generates the written report + Slack notification from the structured
+# datasets (output/david-webb-auction-history.json,
+# output/david-webb-dealer-listings.json) via analyze.js. Deliberately NOT
+# cron-scheduled itself: history-refresh.yml and dealer-refresh.yml are the
+# sources of truth for that data, so dealer-refresh.yml (which always
+# finishes well after history-refresh.yml, per its own wait step) dispatches
+# this workflow once both have committed. Kept dispatchable on its own too,
+# for ad hoc re-runs against whatever's currently committed.
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: write
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+
+      - name: Generate report
+        run: node analyze.js --generate
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit report
+        run: |
+          git config user.name "market-agent"
+          git config user.email "agent@davidwebb.local"
+          git add output/reports/
+          git commit -m "Weekly market report $(date +%F)" || echo "No changes to commit"
+          git push
+
+      - name: Notify Slack
+        run: node analyze.js --notify
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          REPORT_LINK_BRANCH: ${{ github.ref_name }}

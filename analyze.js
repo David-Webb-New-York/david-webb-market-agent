@@ -1,15 +1,21 @@
 #!/usr/bin/env node
 /**
- * David Webb Secondary Market — Analyzer & Notifier
- * --------------------------------------------------
- * Reads the most recent scan snapshot produced by agent.js, computes accurate
- * aggregate stats in JS, asks Claude to turn them into a written report
- * (Markdown) plus a short Slack summary, and posts a notification to Slack.
+ * David Webb Secondary Market — Weekly Report & Notifier
+ * --------------------------------------------------------
+ * Reads the structured datasets that history-refresh.yml and
+ * dealer-refresh.yml maintain (output/david-webb-auction-history.json,
+ * output/david-webb-dealer-listings.json), computes accurate aggregate
+ * stats in JS, asks Claude to turn them into a written report (Markdown)
+ * plus a short Slack summary, and posts a notification to Slack.
+ *
+ * This intentionally does NOT read output/snapshots/ (the older agent.js/
+ * library.js LLM web-search pipeline) — that dataset is a different,
+ * incompatible schema and isn't wired into weekly-report.yml. See
+ * HANDOFF.md for the reasoning.
  *
  * This is the "Pattern A + B" handoff:
  *   A) an auto-generated written report committed to output/reports/
- *   B) a Slack message linking the report + the raw CSV so the data can be
- *      dropped straight into Claude for deeper, interactive analysis.
+ *   B) a Slack message linking the report + the live database + raw CSVs
  *
  * MODES (so CI can post links only AFTER the commit is pushed):
  *   node analyze.js              generate the report AND post to Slack
@@ -19,24 +25,27 @@
  *
  * ENV:
  *   ANTHROPIC_API_KEY   required for --generate (and default mode)
- *   SLACK_WEBHOOK_URL    required to actually post (omit for a dry run)
- *   GITHUB_REPOSITORY    e.g. "owner/repo" (auto-set in GitHub Actions)
- *   GITHUB_SERVER_URL    e.g. "https://github.com" (auto-set in GitHub Actions)
- *   REPORT_LINK_BRANCH   branch the committed links point at (default "main")
+ *   SLACK_WEBHOOK_URL   required to actually post (omit for a dry run)
+ *   GITHUB_REPOSITORY   e.g. "owner/repo" (auto-set in GitHub Actions)
+ *   GITHUB_SERVER_URL   e.g. "https://github.com" (auto-set in GitHub Actions)
+ *   REPORT_LINK_BRANCH  branch the committed links point at (default "main")
+ *   REPORT_PAGES_URL    live database GUI URL (default the org's GitHub Pages URL)
  */
 
 const fs = require("fs");
 const path = require("path");
+const { HISTORY_JSON, HISTORY_CSV } = require("./history-store");
+const { LISTINGS_JSON, LISTINGS_CSV } = require("./dealer-store");
 
 const args = new Set(process.argv.slice(2));
-const MODE_GENERATE = args.has("--generate") || (!args.has("--notify"));
-const MODE_NOTIFY = args.has("--notify") || (!args.has("--generate"));
+const MODE_GENERATE = args.has("--generate") || !args.has("--notify");
+const MODE_NOTIFY = args.has("--notify") || !args.has("--generate");
 const DRY_RUN = args.has("--dry-run");
 
 const OUTPUT_DIR = path.join(__dirname, "output");
-const SNAPSHOT_DIR = path.join(OUTPUT_DIR, "snapshots");
 const REPORTS_DIR = path.join(OUTPUT_DIR, "reports");
-const CSV_PATH = "output/david-webb-market-data.csv";
+const STATS_HISTORY_JSON = path.join(REPORTS_DIR, "stats-history.json");
+const MAX_STATS_HISTORY = 26; // ~6 months of weekly runs
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
@@ -44,23 +53,38 @@ const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
 const REPO = process.env.GITHUB_REPOSITORY || "David-Webb-New-York/david-webb-market-agent";
 const SERVER = (process.env.GITHUB_SERVER_URL || "https://github.com").replace(/\/$/, "");
 const BRANCH = process.env.REPORT_LINK_BRANCH || "main";
+const PAGES_URL =
+  process.env.REPORT_PAGES_URL ||
+  `https://${REPO.split("/")[0].toLowerCase()}.github.io/${REPO.split("/")[1]}/`;
 
-// ---------- snapshot loading ----------
+// ---------- data loading ----------
 
-function listSnapshots() {
-  if (!fs.existsSync(SNAPSHOT_DIR)) return [];
-  return fs
-    .readdirSync(SNAPSHOT_DIR)
-    .filter((f) => f.endsWith(".json"))
-    .sort(); // YYYY-MM-DD.json sorts chronologically
+function loadJson(p) {
+  if (!fs.existsSync(p)) return [];
+  try {
+    const data = JSON.parse(fs.readFileSync(p, "utf8"));
+    return Array.isArray(data) ? data : [];
+  } catch (_) {
+    return [];
+  }
 }
 
-function loadSnapshot(file) {
-  const pieces = JSON.parse(fs.readFileSync(path.join(SNAPSHOT_DIR, file), "utf8"));
-  return Array.isArray(pieces) ? pieces : [];
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function daysAgoStr(n) {
+  const d = new Date();
+  d.setUTCDate(d.getUTCDate() - n);
+  return d.toISOString().slice(0, 10);
 }
 
 // ---------- aggregate stats (computed in JS so numbers are trustworthy) ----------
+
+function num(v) {
+  const n = Number(v);
+  return Number.isFinite(n) && n > 0 ? n : null;
+}
 
 function median(nums) {
   if (nums.length === 0) return null;
@@ -69,80 +93,140 @@ function median(nums) {
   return s.length % 2 ? s[mid] : Math.round((s[mid - 1] + s[mid]) / 2);
 }
 
-function priceOf(piece) {
-  const n = Number(piece.asking_or_hammer_price);
-  return Number.isFinite(n) && n > 0 ? n : null;
-}
-
-function computeStats(pieces) {
-  const withPrice = pieces.map(priceOf).filter((n) => n !== null);
-  const byCategory = {};
-  const byPriceType = {};
-
-  for (const p of pieces) {
-    const cat = (p.category || "other").toLowerCase();
-    const type = (p.price_type || "unknown").toLowerCase();
-    byPriceType[type] = (byPriceType[type] || 0) + 1;
-
-    if (!byCategory[cat]) byCategory[cat] = { count: 0, prices: [] };
-    byCategory[cat].count++;
-    const price = priceOf(p);
-    if (price !== null) byCategory[cat].prices.push(price);
+function byCategoryStats(records, priceField) {
+  const groups = new Map();
+  for (const r of records) {
+    const p = num(r[priceField]);
+    if (p === null) continue;
+    const cat = r.category || "Uncategorized";
+    if (!groups.has(cat)) groups.set(cat, []);
+    groups.get(cat).push(p);
   }
-
-  const categoryTable = Object.entries(byCategory)
-    .map(([category, v]) => ({
+  return [...groups.entries()]
+    .map(([category, prices]) => ({
       category,
-      count: v.count,
-      priced: v.prices.length,
-      min: v.prices.length ? Math.min(...v.prices) : null,
-      median: median(v.prices),
-      max: v.prices.length ? Math.max(...v.prices) : null,
+      count: prices.length,
+      min: Math.min(...prices),
+      median: median(prices),
+      max: Math.max(...prices),
     }))
     .sort((a, b) => b.count - a.count);
+}
 
-  const topPieces = pieces
-    .filter((p) => priceOf(p) !== null)
-    .sort((a, b) => priceOf(b) - priceOf(a))
-    .slice(0, 10)
-    .map((p) => ({
-      piece_name: p.piece_name,
-      category: p.category,
-      price: priceOf(p),
-      price_type: p.price_type,
-      source_site: p.source_site,
-      listing_url: p.listing_url,
-      era_or_year: p.era_or_year,
-      materials_gemstones: p.materials_gemstones,
-    }));
+function pickAuctionFields(r) {
+  return {
+    piece: r.piece_name,
+    category: r.category,
+    house: r.auction_house,
+    sale_date: r.sale_date,
+    price: num(r.sold_price),
+    currency: r.currency_note || "",
+    url: r.listing_url,
+  };
+}
+
+function pickDealerFields(r) {
+  return {
+    piece: r.piece_name,
+    category: r.category,
+    dealer: r.dealer,
+    price: num(r.asking_price),
+    currency: r.currency_note || "",
+    url: r.listing_url,
+    first_seen: r.first_seen,
+    last_seen: r.last_seen,
+  };
+}
+
+function computeStats(history, dealers, today) {
+  const weekAgo = daysAgoStr(7);
+  const recentSaleWindow = daysAgoStr(60);
+  const delistWindow = daysAgoStr(10);
+
+  const newAuctionRecords = history.filter((r) => (r.first_captured || "") >= weekAgo);
+  const newDealerListings = dealers.filter((r) => (r.first_seen || "") >= weekAgo);
+  const activeDealerListings = dealers.filter((r) => r.status === "active");
+  const recentlyDelisted = dealers.filter(
+    (r) => r.status === "inactive" && (r.last_seen || "") >= delistWindow
+  );
+
+  const soldRecords = history.filter((r) => num(r.sold_price) !== null);
+  const recentSales = soldRecords
+    .filter((r) => (r.sale_date || "") >= recentSaleWindow)
+    .sort((a, b) => (b.sale_date || "").localeCompare(a.sale_date || ""));
+  const topRecentSales = [...recentSales]
+    .sort((a, b) => num(b.sold_price) - num(a.sold_price))
+    .slice(0, 8)
+    .map(pickAuctionFields);
+  const topSalesEver = [...soldRecords]
+    .sort((a, b) => num(b.sold_price) - num(a.sold_price))
+    .slice(0, 5)
+    .map(pickAuctionFields);
+
+  const topNewListings = [...newDealerListings]
+    .filter((r) => num(r.asking_price) !== null)
+    .sort((a, b) => num(b.asking_price) - num(a.asking_price))
+    .slice(0, 8)
+    .map(pickDealerFields);
+  const delistedSample = recentlyDelisted.slice(0, 8).map(pickDealerFields);
 
   return {
-    total: pieces.length,
-    priced: withPrice.length,
-    overallMin: withPrice.length ? Math.min(...withPrice) : null,
-    overallMedian: median(withPrice),
-    overallMax: withPrice.length ? Math.max(...withPrice) : null,
-    byPriceType,
-    categoryTable,
-    topPieces,
+    date: today,
+    isBaselineRun: history.length > 0 && newAuctionRecords.length === history.length,
+    totals: {
+      auctionRecords: history.length,
+      dealerRecords: dealers.length,
+      activeDealerListings: activeDealerListings.length,
+    },
+    newThisWeek: {
+      windowDays: 7,
+      auctionRecords: newAuctionRecords.length,
+      dealerListings: newDealerListings.length,
+      topNewListings,
+    },
+    recentSales: {
+      windowDays: 60,
+      count: recentSales.length,
+      median: median(recentSales.map((r) => num(r.sold_price)).filter((n) => n !== null)),
+      top: topRecentSales,
+    },
+    recentlyDelisted: {
+      windowDays: 10,
+      count: recentlyDelisted.length,
+      sample: delistedSample,
+    },
+    topSalesEver,
+    auctionByCategory: byCategoryStats(soldRecords, "sold_price"),
+    dealerByCategory: byCategoryStats(activeDealerListings, "asking_price"),
+    dealerAskingMedian: median(
+      activeDealerListings.map((r) => num(r.asking_price)).filter((n) => n !== null)
+    ),
   };
 }
 
 // ---------- week-over-week trends (deterministic; not model-generated) ----------
 
-function buildTrendSeries(maxPoints = 12) {
-  return listSnapshots()
-    .slice(-maxPoints)
-    .map((file) => {
-      const st = computeStats(loadSnapshot(file));
-      return {
-        date: file.replace(/\.json$/, ""),
-        total: st.total,
-        priced: st.priced,
-        median: st.overallMedian,
-        max: st.overallMax,
-      };
-    });
+function loadStatsHistory() {
+  return loadJson(STATS_HISTORY_JSON);
+}
+
+function appendStatsHistory(stats) {
+  const history = loadStatsHistory().filter((s) => s.date !== stats.date);
+  history.push({
+    date: stats.date,
+    auctionRecords: stats.totals.auctionRecords,
+    dealerRecords: stats.totals.dealerRecords,
+    activeDealerListings: stats.totals.activeDealerListings,
+    newAuctionThisWeek: stats.newThisWeek.auctionRecords,
+    newDealerThisWeek: stats.newThisWeek.dealerListings,
+    dealerAskingMedian: stats.dealerAskingMedian,
+    recentSalesMedian: stats.recentSales.median,
+  });
+  history.sort((a, b) => a.date.localeCompare(b.date));
+  const trimmed = history.slice(-MAX_STATS_HISTORY);
+  fs.mkdirSync(REPORTS_DIR, { recursive: true });
+  fs.writeFileSync(STATS_HISTORY_JSON, JSON.stringify(trimmed, null, 2) + "\n");
+  return trimmed;
 }
 
 function niceCeil(value, step) {
@@ -150,46 +234,35 @@ function niceCeil(value, step) {
 }
 
 function renderTrends(series) {
-  if (series.length === 0) return "";
+  if (series.length < 2) return "";
   const money = (n) => (n === null || n === undefined ? "n/a" : "$" + n.toLocaleString("en-US"));
 
   const table = [
-    "| Scan | Pieces | Priced | Median | Max |",
+    "| Week | Auction records | Dealer records | Active listings | New (auction/dealer) |",
     "|---|---|---|---|---|",
-    ...series.map((s) => `| ${s.date} | ${s.total} | ${s.priced} | ${money(s.median)} | ${money(s.max)} |`),
+    ...series.map(
+      (s) =>
+        `| ${s.date} | ${s.auctionRecords} | ${s.dealerRecords} | ${s.activeDealerListings} | ${s.newAuctionThisWeek}/${s.newDealerThisWeek} |`
+    ),
   ].join("\n");
 
   const xaxis = series.map((s) => `"${s.date}"`).join(", ");
-  const totals = series.map((s) => s.total);
-  const priced = series.map((s) => s.priced);
-  const medians = series.map((s) => s.median || 0);
-  const piecesTop = niceCeil(Math.max(...totals, ...priced, 1), 10);
-  const medianTop = niceCeil(Math.max(...medians, 1), 5000);
+  const totals = series.map((s) => s.dealerRecords);
+  const active = series.map((s) => s.activeDealerListings);
+  const top = niceCeil(Math.max(...totals, ...active, 1), 100);
 
-  // Mermaid xychart-beta renders natively on GitHub. The table above is the
-  // fallback if a viewer does not support the chart.
-  const chartPieces = [
+  const chart = [
     "```mermaid",
     "xychart-beta",
-    '    title "Pieces per scan (bar = total, line = priced)"',
+    '    title "Dealer inventory tracked (bar = total, line = active)"',
     `    x-axis [${xaxis}]`,
-    `    y-axis "Pieces" 0 --> ${piecesTop}`,
+    `    y-axis "Listings" 0 --> ${top}`,
     `    bar [${totals.join(", ")}]`,
-    `    line [${priced.join(", ")}]`,
+    `    line [${active.join(", ")}]`,
     "```",
   ].join("\n");
 
-  const chartMedian = [
-    "```mermaid",
-    "xychart-beta",
-    '    title "Median listed price per scan (USD)"',
-    `    x-axis [${xaxis}]`,
-    `    y-axis "USD" 0 --> ${medianTop}`,
-    `    line [${medians.join(", ")}]`,
-    "```",
-  ].join("\n");
-
-  return ["## Week-over-week trends", "", table, "", chartPieces, "", chartMedian, ""].join("\n");
+  return ["## Week-over-week trends", "", table, "", chart, ""].join("\n");
 }
 
 // Defensively remove any trends heading + placeholder the model may still emit,
@@ -250,39 +323,56 @@ async function callClaude({ system, user, maxTokens = 4000 }) {
 }
 
 const ANALYST_SYSTEM = `You are a secondary-market analyst for David Webb, a luxury jewelry house.
-You will receive PRE-COMPUTED statistics (trust these numbers exactly) plus a list of the
-highest-value pieces from the latest market scan, and summary counts from the previous scan.
+You track two live datasets: auction results (historic hammer prices from Rago, LiveAuctioneers,
+Christie's, Doyle, Phillips, etc.) and estate-dealer inventory (current asking prices from Fred
+Leighton, Yafa Signed Jewels, and other dealers, refreshed weekly). You will receive PRE-COMPUTED
+statistics (trust these numbers exactly) — do not invent or restate figures that aren't given to you.
+
+If "isBaselineRun" is true, this is the FIRST run of the pipeline: nearly everything is "new" simply
+because it was just backfilled, not because the market moved this week. Say so plainly in the
+executive summary and lean on "recentSales" (auction sale_date within the last 60 days) and
+"recentlyDelisted"/"newThisWeek" dealer activity for genuine market signal instead of the raw
+newThisWeek.auctionRecords count. In later (non-baseline) runs, newThisWeek IS the meaningful
+week-over-week signal.
 
 Produce TWO sections separated by the exact delimiter lines shown below. Output nothing else.
 
 ===SLACK_SUMMARY===
-4-6 short bullet points in Slack mrkdwn (use * for bold, - for bullets). Lead with the headline
-numbers (pieces found, price range, median), then 2-3 genuinely notable pieces (name + price +
-source), and any notable change vs the previous scan. Keep it under 1500 characters. No preamble.
+4-6 short bullet points in Slack mrkdwn (use * for bold, - for bullets). Lead with what's actually
+happening in the market this week (recent sales, new/delisted dealer inventory), then 2-3 genuinely
+notable pieces (name + price + source). Keep it under 1500 characters. No preamble.
 
 ===REPORT_MD===
 A polished Markdown report a principal would actually read. Include:
-- an H1 title with the scan date and a one-paragraph executive summary that references the
-  week-over-week trend (use the provided TREND SERIES for direction and magnitude),
-- a "Price ranges by category" Markdown table (category, count, priced, min, median, max) using
-  the provided numbers verbatim, formatting prices as USD with thousands separators,
-- a "Notable pieces" section highlighting the standout listings with their source and a link,
-- an "Asking vs. auction" note contrasting dealer asking prices with any hammer/estimate results,
-- a short "Data-quality caveats" note (asking prices are retail-resale comps, auction hammer
-  excludes buyer's premium, occasional miscategorization).
-Prices must match the provided stats; do not invent figures.
-Do NOT build your own trend charts or scan-over-scan tables, and do NOT add a "Week-over-week
+- an H1 title with the report date and a one-paragraph executive summary (referencing the
+  week-over-week trend if TREND SERIES has more than one point; otherwise note this is the
+  baseline run and future reports will show real trends),
+- a "Recent auction activity" section built from recentSales (sale_date within 60 days) — note the
+  count and median, and list the notable ones with house + date + price + link,
+- a "Dealer market this week" section: how many listings are newly on the market
+  (newThisWeek.topNewListings) and how many recently came off the market (recentlyDelisted.sample),
+  with prices and dealer names,
+- a "Price snapshot by category" Markdown table for BOTH auction results and current dealer asking
+  prices (category, count, min, median, max), using the provided numbers verbatim, formatted as USD
+  with thousands separators,
+- an "All-time notable sales" section using topSalesEver for context,
+- a short "Data-quality caveats" note (auction hammer prices exclude buyer's premium; dealer asking
+  prices are not confirmed sale prices; "closed" status for dealer items means delisted, which
+  usually but not always means sold).
+Prices must match the provided stats; do not invent figures. Every piece you name must include its
+url as a Markdown link if one is present in the data.
+Do NOT build your own trend charts or week-over-week tables, and do NOT add a "Week-over-week
 trends" heading, placeholder, or note anywhere — that entire section is inserted automatically
 right after your H1 title. Begin your report body with a "## Executive Summary" section.`;
 
-function buildUserPrompt(date, stats, trendSeries) {
+function buildUserPrompt(stats, trendSeries) {
   return [
-    `Latest scan date: ${date}`,
+    `Report date: ${stats.date}`,
     ``,
     `PRE-COMPUTED STATS (JSON):`,
     JSON.stringify(stats, null, 2),
     ``,
-    `TREND SERIES across recent scans (oldest -> newest; use for week-over-week commentary):`,
+    `TREND SERIES across recent weekly reports (oldest -> newest; empty or single-item if this is early days):`,
     JSON.stringify(trendSeries, null, 2),
   ].join("\n");
 }
@@ -301,21 +391,18 @@ function splitSections(text) {
 function links(date) {
   return {
     report: `${SERVER}/${REPO}/blob/${BRANCH}/output/reports/${date}.md`,
-    csv: `${SERVER}/${REPO}/raw/${BRANCH}/${CSV_PATH}`,
-    snapshot: `${SERVER}/${REPO}/raw/${BRANCH}/output/snapshots/${date}.json`,
+    database: PAGES_URL,
+    auctionCsv: `${SERVER}/${REPO}/raw/${BRANCH}/${path.relative(__dirname, HISTORY_CSV)}`,
+    dealerCsv: `${SERVER}/${REPO}/raw/${BRANCH}/${path.relative(__dirname, LISTINGS_CSV)}`,
   };
 }
 
 function buildSlackPayload(date, stats, slackSummary) {
   const l = links(date);
-  const money = (n) => (n === null ? "n/a" : "$" + n.toLocaleString("en-US"));
-  const range =
-    stats.priced > 0
-      ? `${money(stats.overallMin)}–${money(stats.overallMax)} (median ${money(stats.overallMedian)})`
-      : "no priced pieces";
+  const money = (n) => (n === null || n === undefined ? "n/a" : "$" + n.toLocaleString("en-US"));
 
   return {
-    text: `David Webb secondary-market scan complete — ${date} (${stats.total} pieces)`,
+    text: `David Webb secondary-market report — ${date}`,
     blocks: [
       {
         type: "header",
@@ -325,7 +412,10 @@ function buildSlackPayload(date, stats, slackSummary) {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*${stats.total}* pieces this scan · *${stats.priced}* priced · ${range}`,
+          text:
+            `*${stats.totals.auctionRecords}* auction records · *${stats.totals.activeDealerListings}* active dealer listings ` +
+            `· *${stats.recentSales.count}* sales in the last 60 days (median ${money(stats.recentSales.median)}) ` +
+            `· *${stats.newThisWeek.dealerListings}* new / *${stats.recentlyDelisted.count}* delisted this week`,
         },
       },
       { type: "section", text: { type: "mrkdwn", text: slackSummary || "_No summary generated._" } },
@@ -333,13 +423,13 @@ function buildSlackPayload(date, stats, slackSummary) {
         type: "section",
         text: {
           type: "mrkdwn",
-          text: `*Report:* <${l.report}|View report>  ·  *CSV (all history):* <${l.csv}|Download>  ·  *This scan (JSON):* <${l.snapshot}|Download>`,
+          text: `*Report:* <${l.report}|View report>  ·  *Live database:* <${l.database}|Search all listings>  ·  *CSVs:* <${l.auctionCsv}|Auctions> / <${l.dealerCsv}|Dealers>`,
         },
       },
       {
         type: "context",
         elements: [
-          { type: "mrkdwn", text: "Generated by `analyze.js` — drop the CSV into Claude for deeper analysis & slides." },
+          { type: "mrkdwn", text: "Generated by `analyze.js` — drop a CSV into Claude for deeper analysis." },
         ],
       },
     ],
@@ -374,21 +464,24 @@ async function generate() {
     console.error("Missing ANTHROPIC_API_KEY. Run: export ANTHROPIC_API_KEY=sk-ant-...");
     process.exit(1);
   }
-  const snaps = listSnapshots();
-  if (snaps.length === 0) {
-    console.error(`No snapshots found in ${SNAPSHOT_DIR}. Run agent.js first.`);
+  const history = loadJson(HISTORY_JSON);
+  const dealers = loadJson(LISTINGS_JSON);
+  if (history.length === 0 && dealers.length === 0) {
+    console.error(
+      `No data found in ${HISTORY_JSON} or ${LISTINGS_JSON}. Run history-refresh / dealer-refresh first.`
+    );
     process.exit(1);
   }
-  const latestFile = snaps[snaps.length - 1];
-  const date = latestFile.replace(/\.json$/, "");
-  const pieces = loadSnapshot(latestFile);
-  const stats = computeStats(pieces);
-  const trendSeries = buildTrendSeries();
+  const date = todayStr();
+  const stats = computeStats(history, dealers, date);
+  const trendSeries = appendStatsHistory(stats);
 
-  console.log(`Analyzing ${date}: ${stats.total} pieces (${stats.priced} priced)...`);
+  console.log(
+    `Analyzing ${date}: ${stats.totals.auctionRecords} auction records, ${stats.totals.activeDealerListings} active dealer listings...`
+  );
   const text = await callClaude({
     system: ANALYST_SYSTEM,
-    user: buildUserPrompt(date, stats, trendSeries),
+    user: buildUserPrompt(stats, trendSeries),
     maxTokens: 4000,
   });
   const { slack, report } = splitSections(text);
@@ -416,12 +509,7 @@ async function generate() {
 async function notify(preloaded) {
   let payload = preloaded && preloaded.payload;
   if (!payload) {
-    const snaps = listSnapshots();
-    if (snaps.length === 0) {
-      console.error("No snapshots found; nothing to notify about.");
-      process.exit(1);
-    }
-    const date = snaps[snaps.length - 1].replace(/\.json$/, "");
+    const date = todayStr();
     const p = payloadPath(date);
     if (!fs.existsSync(p)) {
       console.error(`No Slack payload at ${p}. Run 'node analyze.js --generate' first.`);
