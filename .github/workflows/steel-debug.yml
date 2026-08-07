@@ -10,6 +10,7 @@ on:
       - 'steel-debug.js'
       - 'steel.js'
       - '.github/workflows/steel-debug.yml'
+  workflow_dispatch: {}
 permissions:
   contents: read
 jobs:
