@@ -80,6 +80,13 @@ function priceFromMinorUnit(prices) {
   return raw / 10 ** minorUnit;
 }
 
+function primaryImage(p) {
+  if (Array.isArray(p.images) && p.images[0]) {
+    return p.images[0].src || p.images[0].thumbnail || "";
+  }
+  return "";
+}
+
 function mapProduct(p, { shop, dealer }) {
   const categories = (p.categories || []).map((c) => c.name).join(" ");
   const combinedText = [p.name, categories, p.short_description, p.description].filter(Boolean).join(" ");
@@ -94,6 +101,7 @@ function mapProduct(p, { shop, dealer }) {
     currency_note: (p.prices && p.prices.currency_code) || "",
     dealer,
     listing_url: p.permalink || "",
+    image_url: primaryImage(p),
     sku: p.sku || (p.id != null ? String(p.id) : ""),
     notes: bodyText ? bodyText.slice(0, 300) : "",
   };

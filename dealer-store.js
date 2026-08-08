@@ -30,6 +30,7 @@ const LISTING_FIELDS = [
   "currency_note",
   "dealer",
   "listing_url",
+  "image_url",
   "sku",
   "notes",
 ];

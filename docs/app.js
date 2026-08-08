@@ -26,6 +26,7 @@
     pagination: document.getElementById("pagination"),
     modal: document.getElementById("detail-modal"),
     modalTitle: document.getElementById("modal-title"),
+    modalImage: document.getElementById("modal-image"),
     modalBody: document.getElementById("modal-body"),
   };
 
@@ -71,6 +72,7 @@
         currency: r.currency_note || "USD",
         status: auctionStatus(r),
         listing_url: r.listing_url || "",
+        image_url: "",
         notes: r.notes || "",
       });
     }
@@ -92,6 +94,7 @@
         currency: r.currency_note || "USD",
         status: dealerStatus(r),
         listing_url: r.listing_url || "",
+        image_url: r.image_url || "",
         notes: r.notes || "",
       });
     }
@@ -218,9 +221,12 @@
         const link = r.listing_url
           ? `<a class="listing-link" href="${escapeHtml(r.listing_url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">View ↗</a>`
           : "—";
+        const thumb = r.image_url
+          ? `<img class="piece-thumb" src="${escapeHtml(r.image_url)}" alt="" loading="lazy" onerror="this.remove()" />`
+          : "";
         return `<tr data-idx="${idx}">
           <td>${escapeHtml(r.date || "—")}<div class="type-tag">${r.type === "auction" ? "Auction" : "Dealer"}</div></td>
-          <td><span class="piece-name">${escapeHtml(r.piece_name)}</span>${sub ? `<span class="piece-sub">${escapeHtml(sub)}</span>` : ""}</td>
+          <td><div class="piece-cell">${thumb}<div><span class="piece-name">${escapeHtml(r.piece_name)}</span>${sub ? `<span class="piece-sub">${escapeHtml(sub)}</span>` : ""}</div></div></td>
           <td>${escapeHtml(r.source)}${r.sale_name ? `<div class="piece-sub">${escapeHtml(r.sale_name)}</div>` : ""}</td>
           <td class="num">${fmtMoney(r.price, r.currency)}</td>
           <td class="num">${fmtEstimate(r)}</td>
@@ -273,6 +279,16 @@
   function openDetail(r) {
     if (!r) return;
     els.modalTitle.textContent = r.piece_name;
+    if (r.image_url) {
+      els.modalImage.src = r.image_url;
+      els.modalImage.hidden = false;
+      els.modalImage.onerror = () => {
+        els.modalImage.hidden = true;
+      };
+    } else {
+      els.modalImage.hidden = true;
+      els.modalImage.removeAttribute("src");
+    }
     const fields = [
       ["Type", r.type === "auction" ? "Auction (historic sale)" : "Dealer (current listing)"],
       ["Listing", r.listing_url

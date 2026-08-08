@@ -167,6 +167,19 @@ td {
   padding: 0.6rem 0.9rem;
   vertical-align: top;
 }
+.piece-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.piece-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+  background: var(--row-hover);
+}
 .piece-name { font-weight: 600; }
 .piece-sub {
   display: block;
@@ -258,6 +271,15 @@ footer {
   max-height: 80vh;
   overflow-y: auto;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+}
+.modal-image {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  background: var(--row-hover);
+  border-radius: 10px;
+  margin: 0.75rem 0;
 }
 .modal-close {
   position: absolute;

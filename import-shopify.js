@@ -100,6 +100,12 @@ function minVariantPrice(variants) {
   return prices.length ? Math.min(...prices) : "";
 }
 
+function primaryImage(p) {
+  if (p.image && p.image.src) return p.image.src;
+  if (Array.isArray(p.images) && p.images[0] && p.images[0].src) return p.images[0].src;
+  return "";
+}
+
 function mapProduct(p, { shop, dealer, currency }) {
   const combinedText = [p.title, p.product_type, p.tags, p.body_html].filter(Boolean).join(" ");
   const bodyText = stripHtml(p.body_html);
@@ -114,6 +120,7 @@ function mapProduct(p, { shop, dealer, currency }) {
     currency_note: currency || "",
     dealer,
     listing_url: p.handle ? `https://${shop}/products/${p.handle}` : "",
+    image_url: primaryImage(p),
     sku: variant.sku || (p.id != null ? String(p.id) : ""),
     notes: bodyText ? bodyText.slice(0, 300) : "",
   };
