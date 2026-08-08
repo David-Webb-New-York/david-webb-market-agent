@@ -37,6 +37,7 @@ on:
       - '.github/workflows/history-refresh.yml'
 permissions:
   contents: write
+  actions: write # to dispatch pages-deploy.yml after committing new data
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -79,30 +80,12 @@ jobs:
           git commit -m "Auction history refresh $(date +%F)" || echo "No changes to commit"
           git push
 
-      # Publish the searchable database GUI (docs/) to Vercel with the data
-      # just imported. VERCEL_TOKEN is a personal access token from
-      # vercel.com/account/tokens; the project is created automatically on
-      # first deploy if it doesn't exist yet. Data files are generated here,
-      # not committed -- docs/ itself only holds the static app.
-      - name: Build site data
+      # A commit pushed with the default GITHUB_TOKEN does NOT trigger other
+      # workflows' `on: push` events (a deliberate GitHub anti-loop
+      # safeguard), so pages-deploy.yml's push trigger would otherwise never
+      # fire after this commit. Dispatch it explicitly instead.
+      - name: Deploy database GUI
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: |
-          mkdir -p docs/data
-          cp output/david-webb-auction-history.json docs/data/auction-history.json
-          cp output/david-webb-dealer-listings.json docs/data/dealer-listings.json
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/data/generated-at.txt
-      - name: Deploy database GUI (Vercel)
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: |
-          if [ -z "$VERCEL_TOKEN" ]; then
-            echo "VERCEL_TOKEN not set -- skipping GUI deploy (data import above still succeeded)."
-            exit 0
-          fi
-          npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN" --cwd docs
+        run: gh workflow run pages-deploy.yml --ref main
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          # VERCEL_ORG_ID/VERCEL_PROJECT_ID let the CLI skip interactive
-          # linking; unset on first run so it creates the project, then set
-          # both from the printed .vercel/project.json (or the dashboard).
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

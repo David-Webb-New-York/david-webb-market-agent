@@ -29,9 +29,9 @@
  *   GITHUB_REPOSITORY   e.g. "owner/repo" (auto-set in GitHub Actions)
  *   GITHUB_SERVER_URL   e.g. "https://github.com" (auto-set in GitHub Actions)
  *   REPORT_LINK_BRANCH  branch the committed links point at (default "main")
- *   REPORT_DATABASE_URL live database GUI URL (the Vercel deployment; set once
- *                       known -- see history-refresh.yml's "Deploy database
- *                       GUI" step for how it's deployed)
+ *   REPORT_DATABASE_URL live database GUI URL; defaults to this repo's
+ *                       GitHub Pages URL (see pages-deploy.yml), override
+ *                       only if the GUI moves elsewhere
  */
 
 const fs = require("fs");
@@ -55,7 +55,9 @@ const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
 const REPO = process.env.GITHUB_REPOSITORY || "David-Webb-New-York/david-webb-market-agent";
 const SERVER = (process.env.GITHUB_SERVER_URL || "https://github.com").replace(/\/$/, "");
 const BRANCH = process.env.REPORT_LINK_BRANCH || "main";
-const DATABASE_URL = process.env.REPORT_DATABASE_URL || "";
+const DATABASE_URL =
+  process.env.REPORT_DATABASE_URL ||
+  `https://${REPO.split("/")[0].toLowerCase()}.github.io/${REPO.split("/")[1]}/`;
 
 // ---------- data loading ----------
 

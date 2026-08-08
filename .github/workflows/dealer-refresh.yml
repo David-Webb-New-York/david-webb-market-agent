@@ -53,27 +53,13 @@ jobs:
           git commit -m "Dealer listings refresh $(date +%F)" || echo "No changes to commit"
           git push
 
-      # Publish the searchable database GUI (docs/) to Vercel with the data
-      # just imported. See history-refresh.yml for the same step's notes.
-      - name: Build site data
+      # See history-refresh.yml for why this can't just be pages-deploy.yml's
+      # own push trigger (GITHUB_TOKEN-authored pushes don't cascade).
+      - name: Deploy database GUI
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: |
-          mkdir -p docs/data
-          cp output/david-webb-auction-history.json docs/data/auction-history.json
-          cp output/david-webb-dealer-listings.json docs/data/dealer-listings.json
-          date -u +"%Y-%m-%dT%H:%M:%SZ" > docs/data/generated-at.txt
-      - name: Deploy database GUI (Vercel)
-        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: |
-          if [ -z "$VERCEL_TOKEN" ]; then
-            echo "VERCEL_TOKEN not set -- skipping GUI deploy (data import above still succeeded)."
-            exit 0
-          fi
-          npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN" --cwd docs
+        run: gh workflow run pages-deploy.yml --ref main
         env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # The weekly report (weekly-report.yml) needs BOTH this run's dealer
       # data AND history-refresh.yml's auction data committed first --
