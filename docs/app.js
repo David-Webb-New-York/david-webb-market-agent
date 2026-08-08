@@ -275,6 +275,9 @@
     els.modalTitle.textContent = r.piece_name;
     const fields = [
       ["Type", r.type === "auction" ? "Auction (historic sale)" : "Dealer (current listing)"],
+      ["Listing", r.listing_url
+        ? `<a class="listing-link" href="${escapeHtml(r.listing_url)}" target="_blank" rel="noopener">View original listing ↗</a>`
+        : "—"],
       ["Date", r.date || "—"],
       ["Source", r.source],
       ["Sale", r.sale_name || "—"],
@@ -288,10 +291,9 @@
       ["Status", r.status],
       ["Notes", r.notes || "—"],
     ];
-    els.modalBody.innerHTML = fields.map(([k, v]) => `<dt>${escapeHtml(k)}</dt><dd>${escapeHtml(v)}</dd>`).join("");
-    if (r.listing_url) {
-      els.modalBody.innerHTML += `<dt>Listing</dt><dd><a class="listing-link" href="${escapeHtml(r.listing_url)}" target="_blank" rel="noopener">${escapeHtml(r.listing_url)}</a></dd>`;
-    }
+    els.modalBody.innerHTML = fields
+      .map(([k, v]) => `<dt>${escapeHtml(k)}</dt><dd>${k === "Listing" ? v : escapeHtml(v)}</dd>`)
+      .join("");
     els.modal.hidden = false;
   }
 
