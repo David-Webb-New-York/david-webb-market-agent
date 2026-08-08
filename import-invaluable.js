@@ -71,6 +71,19 @@ function plainDescription(hit) {
   return decodeEntities(raw.replace(HIGHLIGHT_TAG_RE, "")).trim();
 }
 
+// Invaluable's catResults search is a fuzzy full-text match across its whole
+// aggregated catalog (hundreds of small/regional houses) -- a query for
+// "david webb" reliably surfaces unrelated lots (military gear, banknotes,
+// book collections, ...) that just happen to share a word with the query
+// somewhere in a long description. Unlike Rago/Phillips/Sotheby's/Christie's/
+// Doyle (queried by a structured maker/attribution field, or spot-checked
+// clean), there's no such guarantee here, so require the actual phrase
+// "david webb" in the title or description before accepting a hit.
+function isDavidWebb(hit) {
+  const haystack = [decodeEntities(hit.lotTitle || ""), plainDescription(hit)].join(" ");
+  return /david\s*webb/i.test(haystack);
+}
+
 function mapItem(hit) {
   const sold = num(hit.priceResult);
   const title = decodeEntities(hit.lotTitle);
@@ -162,6 +175,7 @@ async function collect(map, { term = "david webb", today } = {}) {
     const result = await fetchPage(term, page);
     nbPages = Number(result.nbPages) || 1;
     for (const hit of result.hits || []) {
+      if (!isDavidWebb(hit)) continue;
       store.upsert(map, mapItem(hit), { source: SOURCE, today });
       processed++;
     }

@@ -70,6 +70,15 @@ function dateFromUnixSeconds(ts) {
   return new Date(n * 1000).toISOString().slice(0, 10);
 }
 
+// LiveAuctioneers' own site search hasn't produced an off-topic match in
+// practice (unlike Invaluable's identical-shaped free-text search, which
+// did), but it's the same kind of unfiltered full-text search across many
+// small aggregated houses, so apply the same guard defensively rather than
+// wait for it to start.
+function isDavidWebb(it) {
+  return /david\s*webb/i.test(it.title || "");
+}
+
 function mapItem(it) {
   const sold = it.isSold === true && num(it.salePrice);
   const notes = [];
@@ -161,6 +170,7 @@ async function collect(map, { term = "david webb", today, maxPages = 25 } = {}) 
     if (freshLots.length === 0) break; // page repeats what we've already seen -- genuinely done
     for (const it of freshLots) {
       seenItemIds.add(it.itemId);
+      if (!isDavidWebb(it)) continue;
       store.upsert(map, mapItem(it), { source: SOURCE, today });
       processed++;
     }
