@@ -8,5 +8,15 @@
     "newDealerThisWeek": 1397,
     "dealerAskingMedian": 25000,
     "recentSalesMedian": 44610
+  },
+  {
+    "date": "2026-08-08",
+    "auctionRecords": 3948,
+    "dealerRecords": 1397,
+    "activeDealerListings": 1397,
+    "newAuctionThisWeek": 3948,
+    "newDealerThisWeek": 1397,
+    "dealerAskingMedian": 25000,
+    "recentSalesMedian": 44610
   }
 ]
