@@ -9,20 +9,101 @@
 
 ---
 
-## 1. What this project is
+## 0. Current state (as of 2026-08-08) — READ THIS FIRST
 
-A Node.js pipeline that tracks **David Webb jewelry on the secondary market**:
+Everything in §1-§9 below was written across several sessions and is a mix
+of still-accurate technical reference and now-stale status. Trust this
+section for "what's actually running today"; trust §7 (per-source technical
+findings) for "how each importer was built and what its known limits are"
+(that part hasn't changed). Sections 2, 6, and 9 below have stale
+`weekly-scan.yml`/branch-state references from before this section existed
+— read this one instead.
 
-1. **Weekly scan** — find currently listed / recently sold pieces via Claude + web search → append-only CSV + dated JSON snapshots.
-2. **Library (silver layer)** — dedupe snapshots into a stable piece catalog with lifecycle (`first_seen` / `last_seen` / `status`).
-3. **Analysis + Slack** — Claude writes a Markdown report with week-over-week Mermaid charts; posts to Slack `#secondary-market` with links to report + CSV + JSON (Pattern A + B: auto-report + interactive handoff into Claude).
-4. **Historical auction library** — past sold lots (separate from live listings), starting with a complete Rago import and a framework to add other houses + estate jewelers.
+**The pipeline today, end to end (all automated, nothing manual):**
 
-Target consumers: Excel / Power BI / Microsoft Fabric (bronze = raw CSV, silver = library + auction history).
+1. `history-refresh.yml` (Mon ~8:15am ET / 13:15 UTC) — structured +
+   Browserbase auction-history importers → `output/david-webb-auction-history.*`.
+2. `dealer-refresh.yml` (Mon ~8:30am ET / 13:30 UTC) — Shopify/WooCommerce
+   dealer importers → `output/david-webb-dealer-listings.*`, then deploys
+   the GUI, then **waits for #1 to finish** (polls `gh run list`, up to 40
+   min) and explicitly dispatches #3 — this replaced an earlier design
+   where the report ran on its own cron *before* the data it depended on
+   had refreshed.
+3. `weekly-report.yml` (workflow_dispatch only, chained from #2) —
+   `analyze.js --generate` then `--notify`. Reads the two structured
+   datasets directly (NOT `output/snapshots/*.json` — see below), writes
+   `output/reports/<date>.md`, posts to Slack.
+
+**The old `agent.js`/`library.js` LLM web-search pipeline (§1's original
+"weekly scan") is no longer part of any of this.** It was the *original*
+discovery mechanism before structured importers existed for each source; it
+still exists and still works, but is now a **manual-only** workflow
+(`market-scan-llm.yml`, no cron) kept around for the thing it's still good
+at — an open-ended sweep that might surface a dealer the structured
+importers don't know about. `analyze.js` was rewritten to read
+`david-webb-auction-history.json`/`david-webb-dealer-listings.json`
+directly; it no longer touches `output/snapshots/` or `output/david-webb-library.json`
+at all. If you're asked to "fix the weekly report" and land in §1's
+original description of `agent.js` → `library.js` → `analyze.js`, that's
+the stale version — read `analyze.js` itself, it's short and current.
+
+**Database GUI:** `docs/` (vanilla HTML/CSS/JS, no build step, no
+framework) deployed via GitHub Pages (`pages-deploy.yml`). Live at
+`https://david-webb-new-york.github.io/david-webb-market-agent/`.
+**Vercel was tried first and abandoned** — the personal-access-token deploy
+kept failing with `"invalidToken": true` (confirmed directly against
+Vercel's own API, across two freshly generated tokens — not a GitHub-secret
+corruption issue) — the user gave up on it and manually enabled GitHub
+Pages instead (`Settings → Pages → Source: GitHub Actions`; `GITHUB_TOKEN`
+can't do this via API even with `pages: write`, confirmed via a live
+`"Resource not accessible by integration"` error — it's a one-time human
+click, already done). If you see any `VERCEL_*` env var references or a
+`vercel deploy` step anywhere, that's dead code from the abandoned attempt
+that should have been fully reverted in commit `398ed96` — if you find a
+trace of it left over, finish removing it.
+
+Dealer listings carry a real `image_url` (Shopify/WooCommerce both return
+one in their normal catalog JSON — no extra scraping needed) rendered as a
+thumbnail in the GUI table + detail modal. Auction-history records don't
+have this yet — would need each auction-house scraper revisited
+individually to capture a lot-image URL from its markup.
+
+**Data-quality fix (2026-08-08):** `import-invaluable.js` searches
+Invaluable's own Algolia index with fuzzy full-text matching across its
+*entire* aggregated catalog (hundreds of unrelated small/regional auction
+houses) and, unlike every other importer, had no relevance check before
+upserting — 134 of 140 records were noise that happened to share a word
+with "david webb" somewhere in a long lot description (military gear,
+banknote lots, book collections). Fixed with an `isDavidWebb()` check
+(phrase match in title + description) before upserting; same defensive
+check added to `import-liveauctioneers.js` (same unfiltered-search shape,
+hasn't misbehaved in practice but has no protection either).
+**Rago/Phillips/Sotheby's/Doyle/most of Christie's are NOT filtered this
+way and shouldn't be** — they're queried by a structured maker/attribution
+field, not free-text search, so their titles legitimately don't always say
+"David Webb" even when the piece is genuine (confirmed via spot-checking —
+Phillips' `notes` field is empty and Rago's is just a price string, so a
+keyword filter there would wrongly reject real pieces). If you're asked to
+investigate "irrelevant listings" again, check the record's `source` field
+first — it was 100% attributable to Invaluable last time, and probably
+still narrows fast.
 
 ---
 
-## 2. Branch / PR state (as of handoff)
+## 1. What this project is (original framing — see §0 for what's current)
+
+A Node.js pipeline that tracks **David Webb jewelry on the secondary market**:
+
+1. **Weekly scan** — find currently listed / recently sold pieces via Claude + web search → append-only CSV + dated JSON snapshots. *(Superseded — see §0: this is now `market-scan-llm.yml`, manual-only, not part of the report.)*
+2. **Library (silver layer)** — dedupe snapshots into a stable piece catalog with lifecycle (`first_seen` / `last_seen` / `status`). *(Still exists as `library.js`, only relevant if `market-scan-llm.yml` is run.)*
+3. **Analysis + Slack** — Claude writes a Markdown report with week-over-week Mermaid charts; posts to Slack `#secondary-market` with links to report + CSV + JSON (Pattern A + B: auto-report + interactive handoff into Claude). *(Still accurate in shape — `analyze.js` does this — but now sourced from the structured datasets, see §0.)*
+4. **Historical auction library** — past sold lots (separate from live listings), starting with a complete Rago import and a framework to add other houses + estate jewelers. *(Done — 8 sources now, see §7.)*
+
+Target consumers: Excel / Power BI / Microsoft Fabric (bronze = raw CSV, silver = library + auction history), **plus a searchable GUI** (`docs/`, see §0) for the sales/product team directly.
+
+---
+
+## 2. Branch / PR state (as of original handoff — see §0 for what's current)
 
 `claude/immediate-next-work-i15bgw` was fast-forward merged into `main` on 2026-08-07 (commit `e8b0d52`) — everything below is now live on `main`: estate-jeweler dealer layer (`import-shopify.js`/`import-woocommerce.js`/`dealer-store.js`, §9 P0), LiveAuctioneers/Invaluable/Bonhams/Sotheby's auction-history importers (§9 P1/P2), and the interactive-probing tooling built while investigating the remaining houses.
 
@@ -60,28 +141,39 @@ Claude Code: confirm these env vars are available in its environment before runn
 ## 4. Repo layout
 
 ```
-agent.js                 # Weekly active-listings scan (Claude + web_search)
-analyze.js               # Report + Slack notify (--generate / --notify / --dry-run)
-library.js               # Deduped active library from snapshots
+agent.js                 # LLM web-search scan (manual-only now, see §0) -- market-scan-llm.yml
+analyze.js               # Weekly report + Slack notify (--generate / --notify / --dry-run) -- reads
+                          # the structured datasets directly, NOT output/snapshots/ (see §0)
+library.js               # Deduped library from agent.js snapshots (only relevant if that's run)
 backfill.js              # Broad LLM historical auction sweep (collect(map) adapter)
-import-rago.js           # Complete Rago structured importer (free HTTP)
-import-all.js            # Orchestrator: structured importers + optional --with-llm
-history-store.js         # Shared auction-history load/dedupe/write
-import-shopify.js        # Dealer layer: Shopify /products.json importer (Yafa + registry); also collectAll()
-dealer-store.js          # Shared dealer-listings load/dedupe/write (first_seen/last_seen/status)
-browserbase.js           # Browserbase + Playwright helper
-bb-probe.js              # Probe a URL in Browserbase; dump embedded state / XHRs
-.cursor/environment.json # Cloud env: { "install": "npm install" } — Cursor-specific
+import-rago.js, import-sothebys.js, import-phillips.js, import-doyle.js,
+import-christies.js, import-liveauctioneers.js, import-invaluable.js,
+import-bonhams.js                # One adapter per auction-history source (see §7 per-source detail)
+import-all.js             # Orchestrator: all of the above (+ optional --with-llm)
+history-store.js          # Shared auction-history load/dedupe/write
+import-shopify.js         # Dealer layer: Shopify /products.json importer (also collectAll())
+import-woocommerce.js     # Dealer layer: WooCommerce Store API importer (also collectAll())
+import-dealers.js         # Orchestrator: both dealer adapters
+dealer-store.js           # Shared dealer-listings load/dedupe/write (first_seen/last_seen/status/image_url)
+browserbase.js            # Browserbase + Playwright helper (shared with steel.js via browser-interactions.js)
+steel.js                  # Steel.dev alternative cloud-browser backend (same interface as browserbase.js)
+bb-probe.js               # Probe a URL in Browserbase/Steel; dump embedded state / XHRs
+docs/                     # Static searchable-database GUI (index.html/style.css/app.js), GitHub Pages
+.cursor/environment.json  # Cloud env: { "install": "npm install" } — Cursor-specific, may be stale
 .github/workflows/
-  weekly-scan.yml        # Mon 8am ET: scan → library → report → commit → Slack
-  history-refresh.yml    # Monthly free structured refresh; manual can --with-llm
+  history-refresh.yml     # Mon 8:15am ET: auction-history importers -> commit -> deploy GUI -> (dealer-refresh chains the report)
+  dealer-refresh.yml      # Mon 8:30am ET: dealer importers -> commit -> deploy GUI -> waits for history-refresh -> dispatches weekly-report.yml
+  weekly-report.yml       # workflow_dispatch only, chained from dealer-refresh.yml: report -> commit -> Slack
+  pages-deploy.yml        # Deploys docs/ (+ latest output/*.json) to GitHub Pages
+  market-scan-llm.yml     # workflow_dispatch only: the original agent.js/library.js sweep, optional/manual
 output/
-  david-webb-market-data.csv      # Append-only bronze log (live scan rows)
-  snapshots/YYYY-MM-DD.json       # Per-run raw results
-  david-webb-library.{json,csv}   # Deduped active catalog (silver)
-  david-webb-auction-history.*    # Past auction lots (Rago 85 committed on PR #7)
-  david-webb-dealer-listings.*    # Estate-jeweler for-sale inventory (Shopify importer; Yafa first)
-  reports/YYYY-MM-DD.md           # Claude-written report + Mermaid charts
+  david-webb-auction-history.*    # Past auction lots, 8 sources (see §7)
+  david-webb-dealer-listings.*    # Estate-jeweler for-sale inventory, 15 dealers
+  reports/YYYY-MM-DD.md           # Claude-written weekly report + Mermaid trend charts
+  reports/stats-history.json      # Small accumulator feeding the week-over-week trend charts
+  david-webb-market-data.csv      # Append-only bronze log from agent.js (only if market-scan-llm.yml is run)
+  snapshots/YYYY-MM-DD.json       # Per-run raw agent.js results (same)
+  david-webb-library.{json,csv}   # Deduped agent.js catalog (same)
 ```
 
 Node **≥ 18** (built-in `fetch`). Package manager: **npm** (`package-lock.json`).
@@ -134,9 +226,10 @@ Do **not** force sold lots into the active library; they are different entities.
 | Area | Status |
 | --- | --- |
 | Cloud env | `.cursor/environment.json` with `npm install`; Node 22 on default image is fine |
-| Weekly scan | Works end-to-end; ~$14 uncapped → **~$2–4** with CORE_QUERIES + `WEB_SEARCH_MAX_USES=3` |
-| Analyze + Slack | Live post to `#secondary-market` succeeded; report includes Mermaid WoW charts |
-| Library layer | 144 raw sightings → 100 unique pieces (validated) |
+| Weekly scan (`agent.js`, manual-only, see §0) | Works end-to-end; ~$14 uncapped → **~$2–4** with CORE_QUERIES + `WEB_SEARCH_MAX_USES=3` |
+| Weekly report (`analyze.js`, on the auto schedule, see §0) | Live end-to-end 2026-08-08: reads the structured datasets, posts to `#secondary-market`, includes deterministic week-over-week Mermaid charts once ≥2 weeks of `stats-history.json` exist |
+| Searchable database GUI (`docs/`, GitHub Pages) | Live at `david-webb-new-york.github.io/david-webb-market-agent/`, confirmed rendering real data incl. dealer thumbnails |
+| Library layer (`library.js`, only relevant if `market-scan-llm.yml` is run) | 144 raw sightings → 100 unique pieces (validated) |
 | Rago historical import | **85/85 lots** via Inertia `data-page` JSON (free). Committed on PR #7 |
 | Browserbase | Auth works (`bb_` key + project UUID). Paid plan; proxies confirmed working (Bonhams). |
 | Estate-jeweler dealer layer | **1,397 dealer listings** across 16 dealers (Shopify+WooCommerce), verified live (§9 P0) |
@@ -229,7 +322,7 @@ This session's own network is allowlisted and blocks essentially everything exce
 
 ---
 
-## 9. Immediate next work (priority order)
+## 9. Immediate next work (priority order) — historical; all of P0-P2 are done, see §0
 
 User’s last direction: upgrade done; **don’t lose estate jewelers**; continue auctioneer coverage via Browserbase.
 
@@ -308,9 +401,10 @@ User’s last direction: upgrade done; **don’t lose estate jewelers**; continu
 
 ### P3 — Product polish
 - Enrich Rago `materials_gemstones` from lot captions (often blank).
-- Combined view (active library + auction history) for Fabric/Claude.
-- Confirm `SLACK_WEBHOOK_URL` is set in **GitHub Actions** secrets.
-- Merge PR #7 when ready; keep `main` as single source of truth.
+- ~~Combined view (active library + auction history) for Fabric/Claude~~ — **done differently than planned:** the GUI (`docs/`) unions auction-history + dealer-listings client-side (see §0/§5), not the original active-library + auction-history combination (`agent.js`'s library was superseded, see §0). A true Fabric/Power BI feed off the two CSVs is still open if wanted.
+- ~~Confirm `SLACK_WEBHOOK_URL` is set in **GitHub Actions** secrets~~ — confirmed working, live Slack posts succeeding as of 2026-08-08.
+- ~~Merge PR #7 when ready~~ — merged long ago; `main` is single source of truth.
+- **Open, not yet built** (see the user's 2026-08-08 improvement-suggestions conversation, if logged, for the fuller list): real-time/faster-cadence dealer polling (currently weekly); auction-house image thumbnails (dealers have them, auction sources don't); price/motif trend intelligence beyond the raw weekly stats; any CRM/clienteling integration.
 
 ---
 
@@ -375,9 +469,10 @@ Notify runs **after** git push in CI so links resolve. Payload written to `outpu
 
 ## 13. Open questions / decisions for the user
 
-- ~~Should estate-jeweler inventory live in the active library, a new dealer listings file, or both?~~ **Decided this session:** new dealer layer (`output/david-webb-dealer-listings.*`, §5C) — kept separate since these are for-sale prices from a single dealer's own feed, not LLM-scan sightings or auction hammers. Revisit "both" (a combined view) once there's more than one source feeding it.
-- Approve Browserbase proxy spend + continued per-site adapter work vs. also pursuing licensed data (artnet)?
-- PR #7 is merged into `main`. Next PR (this session's Shopify/dealer-layer work) — merge when ready.
+- ~~Should estate-jeweler inventory live in the active library, a new dealer listings file, or both?~~ **Decided this session:** new dealer layer (`output/david-webb-dealer-listings.*`, §5C) — kept separate since these are for-sale prices from a single dealer's own feed, not LLM-scan sightings or auction hammers. The GUI (§0) unions both for browsing without merging the underlying stores.
+- ~~Approve Browserbase proxy spend + continued per-site adapter work vs. also pursuing licensed data (artnet)?~~ Proxy spend approved and used (Bonhams, Christie's). Licensed data (artnet or similar) never pursued — still an open option if the remaining unreachable sources (Heritage, Barnebys, Freeman's/Hindman — see §7 P2) matter enough to pay for.
+- ~~PR #7 is merged into `main`~~ — all work across every session has landed on `main` directly since; there's no standing feature branch.
+- **GitHub Pages vs. Vercel vs. Cloudflare Pages for the GUI** — resolved 2026-08-08: tried Vercel first (user's choice over Cloudflare Pages + Access), abandoned after repeated token-auth failures, landed on GitHub Pages (user enabled it by hand). See §0 for the full story if this comes up again.
 
 ---
 
@@ -389,4 +484,4 @@ Notify runs **after** git push in CI so links resolve. Payload written to `outpu
 
 ---
 
-*Generated as a handoff from the Cursor Cloud Agent session that built env setup, Slack/report pipeline, library layer, Rago import, Browserbase integration, and the estate-jeweler Shopify finding (Yafa: 22 David Webb products via `products.json`).*
+*Originally generated as a handoff from the Cursor Cloud Agent session that built env setup, Slack/report pipeline, library layer, Rago import, Browserbase integration, and the estate-jeweler Shopify finding (Yafa: 22 David Webb products via `products.json`). Updated 2026-08-08 (see §0) after the session that: built out the remaining 7 auction-history sources + 15 dealers (§7); replaced the LLM-scan-based weekly report with one reading the structured datasets directly and fixed its scheduling-order bug (`weekly-report.yml`); built the searchable database GUI (`docs/`, GitHub Pages after an abandoned Vercel attempt); added dealer-listing thumbnails; and found + fixed an unfiltered-search data-quality bug in `import-invaluable.js`.*

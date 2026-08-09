@@ -10,7 +10,7 @@ name: Weekly Dealer Listings Refresh
 # workflow_dispatch, is needed pre-merge).
 on:
   schedule:
-    - cron: '30 13 * * 1'  # Monday 8:30am ET (15 min after history-refresh.yml)
+    - cron: '30 13 * * 1'  # Monday 13:30 UTC (8:30am ET in winter / 9:30am ET in summer), 15 min after history-refresh.yml
   workflow_dispatch: {}
   push:
     paths:

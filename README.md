@@ -1,92 +1,130 @@
 # David Webb Secondary Market Agent
 
-Searches the web for David Webb pieces currently listed for sale or sold at
-auction, and logs piece details + pricing to a CSV you can open in Excel or
-plug into Power BI / Fabric.
+Tracks David Webb jewelry on the secondary market — past auction results and
+current estate-dealer inventory — and turns it into three things your team
+actually uses:
 
-## Setup (in Cursor)
+1. **A searchable database (GUI)** — every piece, sortable/filterable by
+   date, source, price, status, category, with a thumbnail and a link to the
+   original listing.
+2. **A weekly written report + Slack post** — what sold recently, what's new
+   on the market, notable pieces, price ranges by category.
+3. **Raw CSVs** — for anyone who wants to pull the data into Excel, Power BI,
+   or drop it into Claude for deeper analysis.
 
-1. Open this folder in Cursor.
-2. Get an API key: https://console.anthropic.com/settings/keys
-3. In the terminal:
-   ```
-   npm install
-   export ANTHROPIC_API_KEY=sk-ant-your-key-here
-   node agent.js
-   ```
-   (Node 18+ required — has built-in `fetch`. Check with `node -v`.)
+All of it refreshes automatically every Monday morning. Nobody needs to run
+anything by hand.
 
-4. Check `output/david-webb-market-data.csv` — new rows get appended every run.
-   `output/snapshots/` keeps a dated JSON copy of each run for auditing.
+## Where to find things
 
-## Customizing what it searches for
+| What | Where |
+| --- | --- |
+| Searchable database | `https://david-webb-new-york.github.io/david-webb-market-agent/` |
+| Weekly report | Posted to the `#secondary-market` Slack channel every Monday; also committed to `output/reports/YYYY-MM-DD.md` |
+| Raw data | `output/david-webb-auction-history.csv` (past sales) and `output/david-webb-dealer-listings.csv` (current inventory) |
 
-Edit the `QUERIES` array at the top of `agent.js`. Right now it covers:
-- 1stDibs by category (bracelet, ring, earrings, brooch, necklace)
-- Named iconic pieces (zebra bracelet, frog bracelet, cross pendant)
-- Sotheby's / Christie's auction results
+## How it works, end to end
 
-Add more specific queries as you think of them — e.g. `"David Webb hammerhead
-bracelet price"` or `"David Webb Kazanjian sapphire"` for specific historic
-pieces you want to track over time.
+Three scheduled GitHub Actions workflows, chained together — nobody needs to
+trigger any of this manually:
 
-## Running it on a schedule (so you don't have to remember)
+1. **`history-refresh.yml`** (Monday ~8:15am ET) — pulls new auction results
+   from Rago, Sotheby's, Christie's, Phillips, Doyle, Invaluable, LiveAuctioneers,
+   and Bonhams into `output/david-webb-auction-history.json`.
+2. **`dealer-refresh.yml`** (Monday ~8:30am ET) — pulls current for-sale
+   inventory from estate-jeweler sites (Yafa, The Back Vault, Fred Leighton,
+   and a dozen others) into `output/david-webb-dealer-listings.json`. Then it
+   waits for step 1 to actually finish, deploys the refreshed database GUI,
+   and kicks off step 3.
+3. **`weekly-report.yml`** — reads both datasets, writes the report, commits
+   it, and posts to Slack.
 
-**Easiest: cron on your own machine (Mac/Linux)**
+Everything upserts into the same two files week over week (deduplicated by
+listing URL), so re-runs are cheap and safe — the only real "new" data most
+weeks is current dealer inventory changing; auction history is mostly a
+settled backlog after the initial backfill.
+
+There's also a fourth, **manual-only** workflow, `market-scan-llm.yml` — an
+open-ended Claude + web-search sweep that can surface a dealer or source the
+structured importers above don't know about yet. It doesn't run on a
+schedule and isn't wired into the report; dispatch it by hand from the
+Actions tab when you want to go fishing for something new.
+
+## Running things locally / by hand
+
+```bash
+npm install
+
+# Pull fresh auction history (add --with-browserbase for LiveAuctioneers/Christie's/Bonhams)
+node import-all.js --with-browserbase
+
+# Pull fresh dealer inventory
+node import-dealers.js
+
+# Generate the weekly report (writes output/reports/<date>.md + Slack payload)
+node analyze.js --generate
+# ...then actually post it:
+node analyze.js --notify
+# ...or preview without posting:
+node analyze.js --dry-run
 ```
-crontab -e
-```
-Add a line to run it every Monday at 8am:
-```
-0 8 * * 1 cd /path/to/david-webb-agent && /usr/local/bin/node agent.js >> run.log 2>&1
-```
 
-**Better for reliability: GitHub Actions**
-Push this repo to GitHub, add `ANTHROPIC_API_KEY` as a repo secret, then add
-`.github/workflows/weekly-scan.yml`:
-```yaml
-name: Weekly David Webb Market Scan
-on:
-  schedule:
-    - cron: '0 13 * * 1'  # Monday 8am ET
-  workflow_dispatch: {}     # lets you also trigger manually from GitHub UI
-jobs:
-  scan:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm install
-      - run: node agent.js
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      - run: |
-          git config user.name "market-agent"
-          git config user.email "agent@davidwebb.local"
-          git add output/
-          git commit -m "Weekly market scan $(date +%F)" || echo "No changes"
-          git push
-```
-This commits fresh data back to the repo every week automatically — no
-machine of yours needs to be on.
+Needs `ANTHROPIC_API_KEY` (report writing), `BROWSERBASE_API_KEY` +
+`BROWSERBASE_PROJECT_ID` (headless-browser sources), and `SLACK_WEBHOOK_URL`
+(posting) as environment variables locally, or as GitHub Actions repo
+secrets for the scheduled runs. `VERCEL_TOKEN`/`VERCEL_ORG_ID` are no longer
+used — the GUI deploys via GitHub Pages now (`pages-deploy.yml`).
 
-## Feeding this into Fabric / Power BI
+## Data model
 
-Since you're already building out Bronze/Silver/Gold layers from Business
-Central at David Webb: the CSV output here is a natural Bronze-layer source.
-Simplest path is to have Fabric read `output/david-webb-market-data.csv`
-straight from GitHub (or drop it into a OneDrive/SharePoint folder the
-pipeline already watches), then dedupe/clean into Silver.
+Two separate datasets, deliberately not merged into one:
 
-## Notes on data quality
+- **`output/david-webb-auction-history.*`** — past sales. Fields include
+  `piece_name`, `category`, `sold_price`, `estimate_low`/`estimate_high`,
+  `sale_date`, `auction_house`, `lot_number`, `listing_url`, `first_captured`.
+  Managed by `history-store.js`.
+- **`output/david-webb-dealer-listings.*`** — current for-sale inventory.
+  Fields include `piece_name`, `category`, `asking_price`, `dealer`,
+  `listing_url`, `image_url`, `first_seen`/`last_seen`/`status`
+  (`active`/`inactive` — a listing that disappears from a dealer's site
+  gets marked inactive, not deleted). Managed by `dealer-store.js`.
 
-- 1stDibs prices are **dealer asking prices**, not what dealers paid or what
-  sellers actually receive after commission — treat as a retail-resale
-  comp, not a wholesale/liquidation value.
-- Auction "hammer" prices are real transaction prices but don't include
-  buyer's premium (typically +20-27% at major houses).
-- The model can occasionally miscategorize a piece or miss a price if a
-  listing page didn't load cleanly — spot check the snapshots periodically
-  rather than trusting the CSV blindly.
+The GUI (`docs/`) unions both into one browsable table client-side, tagging
+each row `auction` or `dealer` so the distinction stays visible.
+
+## Data-quality notes
+
+- **Auction hammer prices exclude buyer's premium** — typically +15–26%
+  depending on the house.
+- **Dealer asking prices are not confirmed sale prices** — they're the
+  dealer's current ask, which may be negotiated down or never sell.
+- **"Delisted" (dealer status: inactive)** usually but not always means
+  sold — could also be a price relist under a new SKU or a data-feed gap.
+- Every importer that queries a source's own free-text search (Invaluable,
+  and defensively LiveAuctioneers) filters results for an actual "David
+  Webb" mention before keeping them — full-text search on an aggregator
+  spanning hundreds of unrelated auction houses otherwise returns real
+  noise (confirmed and fixed 2026-08-08: 134 of Invaluable's 140 raw hits
+  were unrelated lots that happened to share a word with the query).
+  Sources that query by a structured maker/attribution field (Rago,
+  Phillips, Sotheby's, Christie's, Doyle) don't need this and aren't
+  filtered — their titles legitimately don't always spell out "David Webb"
+  even when the piece is genuine.
+
+## Extending it
+
+- **New auction house or dealer site**: add an adapter file (see
+  `import-rago.js` for the simplest structured example, or
+  `import-shopify.js`/`import-woocommerce.js` for the dealer-layer pattern)
+  exporting `collect(map, opts)`, register it in `import-all.js` or
+  `import-dealers.js`.
+- **GUI changes**: `docs/index.html` / `docs/style.css` / `docs/app.js` —
+  plain HTML/CSS/JS, no build step. Redeploys automatically on push via
+  `pages-deploy.yml`.
+- **Report changes**: `analyze.js` — stats are computed deterministically in
+  JS (trustworthy numbers), then handed to Claude to narrate; Claude is
+  explicitly told not to invent figures.
+
+See `HANDOFF.md` for the deeper technical history of how each source's
+adapter was built (what was tried, what worked, known limitations per
+source) — useful before touching any individual importer.
