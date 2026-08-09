@@ -1,0 +1,24 @@
+name: Upcoming Auctions Debug (Christie's / Sotheby's / Bonhams / Phillips)
+on:
+  push:
+    paths:
+      - 'upcoming-auctions-probe.js'
+      - '.github/workflows/upcoming-auctions-debug.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: Probe upcoming-lots feasibility across major houses
+        run: node upcoming-auctions-probe.js
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
