@@ -1,0 +1,32 @@
+name: Dealer Marketplaces Debug (1stDibs / The RealReal)
+on:
+  push:
+    paths:
+      - '1stdibs-listing-shape.js'
+      - 'therealreal-listing-shape.js'
+      - '.github/workflows/dealer-marketplaces-debug.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - name: 1stDibs search-results real field shape
+        if: hashFiles('1stdibs-listing-shape.js') != ''
+        run: node 1stdibs-listing-shape.js
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+      - name: The RealReal search-results real field shape
+        if: hashFiles('therealreal-listing-shape.js') != ''
+        run: node therealreal-listing-shape.js
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
