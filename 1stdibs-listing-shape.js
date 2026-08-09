@@ -31,14 +31,38 @@ async function main() {
   const blob = result.blobs.sort((a, b) => b.length - a.length)[0] || "";
   console.log("largest blob:", blob.length, "bytes");
 
-  // Every ecommerceTrackingParams object is a flat, self-contained JSON
-  // value (no nested braces observed in round 1's sample) -- a
-  // non-greedy brace match is safe here and much simpler than a real
-  // JSON-aware scan.
-  const items = [...blob.matchAll(/"ecommerceTrackingParams":(\{[^{}]*\})/g)]
-    .map((m) => {
+  // Round 1's flat-object assumption was wrong -- ecommerceTrackingParams
+  // has at least one nested object (convertedAmounts:{...}), which a naive
+  // `{[^{}]*}` match can't span (found 0 items on retest). Balance braces
+  // properly instead of assuming a fixed nesting depth.
+  function extractBalancedObjects(text, keyPrefix) {
+    const results = [];
+    const marker = `"${keyPrefix}":`;
+    let searchFrom = 0;
+    while (true) {
+      const markerIdx = text.indexOf(marker, searchFrom);
+      if (markerIdx === -1) break;
+      const braceStart = text.indexOf("{", markerIdx);
+      if (braceStart === -1) break;
+      let depth = 0;
+      let i = braceStart;
+      for (; i < text.length; i++) {
+        if (text[i] === "{") depth++;
+        else if (text[i] === "}") {
+          depth--;
+          if (depth === 0) break;
+        }
+      }
+      if (depth === 0) results.push(text.slice(braceStart, i + 1));
+      searchFrom = markerIdx + marker.length;
+    }
+    return results;
+  }
+
+  const items = extractBalancedObjects(blob, "ecommerceTrackingParams")
+    .map((raw) => {
       try {
-        return JSON.parse(m[1]);
+        return JSON.parse(raw);
       } catch (_) {
         return null;
       }
@@ -49,16 +73,31 @@ async function main() {
     console.log(` - id=${it.id} price=${it.price} brand=${it.brand} name=${JSON.stringify(it.name)}`);
   }
 
-  // Seller/dealer name and listing URL: search near one real item's id
-  // for plausible field names rather than guessing one and hoping.
+  // Seller/dealer name and listing URL: search EVERY occurrence of a real
+  // item's serviceId (not just its ecommerceTrackingParams leaf) for
+  // nearby fields -- Relay's normalized store likely holds the seller/url
+  // info in a different, separately-keyed record for the same item, not
+  // bundled into the ecommerce tracking object.
   if (items.length) {
-    const sampleId = items[0].id;
-    const idx = blob.indexOf(`"${sampleId}"`);
-    console.log(`\n--- 2000b of context around first item (id=${sampleId}) for URL/seller fields ---`);
-    console.log(blob.slice(Math.max(0, idx - 500), idx + 1500));
+    const sampleServiceId = items[0].id; // e.g. "j_19549292"
+    const positions = [];
+    let searchFrom = 0;
+    while (positions.length < 6) {
+      const idx = blob.indexOf(sampleServiceId, searchFrom);
+      if (idx === -1) break;
+      positions.push(idx);
+      searchFrom = idx + sampleServiceId.length;
+    }
+    console.log(`\n--- ${positions.length} occurrence(s) of serviceId "${sampleServiceId}" in the blob ---`);
+    for (const idx of positions) {
+      console.log(`  ...${blob.slice(Math.max(0, idx - 300), idx + 500)}...\n`);
+    }
   }
 
-  const urlFieldCandidates = ["sellerName", "dealerName", "vendorName", "storefrontName", "shopName", '"url":', '"slug":', "canonicalUrl", "itemUrl", "detailUrl"];
+  const urlFieldCandidates = [
+    "sellerName", "dealerName", "vendorName", "storefrontName", "shopName", "seller", "gallery", "Gallery",
+    '"url":', '"slug":', "canonicalUrl", "itemUrl", "detailUrl", "id-j_", "pdpUrl", "productUrl", "webUrl",
+  ];
   console.log("\n--- field-name candidate occurrence counts (whole blob) ---");
   for (const c of urlFieldCandidates) {
     const re = new RegExp(c.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g");

@@ -30,3 +30,4 @@ jobs:
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+          STEEL_API_KEY: ${{ secrets.STEEL_API_KEY }}
