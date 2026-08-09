@@ -85,9 +85,16 @@ function daysAgoStr(n) {
 
 // ---------- aggregate stats (computed in JS so numbers are trustworthy) ----------
 
+// A real David Webb piece essentially never transacts under this --
+// below it is almost always a placeholder ("price on request", a Shopify
+// $1/$0.01 "sold out" stand-in) rather than a genuine price. Confirmed via
+// a real $1 "sold out" placeholder corrupting a category's min-price stat
+// (see the same guard, and the reasoning, in flag-listings.js).
+const MIN_PLAUSIBLE_PRICE = 50;
+
 function num(v) {
   const n = Number(v);
-  return Number.isFinite(n) && n > 0 ? n : null;
+  return Number.isFinite(n) && n >= MIN_PLAUSIBLE_PRICE ? n : null;
 }
 
 function median(nums) {
@@ -109,6 +116,30 @@ function byCategoryStats(records, priceField) {
   return [...groups.entries()]
     .map(([category, prices]) => ({
       category,
+      count: prices.length,
+      min: Math.min(...prices),
+      median: median(prices),
+      max: Math.max(...prices),
+    }))
+    .sort((a, b) => b.count - a.count);
+}
+
+// Same shape as byCategoryStats, but a record can carry multiple tags
+// (piece_name/notes tagged with e.g. both "Zodiac" and "1970s"), so this
+// is a one-to-many grouping rather than category's one-to-one.
+function byTagStats(records, priceField) {
+  const groups = new Map();
+  for (const r of records) {
+    const p = num(r[priceField]);
+    if (p === null) continue;
+    for (const tag of String(r.tags || "").split("; ").filter(Boolean)) {
+      if (!groups.has(tag)) groups.set(tag, []);
+      groups.get(tag).push(p);
+    }
+  }
+  return [...groups.entries()]
+    .map(([tag, prices]) => ({
+      tag,
       count: prices.length,
       min: Math.min(...prices),
       median: median(prices),
@@ -202,6 +233,8 @@ function computeStats(history, dealers, today) {
     topSalesEver,
     auctionByCategory: byCategoryStats(soldRecords, "sold_price"),
     dealerByCategory: byCategoryStats(activeDealerListings, "asking_price"),
+    auctionByTag: byTagStats(soldRecords, "sold_price").filter((t) => t.count >= 5),
+    dealerByTag: byTagStats(activeDealerListings, "asking_price").filter((t) => t.count >= 5),
     dealerAskingMedian: median(
       activeDealerListings.map((r) => num(r.asking_price)).filter((n) => n !== null)
     ),
@@ -267,6 +300,36 @@ function renderTrends(series) {
   ].join("\n");
 
   return ["## Week-over-week trends", "", table, "", chart, ""].join("\n");
+}
+
+// ---------- motif/material trend tags ----------
+
+function renderTagTrends(auctionByTag, dealerByTag) {
+  if (!auctionByTag.length && !dealerByTag.length) return "";
+  const money = (n) => (n === null || n === undefined ? "n/a" : "$" + Math.round(n).toLocaleString("en-US"));
+
+  const table = (rows, priceLabel) =>
+    [
+      `| Tag | Count | Min | Median | Max |`,
+      `|---|---|---|---|---|`,
+      ...rows
+        .slice(0, 15)
+        .map((r) => `| ${r.tag} | ${r.count} | ${money(r.min)} | ${money(r.median)} | ${money(r.max)} |`),
+    ].join("\n");
+
+  const lines = [
+    "## Trends by motif & material",
+    "",
+    "_Tags are keyword-matched from each piece's own listing text against David Webb's known design vocabulary (Zodiac, animal/creature pieces, fishscale, rock crystal, enamel, carved hardstone, etc.) — a piece can carry several tags. Tags with fewer than 5 matching records are omitted as too thin to be meaningful._",
+    "",
+  ];
+  if (auctionByTag.length) {
+    lines.push("**Auction (sold prices)**", "", table(auctionByTag, "sold"), "");
+  }
+  if (dealerByTag.length) {
+    lines.push("**Current dealer inventory (asking prices)**", "", table(dealerByTag, "asking"), "");
+  }
+  return lines.join("\n");
 }
 
 // ---------- listing-quality flags ("worth a second look") ----------
@@ -569,7 +632,13 @@ async function generate() {
 
   // Insert the deterministic (accurate) trend charts + quality flags right
   // after the H1 title, trends first.
-  const deterministicSections = [renderTrends(trendSeries), renderFlags(flags)].filter(Boolean).join("\n");
+  const deterministicSections = [
+    renderTrends(trendSeries),
+    renderTagTrends(stats.auctionByTag, stats.dealerByTag),
+    renderFlags(flags),
+  ]
+    .filter(Boolean)
+    .join("\n");
   const reportWithTrends = insertAfterH1(report, deterministicSections);
 
   fs.mkdirSync(REPORTS_DIR, { recursive: true });

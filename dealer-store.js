@@ -15,6 +15,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { inferTags } = require("./infer-tags");
 
 const OUTPUT_DIR = path.join(__dirname, "output");
 const LISTINGS_JSON = path.join(OUTPUT_DIR, "david-webb-dealer-listings.json");
@@ -33,6 +34,7 @@ const LISTING_FIELDS = [
   "image_url",
   "sku",
   "notes",
+  "tags",
 ];
 
 const CSV_HEADER = ["id", ...LISTING_FIELDS, "source", "first_seen", "last_seen", "times_seen", "status"];
@@ -94,6 +96,9 @@ function upsert(map, record, meta = {}) {
     merged.last_seen = today;
     merged.times_seen = (Number(prev.times_seen) || 0) + (prev.last_seen === today ? 0 : 1);
     merged.status = "active";
+    // tags is fully derived -- always recompute from the final merged text
+    // rather than carrying over whichever side's (likely empty) raw value won.
+    merged.tags = inferTags(`${merged.piece_name} ${merged.notes}`, merged.era_or_year).join("; ");
     map.set(key, merged);
     return false;
   }
@@ -103,6 +108,7 @@ function upsert(map, record, meta = {}) {
   clean.last_seen = today;
   clean.times_seen = 1;
   clean.status = "active";
+  clean.tags = inferTags(`${clean.piece_name} ${clean.notes}`, clean.era_or_year).join("; ");
   map.set(key, clean);
   return true;
 }

@@ -19,6 +19,7 @@
     filterStatus: document.getElementById("filter-status"),
     filterSource: document.getElementById("filter-source"),
     filterCategory: document.getElementById("filter-category"),
+    filterTag: document.getElementById("filter-tag"),
     filterFlagged: document.getElementById("filter-flagged"),
     clearFilters: document.getElementById("clear-filters"),
     table: document.getElementById("results-table"),
@@ -75,6 +76,7 @@
         listing_url: r.listing_url || "",
         image_url: "",
         notes: r.notes || "",
+        tags: splitTags(r.tags),
         flags: flagsByUrl.get(r.listing_url) || [],
       });
     }
@@ -98,10 +100,18 @@
         listing_url: r.listing_url || "",
         image_url: r.image_url || "",
         notes: r.notes || "",
+        tags: splitTags(r.tags),
         flags: flagsByUrl.get(r.listing_url) || [],
       });
     }
     return out;
+  }
+
+  function splitTags(tags) {
+    return String(tags || "")
+      .split(";")
+      .map((t) => t.trim())
+      .filter(Boolean);
   }
 
   function buildFlagsByUrl(flagRecords) {
@@ -161,6 +171,7 @@
     const status = els.filterStatus.value;
     const source = els.filterSource.value;
     const category = els.filterCategory.value;
+    const tag = els.filterTag.value;
     const flaggedOnly = els.filterFlagged.checked;
 
     state.filtered = state.records.filter((r) => {
@@ -168,6 +179,7 @@
       if (status && r.status !== status) return false;
       if (source && r.source !== source) return false;
       if (category && r.category !== category) return false;
+      if (tag && !r.tags.includes(tag)) return false;
       if (flaggedOnly && !r.flags.length) return false;
       if (q) {
         const hay = `${r.piece_name} ${r.source} ${r.materials_gemstones} ${r.notes} ${r.lot_number} ${r.sale_name}`.toLowerCase();
@@ -321,6 +333,7 @@
       ["Sale", r.sale_name || "—"],
       ["Lot / SKU", r.lot_number || "—"],
       ["Category", r.category],
+      ["Tags", r.tags.length ? r.tags.join(", ") : "—"],
       ["Materials", r.materials_gemstones || "—"],
       ["Era / year", r.era_or_year || "—"],
       ["Price type", r.price_type || "—"],
@@ -351,10 +364,12 @@
     const sources = [...new Set(state.records.map((r) => r.source))].sort();
     const categories = [...new Set(state.records.map((r) => r.category))].sort();
     const statuses = [...new Set(state.records.map((r) => r.status))].sort();
+    const tags = [...new Set(state.records.flatMap((r) => r.tags))].sort();
 
     for (const s of sources) els.filterSource.appendChild(new Option(s, s));
     for (const c of categories) els.filterCategory.appendChild(new Option(cap(c), c));
     for (const s of statuses) els.filterStatus.appendChild(new Option(s, s));
+    for (const t of tags) els.filterTag.appendChild(new Option(t, t));
   }
 
   function cap(s) {
@@ -377,6 +392,7 @@
     els.filterStatus.addEventListener("change", applyFilters);
     els.filterSource.addEventListener("change", applyFilters);
     els.filterCategory.addEventListener("change", applyFilters);
+    els.filterTag.addEventListener("change", applyFilters);
     els.filterFlagged.addEventListener("change", applyFilters);
     els.clearFilters.addEventListener("click", () => {
       els.search.value = "";
@@ -384,6 +400,7 @@
       els.filterStatus.value = "";
       els.filterSource.value = "";
       els.filterCategory.value = "";
+      els.filterTag.value = "";
       els.filterFlagged.checked = false;
       applyFilters();
     });

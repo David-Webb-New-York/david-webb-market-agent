@@ -173,9 +173,12 @@ Stamped for 18 karat gold" — clearly a genuine, well-documented piece).
 `flag-listings.js` now excludes any price under $50 as implausible
 placeholder data rather than real pricing, so it can't masquerade as a
 "suspiciously cheap" flag or skew the percentile math for other flagged
-items. This guard lives only in `flag-listings.js`, not in the importers
-or `analyze.js`'s own stats — worth widening if more placeholder prices
-turn up elsewhere.
+items. Same $50 floor added to `analyze.js`'s own `num()` too (2026-08-09,
+while building trend tags below) — it was still missing there and showed
+up as a `min: $1` corrupting a tag's price stats; both guards are
+independent copies (small, self-contained, no shared helper module for
+this one thing), so if a THIRD file ever computes its own price stats, add
+the same floor there too.
 
 **Near-term alerts (2026-08-09):** `alert-new-listings.js` +
 `daily-alert.yml` — Tue-Fri only (Monday's already covered by
@@ -187,6 +190,35 @@ nudge, not a report, and posts nothing at all if nothing clears the
 threshold (no daily "nothing new" noise). Tested via a synthetic injected
 record, not just unit logic, then confirmed the real store file was
 restored byte-for-byte afterward.
+
+**Trend tags (2026-08-09):** `infer-tags.js` — keyword-matched motif/
+material/decade tags grounded in David Webb's actual design vocabulary
+(Zodiac, Animal/Creature, Fishscale, Hammered Gold, Rock Crystal, Enamel,
+Bombé, Door Knocker, Shell/Starfish, Maltese Cross, Cuff/Bangle, Carved
+Hardstone, Cabochon, plus `1940s`-`1990s` decade buckets from
+`era_or_year`). Deliberately excludes near-universal terms like "diamond"
+or "gold" that wouldn't differentiate anything as a trend signal.
+**Unlike category/era_or_year (duplicated across all 11 importers, which
+is exactly what caused the cufflink-miscategorization bug above),
+`inferTags()` is called from ONE place: inside `history-store.js`'s and
+`dealer-store.js`'s own `upsert()`, computed fresh from the record's own
+`piece_name`/`notes`/`era_or_year` on every upsert.** No importer needs to
+know this exists or call anything — this is the pattern category/era
+should probably be refactored to eventually, but that's a larger, riskier
+change than was in scope here. Retroactively computed on all
+already-committed records (2,705/3,794 auction + 1,162/1,397 dealer got at
+least one tag). Surfaced in the weekly report ("Trends by motif &
+material" — count + min/median/max price per tag, auction and dealer
+shown separately, tags with <5 matching records omitted as too thin) and
+the GUI (a tag filter dropdown + a "Tags" field in the detail modal).
+Real example from the live data: Zodiac pieces median $6,875 at auction
+vs. $17,800 in current dealer asking prices; Cuff/Bangle $23,750 vs.
+$37,300 — genuine dealer-markup-over-hammer signal, not noise.
+
+**Upcoming-auctions investigation (started 2026-08-09, per user request to
+scope the major houses first):** not yet resolved — see whatever's most
+recent above this line, or check git log / open threads if this note is
+stale, before assuming it's still unstarted.
 
 ---
 

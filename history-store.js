@@ -10,6 +10,7 @@
 
 const fs = require("fs");
 const path = require("path");
+const { inferTags } = require("./infer-tags");
 
 const OUTPUT_DIR = path.join(__dirname, "output");
 const HISTORY_JSON = path.join(OUTPUT_DIR, "david-webb-auction-history.json");
@@ -31,6 +32,7 @@ const HISTORY_FIELDS = [
   "lot_number",
   "listing_url",
   "notes",
+  "tags",
 ];
 
 const CSV_HEADER = ["id", ...HISTORY_FIELDS, "source", "first_captured"];
@@ -90,11 +92,15 @@ function upsert(map, record, meta = {}) {
     merged.id = key;
     merged.source = prev.source || source;
     merged.first_captured = prev.first_captured || today;
+    // tags is fully derived -- always recompute from the final merged text
+    // rather than carrying over whichever side's (likely empty) raw value won.
+    merged.tags = inferTags(`${merged.piece_name} ${merged.notes}`, merged.era_or_year).join("; ");
     map.set(key, merged);
     return false;
   }
   clean.source = source;
   clean.first_captured = today;
+  clean.tags = inferTags(`${clean.piece_name} ${clean.notes}`, clean.era_or_year).join("; ");
   map.set(key, clean);
   return true;
 }

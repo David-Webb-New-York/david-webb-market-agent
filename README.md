@@ -97,6 +97,15 @@ Two separate datasets, deliberately not merged into one:
   (`active`/`inactive` — a listing that disappears from a dealer's site
   gets marked inactive, not deleted). Managed by `dealer-store.js`.
 
+Both carry a **`tags`** field (`;`-separated) — design motif/material/decade
+tags (Zodiac, Animal/Creature, Fishscale, Rock Crystal, Enamel, Carved
+Hardstone, Cuff/Bangle, `1970s`, etc.), keyword-matched from the piece's own
+listing text via `infer-tags.js`. Computed centrally inside each store's
+`upsert()` — not duplicated per-importer — so it's always in sync and only
+needs updating in one place. Filterable in the GUI, and charted (count +
+min/median/max price per tag) in the weekly report's "Trends by motif &
+material" section.
+
 The GUI (`docs/`) unions both into one browsable table client-side, tagging
 each row `auction` or `dealer` so the distinction stays visible.
 
