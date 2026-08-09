@@ -38,6 +38,7 @@ const fs = require("fs");
 const path = require("path");
 const { HISTORY_JSON, HISTORY_CSV } = require("./history-store");
 const { LISTINGS_JSON, LISTINGS_CSV } = require("./dealer-store");
+const { computeFlags } = require("./flag-listings");
 
 const args = new Set(process.argv.slice(2));
 const MODE_GENERATE = args.has("--generate") || !args.has("--notify");
@@ -47,6 +48,7 @@ const DRY_RUN = args.has("--dry-run");
 const OUTPUT_DIR = path.join(__dirname, "output");
 const REPORTS_DIR = path.join(OUTPUT_DIR, "reports");
 const STATS_HISTORY_JSON = path.join(REPORTS_DIR, "stats-history.json");
+const FLAGGED_LISTINGS_JSON = path.join(OUTPUT_DIR, "flagged-listings.json");
 const MAX_STATS_HISTORY = 26; // ~6 months of weekly runs
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
@@ -267,6 +269,51 @@ function renderTrends(series) {
   return ["## Week-over-week trends", "", table, "", chart, ""].join("\n");
 }
 
+// ---------- listing-quality flags ("worth a second look") ----------
+
+function renderFlags(flags) {
+  if (!flags.length) return "";
+  const money = (n) => (n === null || n === undefined ? "n/a" : "$" + Math.round(n).toLocaleString("en-US"));
+  const link = (r) => (r.url ? `[${r.piece_name || "(untitled)"}](${r.url})` : r.piece_name || "(untitled)");
+
+  const priceFlags = flags
+    .filter((f) => f.flag === "price_anomaly")
+    .sort((a, b) => (a.price || 0) - (b.price || 0))
+    .slice(0, 10);
+  const authFlags = flags
+    .filter((f) => f.flag === "unverified_authenticity")
+    .sort((a, b) => (b.price || 0) - (a.price || 0))
+    .slice(0, 10);
+
+  const lines = [
+    "## Worth a second look",
+    "",
+    "_Heuristic signals for a human to check — not fraud determinations. A flagged piece may well be genuine; these just surface things worth a closer look before relying on the listing._",
+    "",
+  ];
+
+  if (priceFlags.length) {
+    lines.push(`**Implausibly low price** (${flags.filter((f) => f.flag === "price_anomaly").length} total)`, "");
+    for (const f of priceFlags) {
+      lines.push(`- ${link(f)} — ${money(f.price)} via ${f.source || "unknown"}. ${f.reason}.`);
+    }
+    lines.push("");
+  }
+
+  if (authFlags.length) {
+    lines.push(
+      `**Cheap AND no signature/hallmark/certificate mentioned** (${flags.filter((f) => f.flag === "unverified_authenticity").length} total — a subset of the price flags above, worth extra scrutiny)`,
+      ""
+    );
+    for (const f of authFlags) {
+      lines.push(`- ${link(f)} — ${money(f.price)} via ${f.source || "unknown"}. ${f.reason}.`);
+    }
+    lines.push("");
+  }
+
+  return lines.join("\n");
+}
+
 // Defensively remove any trends heading + placeholder the model may still emit,
 // so the deterministic section (inserted below) is the only one.
 function stripModelTrends(report) {
@@ -399,7 +446,7 @@ function links(date) {
   };
 }
 
-function buildSlackPayload(date, stats, slackSummary) {
+function buildSlackPayload(date, stats, slackSummary, flags = []) {
   const l = links(date);
   const money = (n) => (n === null || n === undefined ? "n/a" : "$" + n.toLocaleString("en-US"));
   const linkParts = [
@@ -407,6 +454,23 @@ function buildSlackPayload(date, stats, slackSummary) {
     l.database ? `*Live database:* <${l.database}|Search all listings>` : null,
     `*CSVs:* <${l.auctionCsv}|Auctions> / <${l.dealerCsv}|Dealers>`,
   ].filter(Boolean);
+
+  const priceFlagCount = flags.filter((f) => f.flag === "price_anomaly").length;
+  const authFlagCount = flags.filter((f) => f.flag === "unverified_authenticity").length;
+  const flagsBlock =
+    priceFlagCount || authFlagCount
+      ? [
+          {
+            type: "context",
+            elements: [
+              {
+                type: "mrkdwn",
+                text: `:mag: *Worth a second look:* ${priceFlagCount} implausibly-cheap price flag(s), ${authFlagCount} no-signature-mentioned flag(s) — see the report for details. Heuristic signals, not fraud determinations.`,
+              },
+            ],
+          },
+        ]
+      : [];
 
   return {
     text: `David Webb secondary-market report — ${date}`,
@@ -426,6 +490,7 @@ function buildSlackPayload(date, stats, slackSummary) {
         },
       },
       { type: "section", text: { type: "mrkdwn", text: slackSummary || "_No summary generated._" } },
+      ...flagsBlock,
       {
         type: "section",
         text: { type: "mrkdwn", text: linkParts.join("  ·  ") },
@@ -480,6 +545,14 @@ async function generate() {
   const stats = computeStats(history, dealers, date);
   const trendSeries = appendStatsHistory(stats);
 
+  const flags = computeFlags(history, dealers);
+  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  fs.writeFileSync(FLAGGED_LISTINGS_JSON, JSON.stringify(flags, null, 2) + "\n");
+  console.log(
+    `Flags: ${flags.filter((f) => f.flag === "price_anomaly").length} price anomaly, ` +
+      `${flags.filter((f) => f.flag === "unverified_authenticity").length} unverified authenticity`
+  );
+
   console.log(
     `Analyzing ${date}: ${stats.totals.auctionRecords} auction records, ${stats.totals.activeDealerListings} active dealer listings...`
   );
@@ -494,15 +567,17 @@ async function generate() {
     process.exit(1);
   }
 
-  // Insert the deterministic (accurate) trend charts right after the H1 title.
-  const reportWithTrends = insertAfterH1(report, renderTrends(trendSeries));
+  // Insert the deterministic (accurate) trend charts + quality flags right
+  // after the H1 title, trends first.
+  const deterministicSections = [renderTrends(trendSeries), renderFlags(flags)].filter(Boolean).join("\n");
+  const reportWithTrends = insertAfterH1(report, deterministicSections);
 
   fs.mkdirSync(REPORTS_DIR, { recursive: true });
   const reportPath = path.join(REPORTS_DIR, `${date}.md`);
   fs.writeFileSync(reportPath, reportWithTrends + "\n");
   fs.writeFileSync(path.join(REPORTS_DIR, "latest.md"), reportWithTrends + "\n");
 
-  const payload = buildSlackPayload(date, stats, slack);
+  const payload = buildSlackPayload(date, stats, slack, flags);
   fs.writeFileSync(payloadPath(date), JSON.stringify(payload, null, 2));
 
   console.log(`Report written: ${reportPath}`);

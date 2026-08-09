@@ -117,6 +117,66 @@ Matches the earlier Heritage (ha.com) precedent. Don't re-attempt without a
 different approach (e.g. a captcha-solving proxy service) or explicit
 user direction.
 
+**Listing-quality flags (2026-08-09):** `flag-listings.js` computes two
+heuristic "worth a second look" flags fresh from the current dataset on
+every report run (NOT baked into stored records — thresholds are relative
+to the current price distribution): `price_anomaly` (implausibly cheap vs.
+category norms, both a per-category relative percentile and a dataset-wide
+absolute floor) and `unverified_authenticity` (listing text doesn't mention
+a signature/hallmark/certificate — but ONLY evaluated on records that are
+ALREADY price-flagged, since standalone this fired on ~73% of dealer
+inventory in testing — most genuine dealers' short marketing blurbs just
+don't happen to use those exact words). Christie's/Sotheby's are excluded
+from the authenticity check entirely — their catalog text is frequently
+non-English (Italian/French/Chinese), which produced false positives on
+some of the highest-value lots in the dataset. Wired into `analyze.js`
+(writes `output/flagged-listings.json`, adds a deterministic "Worth a
+second look" report section + a Slack context line) and the GUI (a
+"Worth a second look only" filter checkbox, a badge on flagged table rows,
+a detail-modal section) via `docs/data/flagged-listings.json`
+(pages-deploy.yml packages it same as the two main datasets). Always
+worded as a heuristic signal for a human to check, never a fraud
+determination.
+
+**Category-inference bug found and fixed while building the above
+(2026-08-09):** all 11 importers shared a copy-pasted `inferCategory()`
+whose `/bracelet|bangle|cuff/` check matched before a dedicated cufflink
+check could run (`"cufflink"` contains `"cuff"` as a substring), so
+cufflink lots got miscategorized as "bracelet" — which directly corrupted
+the price-anomaly flag's category-relative comparisons. Fixed with a
+`cuff(?!link)` negative lookahead in all 11 files; retroactively
+recomputed `category` on all already-committed records (135 auction + 74
+dealer records changed) so the fix applies to existing data, not just
+future scrapes.
+
+**Non-jewelry noise found and removed while building the above
+(2026-08-09):** 18 auction-history records were homonym false
+positives — "David Webb" or "Webb" alone matching an unrelated person's
+name (a footballer, a book editor, an author, a different jewelry house
+"David Andersen"), not the jewelry house. Confirmed individually (a book
+on Japanese prints citing "Glenn T. Webb" as a co-editor, astronaut
+autographs, a football match programme signed by footballer "David
+Webb," a "Spider's Webb" brooch explicitly attributed to David Andersen
+of Norway, etc.) and removed as one-off manual deletions — same practice
+as the earlier Christie's Van Cleef & Arpels cleanup — rather than a
+blanket filter, since Doyle/Christie's/Sotheby's titles legitimately omit
+"David Webb" for genuine pieces too (catalog shorthand like "FIRMATO
+WEBB" / "signed Webb" is common and correct). If asked to investigate
+"nonsense listings" again and the Invaluable-source explanation in this
+section doesn't apply, check for this homonym pattern next.
+
+**A $1 dealer listing was found and is now guarded against generally:**
+a Wilson's Estate Jewelry listing had `asking_price: 1` — almost
+certainly a Shopify "sold out"/"price on request" placeholder, not a
+real price (the listing's own description says "Signed for David Webb,
+Stamped for 18 karat gold" — clearly a genuine, well-documented piece).
+`flag-listings.js` now excludes any price under $50 as implausible
+placeholder data rather than real pricing, so it can't masquerade as a
+"suspiciously cheap" flag or skew the percentile math for other flagged
+items. This guard lives only in `flag-listings.js`, not in the importers
+or `analyze.js`'s own stats — worth widening if more placeholder prices
+turn up elsewhere.
+
 ---
 
 ## 1. What this project is (original framing — see §0 for what's current)

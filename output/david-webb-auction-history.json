@@ -12662,7 +12662,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-1799848",
     "piece_name": "A PAIR OF DIAMOND EARCLIPS AND A DIAMOND COCKTAIL RING, BY DAVID WEBB AND BY CARTIER",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -20042,7 +20042,7 @@
   {
     "id": "meta:sotheby's||2021-08-05|david webb | pair of gold, enamel and ruby goat cufflinks | david webb | k金 鑲 琺瑯 及 紅寶石 袖扣一對",
     "piece_name": "David Webb | Pair of Gold, Enamel and Ruby Goat Cufflinks | David Webb | K金 鑲 琺瑯 及 紅寶石 袖扣一對",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -23236,26 +23236,6 @@
     "lot_number": "172",
     "listing_url": "https://www.christies.com/en/lot/lot-4830557",
     "notes": "A SET OF WHITE ENAMEL, MULTI-GEM AND GOLD JEWELRY, BY DAVID WEBB Comprising a brooch, designed as a white enamel and textured gold striped tiger with pear-shaped emerald eyes and circular-cut diamond mane and collar; a bracelet, designed as a white enamelled flexible band, 7½ ins. ; a white enamelled bombé ring with gold boule accents; and a pair of ear clips en suite, all mounted in 18 gold Brooch and ring signed Webb for David Webb, bracelet and pair of ear clips signed David Webb (4) — SOLD TO BENEFIT CancerCare CancerCare is a national nonprofit organization based in New York that provides free professional support services to anyone affected by cancer: people with cancer, caregivers, children, loved ones, and the bereaved. CancerCare programs, including counseling, education, financial assistance and practical help, are provided by trained oncology social workers. Founded in 1944, CancerCare today provides individual assistance to more than 90,000 people a year, in addition to the 1.4 million people who seek out information and resources from the organization's website.",
-    "source": "christies-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.christies.com/en/lot/lot-4431922",
-    "piece_name": "MILTON W. HOPKINS (1789-1844) AND NOAH NORTH (1809-1880)",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 18000,
-    "estimate_low": 10000,
-    "estimate_high": 15000,
-    "currency_note": "USD",
-    "sale_date": "2005-01-20",
-    "auction_house": "Christie's",
-    "sale_name": "Sale 1474 (New York)",
-    "lot_number": "680",
-    "listing_url": "https://www.christies.com/en/lot/lot-4431922",
-    "notes": "MILTON W. HOPKINS (1789-1844) AND NOAH NORTH (1809-1880) A Pair of Portraits of Dr. David Ward and Mary Webb, 1835-1840 oil on canvas each 30 ¼ x 26 ¼ in. — VARIOUS PROPERTIES",
     "source": "christies-site",
     "first_captured": "2026-08-07"
   },
@@ -27442,7 +27422,7 @@
   {
     "id": "meta:sotheby's||2019-09-25|gold and emerald pendant-brooch, david webb, and pair of gold cufflinks",
     "piece_name": "GOLD AND EMERALD PENDANT-BROOCH, DAVID WEBB, AND PAIR OF GOLD CUFFLINKS",
-    "category": "bracelet",
+    "category": "necklace",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -39620,26 +39600,6 @@
     "first_captured": "2026-08-07"
   },
   {
-    "id": "url:www.ragoarts.com/auctions/2007/05/important-20th-century-design-session-2/642",
-    "piece_name": "corner seating from the Burton Schwind and Jo Crawford House",
-    "category": "other",
-    "era_or_year": "c. 1956",
-    "materials_gemstones": "walnut, upholstery",
-    "price_type": "hammer",
-    "sold_price": 9000,
-    "estimate_low": 10000,
-    "estimate_high": 15000,
-    "currency_note": "",
-    "sale_date": "2007-05",
-    "auction_house": "Rago",
-    "sale_name": "May Design Series 2007",
-    "lot_number": 642,
-    "listing_url": "https://www.ragoarts.com/auctions/2007/05/important-20th-century-design-session-2/642",
-    "notes": "Premium price $10,800 (incl. buyer's premium)",
-    "source": "rago-site",
-    "first_captured": "2026-08-06"
-  },
-  {
     "id": "meta:sotheby's||2024-12-12|pair of gold, enamel, emerald and diamond 'leopard' earclips",
     "piece_name": "Pair of Gold, Enamel, Emerald and Diamond 'Leopard' Earclips",
     "category": "earrings",
@@ -51302,7 +51262,7 @@
   {
     "id": "meta:sotheby's||2019-12-09|pair of gold and enamel cufflinks, david webb",
     "piece_name": "PAIR OF GOLD AND ENAMEL CUFFLINKS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -51462,7 +51422,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-66---pair-of-gold-cufflinks-david-webb",
     "piece_name": "Pair of Gold Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -51562,7 +51522,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-99---pair-of-gold-black-enamel-and-emerald-tiger-head-cufflinks-david-webb",
     "piece_name": "Pair of Gold, Black Enamel and Emerald Tiger Head Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -53020,26 +52980,6 @@
     "first_captured": "2026-08-07"
   },
   {
-    "id": "url:www.christies.com/en/lot/lot-1104476",
-    "piece_name": "Ruckersville , James Patterson, 6 1/4, 12 1/2, 25, 50-Cents, June 1st 1840 engraved date, payable at Ruckersville Banking Company, together with Cartersville , Howard & Erwin's Office of Deposit and Collection, 25-Cents, farmer left, April 1, 1862, Decatur , David Watt & Co., 1-Dollar, state seal at center, Justice left, August 1, 1862, Fort Valley , issuer indistinct, 15-Cents, June, 1862, Georgetown , John Webb, 1-Dollar, train left, Sept. 12, 1862, Pine Ridge , Hicks & Carter, 12 1/2-Cents, train at top, Oct. 1840 engraved date, Rome , Unissued 1-Dollar stock note printed on leftover lined paper, horse at top, July 4th, 1862, and two pieces from an unspecified location, probably Georgia, Isaac Winter, 5, 10, 50-Cents, red and black, Nov. 17th, 1862 engraved date, the last three fine to very fine, some with missing pieces and only fair, others good to very good (13)(lot)",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 4620,
-    "estimate_low": 500,
-    "estimate_high": 800,
-    "currency_note": "USD",
-    "sale_date": "1996-11-25",
-    "auction_house": "Christie's",
-    "sale_name": "Sale 8520 (Spink America)",
-    "lot_number": "291",
-    "listing_url": "https://www.christies.com/en/lot/lot-1104476",
-    "notes": "Ruckersville , James Patterson, 6 1/4, 12 1/2, 25, 50-Cents, June 1st 1840 engraved date, payable at Ruckersville Banking Company, together with Cartersville , Howard & Erwin's Office of Deposit and Collection, 25-Cents, farmer left, April 1, 1862, Decatur , David Watt & Co., 1-Dollar, state seal at center, Justice left, August 1, 1862, Fort Valley , issuer indistinct, 15-Cents, June, 1862, Georgetown , John Webb, 1-Dollar, train left, Sept. 12, 1862, Pine Ridge , Hicks & Carter, 12 1/2-Cents, train at top, Oct. 1840 engraved date, Rome , Unissued 1-Dollar stock note printed on leftover lined paper, horse at top, July 4th, 1862, and two pieces from an unspecified location, probably Georgia, Isaac Winter, 5, 10, 50-Cents, red and black, Nov. 17th, 1862 engraved date, the last three fine to very fine, some with missing pieces and only fair, others good to very good (13)(lot)",
-    "source": "christies-site",
-    "first_captured": "2026-08-07"
-  },
-  {
     "id": "url:www.christies.com/en/lot/lot-1591512",
     "piece_name": "A PAIR OF DIAMOND PEARL ENHANCERS, DAVID WEBB",
     "category": "other",
@@ -53422,7 +53362,7 @@
   {
     "id": "meta:sotheby's||2020-10-15|tiffany & co. and david webb | two pairs of ruby cufflinks and three ruby and diamond dress buttons.",
     "piece_name": "TIFFANY & CO. AND DAVID WEBB | TWO PAIRS OF RUBY CUFFLINKS AND THREE RUBY AND DIAMOND DRESS BUTTONS.",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -53662,7 +53602,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-62---pair-of-gold-and-black-enamel-tiger-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Black Enamel Tiger Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -54082,7 +54022,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5058162",
     "piece_name": "A pair of diamond and enamel earclips, by David Webb",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -54122,7 +54062,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5213632",
     "piece_name": "A PAIR OF ENAMEL AND GOLD CUFFLINKS, BY DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -54760,26 +54700,6 @@
     "first_captured": "2026-08-07"
   },
   {
-    "id": "url:www.doyle.com/auction/lot/lot-1281---group-of-designer-boxes-and-pouches",
-    "piece_name": "Group of Designer Boxes and Pouches",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 4062,
-    "estimate_low": 2000,
-    "estimate_high": 3000,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "1281",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-1281---group-of-designer-boxes-and-pouches/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
     "id": "url:www.doyle.com/auction/lot/lot-150---david-webb-hammered-gold-pendant-brooch",
     "piece_name": "David Webb Hammered Gold Pendant-Brooch",
     "category": "necklace",
@@ -54822,7 +54742,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-55---pair-of-gold-and-enamel-lady-bug-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Lady Bug Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -54842,7 +54762,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-63---pair-of-gold-enamel-and-cabochon-ruby-giraffe-cufflinks-david-webb",
     "piece_name": "Pair of Gold, Enamel and Cabochon Ruby Giraffe Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -55682,7 +55602,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5058170",
     "piece_name": "A PAIR OF DIAMOND AND ENAMEL EARCLIPS, BY DAVID WEBB",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -55722,7 +55642,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5255693",
     "piece_name": "A PAIR OF DIAMOND EARCLIPS, BY DAVID WEBB",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -56222,7 +56142,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-78---david-webb-pair-of-gold-black-enamel-and-cabochon-emerald-leopard-cufflinks",
     "piece_name": "David Webb Pair of Gold, Black Enamel and Cabochon Emerald Leopard Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -56262,7 +56182,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-44---tiffany--co-schlumberger-pair-of-two-color-gold-cufflinks",
     "piece_name": "Tiffany & Co., Schlumberger Pair of Two-Color Gold Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -56362,7 +56282,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-56---pair-of-gold-and-blue-enamel-rams-head-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Blue Enamel Ram's Head Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -56382,7 +56302,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-57---pair-of-gold-and-red-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Red Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -56562,7 +56482,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-100---pair-of-gold-platinum-black-enamel-and-diamond-cufflinks-david-webb",
     "piece_name": "Pair of Gold, Platinum, Black Enamel and Diamond Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -57402,7 +57322,7 @@
   {
     "id": "url:www.ragoarts.com/auctions/2023/05/jewelry-silver-objects-of-vertu/357",
     "piece_name": "Enamel and gold frog cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -57602,7 +57522,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-718966",
     "piece_name": "A PAIR OF DAVID WEBB DIAMOND AND ROCK CRYSTAL EARCLIPS",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -57742,7 +57662,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-64---pair-of-gold-and-black-enamel-lions-head-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Black Enamel Lion's Head Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -57802,7 +57722,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-98---pair-of-gold-and-black-and-red-enamel-bull-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Black and Red Enamel Bull Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -57862,7 +57782,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-168---pair-of-gold-and-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -57982,7 +57902,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-693---pair-of-gold-black-enamel-and-cabochon-emerald-leopard-head-cufflinks-david-webb",
     "piece_name": "Pair of Gold, Black Enamel and Cabochon Emerald Leopard Head Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -58102,7 +58022,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-118---pair-of-gold-and-green-enamel-turtle-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Green Enamel Turtle Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -58122,7 +58042,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-4516945",
     "piece_name": "A pair of diamond and rock crystal earclips by David Webb",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -58402,7 +58322,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5058147",
     "piece_name": "A PAIR OF DIAMOND AND ENAMEL EARCLIPS, BY DAVID WEBB",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -58522,7 +58442,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-102---david-webb-pair-of-gold-and-cabochon-emerald-lion-head-cufflinks",
     "piece_name": "David Webb Pair of Gold and Cabochon Emerald Lion Head Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -58762,7 +58682,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-171---pair-of-gold-and-enamel-frog-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Frog Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -59042,7 +58962,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-120---pair-of-gold-and-green-enamel-frog-cufflinks-and-tie-tack-david-webb",
     "piece_name": "Pair of Gold and Green Enamel Frog Cufflinks and Tie Tack, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -59342,7 +59262,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-191---pair-of-hammered-gold-and-invisibly-set-sapphire-cufflinks-david-webb",
     "piece_name": "Pair of Hammered Gold and Invisibly-Set Sapphire Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -59382,7 +59302,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5858324",
     "piece_name": "A pair of lapis lazuli novelty cufflinks, by David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -59422,7 +59342,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5587802",
     "piece_name": "A pair of azurmalachite and ruby cufflinks, by David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -59500,26 +59420,6 @@
     "first_captured": "2026-08-07"
   },
   {
-    "id": "url:www.christies.com/en/lot/lot-5840727",
-    "piece_name": "HOCKNEY, David (b.1937) -- WEBB, Peter. The Erotic Arts . London: Secker & Warburg, 1975.",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 3000,
-    "estimate_low": 1000,
-    "estimate_high": 1500,
-    "currency_note": "GBP",
-    "sale_date": "2014-11-18",
-    "auction_house": "Christie's",
-    "sale_name": "Sale 10773 (London)",
-    "lot_number": "107",
-    "listing_url": "https://www.christies.com/en/lot/lot-5840727",
-    "notes": "HOCKNEY, David (b.1937) -- WEBB, Peter. The Erotic Arts . London: Secker & Warburg, 1975. Octavo (243 x 170 mm). Engraving by David Hockney and colour print by Allen Jones, both signed, tipped in as issued. Printed prospectus laid-in. Illustrated throughout with monochrome reproductions. Original green leather, gilt fillet border to the sides, spine lettered in gilt, gilt edges, original green cloth slipcase (slipcase bumped on one corner). Provenance : Allen Jones (presentation inscription on the limitation page, and short note on his letterhead laid-in, to:) -- Karl Ludwig Leonhardt. FIRST EDITION, ONE OF 26 COPIES, WITH ORIGINAL SIGNED PRINTS BY HOCKNEY AND JONES. Copy I of 26 lettered copies reserved for the artists, the author and the publishers; this one a presentation copy from Allen Jones. Another 100 deluxe copies of this important survey were issued for public distribution. AE and ABPC apparently record no other lettered copy at auction.",
-    "source": "christies-site",
-    "first_captured": "2026-08-07"
-  },
-  {
     "id": "url:www.christies.com/en/lot/lot-1652630",
     "piece_name": "A GOLD NECKLACE, DAVID WEBB",
     "category": "necklace",
@@ -59582,7 +59482,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-1015---david-webb-pair-of-gold-and-black-enamel-cufflinks",
     "piece_name": "David Webb Pair of Gold and Black Enamel Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -59822,7 +59722,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-2065443",
     "piece_name": "A PAIR OF 18K GOLD AND CORAL EARCLIPS, BY DAVID WEBB",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60022,7 +59922,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-169---pair-of-gold-and-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60222,7 +60122,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-244---pair-of-gold-and-red-and-black-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Red and Black Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60282,7 +60182,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-90---pair-of-gold-and-blue-and-green-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Blue and Green Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60302,7 +60202,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-219---pair-of-gold-and-brownish-orange-enamel-lion-head-cufflinks-and-tie-tack-david-webb",
     "piece_name": "Pair of Gold and Brownish-Orange Enamel Lion Head Cufflinks and Tie Tack, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60482,7 +60382,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-1004---pair-of-nut-and-bolt-gold-cufflinks-david-webb",
     "piece_name": "Pair of Nut and Bolt Gold Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60582,7 +60482,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-6065053",
     "piece_name": "TWO PAIRS OF ENAMEL-SET CUFFLINKS, BY TIFFANY & CO AND DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60702,7 +60602,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-4005023",
     "piece_name": "DAVID WEBB. A PAIR OF 18K GOLD AND WHITE ENAMEL EARCLIPS",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60862,7 +60762,7 @@
   {
     "id": "meta:sotheby's||2019-10-29|pair of enamel and emerald cufflinks, david webb, 1960s",
     "piece_name": "PAIR OF ENAMEL AND EMERALD CUFFLINKS, DAVID WEBB, 1960S",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60902,7 +60802,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-77---david-webb-pair-of-gold-and-black-enamel-poodle-cufflinks",
     "piece_name": "David Webb Pair of Gold and Black Enamel Poodle Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -60922,7 +60822,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-67---pair-of-hammered-gold-dome-cufflinks-david-webb",
     "piece_name": "Pair of Hammered Gold Dome Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61022,7 +60922,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-145---pair-of-gold-and-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61242,7 +61142,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-104---pair-of-gold-and-black-enamel-leopard-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Black Enamel Leopard Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61282,7 +61182,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-3235---pair-of-gold-and-blue-enamel-cufflinks-and-gold-and-emerald-panther-head-cufflinks-tiffany--co-schlumberger-and-david-webb",
     "piece_name": "Pair of Gold and Blue Enamel Cufflinks and Gold and Emerald Panther Head Cufflinks, Tiffany & Co., Schlumberger and David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61622,7 +61522,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-49---pair-of-gold-and-azurmalachite-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Azurmalachite Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61702,7 +61602,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-377---pair-of-gold-tigers-eye-and-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold, Tiger's Eye and Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61742,7 +61642,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-54---pair-of-hammered-gold-and-star-ruby-cufflinks-david-webb",
     "piece_name": "Pair of Hammered Gold and Star Ruby Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61782,7 +61682,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5667172",
     "piece_name": "A pair of tourmaline earclips, by David Webb",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61862,7 +61762,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-1899024",
     "piece_name": "A PAIR OF ROCK CRYSTAL, ENAMEL AND DIAMOND CUFFLINKS, BY DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -61982,7 +61882,7 @@
   {
     "id": "meta:sotheby's||2021-09-02|pair of gold and enamel cufflinks",
     "piece_name": "Pair of gold and enamel cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62022,7 +61922,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-1023---david-webb-pair-of-gold-black-enamel-and-cabochon-ruby-lion-cufflinks",
     "piece_name": "David Webb Pair of Gold, Black Enamel and Cabochon Ruby Lion Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62062,7 +61962,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-70---pair-of-gold-cufflinks-david-webb",
     "piece_name": "Pair of Gold Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62182,7 +62082,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-200---pair-of-gold-and-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62402,7 +62302,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-99---david-webb-pair-of-gold-enamel-and-emerald-tiger-cufflinks",
     "piece_name": "David Webb Pair of Gold, Enamel and Emerald Tiger Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62482,7 +62382,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-1028---david-webb-pair-of-gold-pencil-cufflinks",
     "piece_name": "David Webb Pair of Gold Pencil Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62502,7 +62402,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-1050---david-webb-pair-of-gold-and-enamel-cufflinks",
     "piece_name": "David Webb Pair of Gold and Enamel Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62562,7 +62462,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-142---pair-of-gold-and-brown-and-yellow-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Brown and Yellow Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62582,7 +62482,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-281---pair-of-hammered-gold-cufflinks-david-webb-and-pair-of-gold-blue-enamel-and-diamond-cufflinks-faberg",
     "piece_name": "Pair of Hammered Gold Cufflinks, David Webb, and Pair of Gold, Blue Enamel and Diamond Cufflinks, Fabergé",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62662,7 +62562,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-31---pair-of-gold-and-white-and-black-cultured-pearl-cufflinks-david-webb",
     "piece_name": "Pair of Gold and White and Black Cultured Pearl Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62702,7 +62602,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-1408089",
     "piece_name": "A PAIR OF 18K GOLD EARCLIPS, BY DAVID WEBB",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62762,7 +62662,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-2001---david-webb-pair-of-gold-and-enamel-frog-cufflinks",
     "piece_name": "David Webb Pair of Gold and Enamel Frog Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62802,7 +62702,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-65---pair-of-hammered-gold-cufflinks-david-webb",
     "piece_name": "Pair of Hammered Gold Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62922,7 +62822,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-86---pair-of-gold-and-red-and-blue-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Red and Blue Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62942,7 +62842,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-188---pair-of-gold-and-oxidized-silver-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Oxidized Silver Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -62982,7 +62882,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5058145",
     "piece_name": "A PAIR OF ENAMEL EARCLIPS, BY DAVID WEBB",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63022,7 +62922,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5643644",
     "piece_name": "A PAIR OF CULTURED PEARL AND GOLD CUFFLINKS, BY DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63082,7 +62982,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-1590371",
     "piece_name": "A PAIR OF 18K GOLD, ENAMEL AND EMERALD PANTHER HEAD CUFFLINKS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63102,7 +63002,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-34---david-webb-pair-of-gold-and-enamel-cufflinks",
     "piece_name": "David Webb Pair of Gold and Enamel Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63122,7 +63022,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-36---david-webb-pair-of-gold-and-black-enamel-cufflinks",
     "piece_name": "David Webb Pair of Gold and Black Enamel Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63242,7 +63142,7 @@
   {
     "id": "url:www.ragoarts.com/auctions/2025/02/jewels-watches-xoxo/116",
     "piece_name": "Nephrite jade and gold frog cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63382,7 +63282,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-54---david-webb-pair-of-gold-and-enamel-frog-cufflinks",
     "piece_name": "David Webb Pair of Gold and Enamel Frog Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63402,7 +63302,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-48---pair-of-gold-cufflinks-david-webb",
     "piece_name": "Pair of Gold Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63422,7 +63322,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-51---pair-of-gold-bomb-cufflinks-david-webb",
     "piece_name": "Pair of Gold Bombé Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63522,7 +63422,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-47---pair-of-gold-and-frosted-rock-crystal-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Frosted Rock Crystal Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63602,7 +63502,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-49---pair-of-gold-and-green-and-blue-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Green and Blue Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63622,7 +63522,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-51---pair-of-gold-and-black-and-red-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Black and Red Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63702,7 +63602,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-70---pair-of-gold-and-black-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Black Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63762,7 +63662,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-96---pair-of-gold-and-green-and-blue-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Green and Blue Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63842,7 +63742,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-1591591",
     "piece_name": "A PAIR OF RUBY, ENAMEL AND GOLD TIGER CUFFLINKS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -63942,7 +63842,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-1779135",
     "piece_name": "A PAIR OF DIAMOND, ROCK CRYSTAL AND BLACK ENAMEL CUFFLINKS, BY DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64042,7 +63942,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-525---pair-of-gold-and-carved-jade-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Carved Jade Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64102,7 +64002,7 @@
   {
     "id": "url:www.ragoarts.com/auctions/2025/05/spring-jewels-watches/129",
     "piece_name": "Lapis lazuli and gold cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64162,7 +64062,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-55---david-webb-pair-of-gold-and-brown-enamel-frog-cufflinks",
     "piece_name": "David Webb Pair of Gold and Brown Enamel Frog Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64202,7 +64102,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-453---pair-of-gold-and-blue-and-white-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Blue and White Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64222,7 +64122,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-147---pair-of-gold-and-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64382,7 +64282,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-52---david-webb-pair-of-hammered-gold-abstract-cufflinks",
     "piece_name": "David Webb Pair of Hammered Gold Abstract Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64462,7 +64362,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-66---david-webb-pair-of-gold-cufflinks",
     "piece_name": "David Webb Pair of Gold Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64582,7 +64482,7 @@
   {
     "id": "meta:sotheby's||2004-06-08|pair of 18k gold and black enamel cufflinks, david webb",
     "piece_name": "PAIR OF 18K GOLD AND BLACK ENAMEL CUFFLINKS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64597,26 +64497,6 @@
     "listing_url": "",
     "notes": "With signed case. — Auction type: Legacy Auction",
     "source": "sothebys-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.christies.com/en/lot/lot-2116782",
-    "piece_name": "used 1866-72 Small Dragon perf. 12 2c. cancelled by \"LOCAL POST OFFICE SHANGHAI\" h.s. in red and by \"B62\" of Hong Kong (presumably on arrival), small faults. Scarce and unusual; with letter of explanation from Francis W. Webb to Sir David Roseway. L. 48, S.G. 32. Photo",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 1265,
-    "estimate_low": 1500,
-    "estimate_high": 2000,
-    "currency_note": "HKD",
-    "sale_date": "1994-11-02",
-    "auction_house": "Christie's",
-    "sale_name": "Sale 1092 (Hong Kong)",
-    "lot_number": "2841",
-    "listing_url": "https://www.christies.com/en/lot/lot-2116782",
-    "notes": "used 1866-72 Small Dragon perf. 12 2c. cancelled by \"LOCAL POST OFFICE SHANGHAI\" h.s. in red and by \"B62\" of Hong Kong (presumably on arrival), small faults. Scarce and unusual; with letter of explanation from Francis W. Webb to Sir David Roseway. L. 48, S.G. 32. Photo — Small Dragons",
-    "source": "christies-site",
     "first_captured": "2026-08-07"
   },
   {
@@ -64722,7 +64602,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-78---pair-of-gold-and-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64802,7 +64682,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-294---pair-of-gold-scorpion-cufflinks-david-webb",
     "piece_name": "Pair of Gold Scorpion Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64822,7 +64702,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-215---pair-of-gold-and-enamel-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64842,7 +64722,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-288---pair-of-gold-and-enamel-lion-head-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Enamel Lion Head Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -64942,7 +64822,7 @@
   {
     "id": "meta:sotheby's||2022-03-04|david webb | paire de boutons de manchette or | pair of gold cufflinks",
     "piece_name": "David Webb | Paire de boutons de manchette or | Pair of gold cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -65016,26 +64896,6 @@
     "lot_number": "193",
     "listing_url": "https://www.christies.com/en/lot/lot-4119945",
     "notes": "PAIRE DE BOUTONS DE MANCHETTE EN OR ET EMAIL, PAR DAVID WEBB De forme ovale à décor d'une torsade d'émail vert et rouge (éclats), monture en or jaune Signés Webb (2)",
-    "source": "christies-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.christies.com/en/lot/lot-4557496",
-    "piece_name": "REFERENCE BOOKS ON JAPANESE PRINTS AND PAINTINGS: BRANDT, Klaus J. Hosoda Eishi 1751-1829: Der japanische Maler und Holzschnittmeister und seine Schuler (Stuttgart: K.J. Brandt, 1977); GENTLES, Margaret. Clarence Buckingham Collection of Japanese Prints (vol. II) (Chicago: Art Institute of Chicago, 1965), in slipcase, limited edition of 1000; KOOP, Albert & INADA, Hogitaro. Japanese Names and How to Read Them: A Manual for Art-Collectors and Students (London: The Eastern Press Ltd., 1923); LINK, Howard A. The Theatrical Prints of the Torii Masters: A Selection of 17th and 18th Century Ukiyo-e (Honolulu Academy of Arts/Riccar Art Museum, 1977); PINS, Jacob. The Japanese Pillar Print Hashira-e (London: Robert G. Sawers, 1982), in slipcase, copy no. 72 of a limited edition of 1,000; HILLIER, Jack. Catalogue of the Japanese Paintings and Prints in the Collection of Mr. & Mrs. Richard P. Gale (2 vols.) (Minneapolis Institute of Arts/Tuttle, 1970), in slipcase; KEYES, Roger. The Art of Surimono (vols. I & II) (London: Sotheby's/Philip Wilson, 1985); ROBINSON, B.W. Kuniyoshi, The Warrior Prints (Cornell University/Phaidon, 1982); MICHENER, James. The Hokusai Sketchbooks: Selections from the Manga (Vermont & Tokyo: Tuttle, 1975), 1st edition, 12th printing; NARAZAKI, Muneshige. The Japanese Print: Its Evolution and Essence (Tokyo: Kodansha Intl., 1978); MICHNER, James. Japanese Prints: From the Early Masters to the Modern (Rutland: Charles E. Tuttle Co., 1975); DE BECKER, J.E. The Nightless City or The History of the Yoshiwara Yukaku (Rutland: Charles E. Tuttle Co., 1971); AKIYAMA Terukazu. Japanese Painting (New York: Rizzoli International, 1979); Yomiuri Shinbun Library of Congress, ed. Words in Motion: Modern Japanese Calligraphy , exh. cat. (Tokyo: Yomiuri Shinbunsha, 1984); PAINE, Robert Treat and Alexander Sopen. The Art and Architecture of Japan (Harmondsworth: Penguin Books Ltd., 1955); JENKINS, Donald, ed. Masterworks in Wood: China and Japan , exh. cat. (Portland: Portland Museum of Art, 1976); SHEN C.Y. Fu. Traces of the Brush: Studies in Chinese Calligraphy , exh. cat. (New Haven: Yale University Art Gallery, 1977); LANE, Richard. Images from the Floating World: The Japanese Print (New York: Dorset Press, 1978); GRILLI, Elise. The Art of the Japanese Screen (New York: Weatherhill, 1970); KONDO Ichitaro. Japanese Genre Painting: The Lively Art of Renaissance Japan (Tokyo: Charles Rutland Co., 1961), in slip case; Freer Gallery of Art, ed. Japan (Tokyo: Kodansha Ltd., n.d.), in slip case; IMAIZUMI Motosuke. Nabeshima , vol. I of Famous Ceramics of Japan (Tokyo: Kodansha Ltd., 1981); GEN Kozuru. Agano and Takatori , vol.II of Famous Ceramics of Japan (Tokyo: Kodansha International Ltd., 1981); NARAZAKI Muneshige. Masterworks of Ukiyo-e: Kiyonaga (Tokyo: Kodansha International Ltd., 1969), in slip case; ISHIDA Mosaku. Japanese Buddhist Prints (New York: Harry N. Abrams, Inc., 1964); WATSON, William. Sculpture of Japan from the Fifth to the Fifteenth Century (London: The Studio, Ltd., 1959); KIDDER, J. Edward. Japanese Temples: sculptures, paintings, gardens, and architecture (Tokyo: Bijutsu Shuppansha, 1964), in slip case; BOWIE, Theodore. Art of the Surimono , exh. cat. (Indiana: Indiana University Museum, 1979); HOLME, Bryan, ed. A Shoal of Fishes: Hiroshige (London: Thames and Hudson Ltd., 1980), in slip case; MUNSTERBERG, Hugo. The Arts of Japan: An Illustrated History (Rutland: Charles E. Tuttle Co., 1957), in slip case; FICKE, Arthur Davison. Chats on Japanese Prints (London: T. Fisher Unwin, 1975 reprint); HILLIER, J. The Japanese Print: A New Approach (London: G. Bell and Sons Ltd., 1960); BUSHELL, Raymond. Collectors' Netsuke (New York: Walker Weatherhill, 1971), in slip case; ROSENFEILD, John M. and Shimada Shujiro. Traditions of Japanese Art: Selections from the Kimiko and John Powers Collection (Boston: Fogg Art Museum, Harvard University, 1970); International Exhibitions Foundation, ed. Folk Traditions in JApanese Art , exh. cat. (New York: Weathehil, Inc., 1978); ROBERTS, Laurance P. A Dictionary of Japanese Artists; painting, sculpture, prints, lacquer (Tokyo: Weatherhill, Inc., 1976); CHIBBETT, David. The History of Japanese Printin and Book Illustration (Tokyo: Kodansha Internationsl Ltd., 1977); SHIMIZU Yoshiaki, ed. Japan: THe Shaping of Dimyo Culture, 1185-1868 , exh. cat. (New York: George Braziller, Inc., 1988); LEVY, Dana et. al. Kanban: Shop Signs of Japan (New York: Weatherhill, Inc., 1983); SHEN Fu, et. al. From Concept to Context: Approaches to Asian and Islamic Calligraphy , exh. cat. (Washington: Freer Gallery of Art, 1986); SMITH, Bradley. Japan: A History in Art (Tokyo: Gemini Inc., 1964); HILLIER, Jack. Suzuki Harunobu , exh. cat. (Philadelphia: Philadelphia Museum of Art, 1970); ibid. The Art of Hokusai in Book Illustrations (London: Sotheby Parke Bernet Publications, 1980); ibid. Japanese Color Prints (Greenwich: Phaidon Publishers, Inc., n.d.); ibid. Japanese Masters of the Color Print (Greenwich: Phaidon Publishers, Inc., 1954); WATERHOUSE, David. Images of Eighteenth-Century Japan , exh. cat. (Toronto: Royal Ontario Museum, 1975); VOLLMER, John and Glenn T. Webb, eds. Japanese Art at the Art Gallery of Greater Victoria , exh. cat. (Victoria: The Art Gallery of Greater Victoria, 1972); BOWIE, Henry P. On the Laws of Japanese Painting (New York: Dover Publications, Inc., 1951); CLEVELAND Museum of Art, ed. Handbook of the Cleveland Museum of Art (Cleveland: Cleveland Museum of Art, 1978); MUNSTERBERG, Hugo, ed. Mingei: Folk Arts of Old Japan (New York: Asian House Gallery, 1965); ROSENFIELD, John M. et. al. The Courtly Tradition in Japanese Art and Literature: Selections from the Hofer and Hyde Collections , exh. cat. (Boston: Fogg Art Museum, Harvard University, 1973); MURASE, Miyeko. Byobu: Japanese Screens in New York Collections (New York: Asia Society, Inc., 1973); NAKATA Yujiro. The Art of Japanese Calligraphy , vol. 27 of the Heibonsha Survey of Japanese Art (New York: Weatherhill Heibonsha, English edition 1976 reprint); JENKINS, Donald. The Ledoux Heritage; the Collecting of Ukiyo-e Master Prints (New York: Japan Society, Inc., 1973); HACKIN, J. et al. Asiatic Mythology: a Detailed Description and Explanation of the Mythologies of All the Major Nations of Asia (New York: Thomas Y. Crowell Co., n.d.); KEYES, Roger S. and Mizushima Keiko. The Theatrical World of Osaka Prints , exh. cat. (Philadelphia: Philadelphia Museum of Art, 1973); MURASE, Miyeko. Tales of Japan: Scrolls and Prints from the New York Public Library (New York: Oxford University Press, 1986) (11)",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 1020,
-    "estimate_low": 500,
-    "estimate_high": 700,
-    "currency_note": "USD",
-    "sale_date": "2005-09-22",
-    "auction_house": "Christie's",
-    "sale_name": "Sale 1553 (New York)",
-    "lot_number": "144 A",
-    "listing_url": "https://www.christies.com/en/lot/lot-4557496",
-    "notes": "REFERENCE BOOKS ON JAPANESE PRINTS AND PAINTINGS: BRANDT, Klaus J. Hosoda Eishi 1751-1829: Der japanische Maler und Holzschnittmeister und seine Schuler (Stuttgart: K.J. Brandt, 1977); GENTLES, Margaret. Clarence Buckingham Collection of Japanese Prints (vol. II) (Chicago: Art Institute of Chicago, 1965), in slipcase, limited edition of 1000; KOOP, Albert & INADA, Hogitaro. Japanese Names and How to Read Them: A Manual for Art-Collectors and Students (London: The Eastern Press Ltd., 1923); LINK, Howard A. The Theatrical Prints of the Torii Masters: A Selection of 17th and 18th Century Ukiyo-e (Honolulu Academy of Arts/Riccar Art Museum, 1977); PINS, Jacob. The Japanese Pillar Print Hashira-e (London: Robert G. Sawers, 1982), in slipcase, copy no. 72 of a limited edition of 1,000; HILLIER, Jack. Catalogue of the Japanese Paintings and Prints in the Collection of Mr. & Mrs. Richard P. Gale (2 vols.) (Minneapolis Institute of Arts/Tuttle, 1970), in slipcase; KEYES, Roger. The Art of Surimono (vols. I & II) (London: Sotheby's/Philip Wilson, 1985); ROBINSON, B.W. Kuniyoshi, The Warrior Prints (Cornell University/Phaidon, 1982); MICHENER, James. The Hokusai Sketchbooks: Selections from the Manga (Vermont & Tokyo: Tuttle, 1975), 1st edition, 12th printing; NARAZAKI, Muneshige. The Japanese Print: Its Evolution and Essence (Tokyo: Kodansha Intl., 1978); MICHNER, James. Japanese Prints: From the Early Masters to the Modern (Rutland: Charles E. Tuttle Co., 1975); DE BECKER, J.E. The Ni",
     "source": "christies-site",
     "first_captured": "2026-08-07"
   },
@@ -65142,7 +65002,7 @@
   {
     "id": "url:www.christies.com/en/lot/lot-5058192",
     "piece_name": "A RING AND EARCLIPS, BY DAVID WEBB",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "hammer",
@@ -65320,46 +65180,6 @@
     "first_captured": "2026-08-07"
   },
   {
-    "id": "url:www.christies.com/en/lot/lot-380916",
-    "piece_name": "A pen and ink and watercolour caricature drawing of J. Conlin, Manchester City; another similar depicting G.Stewart, Manchester City; another similar depicting Buchan, Manchester City; another similar depicting R. Grieve, Manchester City; another similar depicting David Ross, Manchester City; and two pen and ink caricature drawings, one depicting Charles Webb, the other W.Lot.Jones, both Manchester City (7)",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 747,
-    "estimate_low": 600,
-    "estimate_high": 800,
-    "currency_note": "GBP",
-    "sale_date": "1997-10-15",
-    "auction_house": "Christie's",
-    "sale_name": "Sale 1558 (Glasgow)",
-    "lot_number": "466",
-    "listing_url": "https://www.christies.com/en/lot/lot-380916",
-    "notes": "A pen and ink and watercolour caricature drawing of J. Conlin, Manchester City; another similar depicting G.Stewart, Manchester City; another similar depicting Buchan, Manchester City; another similar depicting R. Grieve, Manchester City; another similar depicting David Ross, Manchester City; and two pen and ink caricature drawings, one depicting Charles Webb, the other W.Lot.Jones, both Manchester City (7)",
-    "source": "christies-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-477---gold-and-cabochon-amethyst-spiders-webb-brooch-david-andersen-norway",
-    "piece_name": "Gold and Cabochon Amethyst Spider's Webb Brooch, David Andersen, Norway",
-    "category": "brooch",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 688,
-    "estimate_low": 600,
-    "estimate_high": 800,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "477",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-477---gold-and-cabochon-amethyst-spiders-webb-brooch-david-andersen-norway/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
     "id": "url:www.christies.com/en/lot/lot-3830577",
     "piece_name": "A GOLD AND DIAMOND PENDANT, BY DAVID WEBB",
     "category": "necklace",
@@ -65495,66 +65315,6 @@
     "sale_name": "",
     "lot_number": "142",
     "listing_url": "https://www.doyle.com/auction/lot/lot-142---pair-of-gold-necklace-shorteners-david-webb/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.christies.com/en/lot/lot-1883907",
-    "piece_name": "West Ham United v. Bobby Moore's XI, match programme, 2/5/78, Upton Park, signed on the reverse by Bobby Moore, David Webb, Trevor Boorking, Bob McNab and others; a black and white photograph of Bobby Moore with the charity shield trophy; England v. Italy, match programme, 6/5/59, Wembley; and a book entitled Modern Soccer - The Skills in Play , by Walter Winterbottom, published by, Niblick Publishing Co. Ltd., London, 1958, autographed by Bobby Charlton, Billy Wright, Ron Flowers and others",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 352,
-    "estimate_low": 300,
-    "estimate_high": 500,
-    "currency_note": "GBP",
-    "sale_date": "2000-09-29",
-    "auction_house": "Christie's",
-    "sale_name": "Sale 8883 (London, South Kensington)",
-    "lot_number": "516",
-    "listing_url": "https://www.christies.com/en/lot/lot-1883907",
-    "notes": "West Ham United v. Bobby Moore's XI, match programme, 2/5/78, Upton Park, signed on the reverse by Bobby Moore, David Webb, Trevor Boorking, Bob McNab and others; a black and white photograph of Bobby Moore with the charity shield trophy; England v. Italy, match programme, 6/5/59, Wembley; and a book entitled Modern Soccer - The Skills in Play , by Walter Winterbottom, published by, Niblick Publishing Co. Ltd., London, 1958, autographed by Bobby Charlton, Billy Wright, Ron Flowers and others (a lot) (4)",
-    "source": "christies-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-6---astronauts-cooper-l-gordon-jr-autograph",
-    "piece_name": "[ASTRONAUTS] COOPER, L. GORDON., Jr. Autograph...",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 281,
-    "estimate_low": 100,
-    "estimate_high": 200,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "6",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-6---astronauts-cooper-l-gordon-jr-autograph/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-275---webb-david-k-and-stevens-john-m-eds",
-    "piece_name": "WEBB, DAVID K. and STEVENS, JOHN M., eds....",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "hammer",
-    "sold_price": 200,
-    "estimate_low": 60,
-    "estimate_high": 80,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "275",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-275---webb-david-k-and-stevens-john-m-eds/",
     "notes": "",
     "source": "doyle-site",
     "first_captured": "2026-08-07"
@@ -66582,7 +66342,7 @@
   {
     "id": "meta:sotheby's||2021-09-30|david webb | paire de boutons de manchette jadéite | pair of jadeite cufflinks",
     "piece_name": "David Webb | Paire de boutons de manchette jadéite | Pair of jadeite cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -66702,7 +66462,7 @@
   {
     "id": "meta:sotheby's||2018-11-29|pair of gold and enamel cufflinks, david webb",
     "piece_name": "PAIR OF GOLD AND ENAMEL CUFFLINKS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -66822,7 +66582,7 @@
   {
     "id": "meta:sotheby's||2018-11-29|two pairs of gold, enamel and gem-set cufflinks, david webb",
     "piece_name": "TWO PAIRS OF GOLD, ENAMEL AND GEM-SET CUFFLINKS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -67442,7 +67202,7 @@
   {
     "id": "meta:sotheby's||2019-09-25|pair of gold and tiger's-eye quartz cufflinks, david webb",
     "piece_name": "PAIR OF GOLD AND TIGER'S-EYE QUARTZ CUFFLINKS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -67522,7 +67282,7 @@
   {
     "id": "meta:sotheby's||2019-09-25|pair of gold, emerald and enamel cufflinks, david webb",
     "piece_name": "PAIR OF GOLD, EMERALD AND ENAMEL CUFFLINKS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -68362,7 +68122,7 @@
   {
     "id": "meta:sotheby's||2004-06-08|pair of 18k gold cufflinks and two 18k gold and enamel tie-clips, david webb",
     "piece_name": "PAIR OF 18K GOLD CUFFLINKS AND TWO 18K GOLD AND ENAMEL TIE-CLIPS, DAVID WEBB",
-    "category": "bracelet",
+    "category": "brooch",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -70022,7 +69782,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/233595",
     "piece_name": "Pair of Rock Crystal Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -70362,7 +70122,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/211292",
     "piece_name": "Pair of Enamel Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -70382,7 +70142,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/211287",
     "piece_name": "Pair of Enamel Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -70702,7 +70462,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/195128",
     "piece_name": "Pair of Cultured Pearl and Diamond Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -70722,7 +70482,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/195107",
     "piece_name": "Pair of Cultured Pearl and Diamond Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -70742,7 +70502,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/195020",
     "piece_name": "Pair of Cultured Pearl and Diamond Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -70762,7 +70522,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/195033",
     "piece_name": "Pair of Diamond and Enamel Tiger Lily Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -70782,7 +70542,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/195111",
     "piece_name": "Pair of Diamond Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -70942,7 +70702,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/159127",
     "piece_name": "A Pair of Diamond, Enamel, and Gold Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -71122,7 +70882,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/140950",
     "piece_name": "A Pair of Enamel and Gold Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -71142,7 +70902,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/140949",
     "piece_name": "A Pair of Enamel, Emerald and Gold Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -71682,7 +71442,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/98369",
     "piece_name": "A Pair of Cultured Pearl and Diamond Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -71902,7 +71662,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/87453",
     "piece_name": "A Pair of Amethyst Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -71922,7 +71682,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/87876",
     "piece_name": "A Pair of Diamond and Cultured Pearl Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -71942,7 +71702,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/87506",
     "piece_name": "A Pair of Diamond, Gold and Azurmalachite Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -71962,7 +71722,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/87627",
     "piece_name": "A Pair of Gold and Enamel Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -71982,7 +71742,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/87619",
     "piece_name": "A Pair of Rock Crystal and Diamond Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -72082,7 +71842,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/85219",
     "piece_name": "A Pair of Gold and Enamel Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -72242,7 +72002,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/79827",
     "piece_name": "A Pair of Diamond, Gold, and Enamel Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -72262,7 +72022,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/80539",
     "piece_name": "A Pair of Gold and Enamel Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -72442,7 +72202,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/78030",
     "piece_name": "A Pair of Enamel and Diamond Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -72462,7 +72222,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/77923",
     "piece_name": "A Pair of Enamel, Ruby and Gold Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -72482,7 +72242,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/78052",
     "piece_name": "A Pair of Gold Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -72642,7 +72402,7 @@
   {
     "id": "url:www.phillips.com/detail/david-webb/73264",
     "piece_name": "A Pair of Cultured Pearl, Diamond and Gold Earclips",
-    "category": "brooch",
+    "category": "earrings",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "",
@@ -72802,7 +72562,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-30---david-webb-pair-of-hammered-gold-and-lapis-pyramid-cufflinks",
     "piece_name": "David Webb Pair of Hammered Gold and Lapis Pyramid Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -73182,7 +72942,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-31---david-webb-pair-of-gold-cufflinks",
     "piece_name": "David Webb Pair of Gold Cufflinks",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -73295,26 +73055,6 @@
     "sale_name": "",
     "lot_number": "435",
     "listing_url": "https://www.doyle.com/auction/lot/lot-435---pair-of-gold-diamond-and-black-onyx-earclips-david-webb/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-213---astronauts-cooper-l-gordon-jr-autograph",
-    "piece_name": "[ASTRONAUTS] COOPER, L. GORDON., Jr. Autograph...",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "estimate",
-    "sold_price": "",
-    "estimate_low": 100,
-    "estimate_high": 200,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "213",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-213---astronauts-cooper-l-gordon-jr-autograph/",
     "notes": "",
     "source": "doyle-site",
     "first_captured": "2026-08-07"
@@ -73902,7 +73642,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-448---pair-of-gold-black-enamel-and-cabochon-ruby-lion-cufflinks-david-webb",
     "piece_name": "Pair of Gold, Black Enamel and Cabochon Ruby Lion Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -74222,7 +73962,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-228---pair-of-gold-and-frosted-rock-crystal-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Frosted Rock Crystal Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -74335,26 +74075,6 @@
     "sale_name": "",
     "lot_number": "401",
     "listing_url": "https://www.doyle.com/auction/lot/lot-401---gold-platinum-diamond-and-cabochon-emerald-clip-brooch-david-webb/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-532---hockney-david-group-of-seven-signed-volumes",
-    "piece_name": "HOCKNEY, DAVID Group of seven signed volumes,...",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "estimate",
-    "sold_price": "",
-    "estimate_low": 1000,
-    "estimate_high": 1500,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "532",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-532---hockney-david-group-of-seven-signed-volumes/",
     "notes": "",
     "source": "doyle-site",
     "first_captured": "2026-08-07"
@@ -74495,86 +74215,6 @@
     "sale_name": "",
     "lot_number": "343",
     "listing_url": "https://www.doyle.com/auction/lot/lot-343---pair-of-gold-platinum-cabochon-ruby-and-emerald-and-diamond-earclips-david-webb/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-504---magnum-signed-photobook-lardinois-brigitte-",
-    "piece_name": "[MAGNUM-SIGNED PHOTOBOOK] [LARDINOIS, BRIGITTE-...",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "estimate",
-    "sold_price": "",
-    "estimate_low": 2000,
-    "estimate_high": 3000,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "504",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-504---magnum-signed-photobook-lardinois-brigitte-/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-505---magnum-signed-photobook-halberstam",
-    "piece_name": "[MAGNUM-SIGNED PHOTOBOOK] [HALBERSTAM,...",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "estimate",
-    "sold_price": "",
-    "estimate_low": 1000,
-    "estimate_high": 1500,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "505",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-505---magnum-signed-photobook-halberstam/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-506---magnum-signed-photobook-magnum-stories-new",
-    "piece_name": "[MAGNUM-SIGNED PHOTOBOOK] Magnum Stories. New...",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "estimate",
-    "sold_price": "",
-    "estimate_low": 2000,
-    "estimate_high": 3000,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "506",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-506---magnum-signed-photobook-magnum-stories-new/",
-    "notes": "",
-    "source": "doyle-site",
-    "first_captured": "2026-08-07"
-  },
-  {
-    "id": "url:www.doyle.com/auction/lot/lot-507---magnum-signed-photobook-new-yorkers-as-seen",
-    "piece_name": "[MAGNUM-SIGNED PHOTOBOOK] New Yorkers as seen...",
-    "category": "other",
-    "era_or_year": "",
-    "materials_gemstones": "",
-    "price_type": "estimate",
-    "sold_price": "",
-    "estimate_low": 1500,
-    "estimate_high": 2500,
-    "currency_note": "USD",
-    "sale_date": "",
-    "auction_house": "Doyle",
-    "sale_name": "",
-    "lot_number": "507",
-    "listing_url": "https://www.doyle.com/auction/lot/lot-507---magnum-signed-photobook-new-yorkers-as-seen/",
     "notes": "",
     "source": "doyle-site",
     "first_captured": "2026-08-07"
@@ -75402,7 +75042,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-383---pair-of-gold-and-blue-enamel-bulls-head-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Blue Enamel Bull's Head Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",
@@ -75722,7 +75362,7 @@
   {
     "id": "url:www.doyle.com/auction/lot/lot-232---pair-of-gold-and-black-star-sapphire-cufflinks-david-webb",
     "piece_name": "Pair of Gold and Black Star Sapphire Cufflinks, David Webb",
-    "category": "bracelet",
+    "category": "cufflinks",
     "era_or_year": "",
     "materials_gemstones": "",
     "price_type": "estimate",

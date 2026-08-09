@@ -54,7 +54,7 @@ const FALLBACK_DEALER = "1stDibs Seller";
 
 function inferCategory(text) {
   const n = (text || "").toLowerCase();
-  if (/bracelet|bangle|cuff/.test(n)) return "bracelet";
+  if (/bracelet|bangle|cuff(?!link)/.test(n)) return "bracelet";
   if (/necklace|pendant|choker|collar|chain/.test(n)) return "necklace";
   if (/earring|ear clip|ear-clip/.test(n)) return "earrings";
   if (/brooch|pin\b|clip/.test(n)) return "brooch";

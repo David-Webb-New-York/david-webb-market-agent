@@ -1,0 +1,4332 @@
+[
+  {
+    "type": "auction",
+    "piece_name": "A GOLD CUFF BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 5377,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4033329",
+    "flag": "price_anomaly",
+    "reason": "$5,377 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold 'Zig-Zag' Bangle Bracelet",
+    "category": "bracelet",
+    "price": 5355,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-1048---david-webb-gold-zig-zag-bangle-bracelet/",
+    "flag": "price_anomaly",
+    "reason": "$5,355 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Lady's Gold, Platinum and Diamond Bracelet-Watch, David Webb",
+    "category": "bracelet",
+    "price": 5312,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-604---ladys-gold-platinum-and-diamond-bracelet-watch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$5,312 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN ENAMEL AND RUBY FROG BANGLE, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 5250,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4980464",
+    "flag": "price_anomaly",
+    "reason": "$5,250 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A CARVED JADEITE AND DIAMOND CUFF BANGLE BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 5175,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-290901",
+    "flag": "price_anomaly",
+    "reason": "$5,175 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN 18K GOLD CUFF BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 5040,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4667191",
+    "flag": "price_anomaly",
+    "reason": "$5,040 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN 18K GOLD CUFF BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 5019,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4353844",
+    "flag": "price_anomaly",
+    "reason": "$5,019 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Multistrand Amethyst Bead Torsade Bracelet with Gold, Carved Emerald and Amethyst Bead Clasp, David Webb",
+    "category": "bracelet",
+    "price": 5000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-280---multistrand-amethyst-bead-torsade-bracelet-with-gold-carved-emerald-and-amethyst-bead-clasp-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$5,000 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum, Sapphire, Ruby and Diamond Bangle Bracelet, David Webb",
+    "category": "bracelet",
+    "price": 5000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-313---gold-platinum-sapphire-ruby-and-diamond-bangle-bracelet-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$5,000 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Bracelet, David Webb",
+    "category": "bracelet",
+    "price": 5000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-441---gold-bracelet-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$5,000 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN ENAMEL BANGLE, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 5000,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5639641",
+    "flag": "price_anomaly",
+    "reason": "$5,000 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A MULTI-GEM, GLASS AND GOLD BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 5000,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5389330",
+    "flag": "price_anomaly",
+    "reason": "$5,000 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A MULTISTRAND LAPIS LAZULI BEAD, CORAL, DIAMOND AND GOLD BRACELET, DAVID WEBB",
+    "category": "bracelet",
+    "price": 4830,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1402007",
+    "flag": "price_anomaly",
+    "reason": "$4,830 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND AND 18K GOLD BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 4700,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1963411",
+    "flag": "price_anomaly",
+    "reason": "$4,700 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND AND ENAMEL BANGLE, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 4500,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5058173",
+    "flag": "price_anomaly",
+    "reason": "$4,500 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold  'ZigZag' Bracelet",
+    "category": "bracelet",
+    "price": 4410,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-2---david-webb-gold--zigzag-bracelet/",
+    "flag": "price_anomaly",
+    "reason": "$4,410 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Carved Jade Pendant-Brooch, David Webb",
+    "category": "necklace",
+    "price": 4400,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-3382---gold-and-carved-jade-pendant-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$4,400 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Hammered Gold and Shell Cameo Pendant Clip-Brooch",
+    "category": "necklace",
+    "price": 4375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-69---david-webb-hammered-gold-and-shell-cameo-pendant-clip-brooch/",
+    "flag": "price_anomaly",
+    "reason": "$4,375 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold, Green Enamel and Cabochon Ruby Frog Pendant Clip-Brooch",
+    "category": "necklace",
+    "price": 4375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-66---david-webb-gold-green-enamel-and-cabochon-ruby-frog-pendant-clip-brooch/",
+    "flag": "price_anomaly",
+    "reason": "$4,375 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum and Diamond Link Bracelet, David Webb",
+    "category": "bracelet",
+    "price": 4375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-366---gold-platinum-and-diamond-link-bracelet-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$4,375 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Pendant Clip-Brooch, David Webb",
+    "category": "necklace",
+    "price": 4375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-42---gold-pendant-clip-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$4,375 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND AND 18K GOLD PENDANT, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 4375,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4999396",
+    "flag": "price_anomaly",
+    "reason": "$4,375 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A MULTI-COLORED ENAMEL AND GOLD BRACELET, DAVID WEBB",
+    "category": "bracelet",
+    "price": 4370,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1436978",
+    "flag": "price_anomaly",
+    "reason": "$4,370 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF CABOCHON TURQUOISE, DIAMOND AND GOLD EAR PENDANTS, DAVID WEBB",
+    "category": "necklace",
+    "price": 4255,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1652677",
+    "flag": "price_anomaly",
+    "reason": "$4,255 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "CULTURED PEARL, RUBY, DIAMOND AND ENAMEL NECKLACE, DAVID WEBB",
+    "category": "necklace",
+    "price": 4200,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$4,200 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A TRIPLE-STRAND CULTURED PEARL AND DIAMOND NECKLACE, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 4063,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4018712",
+    "flag": "price_anomaly",
+    "reason": "$4,063 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Hammered Gold Pendant-Brooch",
+    "category": "necklace",
+    "price": 4062,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-150---david-webb-hammered-gold-pendant-brooch/",
+    "flag": "price_anomaly",
+    "reason": "$4,062 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold, Platinum and Diamond Bangle Bracelet",
+    "category": "bracelet",
+    "price": 4062,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-112---david-webb-gold-platinum-and-diamond-bangle-bracelet/",
+    "flag": "price_anomaly",
+    "reason": "$4,062 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "South Sea Semi-Baroque Cultured Pearl Necklace with Gold and South Sea Cultured Pearl Clasp",
+    "category": "necklace",
+    "price": 4062,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-392---south-sea-semi-baroque-cultured-pearl-necklace-with-gold-and-south-sea-cultured-pearl-clasp/",
+    "flag": "price_anomaly",
+    "reason": "$4,062 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold, Cabochon Green Onyx and Lapis Pendant, David Webb",
+    "category": "necklace",
+    "price": 4062,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-255---hammered-gold-cabochon-green-onyx-and-lapis-pendant-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$4,062 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum, Diamond and Black Enamel Bangle Bracelet, David Webb",
+    "category": "bracelet",
+    "price": 4062,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-317---gold-platinum-diamond-and-black-enamel-bangle-bracelet-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$4,062 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum and Diamond Bracelet-Watch, David Webb",
+    "category": "bracelet",
+    "price": 4062,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-407---gold-platinum-and-diamond-bracelet-watch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$4,062 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Bracelet, David Webb",
+    "category": "bracelet",
+    "price": 4062,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-401---gold-bracelet-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$4,062 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Fluted Gold Bead Necklaces, David Webb",
+    "category": "necklace",
+    "price": 4062,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-459---pair-of-fluted-gold-bead-necklaces-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$4,062 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Diamond and black enamel brooch, 'Zig Zag' and a diamond and black enamel pendant",
+    "category": "necklace",
+    "price": 4032,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$4,032 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GOLD, DIAMOND AND CABOCHON EMERALD LEOPARD BANGLE, DAVID WEBB",
+    "category": "bracelet",
+    "price": 4025,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1652652",
+    "flag": "price_anomaly",
+    "reason": "$4,025 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A rock crystal and diamond bracelet, by David Webb",
+    "category": "bracelet",
+    "price": 4000,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5866834",
+    "flag": "price_anomaly",
+    "reason": "$4,000 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "White Gold, Cultured Pearl and Diamond Pendant-Brooch and David Webb Pair of Earclips",
+    "category": "necklace",
+    "price": 3840,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-63---white-gold-cultured-pearl-and-diamond-pendant-brooch-and-david-webb-pair-of-earclips/",
+    "flag": "price_anomaly",
+    "reason": "$3,840 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD EAR PENDANTS, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 3840,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4429704",
+    "flag": "price_anomaly",
+    "reason": "$3,840 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, ruby, and diamond bracelet",
+    "category": "bracelet",
+    "price": 3750,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2021/05/jewels-watches/138",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold and Shell Cameo 'Sagittarius' Pendant Clip-Brooch",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-122---david-webb-gold-and-shell-cameo-sagittarius-pendant-clip-brooch/",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold 'Aries' Pendant-Brooch",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-67---david-webb-gold-aries-pendant-brooch/",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Multistrand Rock Crystal, Gold and White Enamel Torsade Necklace, David Webb",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-37---multistrand-rock-crystal-gold-and-white-enamel-torsade-necklace-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum and Diamond Choker Necklace, David Webb",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-186---gold-platinum-and-diamond-choker-necklace-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Gemini Pendant, David Webb",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-239---gold-gemini-pendant-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Pendant Clip-Brooch, David Webb",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-500---gold-pendant-clip-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Large Gold Lion Head Pendant-Brooch, David Webb",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-792---large-gold-lion-head-pendant-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Pisces Pendant-Brooch, David Webb",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-293---gold-pisces-pendant-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "RUBY, DIAMOND AND LACQUER PENDANT, DAVID WEBB",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-6289372",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND AND GOLD NECKLACE, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 3750,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5909887",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A TIGER'S EYE AND GOLD BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 3750,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5394804",
+    "flag": "price_anomaly",
+    "reason": "$3,750 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD EAR PENDANTS, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 3600,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4429733",
+    "flag": "price_anomaly",
+    "reason": "$3,600 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN ENAMEL AND GOLD DRESS-SET, BY DAVID WEBB",
+    "category": "other",
+    "price": 3585,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4397061",
+    "flag": "price_anomaly",
+    "reason": "$3,585 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF SAPPHIRE AND DIAMOND CUFF LINKS, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 3585,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4033424",
+    "flag": "price_anomaly",
+    "reason": "$3,585 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A NEPHRITE, RUBY, EMERALD AND 18K GOLD PENDANT, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 3585,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4157778",
+    "flag": "price_anomaly",
+    "reason": "$3,585 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GROUP OF JEWELRY, DAVID WEBB",
+    "category": "other",
+    "price": 3525,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1808298",
+    "flag": "price_anomaly",
+    "reason": "$3,525 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GOLD CUFF BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 3525,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-3887964",
+    "flag": "price_anomaly",
+    "reason": "$3,525 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND AND GOLD BANGLE, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 3525,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-2470541",
+    "flag": "price_anomaly",
+    "reason": "$3,525 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN ENAMEL AND GOLD BANGLE BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 3525,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-3832585",
+    "flag": "price_anomaly",
+    "reason": "$3,525 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "THREE PAIRS OF GOLD AND ENAMEL STUDS, DAVID WEBB",
+    "category": "other",
+    "price": 3500,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$3,500 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "18K GOLD, PLATINUM AND DIAMOND PENDANT NECKLACE, DAVID WEBB",
+    "category": "necklace",
+    "price": 3500,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$3,500 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GOLD, RUBY AND BLACK ENAMEL DRESS SET, DAVID WEBB",
+    "category": "other",
+    "price": 3450,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1591589",
+    "flag": "price_anomaly",
+    "reason": "$3,450 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Turquoise Nugget Pendant-Earclips",
+    "category": "necklace",
+    "price": 3438,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-120---david-webb-pair-of-gold-and-turquoise-nugget-pendant-earclips/",
+    "flag": "price_anomaly",
+    "reason": "$3,438 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Black, White and Red Enamel Zebra Dress Set, David Webb",
+    "category": "other",
+    "price": 3438,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-87---gold-black-white-and-red-enamel-zebra-dress-set-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,438 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Belt Buckle, David Webb",
+    "category": "other",
+    "price": 3438,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-15---gold-belt-buckle-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,438 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Gemini Pendant, David Webb",
+    "category": "necklace",
+    "price": 3438,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-373---gold-gemini-pendant-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,438 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold Snake Belt Buckle, David Webb",
+    "category": "other",
+    "price": 3438,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-142---hammered-gold-snake-belt-buckle-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,438 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "TWO GOLD AND DIAMOND RINGS, BY DAVID WEBB",
+    "category": "other",
+    "price": 3346,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4353820",
+    "flag": "price_anomaly",
+    "reason": "$3,346 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "TWO DAVID WEBB AND ONE KIESELSTEIN-CORD BELT BUCKLES",
+    "category": "other",
+    "price": 3276,
+    "source": "Christie's",
+    "url": "https://onlineonly.christies.com/sso?ObjectID=19933.98&LotNumber=98",
+    "flag": "price_anomaly",
+    "reason": "$3,276 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Tiger's-Eye and Green Enamel Necklace 18 kt....",
+    "category": "necklace",
+    "price": 3250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-318---tigers-eye-and-green-enamel-necklace-18-kt/",
+    "flag": "price_anomaly",
+    "reason": "$3,250 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND AND GOLD NECKLACE, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 3226,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4397044",
+    "flag": "price_anomaly",
+    "reason": "$3,226 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold, Platinum and Diamond Link Bracelet",
+    "category": "bracelet",
+    "price": 3125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-175---david-webb-gold-platinum-and-diamond-link-bracelet/",
+    "flag": "price_anomaly",
+    "reason": "$3,125 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold, Platinum and Diamond Wristwatch",
+    "category": "other",
+    "price": 3125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-133---david-webb-gold-platinum-and-diamond-wristwatch/",
+    "flag": "price_anomaly",
+    "reason": "$3,125 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Indian Gold, Jaipur Enamel, Pearl, Foil-Backed Ruby and Diamond Fringe Necklace, David Webb",
+    "category": "necklace",
+    "price": 3125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-261---indian-gold-jaipur-enamel-pearl-foil-backed-ruby-and-diamond-fringe-necklace-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,125 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Green Enamel Pendant Clip-Brooch, David Webb",
+    "category": "necklace",
+    "price": 3125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-39---gold-and-green-enamel-pendant-clip-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$3,125 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIRE DE BOUTONS DE MANCHETTES EMERAUDES ET EMAIL, PAR DAVID WEBB",
+    "category": "other",
+    "price": 3125,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5248274",
+    "flag": "price_anomaly",
+    "reason": "$3,125 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIRE DE BOUCLES D'OREILLES EMAIL, PAR DAVID WEBB",
+    "category": "other",
+    "price": 3120,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4643186",
+    "flag": "price_anomaly",
+    "reason": "$3,120 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF DIAMOND AND GOLD EAR PENDANTS, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 3055,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-3052131",
+    "flag": "price_anomaly",
+    "reason": "$3,055 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold serpent belt buckle",
+    "category": "other",
+    "price": 3000,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2021/10/fall-jewelry/166",
+    "flag": "price_anomaly",
+    "reason": "$3,000 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "18K GOLD BRACELET, DAVID WEBB AND MATCHING GOLD NECKLACE",
+    "category": "bracelet",
+    "price": 3000,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$3,000 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GOLD NECKLACE, DAVID WEBB",
+    "category": "necklace",
+    "price": 2990,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1652630",
+    "flag": "price_anomaly",
+    "reason": "$2,990 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A SET OF MABE PEARL, DIAMOND AND 18K GOLD JEWELRY, BY DAVID WEBB",
+    "category": "other",
+    "price": 2880,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4614164",
+    "flag": "price_anomaly",
+    "reason": "$2,880 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD EAR PENDANTS, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 2868,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4033331",
+    "flag": "price_anomaly",
+    "reason": "$2,868 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND AND GOLD WRISTWATCH, BY DAVID WEBB",
+    "category": "other",
+    "price": 2820,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-3832629",
+    "flag": "price_anomaly",
+    "reason": "$2,820 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Diamond Necklace and Black Enamel Necklace, David Webb",
+    "category": "necklace",
+    "price": 2812,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-571---gold-diamond-necklace-and-black-enamel-necklace-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,812 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold, Green Onyx and Lapis Pendant, David Webb",
+    "category": "necklace",
+    "price": 2812,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-214---hammered-gold-green-onyx-and-lapis-pendant-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,812 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Snake Belt Buckle, David Webb",
+    "category": "other",
+    "price": 2812,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-297---gold-snake-belt-buckle-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,812 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Cultured Pearl and Diamond Flower Brooch, David Webb",
+    "category": "brooch",
+    "price": 2812,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-402---gold-cultured-pearl-and-diamond-flower-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,812 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Enamel Bangle, David Webb",
+    "category": "bracelet",
+    "price": 2812,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-458---gold-and-enamel-bangle-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,812 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Two gold and enamel snake rings",
+    "category": "other",
+    "price": 2800,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/10/fall-jewels/264",
+    "flag": "price_anomaly",
+    "reason": "$2,800 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GOLD BRACELET, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 2629,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4033701",
+    "flag": "price_anomaly",
+    "reason": "$2,629 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A SUITE OF DIAMOND AND GOLD JEWELRY, BY DAVID WEBB",
+    "category": "other",
+    "price": 2585,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-2470535",
+    "flag": "price_anomaly",
+    "reason": "$2,585 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A gold totem pendant",
+    "category": "necklace",
+    "price": 2500,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2015/12/jewels/214",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Tiger's Eye and Black Onyx Pendant-Brooch, David Webb",
+    "category": "necklace",
+    "price": 2500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-340---gold-tigers-eye-and-black-onyx-pendant-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold and Carved Lapis Pendant, David Webb",
+    "category": "necklace",
+    "price": 2500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-410---hammered-gold-and-carved-lapis-pendant-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum and Diamond Flower Clip-Brooch, David Webb",
+    "category": "brooch",
+    "price": 2500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-204---gold-platinum-and-diamond-flower-clip-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Frosted Rock Crystal Dress Set and Tie Tac, David Webb",
+    "category": "other",
+    "price": 2500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-159---gold-and-frosted-rock-crystal-dress-set-and-tie-tac-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "An enamel and ruby novelty ring and brooch, by David Webb",
+    "category": "brooch",
+    "price": 2500,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5315467",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF ENAMEL CUFF LINKS, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 2500,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5484220",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A MULTI-GEM, PLATINUM AND GOLD NECKLACE",
+    "category": "necklace",
+    "price": 2500,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-6081741",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GROUP OF GOLD GENTLEMAN'S ACCESSORIES",
+    "category": "other",
+    "price": 2500,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5769946",
+    "flag": "price_anomaly",
+    "reason": "$2,500 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and leather belt",
+    "category": "other",
+    "price": 2400,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/10/fall-jewels/386",
+    "flag": "price_anomaly",
+    "reason": "$2,400 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A gold and onyx pendant",
+    "category": "necklace",
+    "price": 2400,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2015/12/jewels/217",
+    "flag": "price_anomaly",
+    "reason": "$2,400 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GOLD, DIAMOND AND RUBY BANGLE, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 2390,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4073671",
+    "flag": "price_anomaly",
+    "reason": "$2,390 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF 18K GOLD EAR PENDANTS, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 2390,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4264393",
+    "flag": "price_anomaly",
+    "reason": "$2,390 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF MABE PEARL AND GOLD EAR PENDANTS, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 2390,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4033509",
+    "flag": "price_anomaly",
+    "reason": "$2,390 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN 18K GOLD WRISTWATCH, BY DAVID WEBB",
+    "category": "other",
+    "price": 2375,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5300603",
+    "flag": "price_anomaly",
+    "reason": "$2,375 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PARURE D'HABIT EN ONYX ET DIAMANTS, PAR DAVID WEBB",
+    "category": "other",
+    "price": 2350,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4119965",
+    "flag": "price_anomaly",
+    "reason": "$2,350 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIRE DE BOUTONS DE MANCHETTE EN OR ET EMAIL, PAR DAVID WEBB",
+    "category": "other",
+    "price": 2350,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4119940",
+    "flag": "price_anomaly",
+    "reason": "$2,350 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "ANELLO IN SMALTO, DIAMANTI E SMERALDI, FIRMATO WEBB",
+    "category": "other",
+    "price": 2340,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5507219",
+    "flag": "price_anomaly",
+    "reason": "$2,340 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold and Oxidized Silver Dress Set",
+    "category": "other",
+    "price": 2304,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-57---david-webb-gold-and-oxidized-silver-dress-set/",
+    "flag": "price_anomaly",
+    "reason": "$2,304 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND AND GEM LARGE PENDANT NECKLACE BY DAVID WEBB , THE ROSE QUARTZ CENTRE CARVED WITH FLOWERS AND FRUIT, THE HAMMERED FINISH PETAL SURROUND SET WITH DIAMONDS, CABOCHON SAPPHIRE, CABOCHON RUBIES AND CABOCHON EMERALDS, SUSPENDED FROM A HAMMERED FINISH FOLIATE DESIGN LONG CHAIN, APPROXIMATELY 66CM LONG, THE PENDANT WITH CLIP PIN FITTING ENABLING IT TO BE WORN AS A BROOCH, THE PENDANT AND CHAIN EACH SIGNED DAVID WEBB , WITH MAKERS GREY SOFT CASE.",
+    "category": "necklace",
+    "price": 2300,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-668401",
+    "flag": "price_anomaly",
+    "reason": "$2,300 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Mabé Pearl Earclips",
+    "category": "earrings",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-47---david-webb-pair-of-gold-and-mab-pearl-earclips/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold, Black Enamel and Cabochon Ruby Lion Cufflinks",
+    "category": "cufflinks",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-1023---david-webb-pair-of-gold-black-enamel-and-cabochon-ruby-lion-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Fluted Gold Earclips, David Webb",
+    "category": "earrings",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-421---pair-of-fluted-gold-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-70---pair-of-gold-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold, Shell and Coral Earclips, David Webb",
+    "category": "earrings",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-182---pair-of-gold-shell-and-coral-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Diamond Ring, David Webb",
+    "category": "ring",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-8---gold-and-diamond-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Enamel Dome Ring, David Webb",
+    "category": "ring",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-238---gold-and-enamel-dome-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold Clip-Brooch, David Webb",
+    "category": "brooch",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-48---hammered-gold-clip-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Carved Tourmaline, Pink Tourmaline, Black Onyx and Diamond Pendant, David Webb",
+    "category": "necklace",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-98---gold-carved-tourmaline-pink-tourmaline-black-onyx-and-diamond-pendant-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-200---pair-of-gold-and-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Ring, David Webb",
+    "category": "ring",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-440---gold-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Black Enamel and Mabe Pearl Ring, David Webb",
+    "category": "ring",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-457---gold-black-enamel-and-mabe-pearl-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of David Webb Gold S-Design Earrings 18...",
+    "category": "earrings",
+    "price": 2250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-27---pair-of-david-webb-gold-s-design-earrings-18/",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A diamond ring, by David Webb",
+    "category": "ring",
+    "price": 2250,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5359530",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GROUP OF CULTURED PEARL, ENAMEL AND GOLD JEWELRY",
+    "category": "other",
+    "price": 2250,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-6081743",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF CORAL AND 18K GOLD SHELL EARRINGS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 2232,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1963408",
+    "flag": "price_anomaly",
+    "reason": "$2,232 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIRE DE BOUTONS DE MANCHETTE EN OR ET EMAIL, PAR DAVID WEBB",
+    "category": "other",
+    "price": 2232,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4119958",
+    "flag": "price_anomaly",
+    "reason": "$2,232 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold earrings",
+    "category": "earrings",
+    "price": 2200,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/10/fall-jewels/305",
+    "flag": "price_anomaly",
+    "reason": "$2,200 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "'Flight' diamond and gold necklace",
+    "category": "necklace",
+    "price": 2200,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2021/05/jewels-watches/194",
+    "flag": "price_anomaly",
+    "reason": "$2,200 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold ropework earrings",
+    "category": "earrings",
+    "price": 2200,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2020/05/jewels-precious-objects/276",
+    "flag": "price_anomaly",
+    "reason": "$2,200 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold, Enamel and Emerald Tiger Cufflinks",
+    "category": "cufflinks",
+    "price": 2176,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-99---david-webb-pair-of-gold-enamel-and-emerald-tiger-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$2,176 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN 18K GOLD RING, BY DAVID WEBB",
+    "category": "ring",
+    "price": 2151,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4157783",
+    "flag": "price_anomaly",
+    "reason": "$2,151 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A BLUE AND GREEN ENAMEL AND GOLD DRESS SET, BY DAVID WEBB",
+    "category": "other",
+    "price": 2151,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4230540",
+    "flag": "price_anomaly",
+    "reason": "$2,151 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Cultured Pearl Earclips",
+    "category": "earrings",
+    "price": 2142,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$2,142 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold Pencil Cufflinks",
+    "category": "cufflinks",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-1028---david-webb-pair-of-gold-pencil-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Enamel Cufflinks",
+    "category": "cufflinks",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-1050---david-webb-pair-of-gold-and-enamel-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum, Carved Jade and Diamond Pendant, David Webb",
+    "category": "necklace",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-426---gold-platinum-carved-jade-and-diamond-pendant-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Hammered Gold Earclips, David Webb",
+    "category": "earrings",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-607---pair-of-hammered-gold-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Brown and Yellow Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-142---pair-of-gold-and-brown-and-yellow-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Hammered Gold Cufflinks, David Webb, and Pair of Gold, Blue Enamel and Diamond Cufflinks, Fabergé",
+    "category": "cufflinks",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-281---pair-of-hammered-gold-cufflinks-david-webb-and-pair-of-gold-blue-enamel-and-diamond-cufflinks-faberg/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Fluted Gold Earclips, David Webb",
+    "category": "earrings",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-388---pair-of-fluted-gold-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Three Gold Ring Mountings",
+    "category": "ring",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-710---three-gold-ring-mountings/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Dome Ring, David Webb",
+    "category": "ring",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-208---gold-dome-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and White and Black Cultured Pearl Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-31---pair-of-gold-and-white-and-black-cultured-pearl-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gentleman's Gold and Star Sapphire Ring, David Webb",
+    "category": "ring",
+    "price": 2125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-3092---gentlemans-gold-and-star-sapphire-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,125 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF 18K GOLD EARCLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 2070,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1408089",
+    "flag": "price_anomaly",
+    "reason": "$2,070 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered gold earrings",
+    "category": "earrings",
+    "price": 2000,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2022/11/jewelry-precious-objects/147",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Tiger's eye and gold ring",
+    "category": "ring",
+    "price": 2000,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2020/07/summer-jewels-watches/198",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Enamel Frog Cufflinks",
+    "category": "cufflinks",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-2001---david-webb-pair-of-gold-and-enamel-frog-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Hammered Gold Earclips, David Webb",
+    "category": "earrings",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-352---pair-of-hammered-gold-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Hammered Gold Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-65---pair-of-hammered-gold-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Coral Bead Earclips, David Webb",
+    "category": "earrings",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-390---pair-of-gold-and-coral-bead-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Two-Color Gold, Diamond and Freshwater Cultured Pearl Earclips, David Webb",
+    "category": "earrings",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-389---pair-of-two-color-gold-diamond-and-freshwater-cultured-pearl-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Coral Earclips, David Webb",
+    "category": "earrings",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-187---pair-of-gold-and-coral-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum, Cabochon Colored Stone and Diamond Ring, David Webb",
+    "category": "ring",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-276---gold-platinum-cabochon-colored-stone-and-diamond-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Cabochon Ruby Snake Ring, David Webb",
+    "category": "ring",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-192---gold-and-cabochon-ruby-snake-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Red and Blue Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-86---pair-of-gold-and-red-and-blue-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Oxidized Silver Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-188---pair-of-gold-and-oxidized-silver-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold Pyramid Ring 18 kt. yellow...",
+    "category": "ring",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-26---david-webb-gold-pyramid-ring-18-kt-yellow/",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF ENAMEL EARCLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 2000,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5058145",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A SET OF WHITE CORAL AND GOLD JEWELRY",
+    "category": "other",
+    "price": 2000,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-6081748",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF CULTURED PEARL AND GOLD CUFFLINKS, BY DAVID WEBB",
+    "category": "cufflinks",
+    "price": 2000,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5643644",
+    "flag": "price_anomaly",
+    "reason": "$2,000 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A CABOCHON MOONSTONE, RUBY, DIAMOND AND GOLD RING, DAVID WEBB",
+    "category": "ring",
+    "price": 1997,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1812226",
+    "flag": "price_anomaly",
+    "reason": "$1,997 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A David Webb black cultured pearl and diamond ring",
+    "category": "ring",
+    "price": 1955,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1486309",
+    "flag": "price_anomaly",
+    "reason": "$1,955 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF 18K GOLD, ENAMEL AND EMERALD PANTHER HEAD CUFFLINKS, DAVID WEBB",
+    "category": "cufflinks",
+    "price": 1955,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1590371",
+    "flag": "price_anomaly",
+    "reason": "$1,955 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Enamel Cufflinks",
+    "category": "cufflinks",
+    "price": 1920,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-34---david-webb-pair-of-gold-and-enamel-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$1,920 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Black Enamel Cufflinks",
+    "category": "cufflinks",
+    "price": 1920,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-36---david-webb-pair-of-gold-and-black-enamel-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$1,920 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN ENAMEL AND DIAMOND RING, BY DAVID WEBB",
+    "category": "ring",
+    "price": 1912,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-3979588",
+    "flag": "price_anomaly",
+    "reason": "$1,912 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD EAR CLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 1912,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4051502",
+    "flag": "price_anomaly",
+    "reason": "$1,912 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD EAR CLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 1912,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4033407",
+    "flag": "price_anomaly",
+    "reason": "$1,912 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD EAR CLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 1912,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4033570",
+    "flag": "price_anomaly",
+    "reason": "$1,912 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD EAR CLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 1912,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4018744",
+    "flag": "price_anomaly",
+    "reason": "$1,912 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Nephrite jade and gold frog cufflinks",
+    "category": "cufflinks",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2025/02/jewels-watches-xoxo/116",
+    "flag": "price_anomaly",
+    "reason": "$1,900 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Enamel and gold earrings",
+    "category": "earrings",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2024/10/fall-jewels/225",
+    "flag": "price_anomaly",
+    "reason": "$1,900 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold ring",
+    "category": "ring",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2024/02/jewels-xoxo/224",
+    "flag": "price_anomaly",
+    "reason": "$1,900 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Cultured pearl and gold bracelet",
+    "category": "bracelet",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/10/fall-jewels/304",
+    "flag": "price_anomaly",
+    "reason": "$1,900 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gem-set, diamond, and gold pinky ring",
+    "category": "ring",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/02/jewels-xoxo/113",
+    "flag": "price_anomaly",
+    "reason": "$1,900 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD AND DIAMOND EAR CLIPS, DAVID WEBB",
+    "category": "earrings",
+    "price": 1880,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1862589",
+    "flag": "price_anomaly",
+    "reason": "$1,880 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Hammered Gold Earrings",
+    "category": "earrings",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-168---david-webb-pair-of-hammered-gold-earrings/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Enamel Frog Cufflinks",
+    "category": "cufflinks",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-54---david-webb-pair-of-gold-and-enamel-frog-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-48---pair-of-gold-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Bombé Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-51---pair-of-gold-bomb-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Link Bracelet, David Webb",
+    "category": "bracelet",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-408---gold-link-bracelet-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Lapis and Blue and Black Enamel Pendant, David Webb",
+    "category": "necklace",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-420---gold-lapis-and-blue-and-black-enamel-pendant-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Lapis Lazuli Pendant Earrings, David Webb and Double Strand Gold and Lapis Lazuli Bead Necklace",
+    "category": "necklace",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-252---pair-of-gold-and-lapis-lazuli-pendant-earrings-david-webb-and-double-strand-gold-and-lapis-lazuli-bead-necklace/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Hammered Gold and Cabochon Colored Stone Earrings, David Webb",
+    "category": "earrings",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-226---pair-of-hammered-gold-and-cabochon-colored-stone-earrings-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Frosted Rock Crystal Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-47---pair-of-gold-and-frosted-rock-crystal-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Blue Enamel Earclips, David Webb",
+    "category": "earrings",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-241---pair-of-gold-and-blue-enamel-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Hoop Earrings, David Webb",
+    "category": "earrings",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-185---pair-of-gold-hoop-earrings-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Flower Clip-Brooch, David Webb",
+    "category": "brooch",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-532---gold-flower-clip-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Green and Blue Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-49---pair-of-gold-and-green-and-blue-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Black and Red Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-51---pair-of-gold-and-black-and-red-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,875 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Earclips and a Gold Necklace The...",
+    "category": "necklace",
+    "price": 1800,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-296---pair-of-gold-earclips-and-a-gold-necklace-the/",
+    "flag": "price_anomaly",
+    "reason": "$1,800 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF 18K GOLD EAR PENDANTS, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 1792,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4018734",
+    "flag": "price_anomaly",
+    "reason": "$1,792 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A CATS EYE CHRYSOBERYL, DIAMOND AND GOLD RING, BY DAVID WEBB",
+    "category": "ring",
+    "price": 1792,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4353786",
+    "flag": "price_anomaly",
+    "reason": "$1,792 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Black Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-70---pair-of-gold-and-black-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,750 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Black Enamel Earclips, David Webb",
+    "category": "earrings",
+    "price": 1750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-338---pair-of-gold-and-black-enamel-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,750 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Nugget Gold Dome Earclips, David Webb",
+    "category": "earrings",
+    "price": 1750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-369---pair-of-nugget-gold-dome-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,750 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Green and Blue Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-96---pair-of-gold-and-green-and-blue-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,750 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Hammered Gold Earclips, David Webb",
+    "category": "earrings",
+    "price": 1750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-28---pair-of-hammered-gold-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,750 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Carnelian Earrings, David Webb, and Pair of Yellow and White Gold and Diamond Curb Link Earclips, Pomellato",
+    "category": "earrings",
+    "price": 1750,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-5---pair-of-gold-and-carnelian-earrings-david-webb-and-pair-of-yellow-and-white-gold-and-diamond-curb-link-earclips-pomellato/",
+    "flag": "price_anomaly",
+    "reason": "$1,750 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF ENAMEL, RUBY AND GOLD FROG EAR CLIPS",
+    "category": "earrings",
+    "price": 1750,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5354358",
+    "flag": "price_anomaly",
+    "reason": "$1,750 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF RUBY, ENAMEL AND GOLD TIGER CUFFLINKS, DAVID WEBB",
+    "category": "cufflinks",
+    "price": 1725,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1591591",
+    "flag": "price_anomaly",
+    "reason": "$1,725 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Abalone shell and gold earrings",
+    "category": "earrings",
+    "price": 1700,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/06/summer-jewels-watches/262",
+    "flag": "price_anomaly",
+    "reason": "$1,700 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A CITRINE AND ENAMEL RING, BY DAVID WEBB",
+    "category": "ring",
+    "price": 1680,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4621333",
+    "flag": "price_anomaly",
+    "reason": "$1,680 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF 18K GOLD EAR CLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 1673,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4018696",
+    "flag": "price_anomaly",
+    "reason": "$1,673 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A CULTURED PEARL AND GOLD BROOCH, BY DAVID WEBB",
+    "category": "brooch",
+    "price": 1645,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-3861485",
+    "flag": "price_anomaly",
+    "reason": "$1,645 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF DIAMOND, ROCK CRYSTAL AND BLACK ENAMEL CUFFLINKS, BY DAVID WEBB",
+    "category": "cufflinks",
+    "price": 1645,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1779135",
+    "flag": "price_anomaly",
+    "reason": "$1,645 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "GOLD BELT BUCKLE, DAVID WEBB",
+    "category": "other",
+    "price": 1625,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$1,625 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and White Onyx Earclips, David Webb",
+    "category": "earrings",
+    "price": 1625,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-442---pair-of-gold-and-white-onyx-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,625 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Earclips, David Webb",
+    "category": "earrings",
+    "price": 1625,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-469---pair-of-gold-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,625 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold Dome Ring, David Webb",
+    "category": "ring",
+    "price": 1625,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-651---hammered-gold-dome-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,625 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Carved Jade Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1625,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-525---pair-of-gold-and-carved-jade-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,625 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A diamond dress ring, by David Webb",
+    "category": "ring",
+    "price": 1625,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5623726",
+    "flag": "price_anomaly",
+    "reason": "$1,625 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold ring",
+    "category": "ring",
+    "price": 1600,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2025/05/spring-jewels-watches/114",
+    "flag": "price_anomaly",
+    "reason": "$1,600 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Lapis lazuli and gold cufflinks",
+    "category": "cufflinks",
+    "price": 1600,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2025/05/spring-jewels-watches/129",
+    "flag": "price_anomaly",
+    "reason": "$1,600 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIRE DE BOUTONS DE MANCHETTE EN OR NOIRCI, PAR DAVID WEBB",
+    "category": "other",
+    "price": 1586,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4119972",
+    "flag": "price_anomaly",
+    "reason": "$1,586 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold, Platinum and Diamond Ring",
+    "category": "ring",
+    "price": 1536,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-2005---david-webb-gold-platinum-and-diamond-ring/",
+    "flag": "price_anomaly",
+    "reason": "$1,536 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Brown Enamel Frog Cufflinks",
+    "category": "cufflinks",
+    "price": 1536,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-55---david-webb-pair-of-gold-and-brown-enamel-frog-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$1,536 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF YELLOW GOLD AND ENAMEL EAR CLIPS, DAVID WEBB",
+    "category": "earrings",
+    "price": 1527,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1894948",
+    "flag": "price_anomaly",
+    "reason": "$1,527 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Blue and White Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-453---pair-of-gold-and-blue-and-white-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,500 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-147---pair-of-gold-and-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,500 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Nugget Gold Earclips, David Webb",
+    "category": "earrings",
+    "price": 1500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-205---pair-of-nugget-gold-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,500 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold Clip-Brooch, David Webb",
+    "category": "brooch",
+    "price": 1500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-649---hammered-gold-clip-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,500 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Hoop Earclips, David Webb",
+    "category": "earrings",
+    "price": 1500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-19---pair-of-gold-hoop-earclips-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,500 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Ring, David Webb",
+    "category": "ring",
+    "price": 1500,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-542---gold-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,500 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A lapis lazuli and diamond ring by David Webb",
+    "category": "ring",
+    "price": 1440,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4562204",
+    "flag": "price_anomaly",
+    "reason": "$1,440 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF GOLD EAR CLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 1434,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4264514",
+    "flag": "price_anomaly",
+    "reason": "$1,434 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF WHITE ENAMEL AND 18K GOLD EAR CLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 1434,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4146875",
+    "flag": "price_anomaly",
+    "reason": "$1,434 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Hammered Gold Abstract Cufflinks",
+    "category": "cufflinks",
+    "price": 1408,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-52---david-webb-pair-of-hammered-gold-abstract-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$1,408 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "ring",
+    "category": "ring",
+    "price": 1400,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2005/06/branded-luxury/195",
+    "flag": "price_anomaly",
+    "reason": "$1,400 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN ENAMEL AND GOLD DRESS SET, DAVID WEBB",
+    "category": "other",
+    "price": 1380,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1445020",
+    "flag": "price_anomaly",
+    "reason": "$1,380 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF JADEITE AND GOLD CUFF LINKS, DAVID WEBB",
+    "category": "bracelet",
+    "price": 1380,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1652624",
+    "flag": "price_anomaly",
+    "reason": "$1,380 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold Cufflinks",
+    "category": "cufflinks",
+    "price": 1375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-66---david-webb-pair-of-gold-cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$1,375 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Enamel Money Clip, David Webb",
+    "category": "brooch",
+    "price": 1375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-375---gold-and-enamel-money-clip-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,375 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Enamel Bombe Ring, David Webb",
+    "category": "ring",
+    "price": 1375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-814---gold-and-enamel-bombe-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,375 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold, Black Enamel and Cabochon Ruby Tiger Earrings, David Webb",
+    "category": "earrings",
+    "price": 1375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-789---pair-of-gold-black-enamel-and-cabochon-ruby-tiger-earrings-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,375 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN 18K GOLD RING, BY DAVID WEBB",
+    "category": "ring",
+    "price": 1314,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4334177",
+    "flag": "price_anomaly",
+    "reason": "$1,314 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF CULTURED PEARL AND DIAMOND CUFF LINKS, BY DAVID WEBB",
+    "category": "bracelet",
+    "price": 1314,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4033545",
+    "flag": "price_anomaly",
+    "reason": "$1,314 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIR OF 18K GOLD AND BLACK ENAMEL CUFFLINKS, DAVID WEBB",
+    "category": "cufflinks",
+    "price": 1300,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$1,300 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A PAIR OF 18K GOLD EAR PENDANTS, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 1254,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4018709",
+    "flag": "price_anomaly",
+    "reason": "$1,254 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and White Coral Earclips",
+    "category": "earrings",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-34---david-webb-pair-of-gold-and-white-coral-earclips/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold, Platinum, Cabochon Amethyst, Emerald and Diamond Ring",
+    "category": "ring",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-1003---hammered-gold-platinum-cabochon-amethyst-emerald-and-diamond-ring/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum and Diamond Mesh Feather Clip-Brooch, David Webb",
+    "category": "brooch",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-139---gold-platinum-and-diamond-mesh-feather-clip-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered Gold Dome Ring, David Webb",
+    "category": "ring",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-4---hammered-gold-dome-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-78---pair-of-gold-and-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Fluted Gold Ring, David Webb",
+    "category": "ring",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-781---fluted-gold-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Red Enamel Band Ring, David Webb",
+    "category": "ring",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-818---gold-and-red-enamel-band-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Bombe Ring, by David Webb",
+    "category": "ring",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-156---gold-bombe-ring-by-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Scorpion Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-294---pair-of-gold-scorpion-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Enamel Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-215---pair-of-gold-and-enamel-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold and Enamel Lion Head Cufflinks, David Webb",
+    "category": "cufflinks",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-288---pair-of-gold-and-enamel-lion-head-cufflinks-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gentleman's Gold ID Bracelet, David Webb",
+    "category": "bracelet",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-401---gentlemans-gold-id-bracelet-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Money Clip, David Webb",
+    "category": "brooch",
+    "price": 1250,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-775---gold-money-clip-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$1,250 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "AN ENAMEL AND DIAMOND FROG BROOCH, BY DAVID WEBB",
+    "category": "brooch",
+    "price": 1200,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4882280",
+    "flag": "price_anomaly",
+    "reason": "$1,200 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GOLD AND ENAMEL RING, DAVID WEBB",
+    "category": "ring",
+    "price": 1150,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1402029",
+    "flag": "price_anomaly",
+    "reason": "$1,150 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb | Paire de boutons de manchette or | Pair of gold cufflinks",
+    "category": "cufflinks",
+    "price": 1134,
+    "source": "Sotheby's",
+    "url": "",
+    "flag": "price_anomaly",
+    "reason": "$1,134 is in the bottom 5% of all auction prices on file, regardless of category"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIRE DE BOUTONS DE MANCHETTE EN OR ET EMAIL, PAR DAVID WEBB",
+    "category": "other",
+    "price": 1116,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4119961",
+    "flag": "price_anomaly",
+    "reason": "$1,116 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold and Black Enamel Jabot",
+    "category": "other",
+    "price": 1088,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-1007---david-webb-gold-and-black-enamel-jabot/",
+    "flag": "price_anomaly",
+    "reason": "$1,088 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIRE DE BOUTONS DE MANCHETTE EN OR ET EMAIL, PAR DAVID WEBB",
+    "category": "other",
+    "price": 1057,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4119945",
+    "flag": "price_anomaly",
+    "reason": "$1,057 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A DIAMOND RING, BY DAVID WEBB",
+    "category": "ring",
+    "price": 1000,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-6055349",
+    "flag": "price_anomaly",
+    "reason": "$1,000 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A David Webb chrysoprase, diamond and sapphire brooch,",
+    "category": "brooch",
+    "price": 977,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1510798",
+    "flag": "price_anomaly",
+    "reason": "$977 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A David Webb turquoise and diamond ring,",
+    "category": "ring",
+    "price": 943,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1486311",
+    "flag": "price_anomaly",
+    "reason": "$943 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "PAIRE DE BOUTONS DE MANCHETTE EN OR ET EMAIL, PAR DAVID WEBB",
+    "category": "other",
+    "price": 940,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4119955",
+    "flag": "price_anomaly",
+    "reason": "$940 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Necklace Shorteners, David Webb",
+    "category": "necklace",
+    "price": 938,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-529---pair-of-gold-necklace-shorteners-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$938 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A RING AND EARCLIPS, BY DAVID WEBB",
+    "category": "earrings",
+    "price": 937,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-5058192",
+    "flag": "price_anomaly",
+    "reason": "$937 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A David Webb diamond dress ring,",
+    "category": "ring",
+    "price": 920,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1486310",
+    "flag": "price_anomaly",
+    "reason": "$920 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "[BOOKS-JEWELRY] Group of approximately...",
+    "category": "other",
+    "price": 875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-814---books-jewelry-group-of-approximately/",
+    "flag": "price_anomaly",
+    "reason": "$875 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Jabot, David Webb",
+    "category": "other",
+    "price": 875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-323---gold-jabot-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$875 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and Jade Ring, David Webb",
+    "category": "ring",
+    "price": 875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-519---gold-and-jade-ring-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$875 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Two Gold and Enamel Jabots, David Webb",
+    "category": "other",
+    "price": 875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-488---two-gold-and-enamel-jabots-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$875 is well below the typical range for \"other\" (295 comparable auction records, median $15,000)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Two-Color Gold Hoop Earrings, David Webb",
+    "category": "earrings",
+    "price": 875,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-288---pair-of-two-color-gold-hoop-earrings-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$875 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A pair of David Webb ropework knot design ear clips with diamond crescent and randomly set diamond decoration. (2)",
+    "category": "earrings",
+    "price": 825,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-3572867",
+    "flag": "price_anomaly",
+    "reason": "$825 is well below the typical range for \"earrings\" (708 comparable auction records, median $7,560)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A MUTLISTRAND CULTURED PEARL AND DIAMOND BRACELET, DAVID WEBB",
+    "category": "bracelet",
+    "price": 822,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-1862648",
+    "flag": "price_anomaly",
+    "reason": "$822 is well below the typical range for \"bracelet\" (643 comparable auction records, median $22,500)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A GOLD AND DIAMOND PENDANT, BY DAVID WEBB",
+    "category": "necklace",
+    "price": 587,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-3830577",
+    "flag": "price_anomaly",
+    "reason": "$587 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A ring by David Webb , modelled as a mythical bearded figure pouring water from a vessel, the shank with black enamel scale work decoration, interior of shank signed.",
+    "category": "ring",
+    "price": 575,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-683796",
+    "flag": "price_anomaly",
+    "reason": "$575 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A turquoise brooch by David Webb",
+    "category": "brooch",
+    "price": 573,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-4341181",
+    "flag": "price_anomaly",
+    "reason": "$573 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A Sagittarius brooch by David Webb",
+    "category": "brooch",
+    "price": 564,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-2533639",
+    "flag": "price_anomaly",
+    "reason": "$564 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold Leaf Brooch, David Webb",
+    "category": "brooch",
+    "price": 562,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-534---gold-leaf-brooch-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$562 is well below the typical range for \"brooch\" (390 comparable auction records, median $11,250)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A David Webb ring modelled as a leopard's head and tail, with black enamel spots and gem set eyes, signed.",
+    "category": "ring",
+    "price": 460,
+    "source": "Christie's",
+    "url": "https://www.christies.com/en/lot/lot-711892",
+    "flag": "price_anomaly",
+    "reason": "$460 is well below the typical range for \"ring\" (536 comparable auction records, median $8,320)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Pair of Gold Necklace Shorteners, David Webb",
+    "category": "necklace",
+    "price": 375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-142---pair-of-gold-necklace-shorteners-david-webb/",
+    "flag": "price_anomaly",
+    "reason": "$375 is well below the typical range for \"necklace\" (609 comparable auction records, median $17,920)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Kingdom 18K Yellow Gold Green Enamel Frog Pendant",
+    "category": "necklace",
+    "price": 12100,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-kingdom-18k-yellow-gold-green-enamel-frog-pendant-rr4261",
+    "flag": "price_anomaly",
+    "reason": "$12,100 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Gold Platinum Diamond Enamel Pendant Necklace",
+    "category": "necklace",
+    "price": 12000,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-gold-platinum-diamond-enamel-pendant-necklace",
+    "flag": "price_anomaly",
+    "reason": "$12,000 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Zodiac Kingdom 18K Yellow Gold Aries Pendant",
+    "category": "necklace",
+    "price": 10700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-zodiac-kingdom-18k-yellow-gold-aries-pendant-rr6618",
+    "flag": "price_anomaly",
+    "reason": "$10,700 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Cabochon Ruby Crossover Hinged Cuff Bracelet",
+    "category": "bracelet",
+    "price": 10200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-cabochon-ruby-crossover-hinged-cuff-bracelet-rr7880",
+    "flag": "price_anomaly",
+    "reason": "$10,200 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Leopard Emerald Eyes With Box Cuff Links",
+    "category": "bracelet",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-leopard-emerald-eyes-with-box-cuff-links-j10525",
+    "flag": "price_anomaly",
+    "reason": "$9,700 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Square Open Link Nameplate Bracelet",
+    "category": "bracelet",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-square-open-link-nameplate-bracelet-rr7250",
+    "flag": "price_anomaly",
+    "reason": "$9,700 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Tiger Eye Star Pendant",
+    "category": "necklace",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-tiger-eye-star-pendant-rr7867",
+    "flag": "price_anomaly",
+    "reason": "$9,700 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Diamond Cuff Bracelet",
+    "category": "bracelet",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-diamond-cuff-bracelet-rr7669",
+    "flag": "price_anomaly",
+    "reason": "$9,700 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold 1.75cts Diamond Cuff Bracelet",
+    "category": "bracelet",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-1-75cts-diamond-cuff-bracelet-rr7668",
+    "flag": "price_anomaly",
+    "reason": "$9,700 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Aries Zodiac Pendant",
+    "category": "necklace",
+    "price": 9200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-aries-zodiac-pendant-rr6776",
+    "flag": "price_anomaly",
+    "reason": "$9,200 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Diamond 0.78cts Bracelet",
+    "category": "bracelet",
+    "price": 9200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-diamond-0-78cts-bracelet-rr4585",
+    "flag": "price_anomaly",
+    "reason": "$9,200 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Yellow Gold Ruby Eye Ram’s Head Bangle",
+    "category": "bracelet",
+    "price": 9000,
+    "source": "Yafa Signed Jewels",
+    "url": "https://yafasignedjewels.com/products/18k-yellow-gold-ruby-eye-ram-s-head-bangle",
+    "flag": "price_anomaly",
+    "reason": "$9,000 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Satin Finish ID Tag Chain Bracelet",
+    "category": "bracelet",
+    "price": 8700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-satin-finish-id-tag-chain-bracelet-rr7294",
+    "flag": "price_anomaly",
+    "reason": "$8,700 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb White Enamel Diamond Gold Platinum Skip Bracelet",
+    "category": "bracelet",
+    "price": 8500,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-white-enamel-diamond-gold-platinum-skip-bracelet",
+    "flag": "price_anomaly",
+    "reason": "$8,500 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Twist Rope Sectional \"Fishscale\" Flexible Bracelet",
+    "category": "bracelet",
+    "price": 8200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-twist-rope-sectional-fishscale-flexible-bracelet-rr6806",
+    "flag": "price_anomaly",
+    "reason": "$8,200 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Red Enamel Lion Heads Cuff Links",
+    "category": "bracelet",
+    "price": 7400,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-red-enamel-lion-heads-cuff-links-rr8006",
+    "flag": "price_anomaly",
+    "reason": "$7,400 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold White Enamel, Diamond Necklace",
+    "category": "necklace",
+    "price": 7100,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-white-enamel-diamond-necklace-rr8072",
+    "flag": "price_anomaly",
+    "reason": "$7,100 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Vintage Ruby Enamel 18 Karat Gold Kingdom Horse Ring",
+    "category": "ring",
+    "price": 6975,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-ruby-enamel-18-karat-gold-kingdom-horse-ring",
+    "flag": "price_anomaly",
+    "reason": "$6,975 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Bombe Black Enamel Ring",
+    "category": "ring",
+    "price": 6900,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-bombe-black-enamel-ring-rr6410",
+    "flag": "price_anomaly",
+    "reason": "$6,900 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Knot Style Button With Diamonds Earrings",
+    "category": "earrings",
+    "price": 6800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-knot-style-button-with-diamonds-earrings-rr8492",
+    "flag": "price_anomaly",
+    "reason": "$6,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 1960's Vintage Tahitian South Sea Pearl 18 Karat Gold Tri-Gold Necklace",
+    "category": "necklace",
+    "price": 6750,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-1960s-vintage-tahitian-south-sea-pearl-18-karat-gold-tri-gold-necklace",
+    "flag": "price_anomaly",
+    "reason": "$6,750 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Pearl Platinum Pearl With A Diamond Clasp Necklace",
+    "category": "necklace",
+    "price": 6700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-pearl-platinum-pearl-with-a-diamond-clasp-necklace-rr2729",
+    "flag": "price_anomaly",
+    "reason": "$6,700 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Ruby, Emerald, Sapphire Three Gem Ring",
+    "category": "ring",
+    "price": 6700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-ruby-emerald-sapphire-three-gem-ring-rr4356",
+    "flag": "price_anomaly",
+    "reason": "$6,700 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Oval White Enamel Earrings",
+    "category": "earrings",
+    "price": 6700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-oval-white-enamel-earrings-rr6048",
+    "flag": "price_anomaly",
+    "reason": "$6,700 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Ram's Head Enamel Gold Cufflinks",
+    "category": "cufflinks",
+    "price": 6600,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-rams-head-enamel-gold-earrings",
+    "flag": "price_anomaly",
+    "reason": "$6,600 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Hammered Nail Diamond Ring",
+    "category": "ring",
+    "price": 6500,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-hammered-nail-diamond-ring-rr9319",
+    "flag": "price_anomaly",
+    "reason": "$6,500 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Vintage 1960s David Webb Three Zero Brooch",
+    "category": "brooch",
+    "price": 6450,
+    "source": "Eric Originals & Antiques",
+    "url": "https://ericoriginals.com/products/vintage-1960s-david-webb-three-zero-brooch",
+    "flag": "price_anomaly",
+    "reason": "$6,450 is well below the typical range for \"brooch\" (141 comparable dealer records, median $27,300)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Circa 1970's 18K Yellow Gold Round Cabochon Green Emerald Earrings",
+    "category": "earrings",
+    "price": 6400,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-circa-1970s-18k-yellow-gold-round-cabochon-green-emerald-earrings-rr2520",
+    "flag": "price_anomaly",
+    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Ram Ring",
+    "category": "ring",
+    "price": 6400,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-ram-ring-rr4044",
+    "flag": "price_anomaly",
+    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Circa 1970's Platinum & 18K Yellow Gold Ruby, Emerald, Sapphire Earrings",
+    "category": "earrings",
+    "price": 6400,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-circa-1970s-platinum-18k-yellow-gold-ruby-emerald-sapphire-earrings-rr4391",
+    "flag": "price_anomaly",
+    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Zebra Stripe Bombe Ring",
+    "category": "ring",
+    "price": 6400,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-zebra-stripe-bombe-ring-rr4900",
+    "flag": "price_anomaly",
+    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Diamond Bombe Clip Earrings",
+    "category": "earrings",
+    "price": 6400,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-diamond-bombe-clip-earrings-rr6539",
+    "flag": "price_anomaly",
+    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Emerald Gold Lion Head Cufflinks",
+    "category": "cufflinks",
+    "price": 6400,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-emerald-gold-lion-head-cufflinks",
+    "flag": "price_anomaly",
+    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Hammered Diamond Dome Ring",
+    "category": "ring",
+    "price": 6300,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-hammered-diamond-dome-ring-rr9375",
+    "flag": "price_anomaly",
+    "reason": "$6,300 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Classic Rigid Shrimp Style Vintage Earrings",
+    "category": "earrings",
+    "price": 6300,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-classic-rigid-shrimp-style-vintage-earrings-rr7849",
+    "flag": "price_anomaly",
+    "reason": "$6,300 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Crosswalk Black And White Enamel Ring",
+    "category": "ring",
+    "price": 6300,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-crosswalk-black-and-white-enamel-ring-rr7541",
+    "flag": "price_anomaly",
+    "reason": "$6,300 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Contemporary 18 Karat Yellow Gold Taurus Zodiac Pendant Necklace",
+    "category": "necklace",
+    "price": 6200,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-contemporary-18-karat-yellow-gold-taurus-zodiac-pendant-necklace",
+    "flag": "price_anomaly",
+    "reason": "$6,200 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Double Tip Diamond Nail Ring",
+    "category": "ring",
+    "price": 6100,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-double-tip-diamond-nail-ring-rr6209",
+    "flag": "price_anomaly",
+    "reason": "$6,100 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Orange Enamel Clip On Earrings",
+    "category": "earrings",
+    "price": 6100,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-orange-enamel-clip-on-earrings-rr7112",
+    "flag": "price_anomaly",
+    "reason": "$6,100 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Money Clip Jewelry",
+    "category": "brooch",
+    "price": 6100,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-money-clip-jewelry-rr7249",
+    "flag": "price_anomaly",
+    "reason": "$6,100 is well below the typical range for \"brooch\" (141 comparable dealer records, median $27,300)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 2.40 CTW Diamond Cultured Pearl Drop Ear-Clip Earrings",
+    "category": "earrings",
+    "price": 6100,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-2-40-ctw-diamond-cultured-pearl-drop-ear-clip-earrings-jewellery-jewelry",
+    "flag": "price_anomaly",
+    "reason": "$6,100 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 1960's Sapphire Turquoise 18 Karat Yellow Gold Platinum Vintage Domed Feather Ear-Clip Earrings",
+    "category": "earrings",
+    "price": 5950,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-1960s-sapphire-turquoise-18-karat-yellow-gold-platinum-vintage-domed-feather-ear-clip-earrings",
+    "flag": "price_anomaly",
+    "reason": "$5,950 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Frog 18K Yellow Gold Green Enamel Clip On Earrings",
+    "category": "earrings",
+    "price": 5900,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-frog-18k-yellow-gold-green-enamel-clip-on-earrings-j10471",
+    "flag": "price_anomaly",
+    "reason": "$5,900 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Enamel Diamond 18 Karat Two-Tone Gold Kingdom Snake Ring",
+    "category": "ring",
+    "price": 5900,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-enamel-diamond-18-karat-two-tone-gold-kingdom-snake-ring-1",
+    "flag": "price_anomaly",
+    "reason": "$5,900 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Vintage 1960s David Webb Gold and Enamel Initial Ring",
+    "category": "ring",
+    "price": 5850,
+    "source": "Eric Originals & Antiques",
+    "url": "https://ericoriginals.com/products/vintage-1960s-david-webb-gold-and-enamel-initial-ring",
+    "flag": "price_anomaly",
+    "reason": "$5,850 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Pearl Drop Pendulum Earrings",
+    "category": "earrings",
+    "price": 5800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-pearl-drop-pendulum-earrings-j10162",
+    "flag": "price_anomaly",
+    "reason": "$5,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 14K White Gold Carved Jade Ring",
+    "category": "ring",
+    "price": 5800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-14k-white-gold-carved-jade-ring-rr9246",
+    "flag": "price_anomaly",
+    "reason": "$5,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Gap Platinum & 18K Yellow Gold Diamond Statement Ring",
+    "category": "ring",
+    "price": 5800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-gap-platinum-18k-yellow-gold-diamond-statement-ring-rr5568",
+    "flag": "price_anomaly",
+    "reason": "$5,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold High Polished High Dme Crossover Ring",
+    "category": "ring",
+    "price": 5800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-high-polished-high-dme-crossover-ring-rr7473",
+    "flag": "price_anomaly",
+    "reason": "$5,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Fluted Ribbed 1970's Clip Earrings",
+    "category": "earrings",
+    "price": 5800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-fluted-ribbed-1970s-clip-earrings-rr7425",
+    "flag": "price_anomaly",
+    "reason": "$5,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Turquoise Lion Gold Cufflinks",
+    "category": "cufflinks",
+    "price": 5700,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-turquoise-lion-gold-cufflinks",
+    "flag": "price_anomaly",
+    "reason": "$5,700 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Vintage 1970s David Webb Coral Cufflinks",
+    "category": "cufflinks",
+    "price": 5650,
+    "source": "Eric Originals & Antiques",
+    "url": "https://ericoriginals.com/products/vintage-1970s-david-webb-coral-cufflinks",
+    "flag": "price_anomaly",
+    "reason": "$5,650 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Carved Emerald Pave Diamond 18 Karat Gold Bypass Ring",
+    "category": "ring",
+    "price": 5650,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-carved-emerald-pave-diamond-18-karat-gold-bypass-ring-1",
+    "flag": "price_anomaly",
+    "reason": "$5,650 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Frog Brooch",
+    "category": "brooch",
+    "price": 5500,
+    "source": "Eric Originals & Antiques",
+    "url": "https://ericoriginals.com/products/david-webb-frog-brooch-1",
+    "flag": "price_anomaly",
+    "reason": "$5,500 is well below the typical range for \"brooch\" (141 comparable dealer records, median $27,300)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Ruby Enamel Gold Horse Head Cufflinks",
+    "category": "cufflinks",
+    "price": 5500,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-ruby-enamel-gold-horse-head-cufflinks",
+    "flag": "price_anomaly",
+    "reason": "$5,500 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Frog Green Enamel Ruby Eyes Cuff Links",
+    "category": "bracelet",
+    "price": 5300,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-frog-green-enamel-ruby-eyes-cuff-links-rr4499",
+    "flag": "price_anomaly",
+    "reason": "$5,300 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Peace Black Enamel And Diamonds Round Pendant Necklace",
+    "category": "necklace",
+    "price": 5200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-peace-black-enamel-and-diamonds-round-pendant-necklace-rr7483",
+    "flag": "price_anomaly",
+    "reason": "$5,200 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Bastille Platinum & 18K Yellow Gold Hammered Finish and Diamond Ring",
+    "category": "ring",
+    "price": 5200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-bastille-platinum-18k-yellow-gold-hammered-finish-and-diamond-ring-rr3858",
+    "flag": "price_anomaly",
+    "reason": "$5,200 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Leopard Cabochon Emerald Eyes Cuff Links",
+    "category": "bracelet",
+    "price": 4800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-leopard-cabochon-emerald-eyes-cuff-links-rr9344",
+    "flag": "price_anomaly",
+    "reason": "$4,800 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Black & Gold in Thunder Bolt Motif Earrings",
+    "category": "earrings",
+    "price": 4800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-black-gold-in-thunder-bolt-motif-earrings-rr5696",
+    "flag": "price_anomaly",
+    "reason": "$4,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 1980's Onyx Rock Crystal Quartz Enamel 18 Karat Yellow Gold Bead Strand Vintage Necklace",
+    "category": "necklace",
+    "price": 4800,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-1980s-onyx-rock-crystal-quartz-enamel-18-karat-yellow-gold-bead-strand-vintage-necklace",
+    "flag": "price_anomaly",
+    "reason": "$4,800 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Signature Zebra Enamel Round Earrings",
+    "category": "earrings",
+    "price": 4600,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-signature-zebra-enamel-round-earrings-rr6922",
+    "flag": "price_anomaly",
+    "reason": "$4,600 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Tiger Brooch",
+    "category": "brooch",
+    "price": 4500,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-tiger-brooch-rr5894",
+    "flag": "price_anomaly",
+    "reason": "$4,500 is well below the typical range for \"brooch\" (141 comparable dealer records, median $27,300)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Rose Gold Gemini Horoscope Vintage Cuff Links",
+    "category": "bracelet",
+    "price": 4500,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-rose-gold-gemini-horoscope-vintage-cuff-links-rr8383",
+    "flag": "price_anomaly",
+    "reason": "$4,500 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Plain Link Chain Necklace",
+    "category": "necklace",
+    "price": 4500,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-plain-link-chain-necklace-rr7374",
+    "flag": "price_anomaly",
+    "reason": "$4,500 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Enamel Gold Ball Cufflinks",
+    "category": "cufflinks",
+    "price": 4400,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-enamel-gold-ball-cufflinks",
+    "flag": "price_anomaly",
+    "reason": "$4,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Blue Red Enamel Gold Cufflinks",
+    "category": "cufflinks",
+    "price": 4400,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-blue-red-enamel-gold-cufflinks-1",
+    "flag": "price_anomaly",
+    "reason": "$4,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Vintage 1960s David Webb Black Enamel Cufflinks",
+    "category": "cufflinks",
+    "price": 4350,
+    "source": "Eric Originals & Antiques",
+    "url": "https://ericoriginals.com/products/vintage-1960s-david-webb-black-enamel-cufflinks",
+    "flag": "price_anomaly",
+    "reason": "$4,350 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Vintage 18 Karat Yellow Gold Hammered Swirl Ear-Clip Earrings",
+    "category": "earrings",
+    "price": 4250,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-18-karat-yellow-gold-hammered-swirl-ear-clip-earrings",
+    "flag": "price_anomaly",
+    "reason": "$4,250 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Vintage 18 Karat Yellow Gold Bamboo Hoop Ear-Clip Earrings",
+    "category": "earrings",
+    "price": 4250,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-18-karat-yellow-gold-bamboo-hoop-ear-clip-earrings",
+    "flag": "price_anomaly",
+    "reason": "$4,250 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18 Karat Yellow Gold Hoop Ear-Clip Earrings",
+    "category": "earrings",
+    "price": 4150,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-18-karat-yellow-gold-hoop-ear-clip-earrings-winter-squash-vegetable-plant",
+    "flag": "price_anomaly",
+    "reason": "$4,150 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Cultured Pearl Lapis 18 Karat Gold Strand Necklace Circa 1960",
+    "category": "necklace",
+    "price": 3850,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-cultured-pearl-lapis-18-karat-gold-strand-necklace-circa-1960",
+    "flag": "price_anomaly",
+    "reason": "$3,850 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18 Karat Gold Brushed Ear-Clip Earrings",
+    "category": "earrings",
+    "price": 3800,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-18-karat-gold-brushed-ear-clip-earrings-1",
+    "flag": "price_anomaly",
+    "reason": "$3,800 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Kingdom Platinum & 18K Yellow Gold Green Enamel Frog Clip-On Earrings",
+    "category": "earrings",
+    "price": 3700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-kingdom-platinum-18k-yellow-gold-green-enamel-frog-clip-on-earrings-rr4711",
+    "flag": "price_anomaly",
+    "reason": "$3,700 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Tiger Cufflinks",
+    "category": "cufflinks",
+    "price": 3600,
+    "source": "Estate Diamond Jewelry",
+    "url": "https://www.estatediamondjewelry.com/product/cufflinks/",
+    "flag": "price_anomaly",
+    "reason": "$3,600 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Tiger Eye Platinum & 18K Yellow Gold Tiger Eye Station Chain Circa 1970 Necklace",
+    "category": "necklace",
+    "price": 3500,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-tiger-eye-platinum-18k-yellow-gold-tiger-eye-station-chain-circa-1970-necklace-rr4046",
+    "flag": "price_anomaly",
+    "reason": "$3,500 is well below the typical range for \"necklace\" (180 comparable dealer records, median $48,700)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Zebra Button Cuff Links",
+    "category": "bracelet",
+    "price": 3200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-zebra-button-cuff-links-rr8879",
+    "flag": "price_anomaly",
+    "reason": "$3,200 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Black Enamel Lion Head With Ruby Eyes Cuff Links",
+    "category": "bracelet",
+    "price": 3200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-black-enamel-lion-head-with-ruby-eyes-cuff-links-rr7569",
+    "flag": "price_anomaly",
+    "reason": "$3,200 is well below the typical range for \"bracelet\" (273 comparable dealer records, median $42,200)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Simple Clip On Earrings",
+    "category": "earrings",
+    "price": 3200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-simple-clip-on-earrings-rr6920",
+    "flag": "price_anomaly",
+    "reason": "$3,200 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Round Clip Black Enamel Vintage Earrings",
+    "category": "earrings",
+    "price": 3200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-round-clip-black-enamel-vintage-earrings-rr6594",
+    "flag": "price_anomaly",
+    "reason": "$3,200 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 1970's Ruby 18 Karat Yellow Gold Knotted Snake Vintage Band Ring",
+    "category": "ring",
+    "price": 3100,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-1970s-ruby-18-karat-yellow-gold-knotted-snake-vintage-band-ring",
+    "flag": "price_anomaly",
+    "reason": "$3,100 is well below the typical range for \"ring\" (303 comparable dealer records, median $20,000)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Vintage 18 Karat Yellow Gold Ridged Band Ring Circa 1960's",
+    "category": "ring",
+    "price": 3100,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-18-karat-yellow-gold-ridged-band-ring-circa-1960s-metal-fashion",
+    "flag": "price_anomaly",
+    "reason": "$3,100 is well below the typical range for \"ring\" (303 comparable dealer records, median $20,000)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Enamel Gold Cufflinks",
+    "category": "cufflinks",
+    "price": 2900,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-enamel-gold-cufflinks-1",
+    "flag": "price_anomaly",
+    "reason": "$2,900 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Fluted Earrings",
+    "category": "earrings",
+    "price": 1900,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-fluted-earrings-rr6921",
+    "flag": "price_anomaly",
+    "reason": "$1,900 is well below the typical range for \"earrings\" (404 comparable dealer records, median $18,800)"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, Platinum and Diamond Link Bracelet, David Webb",
+    "category": "bracelet",
+    "price": 4375,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-366---gold-platinum-and-diamond-link-bracelet-david-webb/",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold, ruby, and diamond bracelet",
+    "category": "bracelet",
+    "price": 3750,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2021/05/jewels-watches/138",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold, Platinum and Diamond Wristwatch",
+    "category": "other",
+    "price": 3125,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-133---david-webb-gold-platinum-and-diamond-wristwatch/",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold serpent belt buckle",
+    "category": "other",
+    "price": 3000,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2021/10/fall-jewelry/166",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Two gold and enamel snake rings",
+    "category": "other",
+    "price": 2800,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/10/fall-jewels/264",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A gold totem pendant",
+    "category": "necklace",
+    "price": 2500,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2015/12/jewels/214",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold and leather belt",
+    "category": "other",
+    "price": 2400,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/10/fall-jewels/386",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "A gold and onyx pendant",
+    "category": "necklace",
+    "price": 2400,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2015/12/jewels/217",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold earrings",
+    "category": "earrings",
+    "price": 2200,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/10/fall-jewels/305",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "'Flight' diamond and gold necklace",
+    "category": "necklace",
+    "price": 2200,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2021/05/jewels-watches/194",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold ropework earrings",
+    "category": "earrings",
+    "price": 2200,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2020/05/jewels-precious-objects/276",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Hammered gold earrings",
+    "category": "earrings",
+    "price": 2000,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2022/11/jewelry-precious-objects/147",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Tiger's eye and gold ring",
+    "category": "ring",
+    "price": 2000,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2020/07/summer-jewels-watches/198",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Pair of Gold and Enamel Frog Cufflinks",
+    "category": "cufflinks",
+    "price": 2000,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-2001---david-webb-pair-of-gold-and-enamel-frog-cufflinks/",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Nephrite jade and gold frog cufflinks",
+    "category": "cufflinks",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2025/02/jewels-watches-xoxo/116",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Enamel and gold earrings",
+    "category": "earrings",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2024/10/fall-jewels/225",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold ring",
+    "category": "ring",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2024/02/jewels-xoxo/224",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Cultured pearl and gold bracelet",
+    "category": "bracelet",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/10/fall-jewels/304",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gem-set, diamond, and gold pinky ring",
+    "category": "ring",
+    "price": 1900,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/02/jewels-xoxo/113",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Abalone shell and gold earrings",
+    "category": "earrings",
+    "price": 1700,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2023/06/summer-jewels-watches/262",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Gold ring",
+    "category": "ring",
+    "price": 1600,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2025/05/spring-jewels-watches/114",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "Lapis lazuli and gold cufflinks",
+    "category": "cufflinks",
+    "price": 1600,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2025/05/spring-jewels-watches/129",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "David Webb Gold, Platinum and Diamond Ring",
+    "category": "ring",
+    "price": 1536,
+    "source": "Doyle",
+    "url": "https://www.doyle.com/auction/lot/lot-2005---david-webb-gold-platinum-and-diamond-ring/",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "auction",
+    "piece_name": "ring",
+    "category": "ring",
+    "price": 1400,
+    "source": "Rago",
+    "url": "https://www.ragoarts.com/auctions/2005/06/branded-luxury/195",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Gold Platinum Diamond Enamel Pendant Necklace",
+    "category": "necklace",
+    "price": 12000,
+    "source": "Oak Gem",
+    "url": "https://oakgem.com/products/david-webb-gold-platinum-diamond-enamel-pendant-necklace",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Zodiac Kingdom 18K Yellow Gold Aries Pendant",
+    "category": "necklace",
+    "price": 10700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-zodiac-kingdom-18k-yellow-gold-aries-pendant-rr6618",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Square Open Link Nameplate Bracelet",
+    "category": "bracelet",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-square-open-link-nameplate-bracelet-rr7250",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Tiger Eye Star Pendant",
+    "category": "necklace",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-tiger-eye-star-pendant-rr7867",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Diamond Cuff Bracelet",
+    "category": "bracelet",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-diamond-cuff-bracelet-rr7669",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold 1.75cts Diamond Cuff Bracelet",
+    "category": "bracelet",
+    "price": 9700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-1-75cts-diamond-cuff-bracelet-rr7668",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Aries Zodiac Pendant",
+    "category": "necklace",
+    "price": 9200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-aries-zodiac-pendant-rr6776",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Yellow Gold Ruby Eye Ram’s Head Bangle",
+    "category": "bracelet",
+    "price": 9000,
+    "source": "Yafa Signed Jewels",
+    "url": "https://yafasignedjewels.com/products/18k-yellow-gold-ruby-eye-ram-s-head-bangle",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Satin Finish ID Tag Chain Bracelet",
+    "category": "bracelet",
+    "price": 8700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-satin-finish-id-tag-chain-bracelet-rr7294",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Twist Rope Sectional \"Fishscale\" Flexible Bracelet",
+    "category": "bracelet",
+    "price": 8200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-twist-rope-sectional-fishscale-flexible-bracelet-rr6806",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 1960's Vintage Tahitian South Sea Pearl 18 Karat Gold Tri-Gold Necklace",
+    "category": "necklace",
+    "price": 6750,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-1960s-vintage-tahitian-south-sea-pearl-18-karat-gold-tri-gold-necklace",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Pearl Platinum Pearl With A Diamond Clasp Necklace",
+    "category": "necklace",
+    "price": 6700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-pearl-platinum-pearl-with-a-diamond-clasp-necklace-rr2729",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Circa 1970's Platinum & 18K Yellow Gold Ruby, Emerald, Sapphire Earrings",
+    "category": "earrings",
+    "price": 6400,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-circa-1970s-platinum-18k-yellow-gold-ruby-emerald-sapphire-earrings-rr4391",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Diamond Bombe Clip Earrings",
+    "category": "earrings",
+    "price": 6400,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-diamond-bombe-clip-earrings-rr6539",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Hammered Diamond Dome Ring",
+    "category": "ring",
+    "price": 6300,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-hammered-diamond-dome-ring-rr9375",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Classic Rigid Shrimp Style Vintage Earrings",
+    "category": "earrings",
+    "price": 6300,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-classic-rigid-shrimp-style-vintage-earrings-rr7849",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Contemporary 18 Karat Yellow Gold Taurus Zodiac Pendant Necklace",
+    "category": "necklace",
+    "price": 6200,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-contemporary-18-karat-yellow-gold-taurus-zodiac-pendant-necklace",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Double Tip Diamond Nail Ring",
+    "category": "ring",
+    "price": 6100,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-double-tip-diamond-nail-ring-rr6209",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Orange Enamel Clip On Earrings",
+    "category": "earrings",
+    "price": 6100,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-orange-enamel-clip-on-earrings-rr7112",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Money Clip Jewelry",
+    "category": "brooch",
+    "price": 6100,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-money-clip-jewelry-rr7249",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 2.40 CTW Diamond Cultured Pearl Drop Ear-Clip Earrings",
+    "category": "earrings",
+    "price": 6100,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-2-40-ctw-diamond-cultured-pearl-drop-ear-clip-earrings-jewellery-jewelry",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 1960's Sapphire Turquoise 18 Karat Yellow Gold Platinum Vintage Domed Feather Ear-Clip Earrings",
+    "category": "earrings",
+    "price": 5950,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-1960s-sapphire-turquoise-18-karat-yellow-gold-platinum-vintage-domed-feather-ear-clip-earrings",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Frog 18K Yellow Gold Green Enamel Clip On Earrings",
+    "category": "earrings",
+    "price": 5900,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-frog-18k-yellow-gold-green-enamel-clip-on-earrings-j10471",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Enamel Diamond 18 Karat Two-Tone Gold Kingdom Snake Ring",
+    "category": "ring",
+    "price": 5900,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-enamel-diamond-18-karat-two-tone-gold-kingdom-snake-ring-1",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Gap Platinum & 18K Yellow Gold Diamond Statement Ring",
+    "category": "ring",
+    "price": 5800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-gap-platinum-18k-yellow-gold-diamond-statement-ring-rr5568",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Carved Emerald Pave Diamond 18 Karat Gold Bypass Ring",
+    "category": "ring",
+    "price": 5650,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-carved-emerald-pave-diamond-18-karat-gold-bypass-ring-1",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Frog Green Enamel Ruby Eyes Cuff Links",
+    "category": "bracelet",
+    "price": 5300,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-frog-green-enamel-ruby-eyes-cuff-links-rr4499",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Peace Black Enamel And Diamonds Round Pendant Necklace",
+    "category": "necklace",
+    "price": 5200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-peace-black-enamel-and-diamonds-round-pendant-necklace-rr7483",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Bastille Platinum & 18K Yellow Gold Hammered Finish and Diamond Ring",
+    "category": "ring",
+    "price": 5200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-bastille-platinum-18k-yellow-gold-hammered-finish-and-diamond-ring-rr3858",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Leopard Cabochon Emerald Eyes Cuff Links",
+    "category": "bracelet",
+    "price": 4800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-leopard-cabochon-emerald-eyes-cuff-links-rr9344",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Black & Gold in Thunder Bolt Motif Earrings",
+    "category": "earrings",
+    "price": 4800,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-black-gold-in-thunder-bolt-motif-earrings-rr5696",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 1980's Onyx Rock Crystal Quartz Enamel 18 Karat Yellow Gold Bead Strand Vintage Necklace",
+    "category": "necklace",
+    "price": 4800,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-1980s-onyx-rock-crystal-quartz-enamel-18-karat-yellow-gold-bead-strand-vintage-necklace",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Signature Zebra Enamel Round Earrings",
+    "category": "earrings",
+    "price": 4600,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-signature-zebra-enamel-round-earrings-rr6922",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Tiger Brooch",
+    "category": "brooch",
+    "price": 4500,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-tiger-brooch-rr5894",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Plain Link Chain Necklace",
+    "category": "necklace",
+    "price": 4500,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-plain-link-chain-necklace-rr7374",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Cultured Pearl Lapis 18 Karat Gold Strand Necklace Circa 1960",
+    "category": "necklace",
+    "price": 3850,
+    "source": "Wilson's Estate Jewelry",
+    "url": "https://wilsonsestatejewelry.com/products/david-webb-cultured-pearl-lapis-18-karat-gold-strand-necklace-circa-1960",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Kingdom Platinum & 18K Yellow Gold Green Enamel Frog Clip-On Earrings",
+    "category": "earrings",
+    "price": 3700,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-kingdom-platinum-18k-yellow-gold-green-enamel-frog-clip-on-earrings-rr4711",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Tiger Eye Platinum & 18K Yellow Gold Tiger Eye Station Chain Circa 1970 Necklace",
+    "category": "necklace",
+    "price": 3500,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-tiger-eye-platinum-18k-yellow-gold-tiger-eye-station-chain-circa-1970-necklace-rr4046",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb Platinum & 18K Yellow Gold Zebra Button Cuff Links",
+    "category": "bracelet",
+    "price": 3200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-zebra-button-cuff-links-rr8879",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Simple Clip On Earrings",
+    "category": "earrings",
+    "price": 3200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-simple-clip-on-earrings-rr6920",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Round Clip Black Enamel Vintage Earrings",
+    "category": "earrings",
+    "price": 3200,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-round-clip-black-enamel-vintage-earrings-rr6594",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "David Webb 18K Yellow Gold Fluted Earrings",
+    "category": "earrings",
+    "price": 1900,
+    "source": "The Back Vault",
+    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-fluted-earrings-rr6921",
+    "flag": "unverified_authenticity",
+    "reason": "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate"
+  }
+]

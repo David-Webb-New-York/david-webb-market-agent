@@ -92,6 +92,15 @@ Two separate datasets, deliberately not merged into one:
 The GUI (`docs/`) unions both into one browsable table client-side, tagging
 each row `auction` or `dealer` so the distinction stays visible.
 
+A third file, **`output/flagged-listings.json`**, is computed fresh on
+every report run (not a stored dataset — thresholds shift with the current
+price distribution) by `flag-listings.js`: heuristic "worth a second look"
+signals — an implausibly low price for the category, or (only when also
+priced anomalously) no signature/hallmark/certificate mentioned in the
+listing text. These are signals for a human to check, not fraud
+determinations. Surfaced in the weekly report, a Slack line, and a
+"Worth a second look only" filter + badge in the GUI.
+
 ## Data-quality notes
 
 - **Auction hammer prices exclude buyer's premium** — typically +15–26%

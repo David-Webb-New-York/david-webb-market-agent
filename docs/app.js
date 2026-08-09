@@ -19,6 +19,7 @@
     filterStatus: document.getElementById("filter-status"),
     filterSource: document.getElementById("filter-source"),
     filterCategory: document.getElementById("filter-category"),
+    filterFlagged: document.getElementById("filter-flagged"),
     clearFilters: document.getElementById("clear-filters"),
     table: document.getElementById("results-table"),
     body: document.getElementById("results-body"),
@@ -52,7 +53,7 @@
     return r.status === "active" ? "For sale" : "Delisted";
   }
 
-  function normalize(history, dealers) {
+  function normalize(history, dealers, flagsByUrl) {
     const out = [];
     for (const r of history) {
       out.push({
@@ -74,6 +75,7 @@
         listing_url: r.listing_url || "",
         image_url: "",
         notes: r.notes || "",
+        flags: flagsByUrl.get(r.listing_url) || [],
       });
     }
     for (const r of dealers) {
@@ -96,9 +98,20 @@
         listing_url: r.listing_url || "",
         image_url: r.image_url || "",
         notes: r.notes || "",
+        flags: flagsByUrl.get(r.listing_url) || [],
       });
     }
     return out;
+  }
+
+  function buildFlagsByUrl(flagRecords) {
+    const map = new Map();
+    for (const f of flagRecords) {
+      if (!f.url) continue;
+      if (!map.has(f.url)) map.set(f.url, []);
+      map.get(f.url).push(f);
+    }
+    return map;
   }
 
   function numOrNull(v) {
@@ -132,6 +145,10 @@
     return "badge-unknown";
   }
 
+  function flagSummary(flags) {
+    return flags.map((f) => f.reason).join(" — ");
+  }
+
   function escapeHtml(s) {
     return String(s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
@@ -144,12 +161,14 @@
     const status = els.filterStatus.value;
     const source = els.filterSource.value;
     const category = els.filterCategory.value;
+    const flaggedOnly = els.filterFlagged.checked;
 
     state.filtered = state.records.filter((r) => {
       if (type && r.type !== type) return false;
       if (status && r.status !== status) return false;
       if (source && r.source !== source) return false;
       if (category && r.category !== category) return false;
+      if (flaggedOnly && !r.flags.length) return false;
       if (q) {
         const hay = `${r.piece_name} ${r.source} ${r.materials_gemstones} ${r.notes} ${r.lot_number} ${r.sale_name}`.toLowerCase();
         if (!hay.includes(q)) return false;
@@ -224,9 +243,12 @@
         const thumb = r.image_url
           ? `<img class="piece-thumb" src="${escapeHtml(r.image_url)}" alt="" loading="lazy" onerror="this.remove()" />`
           : "";
+        const flagBadge = r.flags.length
+          ? `<span class="flag-badge" title="${escapeHtml(flagSummary(r.flags))}">⚑ Worth a look</span>`
+          : "";
         return `<tr data-idx="${idx}">
           <td>${escapeHtml(r.date || "—")}<div class="type-tag">${r.type === "auction" ? "Auction" : "Dealer"}</div></td>
-          <td><div class="piece-cell">${thumb}<div><span class="piece-name">${escapeHtml(r.piece_name)}</span>${sub ? `<span class="piece-sub">${escapeHtml(sub)}</span>` : ""}</div></div></td>
+          <td><div class="piece-cell">${thumb}<div><span class="piece-name">${escapeHtml(r.piece_name)}</span>${sub ? `<span class="piece-sub">${escapeHtml(sub)}</span>` : ""}${flagBadge}</div></div></td>
           <td>${escapeHtml(r.source)}${r.sale_name ? `<div class="piece-sub">${escapeHtml(r.sale_name)}</div>` : ""}</td>
           <td class="num">${fmtMoney(r.price, r.currency)}</td>
           <td class="num">${fmtEstimate(r)}</td>
@@ -307,8 +329,16 @@
       ["Status", r.status],
       ["Notes", r.notes || "—"],
     ];
+    if (r.flags.length) {
+      fields.splice(2, 0, [
+        "Worth a second look",
+        `<span class="flag-note">Heuristic signal, not a fraud determination.</span><ul class="flag-list">${r.flags
+          .map((f) => `<li>${escapeHtml(f.reason)}</li>`)
+          .join("")}</ul>`,
+      ]);
+    }
     els.modalBody.innerHTML = fields
-      .map(([k, v]) => `<dt>${escapeHtml(k)}</dt><dd>${k === "Listing" ? v : escapeHtml(v)}</dd>`)
+      .map(([k, v]) => `<dt>${escapeHtml(k)}</dt><dd>${k === "Listing" || k === "Worth a second look" ? v : escapeHtml(v)}</dd>`)
       .join("");
     els.modal.hidden = false;
   }
@@ -347,12 +377,14 @@
     els.filterStatus.addEventListener("change", applyFilters);
     els.filterSource.addEventListener("change", applyFilters);
     els.filterCategory.addEventListener("change", applyFilters);
+    els.filterFlagged.addEventListener("change", applyFilters);
     els.clearFilters.addEventListener("click", () => {
       els.search.value = "";
       els.filterType.value = "";
       els.filterStatus.value = "";
       els.filterSource.value = "";
       els.filterCategory.value = "";
+      els.filterFlagged.checked = false;
       applyFilters();
     });
 
@@ -394,12 +426,13 @@
   }
 
   async function boot() {
-    const [history, dealers, generatedAt] = await Promise.all([
+    const [history, dealers, flagRecords, generatedAt] = await Promise.all([
       loadJson("data/auction-history.json"),
       loadJson("data/dealer-listings.json"),
+      loadJson("data/flagged-listings.json"),
       loadGeneratedAt(),
     ]);
-    state.records = normalize(history, dealers);
+    state.records = normalize(history, dealers, buildFlagsByUrl(flagRecords));
     populateFilterOptions();
     wireEvents();
     renderSortIndicators();

@@ -207,6 +207,42 @@ td {
   color: var(--text-muted);
 }
 
+.flag-badge {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: color-mix(in srgb, var(--forsale) 18%, transparent);
+  color: var(--forsale);
+  cursor: help;
+}
+
+.flag-filter-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.flag-note {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.flag-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.flag-list li {
+  margin-bottom: 0.2rem;
+}
+
 a.listing-link {
   color: var(--link);
   text-decoration: none;
