@@ -113,6 +113,20 @@ async function main() {
                 break;
               }
             }
+            // sellerProfile.company is itself another nested object/ref --
+            // one more hop.
+            if (!sellerName && profile.company) {
+              const company = profile.company.__ref ? resolveRecord(blob, profile.company.__ref) : profile.company;
+              if (company) {
+                for (const f of NAME_FIELDS) {
+                  if (typeof company[f] === "string" && company[f]) {
+                    sellerName = company[f];
+                    break;
+                  }
+                }
+                if (!sellerName) console.log(`   [company keys for ${sellerRef}]: ${Object.keys(company).join(", ")}`);
+              }
+            }
             if (!sellerName) console.log(`   [sellerProfile keys for ${sellerRef}]: ${Object.keys(profile).join(", ")}`);
           }
         }
