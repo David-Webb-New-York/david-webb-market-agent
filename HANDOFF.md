@@ -177,6 +177,17 @@ items. This guard lives only in `flag-listings.js`, not in the importers
 or `analyze.js`'s own stats — worth widening if more placeholder prices
 turn up elsewhere.
 
+**Near-term alerts (2026-08-09):** `alert-new-listings.js` +
+`daily-alert.yml` — Tue-Fri only (Monday's already covered by
+`dealer-refresh.yml`/the weekly report), refreshes dealer inventory and
+posts an immediate Slack ping for any listing whose `first_seen` is today
+and whose `asking_price` clears `ALERT_PRICE_THRESHOLD` (default
+$50,000). Deliberately deterministic, no Claude call — this is a same-day
+nudge, not a report, and posts nothing at all if nothing clears the
+threshold (no daily "nothing new" noise). Tested via a synthetic injected
+record, not just unit logic, then confirmed the real store file was
+restored byte-for-byte afterward.
+
 ---
 
 ## 1. What this project is (original framing — see §0 for what's current)
@@ -245,6 +256,8 @@ import-woocommerce.js     # Dealer layer: WooCommerce Store API importer (also c
 import-1stdibs.js         # Dealer layer: 1stDibs multi-seller marketplace search (Browserbase, Relay-store parsing)
 import-dealers.js         # Orchestrator: all three dealer adapters
 dealer-store.js           # Shared dealer-listings load/dedupe/write (first_seen/last_seen/status/image_url)
+flag-listings.js          # "Worth a second look" heuristic flags (price_anomaly, unverified_authenticity)
+alert-new-listings.js     # Near-term Slack alert for notable new dealer listings (daily-alert.yml)
 browserbase.js            # Browserbase + Playwright helper (shared with steel.js via browser-interactions.js)
 steel.js                  # Steel.dev alternative cloud-browser backend (same interface as browserbase.js)
 bb-probe.js               # Probe a URL in Browserbase/Steel; dump embedded state / XHRs
@@ -254,6 +267,7 @@ docs/                     # Static searchable-database GUI (index.html/style.css
   history-refresh.yml     # Mon 8:15am ET: auction-history importers -> commit -> deploy GUI -> (dealer-refresh chains the report)
   dealer-refresh.yml      # Mon 8:30am ET: dealer importers -> commit -> deploy GUI -> waits for history-refresh -> dispatches weekly-report.yml
   weekly-report.yml       # workflow_dispatch only, chained from dealer-refresh.yml: report -> commit -> Slack
+  daily-alert.yml         # Tue-Fri 8am ET: dealer refresh -> commit -> deploy GUI -> alert-new-listings.js
   pages-deploy.yml        # Deploys docs/ (+ latest output/*.json) to GitHub Pages
   market-scan-llm.yml     # workflow_dispatch only: the original agent.js/library.js sweep, optional/manual
 output/

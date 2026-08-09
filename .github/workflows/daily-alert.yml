@@ -1,0 +1,60 @@
+name: Daily New-Listing Alert
+# Near-term complement to the Monday weekly digest: refreshes dealer
+# inventory and posts an IMMEDIATE Slack ping for any notable (>=
+# $50,000 by default) piece that showed up TODAY, so it doesn't sit
+# unnoticed until the weekly report. Quiet by default -- posts nothing if
+# there's nothing new above the threshold.
+#
+# Runs Tuesday-Friday only, not Monday -- dealer-refresh.yml + the weekly
+# report already cover Monday's new listings, so running this too would
+# just be a redundant Browserbase session and a duplicate Slack ping the
+# same morning. Not scheduled on weekends either (lower signal, lower cost).
+on:
+  schedule:
+    - cron: '0 13 * * 2-5'  # 13:00 UTC (8am ET in winter / 9am ET in summer), Tue-Fri
+  workflow_dispatch:
+    inputs:
+      price_threshold:
+        description: 'Alert threshold in USD (default 50000)'
+        required: false
+        default: '50000'
+permissions:
+  contents: write
+  actions: write # to dispatch pages-deploy.yml after committing new data
+jobs:
+  alert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+
+      - name: Refresh dealer listings
+        run: node import-dealers.js
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+
+      - name: Commit results
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "market-agent"
+          git config user.email "agent@davidwebb.local"
+          git add output/
+          git commit -m "Daily dealer listings refresh $(date +%F)" || echo "No changes to commit"
+          git push
+
+      - name: Deploy database GUI
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: gh workflow run pages-deploy.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Alert on notable new listings
+        run: node alert-new-listings.js
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          ALERT_PRICE_THRESHOLD: ${{ github.event.inputs.price_threshold }}
