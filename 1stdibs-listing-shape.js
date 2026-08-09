@@ -117,7 +117,9 @@ async function main() {
             // one more hop.
             if (!sellerName && profile.company) {
               const company = profile.company.__ref ? resolveRecord(blob, profile.company.__ref) : profile.company;
-              if (company) {
+              if (typeof company === "string" && company) {
+                sellerName = company;
+              } else if (company && typeof company === "object") {
                 for (const f of NAME_FIELDS) {
                   if (typeof company[f] === "string" && company[f]) {
                     sellerName = company[f];
