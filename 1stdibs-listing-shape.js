@@ -76,7 +76,8 @@ async function main() {
   console.log(`\nFound ${rawItems.length} real item(s) (schema/query-text false matches filtered out):\n`);
 
   const NAME_FIELDS = ["name", "displayName", "businessName", "storeName", "sellerName", "title", "sellerBusinessName"];
-  const IMAGE_FIELDS = ["path", "url", "image", "src", "imageUrl", "imagePath"];
+  const IMAGE_FIELDS = ["masterOrZoomPath", "smallPath", "path", "url", "image", "src", "imageUrl", "imagePath"];
+  const IMAGE_CDN_BASE = "https://a.1stdibscdn.com";
 
   for (const it of rawItems) {
     const itemKey = Buffer.from(`Item:${it.id}`).toString("base64");
@@ -99,6 +100,22 @@ async function main() {
             break;
           }
         }
+        // No direct name field -- sellerProfile nests it one level deeper,
+        // either as an inline object or another __ref to resolve.
+        if (!sellerName && sellerRecord.sellerProfile) {
+          const profile = sellerRecord.sellerProfile.__ref
+            ? resolveRecord(blob, sellerRecord.sellerProfile.__ref)
+            : sellerRecord.sellerProfile;
+          if (profile) {
+            for (const f of NAME_FIELDS) {
+              if (typeof profile[f] === "string" && profile[f]) {
+                sellerName = profile[f];
+                break;
+              }
+            }
+            if (!sellerName) console.log(`   [sellerProfile keys for ${sellerRef}]: ${Object.keys(profile).join(", ")}`);
+          }
+        }
         if (!sellerName) console.log(`   [seller record keys for ${sellerRef}]: ${Object.keys(sellerRecord).join(", ")}`);
       }
     }
@@ -111,7 +128,7 @@ async function main() {
       if (photoRecord) {
         for (const f of IMAGE_FIELDS) {
           if (typeof photoRecord[f] === "string" && photoRecord[f]) {
-            imageUrl = photoRecord[f];
+            imageUrl = photoRecord[f].startsWith("http") ? photoRecord[f] : `${IMAGE_CDN_BASE}${photoRecord[f]}`;
             break;
           }
         }
