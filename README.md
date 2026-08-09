@@ -33,9 +33,9 @@ trigger any of this manually:
    and Bonhams into `output/david-webb-auction-history.json`.
 2. **`dealer-refresh.yml`** (Monday ~8:30am ET) — pulls current for-sale
    inventory from estate-jeweler sites (Yafa, The Back Vault, Fred Leighton,
-   and a dozen others) into `output/david-webb-dealer-listings.json`. Then it
-   waits for step 1 to actually finish, deploys the refreshed database GUI,
-   and kicks off step 3.
+   and a dozen others) plus the 1stDibs marketplace into
+   `output/david-webb-dealer-listings.json`. Then it waits for step 1 to
+   actually finish, deploys the refreshed database GUI, and kicks off step 3.
 3. **`weekly-report.yml`** — reads both datasets, writes the report, commits
    it, and posts to Slack.
 
@@ -110,14 +110,21 @@ each row `auction` or `dealer` so the distinction stays visible.
   Phillips, Sotheby's, Christie's, Doyle) don't need this and aren't
   filtered — their titles legitimately don't always spell out "David Webb"
   even when the piece is genuine.
+- **1stDibs listings can duplicate a dealer's own-site listing.** A dealer
+  may list the same physical piece both on their own storefront (picked up
+  by the Shopify/WooCommerce adapters) and on 1stDibs (picked up by
+  `import-1stdibs.js`) — there's no reliable way to match those as one
+  piece, so they're kept as separate records. **"Total listings" counts
+  platform presence, not unique physical pieces.**
 
 ## Extending it
 
 - **New auction house or dealer site**: add an adapter file (see
-  `import-rago.js` for the simplest structured example, or
-  `import-shopify.js`/`import-woocommerce.js` for the dealer-layer pattern)
-  exporting `collect(map, opts)`, register it in `import-all.js` or
-  `import-dealers.js`.
+  `import-rago.js` for the simplest structured example,
+  `import-shopify.js`/`import-woocommerce.js` for the dealer-layer pattern
+  against a structured feed, or `import-1stdibs.js` for a JS-rendered
+  marketplace needing Browserbase) exporting `collect(map, opts)`, register
+  it in `import-all.js` or `import-dealers.js`.
 - **GUI changes**: `docs/index.html` / `docs/style.css` / `docs/app.js` —
   plain HTML/CSS/JS, no build step. Redeploys automatically on push via
   `pages-deploy.yml`.

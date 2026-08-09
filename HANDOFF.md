@@ -9,7 +9,7 @@
 
 ---
 
-## 0. Current state (as of 2026-08-08) — READ THIS FIRST
+## 0. Current state (as of 2026-08-09) — READ THIS FIRST
 
 Everything in §1-§9 below was written across several sessions and is a mix
 of still-accurate technical reference and now-stale status. Trust this
@@ -263,6 +263,8 @@ Do **not** force sold lots into the active library; they are different entities.
 | Rago historical import | **85/85 lots** via Inertia `data-page` JSON (free). Committed on PR #7 |
 | Browserbase | Auth works (`bb_` key + project UUID). Paid plan; proxies confirmed working (Bonhams). |
 | Estate-jeweler dealer layer | **1,397 dealer listings** across 16 dealers (Shopify+WooCommerce), verified live (§9 P0) |
+| 1stDibs dealer import | **Real, verified 2026-08-09**: Browserbase-rendered Relay/GraphQL store parsing, **20/20 real listings** on a push-triggered dry-run (not yet committed to `main` — lands on the next scheduled `dealer-refresh.yml` run) — see §0 |
+| The RealReal | Confirmed blocked 2026-08-09 — same Browserbase Enterprise-plan wall as Heritage, and Steel.dev's stealth fallback hits the same DataDome-style block. No remaining lever without a different approach (e.g. captcha-solving proxy) — see §0 |
 | LiveAuctioneers historical import | **Real, verified live**: Browserbase-rendered `window.__data` extraction, confirmed pagination, 93 lots/3 pages in latest run (§9 P1) |
 | Invaluable historical import | **Real, verified live**: free (no Browserbase) Algolia POST replay, 133/133 lots (exact `nbHits` match) (§9 P1) |
 | Sotheby's historical import | **Real, verified live**: free (no Browserbase) Algolia search, **1,000 lots** — largest single source this session, real hammer/sold prices (§9 P1) |
