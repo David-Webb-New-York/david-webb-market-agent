@@ -13,10 +13,12 @@
 const store = require("./dealer-store");
 const shopify = require("./import-shopify");
 const woocommerce = require("./import-woocommerce");
+const firstdibs = require("./import-1stdibs");
 
 const ADAPTERS = [
   { name: "Shopify", platform: shopify },
   { name: "WooCommerce", platform: woocommerce },
+  { name: "1stDibs", platform: firstdibs },
 ];
 
 async function main() {

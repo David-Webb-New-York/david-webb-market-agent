@@ -88,6 +88,35 @@ investigate "irrelevant listings" again, check the record's `source` field
 first — it was 100% attributable to Invaluable last time, and probably
 still narrows fast.
 
+**1stDibs (2026-08-09):** `import-1stdibs.js` added as a third dealer-layer
+adapter alongside Shopify/WooCommerce, registered in `import-dealers.js`.
+1stDibs is a multi-seller marketplace, not a single dealer site — its
+search-results page embeds a Relay/GraphQL normalized data store in an
+inline `<script>` blob (not a separate XHR); real per-item price/name come
+from an `ecommerceTrackingParams` object, and the listing URL/seller name/
+image need further ref-hops into that same flat store (see the importer's
+header comment for the exact key-resolution chain). Needs Browserbase like
+Bonhams/Christie's — 1stDibs renders this client-side. v1 is a single
+search page (~14-20 current listings), no pagination yet.
+**Cross-listing caveat:** a dealer may list the same physical piece both on
+their own site (via the Shopify/WooCommerce adapters) and on 1stDibs. There's
+no reliable way to match those as the same piece (no shared SKU or image-hash
+matching available), so 1stDibs listings are kept as their own distinct
+records rather than merged/deduped against direct-site listings — when the
+resolved seller name matches an existing dealer, they'll naturally group
+together in the GUI, but **"total listings" counts platform presence, not
+unique physical pieces.** Keep this in mind before treating the dealer
+listing count as a piece-inventory count.
+**The RealReal was investigated and is currently a dead end:** blocked by a
+genuine Browserbase account-tier wall (`403 Verified mode is only available
+on the Enterprise plan`) on `advancedStealth`, and Steel.dev's stealth
+fallback gets the same DataDome-style block ("Access to this page has been
+denied" / a "Press & Hold" human-verification page) most runs, occasionally
+a fake 404 instead — both read as active anti-bot blocking, not a fluke.
+Matches the earlier Heritage (ha.com) precedent. Don't re-attempt without a
+different approach (e.g. a captcha-solving proxy service) or explicit
+user direction.
+
 ---
 
 ## 1. What this project is (original framing — see §0 for what's current)
@@ -153,7 +182,8 @@ import-all.js             # Orchestrator: all of the above (+ optional --with-ll
 history-store.js          # Shared auction-history load/dedupe/write
 import-shopify.js         # Dealer layer: Shopify /products.json importer (also collectAll())
 import-woocommerce.js     # Dealer layer: WooCommerce Store API importer (also collectAll())
-import-dealers.js         # Orchestrator: both dealer adapters
+import-1stdibs.js         # Dealer layer: 1stDibs multi-seller marketplace search (Browserbase, Relay-store parsing)
+import-dealers.js         # Orchestrator: all three dealer adapters
 dealer-store.js           # Shared dealer-listings load/dedupe/write (first_seen/last_seen/status/image_url)
 browserbase.js            # Browserbase + Playwright helper (shared with steel.js via browser-interactions.js)
 steel.js                  # Steel.dev alternative cloud-browser backend (same interface as browserbase.js)
