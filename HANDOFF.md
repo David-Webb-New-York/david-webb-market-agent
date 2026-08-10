@@ -302,6 +302,39 @@ be re-verified cheaply and repeatedly via `upcoming-auctions-debug.yml`'s
 `workflow_dispatch` trigger without needing a new commit each time or
 risking a production commit through `dealer-refresh.yml`.
 
+**First scheduled run, launch day (2026-08-10):** the repo's very first
+`schedule`-triggered firing of `history-refresh.yml`/`dealer-refresh.yml`
+(13:15/13:30 UTC) simply never fired — confirmed via the Actions API
+(`event:schedule` returned zero runs for either workflow even 30+ minutes
+past time, with the committed cron syntax itself verified correct). Read
+as a one-off GitHub Actions scheduler quirk on a repo's first-ever cron
+occurrence, not a config bug. Both workflows were dispatched manually as
+a one-time catch-up.
+
+**Real bug found and fixed the same day:** dispatching `history-refresh.yml`
+and `dealer-refresh.yml` close together (as the manual catch-up did)
+exposed a latent race in all three workflows' "commit results" steps —
+each did a bare `git push` with no `git pull` first. `history-refresh.yml`
+finished first (its import had no new records, so it was fast) and pushed
+its commit to `main` while `dealer-refresh.yml`'s ~7-minute Shopify/
+WooCommerce/1stDibs/Sotheby's-Buy-Now import was still running against a
+now-stale local checkout; when it tried to push, `main` had moved and the
+push was rejected as non-fast-forward. Since that step has no
+`continue-on-error`, the job stopped right there — the real,
+successfully-collected dealer data (1448 total listings, 51 new,
+including 20/20 1stDibs and 31/31 Sotheby's Buy Now) was computed but
+never landed on `main`, and the later "wait for history-refresh, then
+dispatch weekly-report.yml" step never ran. **Fixed** by adding
+`git pull --rebase origin main` before `git push` in all three commit
+steps (`history-refresh.yml`, `dealer-refresh.yml`, `weekly-report.yml`)
+— cheap and safe since each workflow's commits only ever touch disjoint
+files (auction-history vs. dealer-listings vs. reports/flags), so a
+rebase never has anything to actually conflict on. This race was
+plausible even under the normal 15-minutes-apart Monday schedule
+whenever `history-refresh.yml` runs faster than usual (e.g. a light week
+with few new auction results) — not unique to the manual catch-up that
+surfaced it.
+
 ---
 
 ## 1. What this project is (original framing — see §0 for what's current)

@@ -34,6 +34,7 @@ jobs:
           git config user.email "agent@davidwebb.local"
           git add output/reports/ output/flagged-listings.json
           git commit -m "Weekly market report $(date +%F)" || echo "No changes to commit"
+          git pull --rebase origin main
           git push
 
       - name: Notify Slack

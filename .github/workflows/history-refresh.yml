@@ -78,6 +78,7 @@ jobs:
           git config user.email "agent@davidwebb.local"
           git add output/
           git commit -m "Auction history refresh $(date +%F)" || echo "No changes to commit"
+          git pull --rebase origin main
           git push
 
       # A commit pushed with the default GITHUB_TOKEN does NOT trigger other
