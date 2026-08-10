@@ -76,55 +76,53 @@ _Implausibly low price for the category — a heuristic signal for a human to ch
 
 ## Executive Summary
 
-This is the **baseline run** of the David Webb secondary-market pipeline. The 3,884 auction records and 1,451 dealer listings reflected in the totals were bulk-loaded during initial backfill, so the raw "new this week" counts for both datasets represent the full historical corpus, not genuine week-over-week market movement. The trend series contains three entries spanning August 7–10, all of which are baseline or near-baseline runs; meaningful week-over-week comparisons will emerge from the next report onward. The reliable market signals this week come from two sources: **19 confirmed auction hammer prices in the past 60 days** (median $32,000, led by a strong Sotheby's session in Hong Kong on June 16–18) and **eight notable new dealer listings** entering the market at asking prices between $240,500 and $410,000. No dealer delistings were recorded in the past 10 days. The overall dealer asking-price median is $25,000, consistent across all three trend-series entries to date.
+This is the **baseline run** of the David Webb secondary-market pipeline, representing the initial backfill of 3,884 auction records and 1,451 active dealer listings sourced across all tracked platforms. Because virtually every record entered the database this week as part of that backfill, the raw "new this week" counts do not reflect genuine week-over-week market movement — they simply reflect the size of the historical dataset now in hand. The trend series contains only baseline-period entries (Aug 7–10), all of which carry the same inflated "new" counts; real week-over-week trend analysis will begin with the next scheduled run. For genuine near-term market signal, this report focuses on (a) the 19 auction sales that closed within the past 60 days and (b) the eight high-value dealer listings that appeared in the tracking system this week alongside the zero delistings recorded in the past 10 days. The overall dealer asking median sits at **$25,000** across 1,451 active listings, while the 60-day auction sale median stands at **$32,000** — a useful baseline spread to track going forward.
 
 ---
 
 ## Recent Auction Activity
 
-**19 sales** recorded in the past 60 days — **median hammer price: $32,000** (excluding buyer's premium).
+**19 lots sold** at auction within the past 60 days (sale dates: June 16–18, 2026), with a **median hammer price of $32,000**. The activity was concentrated in a Sotheby's Hong Kong session, with strong results across bracelets and decorative estate pieces. Note: none of the recent sale records carry a public lot URL in the current dataset.
 
-Sotheby's drove all top recent results, with a cluster of lots in Hong Kong on June 16 and a further session on June 18. Notable sales:
-
-| Piece | House | Date | Hammer |
+| Piece | House | Date | Hammer Price |
 |---|---|---|---|
-| Pair of Colored Stone and Diamond Pendant-Earclips | Sotheby's | 2026-06-18 | $153,600 |
-| Diamond, Colored Diamond, Ruby & Gold 'Double Leopard' Bracelet | Sotheby's | 2026-06-16 | $121,600 |
-| Gold, Emerald, Diamond & Enamel Cuff-Bracelet | Sotheby's | 2026-06-16 | $70,400 |
-| Emerald and Diamond Ring | Sotheby's | 2026-06-16 | $64,000 |
-| Coral, Emerald, Diamond and Enamel Bracelet | Sotheby's | 2026-06-16 | $57,600 |
-| Rubellite, Enamel & Diamond 'Couture' Cuff-Bracelet | Sotheby's | 2026-06-18 | $51,200 |
-| Gold, Enamel, Emerald and Diamond Bracelet | Sotheby's | 2026-06-18 | $40,960 |
-| Gold and Emerald Cuff-Bracelet | Sotheby's | 2026-06-18 | $38,400 |
+| Pair of Colored Stone and Diamond Pendant-Earclips | Sotheby's | Jun 18, 2026 | $153,600 |
+| Diamond, Colored Diamond, Ruby & Gold 'Double Leopard' Bracelet | Sotheby's | Jun 16, 2026 | $121,600 |
+| Gold, Emerald, Diamond & Enamel Cuff-Bracelet | Sotheby's | Jun 16, 2026 | $70,400 |
+| Emerald and Diamond Ring | Sotheby's | Jun 16, 2026 | $64,000 |
+| Coral, Emerald, Diamond and Enamel Bracelet | Sotheby's | Jun 16, 2026 | $57,600 |
+| Rubellite, Enamel & Diamond 'Couture' Cuff-Bracelet | Sotheby's | Jun 18, 2026 | $51,200 |
+| Gold, Enamel, Emerald and Diamond Bracelet | Sotheby's | Jun 18, 2026 | $40,960 |
+| Gold and Emerald Cuff-Bracelet | Sotheby's | Jun 18, 2026 | $38,400 |
 
-*No lot-level URLs were available for these results. Hammer prices exclude buyer's premium.*
+The Sotheby's Hong Kong session was clearly the dominant market event of the window. Bracelets led in volume and top-end results; the 'Double Leopard' bracelet at $121,600 confirms continued collector appetite for Webb's signature animal motifs.
 
 ---
 
 ## Dealer Market This Week
 
-Eight high-value listings were identified as newly on the market. No dealer listings were delisted in the past 10 days (0 delistings recorded).
+**8 new high-value listings** entered the tracking system this week. No dealer delistings were recorded in the past 10 days (recentlyDelisted count: 0), meaning there is no confirmed recent sell-through signal from the estate-dealer channel yet — a baseline condition that future runs will be able to contrast against.
 
-**New listings (selected):**
+### Newly Tracked Listings
 
 | Piece | Dealer | Asking Price |
 |---|---|---|
 | [David Webb Cabochon Emerald and Diamond Bracelet](https://ericoriginals.com/products/david-webb-cabochon-emerald-and-diamond-bracelet) | Eric Originals & Antiques | $410,000 |
-| [Mid-century Diamond Cocktail Ring, David Webb](https://kentshire.com/products/mid-century-diamond-cocktail-ring-david-webb) | Kentshire | $375,000 |
+| [Mid-Century Diamond Cocktail Ring, David Webb](https://kentshire.com/products/mid-century-diamond-cocktail-ring-david-webb) | Kentshire | $375,000 |
 | [Iconic David Webb Necklace](https://www.1stdibs.com/jewelry/necklaces/link-necklaces/iconic-david-webb-necklace/id-j_25653002/) | Joseph Saidian and Sons | $345,000 |
-| [David Webb Jade, Diamond & Blue Enamel Necklace (Platinum & 18K Gold)](https://thebackvault.com/products/david-webb-jade-platinum-18k-yellow-gold-jade-diamond-blue-enamel-necklace-rr8093) | The Back Vault | $289,500 |
-| [David Webb 27 Carat Diamond Emerald Pearl Gold Platinum Panther Bracelet Watch](https://oakgem.com/products/david-webb-27-carat-diamond-emerald-pearl-gold-platinum-panther-bracelet-watch) | Oak Gem | $280,000 |
-| [Vintage 1960s David Webb 48.00 Carat Diamond Necklace](https://ericoriginals.com/products/vintage-1960s-david-webb-48-00-carat-diamond-necklace) | Eric Originals & Antiques | $265,000 |
+| [David Webb Jade, Diamond & Blue Enamel Necklace](https://thebackvault.com/products/david-webb-jade-platinum-18k-yellow-gold-jade-diamond-blue-enamel-necklace-rr8093) | The Back Vault | $289,500 |
+| [David Webb 27-Carat Diamond Emerald Pearl Gold Platinum Panther Bracelet Watch](https://oakgem.com/products/david-webb-27-carat-diamond-emerald-pearl-gold-platinum-panther-bracelet-watch) | Oak Gem | $280,000 |
+| [Vintage 1960s David Webb 48.00-Carat Diamond Necklace](https://ericoriginals.com/products/vintage-1960s-david-webb-48-00-carat-diamond-necklace) | Eric Originals & Antiques | $265,000 |
 | [David Webb Platinum & 18K Gold Carved Coral Bangle Bracelet](https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-carved-coral-bangle-bracelet-rr5117) | The Back Vault | $250,200 |
-| [David Webb Turquoise Platinum Turquoise and Diamond Necklace](https://thebackvault.com/products/david-webb-turquoise-platinum-turquoise-and-diamond-necklace-rr7804) | The Back Vault | $240,500 |
+| [David Webb Turquoise Platinum & Diamond Necklace](https://thebackvault.com/products/david-webb-turquoise-platinum-turquoise-and-diamond-necklace-rr7804) | The Back Vault | $240,500 |
 
-**Recently delisted:** None in the past 10 days.
+The Back Vault is particularly active this week with three major listings. Eric Originals & Antiques leads on asking price with the $410,000 cabochon emerald bracelet.
 
 ---
 
 ## Price Snapshot by Category
 
-### Auction Results (Hammer Prices, All-Time)
+### Auction Results (Hammer Prices — All-Time, 3,884 Records)
 
 | Category | Count | Min | Median | Max |
 |---|---|---|---|---|
@@ -136,7 +134,7 @@ Eight high-value listings were identified as newly on the market. No dealer list
 | Other | 296 | $875 | $14,705 | $447,000 |
 | Cufflinks | 85 | $954 | $2,375 | $5,662 |
 
-### Current Dealer Asking Prices
+### Dealer Asking Prices (Current — 1,451 Active Listings)
 
 | Category | Count | Min | Median | Max |
 |---|---|---|---|---|
@@ -148,27 +146,30 @@ Eight high-value listings were identified as newly on the market. No dealer list
 | Cufflinks | 20 | $2,900 | $6,500 | $14,800 |
 | Other | 6 | $8,500 | $27,000 | $150,000 |
 
-*Overall dealer asking-price median across all categories: **$25,000**.*
+*Notable spread:* Dealer asking medians for bracelets ($42,200) and necklaces ($42,200) run roughly 1.9× and 2.4× their respective auction hammer medians ($22,590 and $17,920) — a typical retail-to-auction spread for signed fine jewelry, though it will be worth tracking directionally over time.
 
 ---
 
 ## All-Time Notable Sales
 
-These benchmark results provide context for current dealer asking prices and collector expectations:
+The following represent the highest confirmed hammer prices in the dataset — useful context for understanding the ceiling of the Webb market.
 
-| Piece | House | Date | Hammer |
+| Piece | House | Date | Price |
 |---|---|---|---|
-| [The Annenberg Diamond — Exceptional Diamond Ring, by David Webb](https://www.christies.com/en/lot/lot-5250229) | Christie's | 2009-10-21 | $7,698,500 |
-| [A Diamond Ring, by David Webb](https://www.christies.com/en/lot/lot-5578141) | Christie's | 2012-06-12 | $1,874,500 |
-| [A Colored Diamond Ring, by David Webb](https://www.christies.com/en/lot/lot-5578014) | Christie's | 2012-06-12 | $1,426,500 |
-| [A Pair of Natural Pearl and Diamond Ear Pendants, by David Webb](https://www.christies.com/en/lot/lot-5754780) | Christie's | 2013-12-10 | $1,265,000 |
-| [A Sapphire and Diamond Bracelet, by David Webb](https://www.christies.com/en/lot/lot-5442124) | Christie's | 2011-05-31 | $959,356 (originally HKD 7,460,000) |
+| [The Annenberg Diamond Ring](https://www.christies.com/en/lot/lot-5250229) | Christie's | Oct 21, 2009 | $7,698,500 |
+| [A Diamond Ring](https://www.christies.com/en/lot/lot-5578141) | Christie's | Jun 12, 2012 | $1,874,500 |
+| [A Colored Diamond Ring](https://www.christies.com/en/lot/lot-5578014) | Christie's | Jun 12, 2012 | $1,426,500 |
+| [A Pair of Natural Pearl and Diamond Ear Pendants](https://www.christies.com/en/lot/lot-5754780) | Christie's | Dec 10, 2013 | $1,265,000 |
+| [A Sapphire and Diamond Bracelet](https://www.christies.com/en/lot/lot-5442124) | Christie's | May 31, 2011 | $959,356 (originally HKD 7,460,000) |
+
+Christie's accounts for all five all-time top hammer prices in the dataset, with rings dominating the apex of the market. The Annenberg Diamond at $7,698,500 remains a significant outlier — the next-highest sale is less than a quarter of that figure.
 
 ---
 
 ## Data-Quality Caveats
 
-- **Auction hammer prices exclude buyer's premium.** The all-in cost to a buyer is typically 20–26% higher depending on the auction house and lot value.
-- **Dealer asking prices are not confirmed sale prices.** They represent current or recently observed list prices and may be subject to negotiation.
-- **"Delisted" status for dealer items means the listing was removed from the tracked platform**, which usually — but not always — indicates a completed sale. Items may also be delisted due to withdrawal, relisting under a new URL, or administrative changes.
-- **This baseline report reflects a bulk data load**, not a single week of market activity. Week-over-week trend analysis will be available from the next report onward.
+- **Auction hammer prices exclude buyer's premium.** Actual buyer cost (including premium) is typically 20–26% higher than the figures shown.
+- **Dealer asking prices are not confirmed sale prices.** They represent current or recent list prices and may be subject to negotiation.
+- **"Delisted" dealer status** means a listing was removed from the tracked platform. This usually — but not always — indicates a sale; items may also be withdrawn, repriced under a new listing, or moved to a different platform.
+- All prices shown are USD-converted figures per the pipeline's currency conversion layer. Where a lot sold in a non-USD currency, the original amount is noted parenthetically.
+- This baseline report covers the full historical backfill; category counts and medians reflect the entire available dataset, not a single market period.
