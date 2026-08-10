@@ -335,6 +335,19 @@ whenever `history-refresh.yml` runs faster than usual (e.g. a light week
 with few new auction results) — not unique to the manual catch-up that
 surfaced it.
 
+**Follow-up bug in the fix itself, same day:** the first re-run with the
+`git pull --rebase origin main` fix above hit a *new* failure —
+`error: cannot pull with rebase: You have unstaged changes.` — thrown
+immediately after a clean `git commit` (literally milliseconds later, far
+too fast for any real concurrent write). This is a known GitHub Actions
+runner quirk: right after `actions/checkout` + commit, git's index cache
+can report a stale/false-positive dirty working tree that a plain
+`git pull --rebase` refuses to touch, even though nothing is actually
+uncommitted. **Fixed** by adding `--autostash`
+(`git pull --rebase --autostash origin main`) in all three workflows,
+which stashes and safely reapplies any working-tree state (real or
+phantom) around the rebase instead of erroring out.
+
 ---
 
 ## 1. What this project is (original framing — see §0 for what's current)
