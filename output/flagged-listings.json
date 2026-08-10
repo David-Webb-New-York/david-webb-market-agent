@@ -3041,6 +3041,16 @@
   },
   {
     "type": "dealer",
+    "piece_name": "David Webb Ribbed Gold Earrings with Diamond Shaped Pattern",
+    "category": "earrings",
+    "price": 6800,
+    "source": "Stella Rubin Jewelry",
+    "url": "https://www.1stdibs.com/jewelry/earrings/lever-back-earrings/david-webb-ribbed-gold-earrings-diamond-shaped-pattern/id-j_24274802/",
+    "flag": "price_anomaly",
+    "reason": "$6,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
     "piece_name": "David Webb 1960's Vintage Tahitian South Sea Pearl 18 Karat Gold Tri-Gold Necklace",
     "category": "necklace",
     "price": 6750,
@@ -3547,7 +3557,7 @@
     "source": "Wilson's Estate Jewelry",
     "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-18-karat-yellow-gold-hammered-swirl-ear-clip-earrings",
     "flag": "price_anomaly",
-    "reason": "$4,250 is well below the typical range for \"earrings\" (416 comparable dealer records, median $18,350)"
+    "reason": "$4,250 is well below the typical range for \"earrings\" (418 comparable dealer records, median $18,100)"
   },
   {
     "type": "dealer",
@@ -3557,7 +3567,7 @@
     "source": "Wilson's Estate Jewelry",
     "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-18-karat-yellow-gold-bamboo-hoop-ear-clip-earrings",
     "flag": "price_anomaly",
-    "reason": "$4,250 is well below the typical range for \"earrings\" (416 comparable dealer records, median $18,350)"
+    "reason": "$4,250 is well below the typical range for \"earrings\" (418 comparable dealer records, median $18,100)"
   },
   {
     "type": "dealer",
@@ -3567,7 +3577,7 @@
     "source": "Wilson's Estate Jewelry",
     "url": "https://wilsonsestatejewelry.com/products/david-webb-18-karat-yellow-gold-hoop-ear-clip-earrings-winter-squash-vegetable-plant",
     "flag": "price_anomaly",
-    "reason": "$4,150 is well below the typical range for \"earrings\" (416 comparable dealer records, median $18,350)"
+    "reason": "$4,150 is well below the typical range for \"earrings\" (418 comparable dealer records, median $18,100)"
   },
   {
     "type": "dealer",
@@ -3587,7 +3597,7 @@
     "source": "Wilson's Estate Jewelry",
     "url": "https://wilsonsestatejewelry.com/products/david-webb-18-karat-gold-brushed-ear-clip-earrings-1",
     "flag": "price_anomaly",
-    "reason": "$3,800 is well below the typical range for \"earrings\" (416 comparable dealer records, median $18,350)"
+    "reason": "$3,800 is well below the typical range for \"earrings\" (418 comparable dealer records, median $18,100)"
   },
   {
     "type": "dealer",
@@ -3597,7 +3607,7 @@
     "source": "The Back Vault",
     "url": "https://thebackvault.com/products/david-webb-kingdom-platinum-18k-yellow-gold-green-enamel-frog-clip-on-earrings-rr4711",
     "flag": "price_anomaly",
-    "reason": "$3,700 is well below the typical range for \"earrings\" (416 comparable dealer records, median $18,350)"
+    "reason": "$3,700 is well below the typical range for \"earrings\" (418 comparable dealer records, median $18,100)"
   },
   {
     "type": "dealer",
@@ -3647,7 +3657,7 @@
     "source": "The Back Vault",
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-simple-clip-on-earrings-rr6920",
     "flag": "price_anomaly",
-    "reason": "$3,200 is well below the typical range for \"earrings\" (416 comparable dealer records, median $18,350)"
+    "reason": "$3,200 is well below the typical range for \"earrings\" (418 comparable dealer records, median $18,100)"
   },
   {
     "type": "dealer",
@@ -3657,7 +3667,7 @@
     "source": "The Back Vault",
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-round-clip-black-enamel-vintage-earrings-rr6594",
     "flag": "price_anomaly",
-    "reason": "$3,200 is well below the typical range for \"earrings\" (416 comparable dealer records, median $18,350)"
+    "reason": "$3,200 is well below the typical range for \"earrings\" (418 comparable dealer records, median $18,100)"
   },
   {
     "type": "dealer",
@@ -3697,7 +3707,7 @@
     "source": "The Back Vault",
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-fluted-earrings-rr6921",
     "flag": "price_anomaly",
-    "reason": "$1,900 is well below the typical range for \"earrings\" (416 comparable dealer records, median $18,350)"
+    "reason": "$1,900 is well below the typical range for \"earrings\" (418 comparable dealer records, median $18,100)"
   },
   {
     "type": "auction",

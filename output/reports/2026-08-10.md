@@ -6,15 +6,15 @@
 |---|---|---|---|---|
 | 2026-08-07 | 3948 | 1397 | 1397 | 3948/1397 |
 | 2026-08-08 | 3948 | 1397 | 1397 | 3948/1397 |
-| 2026-08-10 | 3828 | 1448 | 1448 | 3828/1448 |
+| 2026-08-10 | 3892 | 1451 | 1451 | 3892/1451 |
 
 ```mermaid
 xychart-beta
     title "Dealer inventory tracked (bar = total, line = active)"
     x-axis ["2026-08-07", "2026-08-08", "2026-08-10"]
     y-axis "Listings" 0 --> 1700
-    bar [1397, 1397, 1448]
-    line [1397, 1397, 1448]
+    bar [1397, 1397, 1451]
+    line [1397, 1397, 1451]
 ```
 
 ## Trends by motif & material
@@ -62,7 +62,7 @@ _Tags are keyword-matched from each piece's own listing text against David Webb'
 
 _Heuristic signals for a human to check — not fraud determinations. A flagged piece may well be genuine; these just surface things worth a closer look before relying on the listing._
 
-**Implausibly low price** (370 total)
+**Implausibly low price** (371 total)
 
 - [WEBB, DAVID K. and STEVENS, JOHN M., eds....](https://www.doyle.com/auction/lot/lot-275---webb-david-k-and-stevens-john-m-eds/) — $200 via Doyle. $200 is well below the typical range for "other" (298 comparable auction records, median $15,000).
 - [[ASTRONAUTS] COOPER, L. GORDON., Jr. Autograph...](https://www.doyle.com/auction/lot/lot-6---astronauts-cooper-l-gordon-jr-autograph/) — $281 via Doyle. $281 is well below the typical range for "other" (298 comparable auction records, median $15,000).
@@ -91,109 +91,108 @@ _Heuristic signals for a human to check — not fraud determinations. A flagged 
 
 ## Executive Summary
 
-This is the *baseline run* of the David Webb secondary-market pipeline. The 3,828 auction records and 1,448 dealer listings visible in the totals reflect a full historical backfill, not a single week of organic market activity — so the raw "new this week" counts should be understood in that context. The trend series likewise shows only backfill-era entries (August 7–10); meaningful week-over-week comparisons will begin to accumulate from the next scheduled run onward. What *is* genuine market signal today: 19 auction sales have cleared at the block within the last 60 days, with a median hammer of $32,000, led by a cluster of Sotheby's sales in mid-June 2026; and a cohort of high-value pieces — including a $410,000 cabochon emerald bracelet and a $375,000 diamond cocktail ring — has appeared in dealer inventory this week. No dealer delistings were recorded in the past 10 days, and the overall dealer asking-price median stands at $25,000 across 1,448 active listings. Future reports will surface true week-over-week trends as the pipeline matures.
+This is the **baseline run** of the David Webb secondary-market pipeline. The full historical dataset — 3,892 auction records and 1,451 active dealer listings — was ingested simultaneously on August 10, 2026, so the "new this week" record counts reflect a complete backfill rather than a single week of genuine market activity. Future weekly reports will show true week-over-week changes in inventory, pricing, and sales velocity. The trend series contains three closely-spaced preliminary entries (August 7–10) that are artifacts of the same backfill process; meaningful trend commentary will begin once the pipeline accumulates independent weekly snapshots.
+
+The most reliable market signals available today are: (1) **19 confirmed auction hammer prices** from the past 60 days, with a median of **$32,000**, concentrated in Sotheby's Hong Kong and New York June sales; and (2) **eight high-value dealer listings** freshly appearing in the database this week, topped by a $410,000 cabochon emerald and diamond bracelet. The dealer asking-price median across all 1,451 active listings stands at **$25,000**, running meaningfully above the all-category auction hammer median, consistent with the typical retail-to-auction spread for signed vintage jewelry.
 
 ---
 
 ## Recent Auction Activity
 
-**19 sales** recorded in the last 60 days (auction hammer prices, excluding buyer's premium). **Median: $32,000.**
+**Window:** Last 60 days (from August 10, 2026) | **Sales recorded:** 19 | **Median hammer price:** $32,000
 
-All recent sales below were conducted by **Sotheby's**. No lot-level URLs were available in this data pull.
+Sotheby's dominated this window with a cluster of results from its June 16 and June 18, 2026 sales (Hong Kong and New York). Prices excluded buyer's premium — see data-quality note below.
 
-| Piece | Category | House | Date | Hammer Price |
-|---|---|---|---|---|
-| Pair of Colored Stone and Diamond Pendant-Earclips | Necklace/Earclips | Sotheby's | 2026-06-18 | $153,600 |
-| Diamond, Colored Diamond, Ruby and Gold 'Double Leopard' Bracelet | Bracelet | Sotheby's | 2026-06-16 | $121,600 |
-| Gold, Emerald, Diamond, and Enamel Cuff-Bracelet | Bracelet | Sotheby's | 2026-06-16 | $70,400 |
-| Emerald and Diamond Ring | Ring | Sotheby's | 2026-06-16 | $64,000 |
-| Coral, Emerald, Diamond and Enamel Bracelet | Bracelet | Sotheby's | 2026-06-16 | $57,600 |
-| Rubellite, Enamel, and Diamond 'Couture' Cuff-Bracelet | Bracelet | Sotheby's | 2026-06-18 | $51,200 |
-| Gold, Enamel, Emerald and Diamond Bracelet | Bracelet | Sotheby's | 2026-06-18 | $40,960 |
-| Gold and Emerald Cuff-Bracelet | Bracelet | Sotheby's | 2026-06-18 | $38,400 |
+| Piece | House | Date | Hammer Price |
+|---|---|---|---|
+| Pair of Colored Stone and Diamond Pendant-Earclips | Sotheby's | Jun 18, 2026 | $153,600 |
+| Diamond, Colored Diamond, Ruby & Gold 'Double Leopard' Bracelet | Sotheby's | Jun 16, 2026 | $121,600 |
+| Gold, Emerald, Diamond & Enamel Cuff-Bracelet | Sotheby's | Jun 16, 2026 | $70,400 |
+| Emerald and Diamond Ring | Sotheby's | Jun 16, 2026 | $64,000 |
+| Coral, Emerald, Diamond & Enamel Bracelet | Sotheby's | Jun 16, 2026 | $57,600 |
+| Rubellite, Enamel & Diamond 'Couture' Cuff-Bracelet | Sotheby's | Jun 18, 2026 | $51,200 |
+| Gold, Enamel, Emerald & Diamond Bracelet | Sotheby's | Jun 18, 2026 | $40,960 |
+| Gold and Emerald Cuff-Bracelet | Sotheby's | Jun 18, 2026 | $38,400 |
 
-*Bracelets were the most active category in the recent auction window, with six of the eight notable lots — a pattern consistent with Webb's historic strength in bold cuff and enamel designs.*
+*No URLs are available for these lots in the current dataset.*
+
+The top result — the colored-stone pendant-earclips at **$153,600** — and the 'Double Leopard' bracelet at **$121,600** are both meaningfully above the 60-day median, signaling continued collector appetite for statement animal-motif and polychrome pieces. Bracelets account for five of the eight results listed, reinforcing their position as the highest-volume and highest-value auction category.
 
 ---
 
 ## Dealer Market This Week
 
-**8 notable new listings** entered the market this week (representing the highest-value pieces among the broader inventory load). **0 delistings** were recorded in the past 10 days — no confirmed or probable sales to report from the dealer channel yet.
+**Active listings:** 1,451 | **New this week (backfill):** 1,451 | **Recently delisted (last 10 days):** 0
 
-### Newly Listed — Top Pieces
+Because this is the baseline run, all 1,451 listings appear "new." There are **no delistings** recorded in the past 10 days — either inventory is sticky right now, or pre-pipeline removals are not yet captured. The eight highest-priced listings surfacing in the dataset this week are highlighted below as they represent the top of current asking-price supply:
 
-| Piece | Category | Dealer | Asking Price |
-|---|---|---|---|
-| [David Webb Cabochon Emerald and Diamond Bracelet](https://ericoriginals.com/products/david-webb-cabochon-emerald-and-diamond-bracelet) | Bracelet | Eric Originals & Antiques | $410,000 |
-| [Mid-century Diamond Cocktail Ring, David Webb](https://kentshire.com/products/mid-century-diamond-cocktail-ring-david-webb) | Ring | Kentshire | $375,000 |
-| [Iconic David Webb Necklace](https://www.1stdibs.com/jewelry/necklaces/link-necklaces/iconic-david-webb-necklace/id-j_25653002/) | Necklace | Joseph Saidian and Sons | $345,000 |
-| [David Webb Jade Platinum & 18K Yellow Gold, Diamond, Blue Enamel Necklace](https://thebackvault.com/products/david-webb-jade-platinum-18k-yellow-gold-jade-diamond-blue-enamel-necklace-rr8093) | Necklace | The Back Vault | $289,500 |
-| [David Webb 27 Carat Diamond Emerald Pearl Gold Platinum Panther Bracelet Watch](https://oakgem.com/products/david-webb-27-carat-diamond-emerald-pearl-gold-platinum-panther-bracelet-watch) | Bracelet | Oak Gem | $280,000 |
-| [Vintage 1960s David Webb 48.00 Carat Diamond Necklace](https://ericoriginals.com/products/vintage-1960s-david-webb-48-00-carat-diamond-necklace) | Necklace | Eric Originals & Antiques | $265,000 |
-| [David Webb Platinum & 18K Yellow Gold Carved Coral Bangle Bracelet](https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-carved-coral-bangle-bracelet-rr5117) | Bracelet | The Back Vault | $250,200 |
-| [David Webb Turquoise Platinum Turquoise and Diamond Necklace](https://thebackvault.com/products/david-webb-turquoise-platinum-turquoise-and-diamond-necklace-rr7804) | Necklace | The Back Vault | $240,500 |
+### Newly Catalogued High-Value Listings
 
-### Recently Delisted
+| Piece | Dealer | Asking Price |
+|---|---|---|
+| [David Webb Cabochon Emerald and Diamond Bracelet](https://ericoriginals.com/products/david-webb-cabochon-emerald-and-diamond-bracelet) | Eric Originals & Antiques | $410,000 |
+| [Mid-Century Diamond Cocktail Ring, David Webb](https://kentshire.com/products/mid-century-diamond-cocktail-ring-david-webb) | Kentshire | $375,000 |
+| [Iconic David Webb Necklace](https://www.1stdibs.com/jewelry/necklaces/link-necklaces/iconic-david-webb-necklace/id-j_25653002/) | Joseph Saidian and Sons | $345,000 |
+| [David Webb Jade, Diamond & Blue Enamel Necklace](https://thebackvault.com/products/david-webb-jade-platinum-18k-yellow-gold-jade-diamond-blue-enamel-necklace-rr8093) | The Back Vault | $289,500 |
+| [David Webb 27-Carat Diamond Emerald Pearl Gold Platinum Panther Bracelet Watch](https://oakgem.com/products/david-webb-27-carat-diamond-emerald-pearl-gold-platinum-panther-bracelet-watch) | Oak Gem | $280,000 |
+| [Vintage 1960s David Webb 48.00-Carat Diamond Necklace](https://ericoriginals.com/products/vintage-1960s-david-webb-48-00-carat-diamond-necklace) | Eric Originals & Antiques | $265,000 |
+| [David Webb Platinum & 18K Yellow Gold Carved Coral Bangle Bracelet](https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-carved-coral-bangle-bracelet-rr5117) | The Back Vault | $250,200 |
+| [David Webb Turquoise, Platinum, Turquoise & Diamond Necklace](https://thebackvault.com/products/david-webb-turquoise-platinum-turquoise-and-diamond-necklace-rr7804) | The Back Vault | $240,500 |
 
-No delistings recorded in the past 10 days.
+The Back Vault and Eric Originals & Antiques each contributed multiple top-tier listings, accounting for five of the eight entries above. The Panther Bracelet Watch from Oak Gem at **$280,000** is a particularly rare crossover between jewelry and horology.
 
 ---
 
 ## Price Snapshot by Category
 
-### Auction Results (Hammer Prices, All-Time)
+### Auction Hammer Prices (All-Time, 3,892 Records)
 
 | Category | Count | Min | Median | Max |
 |---|---|---|---|---|
 | Earrings | 709 | $825 | $7,560 | $275,000 |
-| Bracelet | 644 | $822 | $22,500 | $7,460,000¹ |
+| Bracelet | 644 | $822 | $22,500 | $7,460,000 |
 | Necklace | 609 | $375 | $17,920 | $1,265,000 |
 | Ring | 536 | $460 | $8,320 | $7,698,500 |
 | Brooch | 391 | $562 | $11,250 | $343,500 |
-| Other | 298 | $200 | $15,000 | $11,260,000² |
+| Other | 298 | $200 | $15,000 | $11,260,000 |
 | Cufflinks | 85 | $1,134 | $2,350 | $20,160 |
 
-¹ HKD-denominated result converted; see Christie's Hong Kong, May 2011.
-² ITL-denominated result from Christie's Italy, May 1994; USD equivalent at period exchange rates.
-
-### Current Dealer Asking Prices
+### Current Dealer Asking Prices (1,451 Active Listings)
 
 | Category | Count | Min | Median | Max |
 |---|---|---|---|---|
-| Earrings | 416 | $1,900 | $18,350 | $227,500 |
+| Earrings | 418 | $1,900 | $18,100 | $227,500 |
 | Ring | 315 | $3,100 | $20,000 | $375,000 |
 | Bracelet | 290 | $3,200 | $42,200 | $410,000 |
 | Necklace | 212 | $3,500 | $42,200 | $345,000 |
 | Brooch | 121 | $4,500 | $24,500 | $114,400 |
 | Cufflinks | 20 | $2,900 | $6,500 | $14,800 |
-| Other | 5 | $11,950 | $37,500 | $150,000 |
+| Other | 6 | $8,500 | $27,000 | $150,000 |
 
-*Overall dealer asking-price median (all categories): **$25,000.***
-
-*Notable observation: Dealer medians for bracelets ($42,200) and necklaces ($42,200) run roughly 1.9× the corresponding auction medians ($22,500 and $17,920), reflecting the typical retail-to-hammer spread and the higher-condition inventory dealers tend to hold.*
+**Key observation:** Dealer asking medians for bracelets and necklaces ($42,200 each) are roughly **1.9× and 2.4× their respective auction hammer medians** ($22,500 and $17,920). This retail premium is typical for signed estate jewelry but is worth monitoring as auction results firm or soften. Cufflinks are the only category where dealer medians and auction medians are closely aligned ($6,500 vs. $2,350 — still a meaningful spread, but the absolute dollar gap is modest).
 
 ---
 
 ## All-Time Notable Sales
 
-The five highest-value auction results in the dataset provide context for the upper ceiling of the Webb market:
+These benchmark results provide long-term context for the top of the David Webb market:
 
-| Piece | House | Date | Price (Original Currency) |
+| Piece | House | Date | Price |
 |---|---|---|---|
-| [Demi parure: Enamel Frog Brooch & Earrings (18K)](https://www.christies.com/en/lot/lot-2491651) | Christie's (Italy) | 1994-05-26 | ITL 11,260,000 |
-| [The Annenberg Diamond Ring](https://www.christies.com/en/lot/lot-5250229) | Christie's (New York) | 2009-10-21 | $7,698,500 |
-| [Sapphire and Diamond Bracelet](https://www.christies.com/en/lot/lot-5442124) | Christie's (Hong Kong) | 2011-05-31 | HKD 7,460,000 |
-| [Spilla (Ruby, Sapphire, Diamond Brooch, 18K)](https://www.christies.com/en/lot/lot-2493463) | Christie's (Italy) | 1994-12-01 | ITL 4,278,000 |
-| [A Diamond Ring](https://www.christies.com/en/lot/lot-5578141) | Christie's (New York) | 2012-06-12 | $1,874,500 |
+| [Demi-parure: Enamel Frog Brooch & Earrings (18k)](https://www.christies.com/en/lot/lot-2491651) | Christie's | May 26, 1994 | ITL 11,260,000 |
+| [The Annenberg Diamond Ring](https://www.christies.com/en/lot/lot-5250229) | Christie's | Oct 21, 2009 | $7,698,500 |
+| [Sapphire and Diamond Bracelet](https://www.christies.com/en/lot/lot-5442124) | Christie's | May 31, 2011 | HKD 7,460,000 |
+| [Gold Brooch with Rubies, Sapphires & Diamonds (18k)](https://www.christies.com/en/lot/lot-2493463) | Christie's | Dec 1, 1994 | ITL 4,278,000 |
+| [A Diamond Ring](https://www.christies.com/en/lot/lot-5578141) | Christie's | Jun 12, 2012 | $1,874,500 |
 
-*The Annenberg Diamond ($7,698,500, 2009) and the Christie's Hong Kong sapphire-and-diamond bracelet remain the benchmarks for trophy-level Webb in USD and HKD markets respectively. Christie's Italy's 1994 frog demi parure represents the all-time record in the dataset by lot number, though ITL values require period FX conversion for direct USD comparison.*
+Christie's has been the dominant venue for Webb's highest-value results. The Annenberg Diamond Ring at **$7,698,500** (USD) remains the benchmark for rings in the database. Note that the 1994 Italian lira results and the 2011 HKD bracelet result are reported in their original transaction currencies and have not been converted.
 
 ---
 
 ## Data-Quality Caveats
 
-- **Auction hammer prices exclude buyer's premium.** All-in buyer costs (including the auction house premium, typically 20–27% at major houses) will be materially higher than the figures shown.
-- **Dealer asking prices are not confirmed sale prices.** They represent listed retail ask at the time of data collection and may be subject to negotiation or may not result in a transaction at the stated price.
-- **"Delisted" ≠ confirmed sold.** When a dealer listing disappears from inventory, it is recorded as "closed" — which usually, but not always, indicates a sale. Pieces may be withdrawn, transferred to another platform, or relisted under a different description.
-- **Currency heterogeneity.** Several all-time records are denominated in ITL (Italian Lira, pre-Euro) or HKD; these are retained in their original currency in this report and should not be compared directly to USD figures without period-appropriate FX conversion.
-- **Baseline run caveat.** Because this is the first pipeline run, all "new this week" counts reflect the full backfill rather than incremental weekly additions. Trend data will become meaningful starting with the next weekly report.
+- **Auction hammer prices exclude buyer's premium.** The true all-in cost to buyers is typically 20–26% higher than figures shown.
+- **Dealer asking prices are not confirmed sale prices.** They represent what sellers are currently seeking; actual transaction prices may differ substantially.
+- **"Delisted" dealer status** generally indicates a piece sold or was withdrawn, but the pipeline cannot distinguish between these outcomes. Delistings are therefore described as "came off the market" rather than "sold."
+- **Currency heterogeneity in all-time records:** A small number of historic auction results (particularly 1990s Christie's Italy sales) are recorded in original currencies (ITL, HKD) and have not been converted to USD in the statistics above.
+- **Baseline run limitation:** Because all records were ingested simultaneously, week-over-week trend data will not be meaningful until the next independent weekly snapshot is captured.
