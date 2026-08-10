@@ -354,40 +354,19 @@ function renderFlags(flags) {
   // when the source doesn't have one on file.
   const link = (r) => (r.url ? `[${r.piece_name || "(untitled)"}](${r.url})` : r.piece_name || "(untitled) — no link on file for this source");
 
-  const priceFlags = flags
-    .filter((f) => f.flag === "price_anomaly")
-    .sort((a, b) => (a.price || 0) - (b.price || 0))
-    .slice(0, 10);
-  const authFlags = flags
-    .filter((f) => f.flag === "unverified_authenticity")
-    .sort((a, b) => (b.price || 0) - (a.price || 0))
-    .slice(0, 10);
+  const priceFlags = [...flags].sort((a, b) => (a.price || 0) - (b.price || 0)).slice(0, 10);
 
   const lines = [
     "## Worth a second look",
     "",
-    "_Heuristic signals for a human to check — not fraud determinations. A flagged piece may well be genuine; these just surface things worth a closer look before relying on the listing. Click through to validate each one; once checked, it's checked — this list will keep re-surfacing the same items week to week until the underlying price/description changes._",
+    `_Implausibly low price for the category — a heuristic signal for a human to check, not a fraud determination. A flagged piece may well be genuine; this just surfaces things worth a closer look before relying on the listing. Click through to validate each one. (${flags.length} total, showing the ${priceFlags.length} cheapest.)_`,
     "",
   ];
 
-  if (priceFlags.length) {
-    lines.push(`**Implausibly low price** (${flags.filter((f) => f.flag === "price_anomaly").length} total)`, "");
-    for (const f of priceFlags) {
-      lines.push(`- ${link(f)} — ${money(f.price)}${f.native} via ${f.source || "unknown"}. ${f.reason}.`);
-    }
-    lines.push("");
+  for (const f of priceFlags) {
+    lines.push(`- ${link(f)} — ${money(f.price)}${f.native} via ${f.source || "unknown"}. ${f.reason}.`);
   }
-
-  if (authFlags.length) {
-    lines.push(
-      `**Currently for sale, $1,000+, no signature/hallmark/certificate mentioned** (${flags.filter((f) => f.flag === "unverified_authenticity").length} total)`,
-      ""
-    );
-    for (const f of authFlags) {
-      lines.push(`- ${link(f)} — ${money(f.price)}${f.native} via ${f.source || "unknown"}. ${f.reason}.`);
-    }
-    lines.push("");
-  }
+  lines.push("");
 
   return lines.join("\n");
 }
@@ -537,17 +516,16 @@ function buildSlackPayload(date, stats, slackSummary, flags = []) {
     `*CSVs:* <${l.auctionCsv}|Auctions> / <${l.dealerCsv}|Dealers>`,
   ].filter(Boolean);
 
-  const priceFlagCount = flags.filter((f) => f.flag === "price_anomaly").length;
-  const authFlagCount = flags.filter((f) => f.flag === "unverified_authenticity").length;
+  const priceFlagCount = flags.length;
   const flagsBlock =
-    priceFlagCount || authFlagCount
+    priceFlagCount
       ? [
           {
             type: "context",
             elements: [
               {
                 type: "mrkdwn",
-                text: `:mag: *Worth a second look:* ${priceFlagCount} implausibly-cheap price flag(s), ${authFlagCount} no-signature-mentioned flag(s) — see the report for details. Heuristic signals, not fraud determinations.`,
+                text: `:mag: *Worth a second look:* ${priceFlagCount} implausibly-cheap price flag(s) — see the report for details. Heuristic signal, not a fraud determination.`,
               },
             ],
           },
@@ -630,10 +608,7 @@ async function generate() {
   const flags = computeFlags(history, dealers);
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   fs.writeFileSync(FLAGGED_LISTINGS_JSON, JSON.stringify(flags, null, 2) + "\n");
-  console.log(
-    `Flags: ${flags.filter((f) => f.flag === "price_anomaly").length} price anomaly, ` +
-      `${flags.filter((f) => f.flag === "unverified_authenticity").length} unverified authenticity`
-  );
+  console.log(`Flags: ${flags.length} price anomaly`);
 
   console.log(
     `Analyzing ${date}: ${stats.totals.auctionRecords} auction records, ${stats.totals.activeDealerListings} active dealer listings...`

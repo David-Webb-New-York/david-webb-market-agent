@@ -121,14 +121,14 @@ each row `auction` or `dealer` so the distinction stays visible.
 
 A third file, **`output/flagged-listings.json`**, is computed fresh on
 every report run (not a stored dataset — thresholds shift with the current
-price distribution) by `flag-listings.js`: heuristic "worth a second look"
-signals — an implausibly low price for the category, or a currently-for-sale
-dealer listing priced at $1,000+ with no signature/hallmark/certificate
-mentioned in the listing text (past auction results are excluded from the
-second check — nothing to act on there). These are signals for a human to
-check, not fraud determinations. Surfaced in the weekly report (with a link
-back to the source listing whenever one is on file), a Slack line, and a
-"Worth a second look only" filter + badge in the GUI.
+price distribution) by `flag-listings.js`: a heuristic "worth a second
+look" signal for an implausibly low price for the category. This is a
+signal for a human to check, not a fraud determination. Surfaced in the
+weekly report (with a link back to the source listing whenever one is on
+file), a Slack line, and a "Worth a second look only" filter + badge in
+the GUI. (An earlier second flag — no signature/hallmark/certificate
+mentioned in the listing text — was tried and removed 2026-08-10: it
+didn't discriminate genuine listings from anything else, see HANDOFF.md.)
 
 ## Data-quality notes
 

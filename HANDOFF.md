@@ -419,6 +419,24 @@ first real Monday report went out, four issues came back from review:
      this source" instead of silently rendering plain text so the gap is
      visible rather than invisible.
 
+**Follow-up, same day:** once the redesigned authenticity flag (803
+flags) was actually visible, the user's own read on it was that it's
+"probably not useful, since many listings simply don't include that
+note" — matching the ~73% baseline false-positive rate found while
+originally building it (see the 2026-08-09 entry above). Decoupling it
+from price_anomaly didn't fix the underlying problem: a keyword-absence
+check on a short marketing blurb just doesn't discriminate genuine
+listings from anything else, at any price floor tried. **Removed
+entirely** rather than tuned further — `computeFlags()` now returns only
+price_anomaly flags; `unverified_authenticity`, `computeAuthenticityFlags`,
+`AUTH_KEYWORDS`, and `AUTH_MIN_PRICE` are gone from `flag-listings.js`.
+`renderFlags()`/the Slack payload in `analyze.js` simplified to match (one
+flag type, no more "N price flags, M signature flags" split). If an
+authenticity-style signal is wanted again, it needs a materially better
+source than free-text keyword absence — e.g. a structured "certificate/
+provenance" field if any dealer feed ever exposes one — not a lower price
+floor or a smarter regex on the same text.
+
 Also answered (no code changed): **photos in the "Recent Auction
 Activity"/"Dealer Market This Week" report sections** — feasible for the
 dealer side (`image_url` is populated for 1,394/1,397 = 99.8% of dealer

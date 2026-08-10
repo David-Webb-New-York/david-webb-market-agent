@@ -1,41 +1,34 @@
 /**
  * David Webb — listing-quality flags ("worth a second look")
  * -------------------------------------------------------------
- * Two heuristic, best-effort flags computed fresh from the current dataset
- * on every report run (NOT baked into the stored records — the thresholds
- * are relative to the current price distribution, which shifts week to
- * week). Both work off sold_price_usd/asking_price_usd (convert-currency.js's
- * USD-normalized fields), not the raw native-currency price — otherwise a
- * foreign-currency lot (CHF, GBP, EUR, HKD, ITL...) skews the percentile
- * math and can itself look like a false price anomaly.
+ * price_anomaly: the price is implausibly low for a genuine David Webb
+ * piece, computed fresh from the current dataset on every report run (NOT
+ * baked into the stored records — the thresholds are relative to the
+ * current price distribution, which shifts week to week). Works off
+ * sold_price_usd/asking_price_usd (convert-currency.js's USD-normalized
+ * fields), not the raw native-currency price — otherwise a foreign-
+ * currency lot (CHF, GBP, EUR, HKD, ITL...) skews the percentile math and
+ * can itself look like a false price anomaly. Two independent tests,
+ * either one is enough to flag:
+ *   (a) category-relative: below the 15th percentile AND below 25% of
+ *       the median for that category (needs >=12 comparable records —
+ *       skipped for thin categories, not enough signal to judge)
+ *   (b) absolute floor: below the 5th percentile of ALL prices of that
+ *       record type (auction/dealer), regardless of category or sample
+ *       size — catches a piece that's cheap in an absolute sense even
+ *       if it's the only one of its kind on file.
  *
- *   - price_anomaly: the price is implausibly low for a genuine David Webb
- *     piece. Two independent tests, either one is enough to flag:
- *       (a) category-relative: below the 15th percentile AND below 25% of
- *           the median for that category (needs >=12 comparable records —
- *           skipped for thin categories, not enough signal to judge)
- *       (b) absolute floor: below the 5th percentile of ALL prices of that
- *           record type (auction/dealer), regardless of category or sample
- *           size — catches a piece that's cheap in an absolute sense even
- *           if it's the only one of its kind on file.
- *   - unverified_authenticity: a CURRENTLY-FOR-SALE dealer listing (not a
- *     past auction result — you can't act on a completed sale) priced at
- *     $1,000+ (below that, buyers already expect a minor/component piece,
- *     so "no signature mentioned" isn't a meaningful signal) whose own
- *     description text doesn't mention a signature, hallmark, maker's
- *     mark, or certificate. Deliberately NOT compounded with price_anomaly
- *     anymore (an earlier version only flagged already-cheap-looking
- *     pieces, which produced a misleading "cheap AND unverified" framing
- *     for pieces that were, in absolute terms, perfectly normal $5-10K
- *     prices for their category). Only evaluated when there IS description
- *     text to check — several sources (Phillips, 1stDibs, often Doyle)
- *     carry no free-text description at all, and an empty field is absence
- *     of evidence, not evidence of a problem; flagging those would just be
- *     systematic noise (see HANDOFF.md's Invaluable/Rago notes-field
- *     discussion for the same per-source caveat pattern).
+ * This is a SIGNAL FOR A HUMAN TO CHECK, not a fraud determination —
+ * worded that way everywhere it's surfaced (report, Slack, GUI).
  *
- * These are SIGNALS FOR A HUMAN TO CHECK, not fraud determinations —
- * worded that way everywhere they're surfaced (report, Slack, GUI).
+ * A second flag (unverified_authenticity: no signature/hallmark/
+ * certificate mentioned in the listing text) was tried and removed
+ * 2026-08-10. It doesn't discriminate: genuine listings routinely skip
+ * that language in a short marketing blurb regardless of price, so even
+ * gated to active dealer listings $1,000+ it fired on 803 of ~1,382
+ * eligible listings (58%) -- too broad to be "worth a second look" rather
+ * than just background noise. Not worth re-adding without a materially
+ * better signal than a keyword-absence check on free text.
  */
 
 // A real David Webb piece -- even the smallest single cufflink or ring --
@@ -137,47 +130,9 @@ function computePriceFlags(records, priceField, sourceField, typeLabel) {
   return flags;
 }
 
-const AUTH_KEYWORDS = /\b(sign(?:ed|ature)?|hallmark(?:ed)?|stamp(?:ed)?|marked|maker'?s?\s*mark|certificat(?:e|ed|ion)?|provenance)\b/i;
-
-// Below this, a listing is already understood to be a minor/component
-// piece (a single cufflink, a stud, a clasp) where buyers don't expect
-// full provenance language in a short marketing blurb -- "no signature
-// mentioned" isn't a meaningful signal at that price point.
-const AUTH_MIN_PRICE = 1000;
-
-// Only evaluated against CURRENTLY-FOR-SALE dealer listings, not past
-// auction results -- a "no signature mentioned" flag on a completed sale
-// is nothing a human can act on. No longer compounded with price_anomaly
-// (an earlier version required the piece to ALSO look implausibly cheap,
-// which mislabeled perfectly normal $5-10K category prices as "cheap").
-// Confirmed empirically that "doesn't mention a signature" is too weak a
-// signal standalone across ALL prices: a real test run found only ~40% of
-// obviously genuine dealer listings (Yafa, Fred Leighton, etc.) happen to
-// use one of these words in their short marketing blurb, so unfiltered
-// this flagged ~73% of all active dealer inventory -- noise, not signal.
-// The $1,000 floor is the current compromise: it drops the small-piece
-// noise without requiring the price to look anomalous first.
-function computeAuthenticityFlags(records, priceField, sourceField, typeLabel) {
-  const flags = [];
-  for (const r of records) {
-    const price = num(r[priceField]);
-    if (price === null || price < AUTH_MIN_PRICE) continue;
-    const text = (r.notes || "").trim();
-    if (!text) continue; // no description to check -- not evidence either way
-    if (!AUTH_KEYWORDS.test(text)) {
-      flags.push({
-        ...pickFields(r, typeLabel, priceField, sourceField),
-        flag: "unverified_authenticity",
-        reason: "Listing description doesn't mention a signature, hallmark, maker's mark, or certificate",
-      });
-    }
-  }
-  return flags;
-}
-
-// Combine both flag types across both datasets. Returns a flat array, each
-// item tagged with `flag` ("price_anomaly" | "unverified_authenticity") and
-// `type` ("auction" | "dealer") plus enough fields to display standalone.
+// Returns a flat array of price_anomaly flags across both datasets, each
+// tagged with `type` ("auction" | "dealer") plus enough fields to display
+// standalone.
 function computeFlags(history, dealers) {
   const activeDealers = dealers.filter((r) => r.status !== "inactive");
   const soldAuctions = history.filter((r) => num(r.sold_price_usd) !== null);
@@ -185,8 +140,7 @@ function computeFlags(history, dealers) {
   return [
     ...computePriceFlags(soldAuctions, "sold_price_usd", "auction_house", "auction"),
     ...computePriceFlags(activeDealers, "asking_price_usd", "dealer", "dealer"),
-    ...computeAuthenticityFlags(activeDealers, "asking_price_usd", "dealer", "dealer"),
   ];
 }
 
-module.exports = { computeFlags, computePriceFlags, computeAuthenticityFlags, median, percentile };
+module.exports = { computeFlags, computePriceFlags, median, percentile };
