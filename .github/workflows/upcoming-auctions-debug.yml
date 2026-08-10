@@ -4,6 +4,8 @@ on:
     paths:
       - 'upcoming-auctions-probe.js'
       - 'sothebys-buynow-shape.js'
+      - 'test-sothebys-buynow.js'
+      - 'import-sothebys-buynow.js'
       - '.github/workflows/upcoming-auctions-debug.yml'
   workflow_dispatch: {}
 permissions:
@@ -27,6 +29,12 @@ jobs:
       - name: Sotheby's Buy Now / upcoming-lots real field shape
         if: hashFiles('sothebys-buynow-shape.js') != ''
         run: node sothebys-buynow-shape.js
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+      - name: Re-verify import-sothebys-buynow.js in isolation (no output/ writes)
+        if: hashFiles('test-sothebys-buynow.js') != ''
+        run: node test-sothebys-buynow.js
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
