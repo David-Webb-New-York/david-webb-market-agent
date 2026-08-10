@@ -215,10 +215,92 @@ Real example from the live data: Zodiac pieces median $6,875 at auction
 vs. $17,800 in current dealer asking prices; Cuff/Bangle $23,750 vs.
 $37,300 — genuine dealer-markup-over-hammer signal, not noise.
 
-**Upcoming-auctions investigation (started 2026-08-09, per user request to
-scope the major houses first):** not yet resolved — see whatever's most
-recent above this line, or check git log / open threads if this note is
-stale, before assuming it's still unstarted.
+**Upcoming-auctions investigation, resolved (2026-08-09/10):** per the
+user's request to scope the major houses first, probed Christie's,
+Sotheby's, Bonhams, and Phillips for genuine bid-based upcoming/current
+auction lots (as opposed to past/sold results, which is all every
+existing importer captures). Findings, all live-confirmed not guessed:
+- **Christie's**: `is_past_lots=False` on the same `apim.christies.com/
+  search-client` endpoint the sold-lots importer already uses returns a
+  real, well-formed response — just zero current David Webb lots right
+  now. The mechanism works; there's simply nothing live at this moment.
+- **Sotheby's**: no separate bid-lot surface found for "david webb" via
+  the live site search. What that same search DOES return is a real,
+  separate fixed-price **"Buy Now" retail marketplace** — 31-34 items,
+  every one showing a "Buy now" CTA with a set USD price, zero bids/
+  estimates/lot numbers/sale dates. The backing GraphQL query is literally
+  named `retailItemBySlug`. Confirmed and built (see below).
+- **Bonhams**: `import-bonhams.js`'s existing `status:=[NEW]` filter
+  doesn't mean "upcoming" — every document in the index has `status:
+  "NEW"` regardless of sale date (one sample had `auctionStatus:
+  "FINISHED"` from a Nov 2022 sale). The real past/upcoming signal is a
+  different field, `auctionStatus`, which the existing importer doesn't
+  read. Not acted on further (Bonhams currently contributes 0 records to
+  the store anyway) but worth knowing if Bonhams is revisited.
+- **Phillips**: two guessed candidate URLs (`/auctions`, `/jewelry/
+  auctions`) didn't have real lot-level content. Inconclusive, not
+  pursued further given the other three houses gave a clear enough
+  overall answer.
+
+**Bottom line for "upcoming auctions" as the user originally framed
+it: no genuine upcoming bid-based lots exist for David Webb at Christie's
+or Sotheby's right now** (Bonhams/Phillips inconclusive but low-priority
+given 0 current Bonhams records and no auction-history importer exists
+for either as an "upcoming" source). The Sotheby's Buy Now marketplace
+was a real, valuable substitute find instead — captured as a new dealer
+source, `import-sothebys-buynow.js`.
+
+**Sotheby's Buy Now importer (`import-sothebys-buynow.js`, 2026-08-10):**
+five probe rounds total. The first two attempts tried parsing the backing
+GraphQL API (`clientapi.prod.sothelabs.com/graphql`, `retailItemBySlug`)
+directly — a genuine dead end: all 31 XHR calls the page makes carry only
+image-rendition data, zero pricing/title/slug/currency/condition fields
+anywhere, confirmed by keyword-searching every captured response body, not
+by giving up after a partial look. A third round tried DOM-scraping for
+result-card markup; a heuristic bug ("walk up 5 parent levels from any
+element containing 'Buy now' text") grabbed the site's top nav menu
+instead of an actual result card. The importer that shipped instead
+parses the search-results page's own rendered text directly — the "David
+Webb / \<Title\> / Buy now / \<price\> USD" block repeats reliably and was
+confirmed identically across multiple separate probe/verification runs.
+**Known, documented gap** (same practice as `import-sothebys.js`'s own
+historical adapter, which also ships without a confirmed `listing_url`):
+no per-item detail-page URL or image URL was recoverable via any method
+tried, so both are left blank; `dealer-store.js`'s `recordKey()` falls
+back to `dealer+piece_name` for identity, which is stable as long as two
+items never share an exact title. In the GUI, these records show no
+"View original listing" link — that's expected, not a bug.
+
+**Real bug found and fixed during this build:** the first live
+verification run parsed 31 real items but matched 0 — an `isDavidWebb()`
+safety filter (the same defensive pattern used in other importers) was
+checking `it.name` (the item title) for "david webb", but the brand name
+is a separate line the extraction regex anchors on and never captures
+into the title, so titles like "Gold and Enamel Cufflinks" structurally
+never contain it. The regex match already guarantees brand match by
+construction; the filter was redundant and actively wrong, and was
+removed. **Reusable lesson: don't re-check a field for something a
+regex anchor upstream already guarantees is true.**
+
+**Known flakiness:** one verification run (immediately after the above
+fix, via the full `dealer-refresh.yml` dry-run) came back with 0 scanned
+items and no error — no code had changed between that run and the next
+one, which succeeded cleanly, nor the one after that (3 total clean
+successes across the isolated `test-sothebys-buynow.js` driver, described
+below). Read as a one-off Browserbase/proxy hiccup against a live
+third-party site, not a systematic bug — similar in kind to Robinson's
+Jewelers/Schiffman's occasionally hitting transient Shopify 429/500s
+elsewhere in this codebase. Not currently retried automatically; worth
+adding a retry-once-on-empty-result guard if this recurs noticeably once
+the source is live on the weekly schedule.
+
+`test-sothebys-buynow.js` (new, kept — matches the repo's convention of
+keeping investigative/verification tooling around, e.g. the `*-shape.js`
+probe scripts) calls the real `collect()` against a throwaway in-memory
+`Map`, never touching `output/` files, so this importer specifically can
+be re-verified cheaply and repeatedly via `upcoming-auctions-debug.yml`'s
+`workflow_dispatch` trigger without needing a new commit each time or
+risking a production commit through `dealer-refresh.yml`.
 
 ---
 
@@ -286,7 +368,8 @@ history-store.js          # Shared auction-history load/dedupe/write
 import-shopify.js         # Dealer layer: Shopify /products.json importer (also collectAll())
 import-woocommerce.js     # Dealer layer: WooCommerce Store API importer (also collectAll())
 import-1stdibs.js         # Dealer layer: 1stDibs multi-seller marketplace search (Browserbase, Relay-store parsing)
-import-dealers.js         # Orchestrator: all three dealer adapters
+import-sothebys-buynow.js # Dealer layer: Sotheby's fixed-price "Buy Now" marketplace (Browserbase, page-text parsing)
+import-dealers.js         # Orchestrator: all four dealer adapters
 dealer-store.js           # Shared dealer-listings load/dedupe/write (first_seen/last_seen/status/image_url)
 flag-listings.js          # "Worth a second look" heuristic flags (price_anomaly, unverified_authenticity)
 alert-new-listings.js     # Near-term Slack alert for notable new dealer listings (daily-alert.yml)
@@ -371,6 +454,7 @@ Do **not** force sold lots into the active library; they are different entities.
 | Estate-jeweler dealer layer | **1,397 dealer listings** across 16 dealers (Shopify+WooCommerce), verified live (§9 P0) |
 | 1stDibs dealer import | **Real, verified 2026-08-09**: Browserbase-rendered Relay/GraphQL store parsing, **20/20 real listings** on a push-triggered dry-run (not yet committed to `main` — lands on the next scheduled `dealer-refresh.yml` run) — see §0 |
 | The RealReal | Confirmed blocked 2026-08-09 — same Browserbase Enterprise-plan wall as Heritage, and Steel.dev's stealth fallback hits the same DataDome-style block. No remaining lever without a different approach (e.g. captcha-solving proxy) — see §0 |
+| Sotheby's Buy Now dealer import | **Real, verified 2026-08-10**: page-text parsing (GraphQL API approach hit a real dead end — no pricing data in 31 captured calls), **31/31 real listings** confirmed across 3 consecutive clean runs after a real filter bug was found and fixed — see §0. Christie's/Sotheby's confirmed to have zero genuine upcoming bid-lots for David Webb right now — see §0 |
 | LiveAuctioneers historical import | **Real, verified live**: Browserbase-rendered `window.__data` extraction, confirmed pagination, 93 lots/3 pages in latest run (§9 P1) |
 | Invaluable historical import | **Real, verified live**: free (no Browserbase) Algolia POST replay, 133/133 lots (exact `nbHits` match) (§9 P1) |
 | Sotheby's historical import | **Real, verified live**: free (no Browserbase) Algolia search, **1,000 lots** — largest single source this session, real hammer/sold prices (§9 P1) |

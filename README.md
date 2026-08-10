@@ -33,9 +33,10 @@ trigger any of this manually:
    and Bonhams into `output/david-webb-auction-history.json`.
 2. **`dealer-refresh.yml`** (Monday ~8:30am ET) — pulls current for-sale
    inventory from estate-jeweler sites (Yafa, The Back Vault, Fred Leighton,
-   and a dozen others) plus the 1stDibs marketplace into
-   `output/david-webb-dealer-listings.json`. Then it waits for step 1 to
-   actually finish, deploys the refreshed database GUI, and kicks off step 3.
+   and a dozen others) plus the 1stDibs and Sotheby's Buy Now marketplaces
+   into `output/david-webb-dealer-listings.json`. Then it waits for step 1
+   to actually finish, deploys the refreshed database GUI, and kicks off
+   step 3.
 3. **`weekly-report.yml`** — reads both datasets, writes the report, commits
    it, and posts to Slack.
 
@@ -142,6 +143,14 @@ determinations. Surfaced in the weekly report, a Slack line, and a
   `import-1stdibs.js`) — there's no reliable way to match those as one
   piece, so they're kept as separate records. **"Total listings" counts
   platform presence, not unique physical pieces.**
+- **Sotheby's Buy Now listings have no confirmed listing URL.** Live
+  investigation across five probe rounds couldn't recover a working
+  per-item detail-page URL (the site's backing API carries no pricing/URL
+  data; DOM scraping for it also failed) — these records show no "View
+  original listing" link in the GUI. That's expected, not a bug. This
+  source is Sotheby's fixed-price retail marketplace, not bid-based
+  auction lots — genuine *upcoming* auction lots were confirmed absent
+  for David Webb at both Christie's and Sotheby's as of this writing.
 
 ## Extending it
 
