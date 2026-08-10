@@ -54,10 +54,6 @@ function inferEra(text) {
   return m ? m[0].trim() : "";
 }
 
-function isDavidWebb(name) {
-  return /david\s*webb/i.test(name || "");
-}
-
 // Parses the "David Webb\n\n<Title>\n\nBuy now\n\n<price> USD" repeating
 // block confirmed identically across two separate live probe rounds
 // against the real, rendered search-results page text.
@@ -114,8 +110,15 @@ async function collect(map, { today, searchUrl = SEARCH_URL } = {}) {
 
   const items = await fetchListings(searchUrl);
   const seen = items.length;
+  // No separate isDavidWebb() filter here (unlike the other dealer
+  // adapters): parseResults()'s regex anchors on the literal "David Webb"
+  // brand line, which precedes and is NOT part of the captured title --
+  // so every item that survives the regex is already brand-matched by
+  // construction. Filtering it.name against isDavidWebb() would always
+  // fail (confirmed the hard way: a live run parsed 31 real items and
+  // matched 0, since titles like "Gold and Enamel Cufflinks" never repeat
+  // the brand name themselves) and silently drop every real item.
   for (const it of items) {
-    if (!isDavidWebb(it.name)) continue;
     matched++;
     const record = mapItem(it);
     const key = store.recordKey(record);
