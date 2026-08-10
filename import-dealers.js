@@ -14,11 +14,13 @@ const store = require("./dealer-store");
 const shopify = require("./import-shopify");
 const woocommerce = require("./import-woocommerce");
 const firstdibs = require("./import-1stdibs");
+const sothebysBuyNow = require("./import-sothebys-buynow");
 
 const ADAPTERS = [
   { name: "Shopify", platform: shopify },
   { name: "WooCommerce", platform: woocommerce },
   { name: "1stDibs", platform: firstdibs },
+  { name: "Sotheby's Buy Now", platform: sothebysBuyNow },
 ];
 
 async function main() {
