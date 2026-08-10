@@ -516,6 +516,20 @@ function buildSlackPayload(date, stats, slackSummary, flags = []) {
     `*CSVs:* <${l.auctionCsv}|Auctions> / <${l.dealerCsv}|Dealers>`,
   ].filter(Boolean);
 
+  // Optional one-off banner for re-posting a corrected report the same
+  // day an earlier post already went out with known-bad data (e.g. a
+  // delayed cron firing mid-fix) -- set via the SUPERSEDES_NOTE env var,
+  // wired to weekly-report.yml's `supersedes_note` workflow_dispatch input.
+  const supersedesNote = (process.env.SUPERSEDES_NOTE || "").trim();
+  const supersedesBlock = supersedesNote
+    ? [
+        {
+          type: "section",
+          text: { type: "mrkdwn", text: `:warning: *${supersedesNote}*` },
+        },
+      ]
+    : [];
+
   const priceFlagCount = flags.length;
   const flagsBlock =
     priceFlagCount
@@ -539,6 +553,7 @@ function buildSlackPayload(date, stats, slackSummary, flags = []) {
         type: "header",
         text: { type: "plain_text", text: `David Webb Secondary Market — ${date}`, emoji: true },
       },
+      ...supersedesBlock,
       {
         type: "section",
         text: {

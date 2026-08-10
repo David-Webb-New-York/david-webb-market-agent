@@ -14,6 +14,10 @@ on:
         description: 'Regenerate the report/flags without posting to Slack (for reviewing a fix before it goes out)'
         type: boolean
         default: false
+      supersedes_note:
+        description: 'Optional banner shown at the top of the Slack post, e.g. to flag that this corrects an earlier post the same day'
+        type: string
+        default: ''
 permissions:
   contents: write
 jobs:
@@ -32,6 +36,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           REPORT_DATABASE_URL: ${{ vars.REPORT_DATABASE_URL }}
+          SUPERSEDES_NOTE: ${{ github.event_name == 'workflow_dispatch' && inputs.supersedes_note || '' }}
 
       - name: Commit report
         run: |
