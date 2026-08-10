@@ -9,7 +9,7 @@
 
 ---
 
-## 0. Current state (as of 2026-08-09) — READ THIS FIRST
+## 0. Current state (as of 2026-08-10) — READ THIS FIRST
 
 Everything in §1-§9 below was written across several sessions and is a mix
 of still-accurate technical reference and now-stale status. Trust this
@@ -347,6 +347,89 @@ uncommitted. **Fixed** by adding `--autostash`
 (`git pull --rebase --autostash origin main`) in all three workflows,
 which stashes and safely reapplies any working-tree state (real or
 phantom) around the rebase instead of erroring out.
+
+**Currency conversion, report-quality fixes (2026-08-10):** after the
+first real Monday report went out, four issues came back from review:
+
+1. **Foreign-currency prices were treated as USD, silently corrupting
+   stats.** ~12% of auction-history records settle in CHF/GBP/EUR/HKD/ITL
+   (Christie's/Sotheby's international sale rooms) — `sold_price` stored
+   the raw native-currency number with `currency_note` alongside it, but
+   every stat/flag/GUI-sort downstream just used `sold_price` directly as
+   if it were already USD. Concretely: a 1994 Rome sale of 11,260,000 ITL
+   (really ~$7,000) was showing as the single highest-priced "sale" on
+   file, and a 7,460,000 HKD lot (really ~$959K) was inflating the
+   all-time-sales ranking ~8x. **Fixed** with a new `convert-currency.js`
+   (hand-compiled annual-average FX table — live lookups aren't reachable
+   from this environment's network egress allowlist, so this is
+   order-of-magnitude-accurate, not settlement-precise, and says so in its
+   own header comment) plus a new `sold_price_usd`/`asking_price_usd`
+   field, computed centrally in `history-store.js`/`dealer-store.js`'s
+   `upsert()` (same "derive once, in one place" pattern as `tags` —
+   see the cufflink/category bug above for why that pattern exists).
+   Every stat, flag, and the GUI's sort-by-price now use the USD field;
+   the original native amount is preserved and footnoted (e.g.
+   "$16,700 (originally CHF 15,000)") everywhere a price is shown, so
+   clicking through to the source site isn't confusing.
+2. **Doyle's `listing_url` was broken for every record.** The importer
+   stripped the query string (`?lot=<id>&so=4&st=...`) off the confirmed-
+   working href before storing it, apparently never actually testing
+   whether the slug-only path resolves on its own — it doesn't. Confirmed
+   directly by the user clicking several and getting nothing. **Fixed** in
+   `import-doyle.js` by keeping the full href as captured. The ~1,150
+   already-committed Doyle records still have the broken slug-only URL
+   until the importer re-runs live (this environment's network egress
+   can't reach doyle.com to verify/backfill locally) — corrected on the
+   next real `history-refresh.yml` run, since `normalizeUrl()` ignores the
+   query string for identity purposes, so re-upserting a corrected URL
+   updates the existing record in place rather than duplicating it.
+3. **A related, previously-masked bug surfaced while testing the above:**
+   8 confirmed non-jewelry "David Webb" homonym-noise records (astronaut
+   autographs, Magnum photobook lots, a book citing "WEBB, DAVID K." as
+   co-editor, a "Spider's Webb" brooch by the unrelated jeweler David
+   Andersen of Norway — see the "Non-jewelry noise" entry above) had
+   silently come back. They'd been removed once already (2026-08-09) as a
+   one-off manual JSON edit, which doesn't survive a fresh re-scrape —
+   today's several history-refresh.yml re-runs picked every one of them
+   back up. **Fixed properly this time** with a new `excluded-listings.js`
+   — a permanent URL blocklist checked inside `history-store.js`'s
+   `upsert()` (refuses to add, and actively purges if already present) —
+   instead of a one-off deletion that quietly erodes on the next import.
+4. **The "worth a second look" report section had two design problems,**
+   both from user review of the first real report:
+   - The authenticity flag was labeled "cheap AND no signature mentioned,"
+     but a $5-10K price is completely normal for these categories — the
+     "cheap" framing was misleading even when the underlying compound
+     signal (already price-anomaly-flagged AND no verification language)
+     was doing something reasonable. **Redesigned**: no longer compounded
+     with price_anomaly at all; now applies to any CURRENTLY-FOR-SALE
+     dealer listing (never a past auction result — nothing to act on
+     there) priced at $1,000+ (below that, a listing is presumed to be a
+     minor/component piece where sparse language is normal). This raised
+     the flag count substantially (66 → 803) since it's no longer gated on
+     looking cheap first — reported honestly rather than quietly narrowed
+     back down; the report/GUI still cap the *displayed* list, so this
+     is a bigger validate-once backlog, not a noisier top-10.
+   - Flagged items didn't reliably link back to the source for validation
+     — really just symptom #2 above (Doyle links being broken) plus a few
+     sources (old `import-sothebys.js`, Bonhams, Invaluable) that have
+     never captured a `listing_url` at all (documented gap, not new).
+     `renderFlags()` in `analyze.js` already builds a Markdown link when a
+     URL is present; now falls back to an explicit "no link on file for
+     this source" instead of silently rendering plain text so the gap is
+     visible rather than invisible.
+
+Also answered (no code changed): **photos in the "Recent Auction
+Activity"/"Dealer Market This Week" report sections** — feasible for the
+dealer side (`image_url` is populated for 1,394/1,397 = 99.8% of dealer
+records already) but NOT currently feasible for auction records (zero of
+the 8 auction-house importers capture an image URL at all; adding it would
+be new per-source scraping work, not a quick add).
+
+`weekly-report.yml` gained a `skip_slack` `workflow_dispatch` input
+(regenerate the report/flags, commit them, but skip the Slack post) — for
+reviewing a fix like this one before it goes out to the team a second time
+in one day.
 
 ---
 

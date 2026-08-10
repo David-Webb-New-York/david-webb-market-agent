@@ -68,7 +68,9 @@
         sale_name: r.sale_name || "",
         lot_number: r.lot_number || "",
         price_type: r.price_type || "",
-        price: numOrNull(r.sold_price),
+        price: numOrNull(r.sold_price_usd),
+        native_amount: isForeignCurrency(r.currency_note) ? numOrNull(r.sold_price) : null,
+        native_currency: isForeignCurrency(r.currency_note) ? r.currency_note : "",
         estimate_low: numOrNull(r.estimate_low),
         estimate_high: numOrNull(r.estimate_high),
         currency: r.currency_note || "USD",
@@ -92,7 +94,9 @@
         sale_name: "",
         lot_number: r.sku || "",
         price_type: r.price_type || "asking",
-        price: numOrNull(r.asking_price),
+        price: numOrNull(r.asking_price_usd),
+        native_amount: isForeignCurrency(r.currency_note) ? numOrNull(r.asking_price) : null,
+        native_currency: isForeignCurrency(r.currency_note) ? r.currency_note : "",
         estimate_low: null,
         estimate_high: null,
         currency: r.currency_note || "USD",
@@ -129,6 +133,11 @@
     return Number.isFinite(n) && n > 0 ? n : null;
   }
 
+  function isForeignCurrency(currency) {
+    const c = String(currency || "").toUpperCase().trim();
+    return Boolean(c) && c !== "USD";
+  }
+
   // --- Formatting --------------------------------------------------------
 
   function fmtMoney(n, currency) {
@@ -138,6 +147,17 @@
     } catch (_) {
       return "$" + n.toLocaleString();
     }
+  }
+
+  // `r.price` is always the USD-converted figure (from convert-currency.js,
+  // via history-store.js/dealer-store.js's sold_price_usd/asking_price_usd)
+  // -- that's what sorting/filtering use. When the piece's native currency
+  // wasn't USD, footnote the original amount so it's clear at a glance why
+  // the number here might not match what the source site shows.
+  function fmtMoneyWithNative(r) {
+    const usd = fmtMoney(r.price);
+    if (!r.native_currency) return usd;
+    return `${usd} <span class="native-note">(${fmtMoney(r.native_amount, r.native_currency)})</span>`;
   }
 
   function fmtEstimate(r) {
@@ -262,7 +282,7 @@
           <td>${escapeHtml(r.date || "—")}<div class="type-tag">${r.type === "auction" ? "Auction" : "Dealer"}</div></td>
           <td><div class="piece-cell">${thumb}<div><span class="piece-name">${escapeHtml(r.piece_name)}</span>${sub ? `<span class="piece-sub">${escapeHtml(sub)}</span>` : ""}${flagBadge}</div></div></td>
           <td>${escapeHtml(r.source)}${r.sale_name ? `<div class="piece-sub">${escapeHtml(r.sale_name)}</div>` : ""}</td>
-          <td class="num">${fmtMoney(r.price, r.currency)}</td>
+          <td class="num">${fmtMoneyWithNative(r)}</td>
           <td class="num">${fmtEstimate(r)}</td>
           <td><span class="badge ${badgeClass(r.status)}">${escapeHtml(r.status)}</span></td>
           <td>${link}</td>
@@ -337,7 +357,7 @@
       ["Materials", r.materials_gemstones || "—"],
       ["Era / year", r.era_or_year || "—"],
       ["Price type", r.price_type || "—"],
-      ["Price", fmtMoney(r.price, r.currency)],
+      ["Price", fmtMoneyWithNative(r)],
       ["Estimate", fmtEstimate(r)],
       ["Status", r.status],
       ["Notes", r.notes || "—"],
@@ -350,8 +370,9 @@
           .join("")}</ul>`,
       ]);
     }
+    const rawHtmlFields = new Set(["Listing", "Worth a second look", "Price"]);
     els.modalBody.innerHTML = fields
-      .map(([k, v]) => `<dt>${escapeHtml(k)}</dt><dd>${k === "Listing" || k === "Worth a second look" ? v : escapeHtml(v)}</dd>`)
+      .map(([k, v]) => `<dt>${escapeHtml(k)}</dt><dd>${rawHtmlFields.has(k) ? v : escapeHtml(v)}</dd>`)
       .join("");
     els.modal.hidden = false;
   }

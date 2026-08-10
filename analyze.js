@@ -148,14 +148,26 @@ function byTagStats(records, priceField) {
     .sort((a, b) => b.count - a.count);
 }
 
+// When the record's native currency wasn't USD, surface the original
+// figure too -- `price` below is already the accurate USD-converted
+// number (see convert-currency.js), this is just a footnote so the report
+// can say "$16,700 (originally CHF 15,000)" instead of silently hiding
+// that a conversion happened.
+function nativeAmount(r, nativePriceField) {
+  const cur = String(r.currency_note || "").toUpperCase().trim();
+  const amount = Number(r[nativePriceField]);
+  if (!cur || cur === "USD" || !Number.isFinite(amount) || amount <= 0) return null;
+  return { amount: Math.round(amount), currency: cur };
+}
+
 function pickAuctionFields(r) {
   return {
     piece: r.piece_name,
     category: r.category,
     house: r.auction_house,
     sale_date: r.sale_date,
-    price: num(r.sold_price),
-    currency: r.currency_note || "",
+    price: num(r.sold_price_usd),
+    native: nativeAmount(r, "sold_price"),
     url: r.listing_url,
   };
 }
@@ -165,8 +177,8 @@ function pickDealerFields(r) {
     piece: r.piece_name,
     category: r.category,
     dealer: r.dealer,
-    price: num(r.asking_price),
-    currency: r.currency_note || "",
+    price: num(r.asking_price_usd),
+    native: nativeAmount(r, "asking_price"),
     url: r.listing_url,
     first_seen: r.first_seen,
     last_seen: r.last_seen,
@@ -185,22 +197,22 @@ function computeStats(history, dealers, today) {
     (r) => r.status === "inactive" && (r.last_seen || "") >= delistWindow
   );
 
-  const soldRecords = history.filter((r) => num(r.sold_price) !== null);
+  const soldRecords = history.filter((r) => num(r.sold_price_usd) !== null);
   const recentSales = soldRecords
     .filter((r) => (r.sale_date || "") >= recentSaleWindow)
     .sort((a, b) => (b.sale_date || "").localeCompare(a.sale_date || ""));
   const topRecentSales = [...recentSales]
-    .sort((a, b) => num(b.sold_price) - num(a.sold_price))
+    .sort((a, b) => num(b.sold_price_usd) - num(a.sold_price_usd))
     .slice(0, 8)
     .map(pickAuctionFields);
   const topSalesEver = [...soldRecords]
-    .sort((a, b) => num(b.sold_price) - num(a.sold_price))
+    .sort((a, b) => num(b.sold_price_usd) - num(a.sold_price_usd))
     .slice(0, 5)
     .map(pickAuctionFields);
 
   const topNewListings = [...newDealerListings]
-    .filter((r) => num(r.asking_price) !== null)
-    .sort((a, b) => num(b.asking_price) - num(a.asking_price))
+    .filter((r) => num(r.asking_price_usd) !== null)
+    .sort((a, b) => num(b.asking_price_usd) - num(a.asking_price_usd))
     .slice(0, 8)
     .map(pickDealerFields);
   const delistedSample = recentlyDelisted.slice(0, 8).map(pickDealerFields);
@@ -222,7 +234,7 @@ function computeStats(history, dealers, today) {
     recentSales: {
       windowDays: 60,
       count: recentSales.length,
-      median: median(recentSales.map((r) => num(r.sold_price)).filter((n) => n !== null)),
+      median: median(recentSales.map((r) => num(r.sold_price_usd)).filter((n) => n !== null)),
       top: topRecentSales,
     },
     recentlyDelisted: {
@@ -231,12 +243,12 @@ function computeStats(history, dealers, today) {
       sample: delistedSample,
     },
     topSalesEver,
-    auctionByCategory: byCategoryStats(soldRecords, "sold_price"),
-    dealerByCategory: byCategoryStats(activeDealerListings, "asking_price"),
-    auctionByTag: byTagStats(soldRecords, "sold_price").filter((t) => t.count >= 5),
-    dealerByTag: byTagStats(activeDealerListings, "asking_price").filter((t) => t.count >= 5),
+    auctionByCategory: byCategoryStats(soldRecords, "sold_price_usd"),
+    dealerByCategory: byCategoryStats(activeDealerListings, "asking_price_usd"),
+    auctionByTag: byTagStats(soldRecords, "sold_price_usd").filter((t) => t.count >= 5),
+    dealerByTag: byTagStats(activeDealerListings, "asking_price_usd").filter((t) => t.count >= 5),
     dealerAskingMedian: median(
-      activeDealerListings.map((r) => num(r.asking_price)).filter((n) => n !== null)
+      activeDealerListings.map((r) => num(r.asking_price_usd)).filter((n) => n !== null)
     ),
   };
 }
@@ -337,7 +349,10 @@ function renderTagTrends(auctionByTag, dealerByTag) {
 function renderFlags(flags) {
   if (!flags.length) return "";
   const money = (n) => (n === null || n === undefined ? "n/a" : "$" + Math.round(n).toLocaleString("en-US"));
-  const link = (r) => (r.url ? `[${r.piece_name || "(untitled)"}](${r.url})` : r.piece_name || "(untitled)");
+  // Always show a link when there's a real URL to click through and
+  // validate against; fall back to plain text (no dead/placeholder link)
+  // when the source doesn't have one on file.
+  const link = (r) => (r.url ? `[${r.piece_name || "(untitled)"}](${r.url})` : r.piece_name || "(untitled) — no link on file for this source");
 
   const priceFlags = flags
     .filter((f) => f.flag === "price_anomaly")
@@ -351,25 +366,25 @@ function renderFlags(flags) {
   const lines = [
     "## Worth a second look",
     "",
-    "_Heuristic signals for a human to check — not fraud determinations. A flagged piece may well be genuine; these just surface things worth a closer look before relying on the listing._",
+    "_Heuristic signals for a human to check — not fraud determinations. A flagged piece may well be genuine; these just surface things worth a closer look before relying on the listing. Click through to validate each one; once checked, it's checked — this list will keep re-surfacing the same items week to week until the underlying price/description changes._",
     "",
   ];
 
   if (priceFlags.length) {
     lines.push(`**Implausibly low price** (${flags.filter((f) => f.flag === "price_anomaly").length} total)`, "");
     for (const f of priceFlags) {
-      lines.push(`- ${link(f)} — ${money(f.price)} via ${f.source || "unknown"}. ${f.reason}.`);
+      lines.push(`- ${link(f)} — ${money(f.price)}${f.native} via ${f.source || "unknown"}. ${f.reason}.`);
     }
     lines.push("");
   }
 
   if (authFlags.length) {
     lines.push(
-      `**Cheap AND no signature/hallmark/certificate mentioned** (${flags.filter((f) => f.flag === "unverified_authenticity").length} total — a subset of the price flags above, worth extra scrutiny)`,
+      `**Currently for sale, $1,000+, no signature/hallmark/certificate mentioned** (${flags.filter((f) => f.flag === "unverified_authenticity").length} total)`,
       ""
     );
     for (const f of authFlags) {
-      lines.push(`- ${link(f)} — ${money(f.price)} via ${f.source || "unknown"}. ${f.reason}.`);
+      lines.push(`- ${link(f)} — ${money(f.price)}${f.native} via ${f.source || "unknown"}. ${f.reason}.`);
     }
     lines.push("");
   }
@@ -471,8 +486,12 @@ A polished Markdown report a principal would actually read. Include:
 - a short "Data-quality caveats" note (auction hammer prices exclude buyer's premium; dealer asking
   prices are not confirmed sale prices; "closed" status for dealer items means delisted, which
   usually but not always means sold).
-Prices must match the provided stats; do not invent figures. Every piece you name must include its
-url as a Markdown link if one is present in the data.
+Prices must match the provided stats; do not invent figures. Every price field given to you is
+already an accurate USD-converted figure (see convert-currency.js) -- trust it directly, never
+re-derive or guess a conversion yourself. If a piece's "native" field is set (it sold/lists in a
+non-USD currency), footnote the original amount in parentheses after the USD figure, e.g.
+"$16,700 (originally CHF 15,000)" -- otherwise just state the USD price plainly. Every piece you
+name must include its url as a Markdown link if one is present in the data.
 Do NOT build your own trend charts or week-over-week tables, and do NOT add a "Week-over-week
 trends" heading, placeholder, or note anywhere — that entire section is inserted automatically
 right after your H1 title. Begin your report body with a "## Executive Summary" section.`;

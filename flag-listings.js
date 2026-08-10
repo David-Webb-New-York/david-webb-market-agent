@@ -4,7 +4,10 @@
  * Two heuristic, best-effort flags computed fresh from the current dataset
  * on every report run (NOT baked into the stored records — the thresholds
  * are relative to the current price distribution, which shifts week to
- * week):
+ * week). Both work off sold_price_usd/asking_price_usd (convert-currency.js's
+ * USD-normalized fields), not the raw native-currency price — otherwise a
+ * foreign-currency lot (CHF, GBP, EUR, HKD, ITL...) skews the percentile
+ * math and can itself look like a false price anomaly.
  *
  *   - price_anomaly: the price is implausibly low for a genuine David Webb
  *     piece. Two independent tests, either one is enough to flag:
@@ -15,14 +18,21 @@
  *           record type (auction/dealer), regardless of category or sample
  *           size — catches a piece that's cheap in an absolute sense even
  *           if it's the only one of its kind on file.
- *   - unverified_authenticity: the listing's own description text doesn't
- *     mention a signature, hallmark, maker's mark, or certificate. Only
- *     evaluated when there IS description text to check — several sources
- *     (Phillips, 1stDibs, often Doyle) carry no free-text description at
- *     all, and an empty field is absence of evidence, not evidence of a
- *     problem; flagging those would just be systematic noise (see
- *     HANDOFF.md's Invaluable/Rago notes-field discussion for the same
- *     per-source caveat pattern).
+ *   - unverified_authenticity: a CURRENTLY-FOR-SALE dealer listing (not a
+ *     past auction result — you can't act on a completed sale) priced at
+ *     $1,000+ (below that, buyers already expect a minor/component piece,
+ *     so "no signature mentioned" isn't a meaningful signal) whose own
+ *     description text doesn't mention a signature, hallmark, maker's
+ *     mark, or certificate. Deliberately NOT compounded with price_anomaly
+ *     anymore (an earlier version only flagged already-cheap-looking
+ *     pieces, which produced a misleading "cheap AND unverified" framing
+ *     for pieces that were, in absolute terms, perfectly normal $5-10K
+ *     prices for their category). Only evaluated when there IS description
+ *     text to check — several sources (Phillips, 1stDibs, often Doyle)
+ *     carry no free-text description at all, and an empty field is absence
+ *     of evidence, not evidence of a problem; flagging those would just be
+ *     systematic noise (see HANDOFF.md's Invaluable/Rago notes-field
+ *     discussion for the same per-source caveat pattern).
  *
  * These are SIGNALS FOR A HUMAN TO CHECK, not fraud determinations —
  * worded that way everywhere they're surfaced (report, Slack, GUI).
@@ -60,6 +70,17 @@ function money(n) {
   return n === null || n === undefined ? "n/a" : "$" + Math.round(n).toLocaleString("en-US");
 }
 
+// When the record's native currency wasn't USD, footnote the original
+// figure alongside the USD-converted one shown everywhere else -- so
+// clicking through to validate isn't confusing when the source site shows
+// "CHF 15,000" but this report says "$16,700".
+function nativeNote(r) {
+  const cur = String(r.currency_note || "").toUpperCase().trim();
+  const amount = Number(r.sold_price ?? r.asking_price);
+  if (!cur || cur === "USD" || !Number.isFinite(amount) || amount <= 0) return "";
+  return ` (${cur} ${Math.round(amount).toLocaleString("en-US")})`;
+}
+
 function pickFields(r, typeLabel, priceField, sourceField) {
   return {
     type: typeLabel,
@@ -68,7 +89,7 @@ function pickFields(r, typeLabel, priceField, sourceField) {
     price: num(r[priceField]),
     source: r[sourceField] || "",
     url: r.listing_url || "",
-    _id: recordIdentity(r),
+    native: nativeNote(r),
   };
 }
 
@@ -118,39 +139,36 @@ function computePriceFlags(records, priceField, sourceField, typeLabel) {
 
 const AUTH_KEYWORDS = /\b(sign(?:ed|ature)?|hallmark(?:ed)?|stamp(?:ed)?|marked|maker'?s?\s*mark|certificat(?:e|ed|ion)?|provenance)\b/i;
 
-// Christie's and Sotheby's international sale catalogs are frequently
-// written in Italian/Chinese/French/etc, not just English (confirmed via a
-// real test run: a $11.26M Christie's lot got flagged purely because its
-// description said "timbrata" instead of "stamped") -- the English-only
-// keyword regex can't tell "no mention" from "mentioned in another
-// language", so it's excluded here rather than producing systematic
-// false positives on exactly the highest-value lots in the dataset.
-const AUTH_EXCLUDED_SOURCES = new Set(["Christie's", "Sotheby's"]);
+// Below this, a listing is already understood to be a minor/component
+// piece (a single cufflink, a stud, a clasp) where buyers don't expect
+// full provenance language in a short marketing blurb -- "no signature
+// mentioned" isn't a meaningful signal at that price point.
+const AUTH_MIN_PRICE = 1000;
 
-function recordIdentity(r) {
-  return r.listing_url || `${r.piece_name || ""}|${r.auction_house || r.dealer || ""}`;
-}
-
-// Only evaluated against records ALREADY flagged as price anomalies --
-// confirmed empirically that "doesn't mention a signature" is too weak a
-// signal standalone: a real test run found only ~40% of obviously genuine
-// dealer listings (Yafa, Fred Leighton, etc.) happen to use one of these
-// words in their short marketing blurb, so alone this flagged ~73% of all
-// active dealer inventory -- noise, not signal. Combined with an already-
-// suspicious price, "cheap AND no verification language" is a real signal;
-// "normally priced but the blurb didn't say 'signed'" isn't.
-function computeAuthenticityFlags(records, priceField, sourceField, typeLabel, priceFlaggedIds) {
+// Only evaluated against CURRENTLY-FOR-SALE dealer listings, not past
+// auction results -- a "no signature mentioned" flag on a completed sale
+// is nothing a human can act on. No longer compounded with price_anomaly
+// (an earlier version required the piece to ALSO look implausibly cheap,
+// which mislabeled perfectly normal $5-10K category prices as "cheap").
+// Confirmed empirically that "doesn't mention a signature" is too weak a
+// signal standalone across ALL prices: a real test run found only ~40% of
+// obviously genuine dealer listings (Yafa, Fred Leighton, etc.) happen to
+// use one of these words in their short marketing blurb, so unfiltered
+// this flagged ~73% of all active dealer inventory -- noise, not signal.
+// The $1,000 floor is the current compromise: it drops the small-piece
+// noise without requiring the price to look anomalous first.
+function computeAuthenticityFlags(records, priceField, sourceField, typeLabel) {
   const flags = [];
   for (const r of records) {
-    if (!priceFlaggedIds.has(recordIdentity(r))) continue;
-    if (AUTH_EXCLUDED_SOURCES.has(r[sourceField])) continue;
+    const price = num(r[priceField]);
+    if (price === null || price < AUTH_MIN_PRICE) continue;
     const text = (r.notes || "").trim();
     if (!text) continue; // no description to check -- not evidence either way
     if (!AUTH_KEYWORDS.test(text)) {
       flags.push({
         ...pickFields(r, typeLabel, priceField, sourceField),
         flag: "unverified_authenticity",
-        reason: "Also: listing description doesn't mention a signature, hallmark, maker's mark, or certificate",
+        reason: "Listing description doesn't mention a signature, hallmark, maker's mark, or certificate",
       });
     }
   }
@@ -162,19 +180,13 @@ function computeAuthenticityFlags(records, priceField, sourceField, typeLabel, p
 // `type` ("auction" | "dealer") plus enough fields to display standalone.
 function computeFlags(history, dealers) {
   const activeDealers = dealers.filter((r) => r.status !== "inactive");
-  const soldAuctions = history.filter((r) => num(r.sold_price) !== null);
+  const soldAuctions = history.filter((r) => num(r.sold_price_usd) !== null);
 
-  const auctionPriceFlags = computePriceFlags(soldAuctions, "sold_price", "auction_house", "auction");
-  const dealerPriceFlags = computePriceFlags(activeDealers, "asking_price", "dealer", "dealer");
-  const priceFlaggedIds = new Set([...auctionPriceFlags, ...dealerPriceFlags].map((f) => f._id));
-
-  const all = [
-    ...auctionPriceFlags,
-    ...dealerPriceFlags,
-    ...computeAuthenticityFlags(soldAuctions, "sold_price", "auction_house", "auction", priceFlaggedIds),
-    ...computeAuthenticityFlags(activeDealers, "asking_price", "dealer", "dealer", priceFlaggedIds),
+  return [
+    ...computePriceFlags(soldAuctions, "sold_price_usd", "auction_house", "auction"),
+    ...computePriceFlags(activeDealers, "asking_price_usd", "dealer", "dealer"),
+    ...computeAuthenticityFlags(activeDealers, "asking_price_usd", "dealer", "dealer"),
   ];
-  return all.map(({ _id, ...rest }) => rest);
 }
 
 module.exports = { computeFlags, computePriceFlags, computeAuthenticityFlags, median, percentile };

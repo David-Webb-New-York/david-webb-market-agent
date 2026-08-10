@@ -101,7 +101,13 @@ function parseListings(html) {
     const soldMatch = chunk.match(/Sold for\s*\$([\d,]+(?:\.\d+)?)/);
     const estMatch = chunk.match(/Estimated at\s*\$([\d,]+(?:\.\d+)?)\s*-\s*\$([\d,]+(?:\.\d+)?)/);
     if (!hrefMatch || !titleMatch) continue;
-    const rawHref = decodeEntities(hrefMatch[1]).split("?")[0];
+    // Keep the full href, including its query string (?lot=<id>&so=4&st=...)
+    // -- an earlier version stripped it for a "cleaner" URL without ever
+    // confirming the slug-only path resolves on its own, and it turned out
+    // not to: real users clicking the stored listing_url got nothing. The
+    // full href is the CONFIRMED-working pattern (it's exactly what the
+    // search-results page itself links to).
+    const rawHref = decodeEntities(hrefMatch[1]);
     const listingUrl = rawHref.startsWith("http") ? rawHref : `${BASE}${rawHref}`;
     items.push({
       lotNumber: titleMatch[1],

@@ -243,6 +243,12 @@ td {
   margin-bottom: 0.2rem;
 }
 
+.native-note {
+  font-size: 0.82em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 a.listing-link {
   color: var(--link);
   text-decoration: none;

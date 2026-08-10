@@ -16,6 +16,7 @@
 const fs = require("fs");
 const path = require("path");
 const { inferTags } = require("./infer-tags");
+const { toUsd } = require("./convert-currency");
 
 const OUTPUT_DIR = path.join(__dirname, "output");
 const LISTINGS_JSON = path.join(OUTPUT_DIR, "david-webb-dealer-listings.json");
@@ -35,6 +36,7 @@ const LISTING_FIELDS = [
   "sku",
   "notes",
   "tags",
+  "asking_price_usd",
 ];
 
 const CSV_HEADER = ["id", ...LISTING_FIELDS, "source", "first_seen", "last_seen", "times_seen", "status"];
@@ -58,6 +60,20 @@ function recordKey(r) {
   if (r.sku) return `sku:${dealer}|${String(r.sku).toLowerCase().trim()}`;
   const name = (r.piece_name || "").toLowerCase().replace(/\s+/g, " ").trim();
   return `meta:${dealer}|${name}`;
+}
+
+// asking_price_usd is fully derived (like tags) -- see history-store.js's
+// usdPrice() for the reasoning. Every dealer source is USD-only today, so
+// this is currently always a passthrough; kept symmetric with the auction
+// side so a future foreign-currency dealer source doesn't reintroduce the
+// same unconverted-price bug. Uses first_seen (falls back to today) as
+// the reference date since this is a current asking price, not a
+// historical settlement.
+function usdPrice(r, today) {
+  const converted = toUsd(r.asking_price, r.currency_note, r.first_seen || today);
+  if (converted !== null) return converted;
+  const n = Number(r.asking_price);
+  return Number.isFinite(n) && n > 0 ? n : "";
 }
 
 function csvEscape(val) {
@@ -99,6 +115,7 @@ function upsert(map, record, meta = {}) {
     // tags is fully derived -- always recompute from the final merged text
     // rather than carrying over whichever side's (likely empty) raw value won.
     merged.tags = inferTags(`${merged.piece_name} ${merged.notes}`, merged.era_or_year).join("; ");
+    merged.asking_price_usd = usdPrice(merged, today);
     map.set(key, merged);
     return false;
   }
@@ -109,6 +126,7 @@ function upsert(map, record, meta = {}) {
   clean.times_seen = 1;
   clean.status = "active";
   clean.tags = inferTags(`${clean.piece_name} ${clean.notes}`, clean.era_or_year).join("; ");
+  clean.asking_price_usd = usdPrice(clean, today);
   map.set(key, clean);
   return true;
 }
@@ -123,7 +141,7 @@ function markMissingInactive(map, seenIds, today) {
 
 function writeStore(map) {
   const records = [...map.values()].sort(
-    (a, b) => (Number(b.asking_price) || 0) - (Number(a.asking_price) || 0)
+    (a, b) => (Number(b.asking_price_usd) || 0) - (Number(a.asking_price_usd) || 0)
   );
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   fs.writeFileSync(LISTINGS_JSON, JSON.stringify(records, null, 2) + "\n");

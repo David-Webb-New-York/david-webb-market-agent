@@ -98,6 +98,15 @@ Two separate datasets, deliberately not merged into one:
   (`active`/`inactive` — a listing that disappears from a dealer's site
   gets marked inactive, not deleted). Managed by `dealer-store.js`.
 
+Both also carry a **USD-normalized price** (`sold_price_usd` /
+`asking_price_usd`) alongside the original native-currency figure — most
+records are already USD, but ~12% of auction-history records settle in
+CHF/GBP/EUR/HKD/ITL (Christie's/Sotheby's international sale rooms), and
+every stat, flag, and GUI sort uses the converted field so a foreign-
+currency number can't masquerade as an outlier (or hide one). Conversion
+uses hand-compiled historical annual-average FX rates (`convert-currency.js`)
+— order-of-magnitude accurate, not settlement-precise.
+
 Both carry a **`tags`** field (`;`-separated) — design motif/material/decade
 tags (Zodiac, Animal/Creature, Fishscale, Rock Crystal, Enamel, Carved
 Hardstone, Cuff/Bangle, `1970s`, etc.), keyword-matched from the piece's own
@@ -113,10 +122,12 @@ each row `auction` or `dealer` so the distinction stays visible.
 A third file, **`output/flagged-listings.json`**, is computed fresh on
 every report run (not a stored dataset — thresholds shift with the current
 price distribution) by `flag-listings.js`: heuristic "worth a second look"
-signals — an implausibly low price for the category, or (only when also
-priced anomalously) no signature/hallmark/certificate mentioned in the
-listing text. These are signals for a human to check, not fraud
-determinations. Surfaced in the weekly report, a Slack line, and a
+signals — an implausibly low price for the category, or a currently-for-sale
+dealer listing priced at $1,000+ with no signature/hallmark/certificate
+mentioned in the listing text (past auction results are excluded from the
+second check — nothing to act on there). These are signals for a human to
+check, not fraud determinations. Surfaced in the weekly report (with a link
+back to the source listing whenever one is on file), a Slack line, and a
 "Worth a second look only" filter + badge in the GUI.
 
 ## Data-quality notes
@@ -143,6 +154,12 @@ determinations. Surfaced in the weekly report, a Slack line, and a
   `import-1stdibs.js`) — there's no reliable way to match those as one
   piece, so they're kept as separate records. **"Total listings" counts
   platform presence, not unique physical pieces.**
+- **Some already-committed Doyle records still carry a broken listing
+  URL.** A bug (fixed 2026-08-10) stripped the query string off Doyle's
+  confirmed-working href before storing it, which doesn't resolve on its
+  own. New/re-scraped Doyle records get the corrected full URL; already-
+  committed ones self-correct the next time `history-refresh.yml` runs
+  (matched and updated in place, not duplicated).
 - **Sotheby's Buy Now listings have no confirmed listing URL.** Live
   investigation across five probe rounds couldn't recover a working
   per-item detail-page URL (the site's backing API carries no pricing/URL

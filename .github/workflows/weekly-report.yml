@@ -8,7 +8,12 @@ name: Weekly Market Report
 # this workflow once both have committed. Kept dispatchable on its own too,
 # for ad hoc re-runs against whatever's currently committed.
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      skip_slack:
+        description: 'Regenerate the report/flags without posting to Slack (for reviewing a fix before it goes out)'
+        type: boolean
+        default: false
 permissions:
   contents: write
 jobs:
@@ -38,6 +43,7 @@ jobs:
           git push
 
       - name: Notify Slack
+        if: github.event_name != 'workflow_dispatch' || inputs.skip_slack != true
         run: node analyze.js --notify
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
