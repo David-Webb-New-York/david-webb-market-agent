@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - 'upcoming-auctions-probe.js'
+      - 'sothebys-buynow-shape.js'
       - '.github/workflows/upcoming-auctions-debug.yml'
   workflow_dispatch: {}
 permissions:
@@ -18,7 +19,14 @@ jobs:
           node-version: 20
       - run: npm install
       - name: Probe upcoming-lots feasibility across major houses
+        if: hashFiles('upcoming-auctions-probe.js') != ''
         run: node upcoming-auctions-probe.js
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
+      - name: Sotheby's Buy Now / upcoming-lots real field shape
+        if: hashFiles('sothebys-buynow-shape.js') != ''
+        run: node sothebys-buynow-shape.js
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
