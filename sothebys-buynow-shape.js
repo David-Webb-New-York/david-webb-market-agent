@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 /**
- * Round 4. Round 3's DOM-selector approach failed (a heuristic bug --
- * "walk up 5 parent levels from any element containing 'Buy now' text"
- * landed on the site's top nav menu, not a result card, since "Buy now"
- * text apparently also appears somewhere in nav/promo chrome). Rather
- * than keep fighting fragile CSS selectors, this pivots to parsing the
- * GraphQL response directly -- more robust anyway. Rounds 1-2 already
- * confirmed the query field is `retailItemBySlug` and the response
- * contains real data (image arrays were seen), but the summarizer only
- * captured ARRAY fields, not scalar leaves like price/title/slug. This
- * dumps full raw JSON for a couple of responses to get those directly.
+ * Round 5. Round 4 dumped the first 3 of 31 captured GraphQL responses raw
+ * -- but those happened to be `retailItemBySlug` calls scoped to JUST the
+ * media.images field (a component that lazy-loads images independently),
+ * with zero price/title/slug data in them. The page fires many differently
+ * -scoped queries against the same field name; this round searches ALL 31
+ * captured bodies for "price" (and related keywords) and dumps only the
+ * ones that actually contain pricing/title/slug data, instead of guessing
+ * which of the 31 to print.
  */
 const bb = require("./browserbase");
 
@@ -34,15 +32,26 @@ async function main() {
   );
 
   console.log(`Captured ${result.graphqlBodies.length} GraphQL response bodies\n`);
-  // Print full raw bodies for the first 3 -- these are per-item queries
-  // (each ~7-13KB per round 1-2), so full dumps should reveal the real
-  // top-level scalar fields (price, title, slug, sku, condition, etc.)
-  // right next to the media.images array we already confirmed exists.
-  for (let i = 0; i < Math.min(3, result.graphqlBodies.length); i++) {
-    console.log(`=== Body ${i} (${result.graphqlBodies[i].length} bytes) ===`);
-    console.log(result.graphqlBodies[i]);
+
+  const KEYWORDS = /price|amount|slug|sku|currency|permalink|"url":|condition|listPrice|askingPrice/i;
+  const matches = result.graphqlBodies
+    .map((b, i) => ({ i, body: b, hit: KEYWORDS.test(b) }))
+    .filter((x) => x.hit);
+
+  console.log(`${matches.length} of ${result.graphqlBodies.length} bodies contain a pricing/slug-related keyword\n`);
+
+  for (const m of matches.slice(0, 5)) {
+    console.log(`=== Body ${m.i} (${m.body.length} bytes) ===`);
+    console.log(m.body);
     console.log("\n\n");
   }
+
+  // Also print byte-length distribution so we know which ones are "big"
+  // (likely the full item record) vs "small" (likely just one field).
+  console.log(
+    "All body sizes:",
+    result.graphqlBodies.map((b) => b.length)
+  );
 }
 
 main().catch((err) => {
