@@ -19,7 +19,7 @@
  *
  * ENV:
  *   SLACK_WEBHOOK_URL       required to actually post (omit for a dry run)
- *   ALERT_PRICE_THRESHOLD   USD; default 20000 -- override for a noisier/
+ *   ALERT_PRICE_THRESHOLD   USD; default 5000 -- override for a noisier/
  *                           quieter feed without editing code
  *
  * Usage: node alert-new-listings.js [--dry-run]
@@ -30,7 +30,7 @@ const fs = require("fs");
 
 const DRY_RUN = process.argv.includes("--dry-run");
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
-const PRICE_THRESHOLD = Number(process.env.ALERT_PRICE_THRESHOLD) || 20000;
+const PRICE_THRESHOLD = Number(process.env.ALERT_PRICE_THRESHOLD) || 5000;
 
 function todayStr() {
   return new Date().toISOString().slice(0, 10);

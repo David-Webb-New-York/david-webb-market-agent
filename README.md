@@ -53,7 +53,7 @@ Actions tab when you want to go fishing for something new.
 
 **`daily-alert.yml`** (Tue–Fri, 8am ET) is the near-term complement to the
 weekly digest: refreshes dealer inventory and posts an immediate Slack ping
-for any piece that's new *today* and priced at or above `$20,000` (override
+for any piece that's new *today* and priced at or above `$5,000` (override
 with the `price_threshold` input on a manual dispatch, or
 `ALERT_PRICE_THRESHOLD` as an env var). Quiet by default — posts nothing if
 nothing clears the threshold. Skips Monday since `dealer-refresh.yml` +
