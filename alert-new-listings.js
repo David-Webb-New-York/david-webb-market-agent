@@ -19,7 +19,7 @@
  *
  * ENV:
  *   SLACK_WEBHOOK_URL       required to actually post (omit for a dry run)
- *   ALERT_PRICE_THRESHOLD   USD; default 50000 -- override for a noisier/
+ *   ALERT_PRICE_THRESHOLD   USD; default 20000 -- override for a noisier/
  *                           quieter feed without editing code
  *
  * Usage: node alert-new-listings.js [--dry-run]
@@ -30,7 +30,7 @@ const fs = require("fs");
 
 const DRY_RUN = process.argv.includes("--dry-run");
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL || "";
-const PRICE_THRESHOLD = Number(process.env.ALERT_PRICE_THRESHOLD) || 50000;
+const PRICE_THRESHOLD = Number(process.env.ALERT_PRICE_THRESHOLD) || 20000;
 
 function todayStr() {
   return new Date().toISOString().slice(0, 10);
@@ -43,9 +43,13 @@ function money(n) {
 function loadNewListings(today) {
   if (!fs.existsSync(LISTINGS_JSON)) return [];
   const records = JSON.parse(fs.readFileSync(LISTINGS_JSON, "utf8"));
+  // asking_price_usd (convert-currency.js, computed centrally in
+  // dealer-store.js) rather than raw asking_price -- every dealer source
+  // is USD-only today, but this keeps the threshold comparison correct if
+  // that ever changes, same reasoning as the weekly report's price flags.
   return records
     .filter((r) => r.status === "active" && r.first_seen === today)
-    .map((r) => ({ ...r, asking_price: Number(r.asking_price) || 0 }))
+    .map((r) => ({ ...r, asking_price: Number(r.asking_price_usd || r.asking_price) || 0 }))
     .filter((r) => r.asking_price >= PRICE_THRESHOLD)
     .sort((a, b) => b.asking_price - a.asking_price);
 }

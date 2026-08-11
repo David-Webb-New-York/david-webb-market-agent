@@ -1,7 +1,7 @@
 name: Daily New-Listing Alert
 # Near-term complement to the Monday weekly digest: refreshes dealer
 # inventory and posts an IMMEDIATE Slack ping for any notable (>=
-# $50,000 by default) piece that showed up TODAY, so it doesn't sit
+# $20,000 by default) piece that showed up TODAY, so it doesn't sit
 # unnoticed until the weekly report. Quiet by default -- posts nothing if
 # there's nothing new above the threshold.
 #
@@ -15,9 +15,9 @@ on:
   workflow_dispatch:
     inputs:
       price_threshold:
-        description: 'Alert threshold in USD (default 50000)'
+        description: 'Alert threshold in USD (default 20000)'
         required: false
-        default: '50000'
+        default: '20000'
 permissions:
   contents: write
   actions: write # to dispatch pages-deploy.yml after committing new data
@@ -45,6 +45,7 @@ jobs:
           git config user.email "agent@davidwebb.local"
           git add output/
           git commit -m "Daily dealer listings refresh $(date +%F)" || echo "No changes to commit"
+          git pull --rebase --autostash origin main
           git push
 
       - name: Deploy database GUI
