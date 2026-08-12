@@ -19,6 +19,7 @@ on:
       - 'import-woocommerce.js'
       - 'import-1stdibs.js'
       - 'import-sothebys-buynow.js'
+      - 'import-therealreal.js'
       - 'dealer-store.js'
       - '.github/workflows/dealer-refresh.yml'
 permissions:

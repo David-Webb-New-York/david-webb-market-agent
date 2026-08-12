@@ -9,7 +9,7 @@
 
 ---
 
-## 0. Current state (as of 2026-08-10) — READ THIS FIRST
+## 0. Current state (as of 2026-08-11) — READ THIS FIRST
 
 Everything in §1-§9 below was written across several sessions and is a mix
 of still-accurate technical reference and now-stale status. Trust this
@@ -23,7 +23,8 @@ findings) for "how each importer was built and what its known limits are"
 
 1. `history-refresh.yml` (Mon ~8:15am ET / 13:15 UTC) — structured +
    Browserbase auction-history importers → `output/david-webb-auction-history.*`.
-2. `dealer-refresh.yml` (Mon ~8:30am ET / 13:30 UTC) — Shopify/WooCommerce
+2. `dealer-refresh.yml` (Mon ~8:30am ET / 13:30 UTC) — Shopify/WooCommerce,
+   1stDibs, Sotheby's Buy Now, and (as of 2026-08-11 night) The RealReal
    dealer importers → `output/david-webb-dealer-listings.*`, then deploys
    the GUI, then **waits for #1 to finish** (polls `gh run list`, up to 40
    min) and explicitly dispatches #3 — this replaced an earlier design
@@ -107,15 +108,89 @@ resolved seller name matches an existing dealer, they'll naturally group
 together in the GUI, but **"total listings" counts platform presence, not
 unique physical pieces.** Keep this in mind before treating the dealer
 listing count as a piece-inventory count.
-**The RealReal was investigated and is currently a dead end:** blocked by a
-genuine Browserbase account-tier wall (`403 Verified mode is only available
-on the Enterprise plan`) on `advancedStealth`, and Steel.dev's stealth
-fallback gets the same DataDome-style block ("Access to this page has been
-denied" / a "Press & Hold" human-verification page) most runs, occasionally
-a fake 404 instead — both read as active anti-bot blocking, not a fluke.
-Matches the earlier Heritage (ha.com) precedent. Don't re-attempt without a
-different approach (e.g. a captcha-solving proxy service) or explicit
-user direction.
+**The RealReal — blocked 2026-08-09, unblocked for free 2026-08-11 night.**
+The original 2026-08-09 investigation found a genuine Browserbase
+account-tier wall (`403 Verified mode is only available on the Enterprise
+plan`) on `advancedStealth`, and Steel.dev's stealth fallback getting an
+active block most runs. It labeled this "DataDome-style" — **that was an
+approximation, not confirmed.** A 2026-08-11 night investigation (the
+user: "do a deep dive... run experiments unattended and drive for
+possibilities", explicitly not wanting to pay for Browserbase's paid
+tier) got a real answer across 4 probe rounds:
+
+1. `therealreal-plain-fetch-probe.js` — a plain `fetch()` (no browser,
+   no automation markers) against `/designers/david-webb/jewelry`,
+   individual `/products/...` pages, and other content paths all got an
+   IDENTICAL 403 block page whose own JS unambiguously names the vendor:
+   `window._pxAppId = 'PXev56mY37'`. This is **PerimeterX**, a different
+   named vendor than DataDome — corrected here. `robots.txt` alone
+   returned real content (200) — the block is applied to content paths
+   specifically, not the whole domain.
+2. `therealreal-round3-probe.js` — since a plain fetch (no JS execution,
+   no browser fingerprint at all) got BLOCKED IDENTICALLY to Steel.dev's
+   real browser with stealth config, that points to **IP-reputation
+   blocking of datacenter/cloud ranges** (GitHub Actions runners,
+   Browserbase, Steel), not (only) fingerprint detection — a genuinely
+   different browser vs. no-browser vs. request-header experiment
+   wouldn't matter if the block triggers on IP alone. Ruled out in this
+   round: the Wayback Machine (zero snapshots exist for this URL —
+   confirmed via `archive.org/wayback/available`, not assumed), a
+   Googlebot user-agent (still blocked — not a naive UA-string check),
+   and fuller browser-like headers + Google referer (still blocked).
+   **The one thing that worked: `https://r.jina.ai/<url>`** — a free
+   public "reader" proxy (no API key or signup needed, ~20 req/min free
+   per Jina's own docs) that fetches server-side from ITS OWN
+   infrastructure and returns clean markdown. Real, current inventory
+   came back immediately: e.g. a "Turquoise & Diamond Brooch Pendant" at
+   $14,995 (60% off a $37,500 est. retail), "Published Time" dated days
+   before the probe.
+3. `therealreal-round4-probe.js` confirmed this wasn't a one-off: the
+   full category page has 121 David Webb items with NO pagination needed
+   (all load on one page — confirmed by the absence of any
+   "Next"/"Load more"/pagination keyword in the returned markdown), image
+   URLs are recoverable via a `[![Image N: ...](imgUrl)](productUrl)`
+   pattern for ~93% of items (the rest genuinely have none in the source,
+   not a parsing gap), and — as a sanity check against a completely
+   different designer — Van Cleef & Arpels's category page also came back
+   real (44 real mentions, real prices), confirming this isn't specific
+   to one URL.
+4. **`import-therealreal.js` (real importer, built and verified same
+   night):** parses the category page's markdown into per-product blocks
+   anchored on the literal `[David Webb](<product url>)` link (same
+   brand-guaranteed-by-anchor reasoning as `import-sothebys-buynow.js` —
+   no separate brand filter needed). The current asking price is
+   reliably the only dollar figure in a block that carries cents
+   (`$14,995.00`); "Est. Retail $X" and "~~Was: $X~~" are always
+   whole-dollar, so price extraction doesn't need to guess which figure
+   is which. Verified twice before being trusted: once locally against
+   the actual captured markdown (120 items, $1,995–$67,500, no network
+   call needed), then live via `test-therealreal.js` (matches the
+   `test-sothebys-buynow.js` isolated-driver precedent) — both runs
+   agreed exactly (`{"seen":120,"matched":120,"added":120}`).
+   **Needs no Browserbase/Steel/proxy secrets at all** — it's a single
+   plain `fetch()` per refresh to a free public service.
+
+**Known gap, left blank rather than guessed:** `materials_gemstones`,
+`era_or_year`, and `sku` aren't pulled — they're only on individual
+product pages (confirmed rich there: materials, gemstone cut/weight/
+color, a "Marks" field like "Designer Signature, No Hallmark, Tested for
+18K Purity", and an Item # SKU), which would mean ~120+ additional
+r.jina.ai fetches per run. Not pulled in v1 to keep a run fast and
+comfortably inside the free rate limit. Worth revisiting later — the
+"Marks" field in particular is a real, professionally-curated
+authenticity signal (TheRealReal's own authentication team notes signed/
+hallmark status per item), unlike the keyword-absence heuristic that was
+tried and removed from `flag-listings.js` earlier this week for being
+too noisy on free-text dealer blurbs.
+
+**Real dependency risk, stated plainly:** r.jina.ai is a free third-party
+service entirely outside this project's control. If Jina ever
+rate-limits harder, changes its ToS, or shuts the free reader down, this
+source breaks with no warning — there's no SLA. That's an accepted
+trade-off for $0/month versus Browserbase's paid Enterprise tier (the
+user was explicit: not ready to spend ~$100/mo on that). If this source
+ever goes quiet, Browserbase Enterprise (or a captcha-solving proxy
+service) remains the fallback lever, not yet purchased.
 
 **Listing-quality flags (2026-08-09):** `flag-listings.js` computes two
 heuristic "worth a second look" flags fresh from the current dataset on
@@ -600,7 +675,7 @@ Do **not** force sold lots into the active library; they are different entities.
 | Browserbase | Auth works (`bb_` key + project UUID). Paid plan; proxies confirmed working (Bonhams). |
 | Estate-jeweler dealer layer | **1,397 dealer listings** across 16 dealers (Shopify+WooCommerce), verified live (§9 P0) |
 | 1stDibs dealer import | **Real, verified 2026-08-09**: Browserbase-rendered Relay/GraphQL store parsing, **20/20 real listings** on a push-triggered dry-run (not yet committed to `main` — lands on the next scheduled `dealer-refresh.yml` run) — see §0 |
-| The RealReal | Confirmed blocked 2026-08-09 — same Browserbase Enterprise-plan wall as Heritage, and Steel.dev's stealth fallback hits the same DataDome-style block. No remaining lever without a different approach (e.g. captcha-solving proxy) — see §0 |
+| The RealReal | **Real, verified 2026-08-11 night**: blocked directly (Browserbase/Steel/plain fetch all hit an identical PerimeterX 403 — IP-reputation, not just fingerprinting), but `https://r.jina.ai/<url>` (a free public reader proxy) bypasses it entirely — **120/120 real listings**, no Browserbase/Steel/proxy cost at all — see §0 |
 | Sotheby's Buy Now dealer import | **Real, verified 2026-08-10**: page-text parsing (GraphQL API approach hit a real dead end — no pricing data in 31 captured calls), **31/31 real listings** confirmed across 3 consecutive clean runs after a real filter bug was found and fixed — see §0. Christie's/Sotheby's confirmed to have zero genuine upcoming bid-lots for David Webb right now — see §0 |
 | LiveAuctioneers historical import | **Real, verified live**: Browserbase-rendered `window.__data` extraction, confirmed pagination, 93 lots/3 pages in latest run (§9 P1) |
 | Invaluable historical import | **Real, verified live**: free (no Browserbase) Algolia POST replay, 133/133 lots (exact `nbHits` match) (§9 P1) |

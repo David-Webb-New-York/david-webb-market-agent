@@ -33,10 +33,10 @@ trigger any of this manually:
    and Bonhams into `output/david-webb-auction-history.json`.
 2. **`dealer-refresh.yml`** (Monday ~8:30am ET) — pulls current for-sale
    inventory from estate-jeweler sites (Yafa, The Back Vault, Fred Leighton,
-   and a dozen others) plus the 1stDibs and Sotheby's Buy Now marketplaces
-   into `output/david-webb-dealer-listings.json`. Then it waits for step 1
-   to actually finish, deploys the refreshed database GUI, and kicks off
-   step 3.
+   and a dozen others) plus the 1stDibs, Sotheby's Buy Now, and The RealReal
+   marketplaces into `output/david-webb-dealer-listings.json`. Then it waits
+   for step 1 to actually finish, deploys the refreshed database GUI, and
+   kicks off step 3.
 3. **`weekly-report.yml`** — reads both datasets, writes the report, commits
    it, and posts to Slack.
 
@@ -168,8 +168,15 @@ didn't discriminate genuine listings from anything else, see HANDOFF.md.)
   source is Sotheby's fixed-price retail marketplace, not bid-based
   auction lots — genuine *upcoming* auction lots were confirmed absent
   for David Webb at both Christie's and Sotheby's as of this writing.
-
-## Extending it
+- **The RealReal blocks direct access (PerimeterX)** — `import-therealreal.js`
+  routes around it via `r.jina.ai`, a free public reader-proxy service, rather
+  than a paid browser-automation service. This works well (verified with 120
+  real listings) but is a genuine third-party dependency outside this
+  project's control — if Jina's free reader ever rate-limits harder, changes
+  its terms, or shuts down, this source will start failing with no advance
+  warning. `materials_gemstones`/`era_or_year`/`sku` are also left blank for
+  this source: they're only available on individual product pages, which
+  would mean ~120+ extra fetches per run, not pulled to keep runs fast.
 
 - **New auction house or dealer site**: add an adapter file (see
   `import-rago.js` for the simplest structured example,
