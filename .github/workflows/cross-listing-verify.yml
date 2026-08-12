@@ -12,7 +12,12 @@ on:
       - 'verify-cross-listings.js'
       - 'verify-known-pairs-debug.js'
       - '.github/workflows/cross-listing-verify.yml'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      debug_only:
+        description: 'Only run the small known-pairs debug check (skip the full ~164-candidate sweep)'
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -31,6 +36,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - run: node verify-cross-listings.js
+        if: ${{ !inputs.debug_only }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Upload verification report
