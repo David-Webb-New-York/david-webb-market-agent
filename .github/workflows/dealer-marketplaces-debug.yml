@@ -11,6 +11,7 @@ on:
       - 'import-therealreal.js'
       - 'test-therealreal.js'
       - 'backvault-model-probe.js'
+      - 'backvault-crosscheck-probe.js'
       - '.github/workflows/dealer-marketplaces-debug.yml'
   workflow_dispatch: {}
 permissions:
@@ -56,3 +57,9 @@ jobs:
       - name: The Back Vault -- single retailer or consignment marketplace? (free)
         if: hashFiles('backvault-model-probe.js') != ''
         run: node backvault-model-probe.js
+      - name: The Back Vault -- trace 5 close-match candidates elsewhere (Browserbase, paid)
+        if: hashFiles('backvault-crosscheck-probe.js') != ''
+        run: node backvault-crosscheck-probe.js
+        env:
+          BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
+          BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
