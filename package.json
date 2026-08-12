@@ -21,6 +21,7 @@
   "dependencies": {
     "@browserbasehq/sdk": "^2.16.0",
     "playwright-core": "^1.62.1",
+    "sharp": "^0.35.3",
     "steel-sdk": "^0.18.0"
   }
 }

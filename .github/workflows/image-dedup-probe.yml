@@ -1,0 +1,35 @@
+name: Image Dedup Probe (cross-dealer duplicate photos)
+# One-off systematic check: perceptual-hash every active dealer listing's
+# photo and compare across dealers, to measure how much of the tracked
+# inventory is the same physical piece listed more than once (2026-08-12,
+# following up on a hand-picked 5-item spot-check that confirmed 4 real
+# Back Vault cross-listings via Google reverse-image search). Free -- no
+# paid API -- but downloads/hashes ~1,500 images, so it gets its own
+# workflow with a longer timeout than dealer-marketplaces-debug.yml.
+on:
+  push:
+    paths:
+      - 'image-dedup-probe.js'
+      - '.github/workflows/image-dedup-probe.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  dedup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: node image-dedup-probe.js
+      - name: Upload dedup report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-dedup-report
+          path: probe-output/image-dedup-report.json
+          retention-days: 30
+          if-no-files-found: warn

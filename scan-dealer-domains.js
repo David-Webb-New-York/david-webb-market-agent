@@ -45,6 +45,10 @@ const DOMAINS = [
   "syl-leeantiques.com",
   "schiffmans.com",
   "macklowegallery.com",
+  // Surfaced 2026-08-12 via Google reverse-image search while tracing a
+  // Back Vault cross-listing candidate -- a real dealer, confirmed by the
+  // user, that we weren't tracking at all.
+  "greenleafcrosby.com",
 ];
 
 const USER_AGENT =
