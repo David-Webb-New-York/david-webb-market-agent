@@ -5,6 +5,7 @@ on:
       - '1stdibs-listing-shape.js'
       - 'therealreal-listing-shape.js'
       - 'therealreal-plain-fetch-probe.js'
+      - 'therealreal-round3-probe.js'
       - 'therealreal-algolia-probe.js'
       - '.github/workflows/dealer-marketplaces-debug.yml'
   workflow_dispatch: {}
@@ -29,6 +30,9 @@ jobs:
       - name: The RealReal -- plain fetch, no browser (free, no proxy)
         if: hashFiles('therealreal-plain-fetch-probe.js') != ''
         run: node therealreal-plain-fetch-probe.js
+      - name: The RealReal -- round 3, reader proxy / wayback / UA tests (free)
+        if: hashFiles('therealreal-round3-probe.js') != ''
+        run: node therealreal-round3-probe.js
       - name: The RealReal -- Algolia direct-query probe (free, no proxy)
         if: hashFiles('therealreal-algolia-probe.js') != ''
         run: node therealreal-algolia-probe.js
