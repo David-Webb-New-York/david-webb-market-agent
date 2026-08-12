@@ -8,6 +8,8 @@ on:
       - 'therealreal-round3-probe.js'
       - 'therealreal-round4-probe.js'
       - 'therealreal-algolia-probe.js'
+      - 'import-therealreal.js'
+      - 'test-therealreal.js'
       - '.github/workflows/dealer-marketplaces-debug.yml'
   workflow_dispatch: {}
 permissions:
@@ -37,6 +39,9 @@ jobs:
       - name: The RealReal -- round 4, r.jina.ai full page + pagination + product page (free)
         if: hashFiles('therealreal-round4-probe.js') != ''
         run: node therealreal-round4-probe.js
+      - name: The RealReal -- re-verify real import-therealreal.js in isolation (no output/ writes)
+        if: hashFiles('test-therealreal.js') != ''
+        run: node test-therealreal.js
       - name: The RealReal -- Algolia direct-query probe (free, no proxy)
         if: hashFiles('therealreal-algolia-probe.js') != ''
         run: node therealreal-algolia-probe.js
