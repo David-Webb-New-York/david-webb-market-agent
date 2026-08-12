@@ -10,6 +10,7 @@ on:
   push:
     paths:
       - 'image-dedup-probe.js'
+      - 'image-hash-calibrate.js'
       - '.github/workflows/image-dedup-probe.yml'
   workflow_dispatch: {}
 permissions:
@@ -24,6 +25,9 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      - name: Calibrate hash size against known true/false pairs
+        if: hashFiles('image-hash-calibrate.js') != ''
+        run: node image-hash-calibrate.js
       - run: node image-dedup-probe.js
       - name: Upload dedup report
         if: always()
