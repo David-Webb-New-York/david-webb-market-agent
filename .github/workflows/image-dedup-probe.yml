@@ -12,7 +12,12 @@ on:
       - 'image-dedup-probe.js'
       - 'image-hash-calibrate.js'
       - '.github/workflows/image-dedup-probe.yml'
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      calibrate_only:
+        description: 'Only run the small calibration check (skip the full ~1,500-image sweep) -- for reading calibration output without the full sweep drowning it out in the log'
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
@@ -29,6 +34,7 @@ jobs:
         if: hashFiles('image-hash-calibrate.js') != ''
         run: node image-hash-calibrate.js
       - run: node image-dedup-probe.js
+        if: ${{ !inputs.calibrate_only }}
       - name: Upload dedup report
         if: always()
         uses: actions/upload-artifact@v4
