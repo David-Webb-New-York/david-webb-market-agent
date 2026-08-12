@@ -10,6 +10,7 @@ on:
   push:
     paths:
       - 'verify-cross-listings.js'
+      - 'verify-known-pairs-debug.js'
       - '.github/workflows/cross-listing-verify.yml'
   workflow_dispatch: {}
 permissions:
@@ -24,6 +25,11 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      - name: Debug -- Claude's reasoning on 3 known-true pairs it marked DIFFERENT
+        if: hashFiles('verify-known-pairs-debug.js') != ''
+        run: node verify-known-pairs-debug.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - run: node verify-cross-listings.js
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

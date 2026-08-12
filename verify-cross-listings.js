@@ -241,7 +241,11 @@ async function main() {
   console.log(`\nFull report: probe-output/cross-listing-verification.json`);
 }
 
-main().catch((err) => {
-  console.error("FATAL:", err.message || err);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch((err) => {
+    console.error("FATAL:", err.message || err);
+    process.exit(1);
+  });
+}
+
+module.exports = { findCandidates, fetchImageBase64, askClaude };
