@@ -1,27 +1,29 @@
 #!/usr/bin/env node
 /**
- * Manual cross-listing trace: pick a handful of Back Vault (thebackvault.com)
- * listings whose price + wording are unusually close to a listing we
- * already track from a DIFFERENT dealer, open the real Back Vault page in a
- * Browserbase browser (this sandbox's plain fetch/network can't reach it --
- * see HANDOFF.md §7.6), pull its actual product photo, and try to trace
- * that piece elsewhere via a reverse-image search and a text search --
- * looking for whether it also surfaces under another dealer's name (which
- * The Back Vault's own listing never discloses -- see
- * backvault-model-probe.js: no per-item seller/consignor byline on the
- * page itself).
+ * Manual cross-listing trace, round 2: pick a handful of Back Vault
+ * (thebackvault.com) listings whose price + wording are unusually close to
+ * a listing we already track from a DIFFERENT dealer, and try to trace the
+ * piece elsewhere via a reverse-image search and a text search -- looking
+ * for whether it also surfaces under another dealer's name (which The Back
+ * Vault's own listing never discloses -- see backvault-model-probe.js: no
+ * per-item seller/consignor byline on the page itself).
  *
- * This is exploratory/manual verification, not a production import -- one
- * Browserbase session is reused across all candidates to keep cost down.
+ * Round 1 (backvault-crosscheck-probe.js, first version) drove EVERYTHING
+ * through Browserbase, including the Back Vault page loads -- and Back
+ * Vault's own bot-check (a Cloudflare-style "Just a moment..." challenge)
+ * blocked the Browserbase/Playwright browser fingerprint specifically, on
+ * all 5 candidates. Ironic reversal of The RealReal's case: there, plain
+ * fetch() was blocked and a real browser was the workaround; here, plain
+ * fetch() already works fine (confirmed in backvault-model-probe.js) and
+ * it's the real browser that gets walled off. So this round uses plain
+ * fetch() for the Back Vault side (reliable, free) and reserves Browserbase
+ * only for the Google side, which needs real browser interaction -- with
+ * explicit CAPTCHA/consent-wall detection this time, since round 1's empty
+ * "domains: []" results were ambiguous (genuine no-results vs. blocked).
  */
+const { fetchWithTimeout } = require("./fetch-with-timeout");
 const bb = require("./browserbase");
 
-// Candidates picked from a local price+title-similarity pass over the
-// committed dataset (loose net: category match, price within 15%, >=1
-// shared distinctive word) -- these are the CLOSEST candidate matches
-// found between a Back Vault listing and something we already track from
-// a different dealer. "Close" here does not mean confirmed -- that's what
-// this probe is checking.
 const CANDIDATES = [
   {
     bvUrl: "https://thebackvault.com/products/david-webb-platinum-turquoise-and-diamond-ring-rr7841",
@@ -70,29 +72,60 @@ const CANDIDATES = [
   },
 ];
 
-async function extractBackVaultListing(page, url) {
-  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
-  await page.waitForTimeout(3000);
-  return page.evaluate(() => {
-    const img = document.querySelector('meta[property="og:image"]')?.content
-      || document.querySelector(".product__media img, .product-single__photo img")?.src
-      || null;
-    const price = document.querySelector('[class*="price"]')?.textContent?.trim() || null;
-    const bodyText = document.body.innerText.slice(0, 3000);
-    return { img, price, bodyText, title: document.title };
-  });
+// -- Back Vault side: plain fetch, no browser needed (confirmed working) --
+
+async function fetchBackVaultListing(url) {
+  const res = await fetchWithTimeout(url, {}, 20000);
+  if (!res.ok) return { error: `status ${res.status}` };
+  const html = await res.text();
+  const imgMatch = html.match(/<meta property="og:image" content="([^"]+)"/i);
+  const priceMatch = html.match(/\$[\d,]+\.\d{2}/);
+  const text = html.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+  return {
+    img: imgMatch ? imgMatch[1] : null,
+    price: priceMatch ? priceMatch[0] : null,
+    textSnippet: text.slice(0, 400),
+  };
 }
 
-async function reverseImageSearch(page, imageUrl) {
-  if (!imageUrl) return { error: "no image URL" };
-  const searchUrl = `https://www.google.com/searchbyimage?image_url=${encodeURIComponent(imageUrl)}&sbisrc=cr_1_5_2`;
-  await page.goto(searchUrl, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
-  await page.waitForTimeout(4000);
+// -- Google side: needs a real browser -- with explicit wall detection --
+
+const WALL_MARKERS = [
+  "unusual traffic",
+  "detected unusual traffic",
+  "before you continue to google",
+  "our systems have detected",
+  "verify you're human",
+  "verify you are human",
+  "recaptcha",
+];
+
+function detectWall(bodyText, pageTitle) {
+  const lower = `${bodyText} ${pageTitle}`.toLowerCase();
+  const hit = WALL_MARKERS.find((m) => lower.includes(m));
+  return hit || null;
+}
+
+async function tryAcceptConsent(page) {
+  // Google's EU/cookie-consent interstitial commonly shows an "Accept all" button
+  for (const text of ["Accept all", "I agree", "Accept"]) {
+    try {
+      const btn = page.getByRole("button", { name: text, exact: false }).first();
+      if (await btn.isVisible({ timeout: 1500 }).catch(() => false)) {
+        await btn.click({ timeout: 3000 }).catch(() => {});
+        await page.waitForTimeout(1500);
+        return true;
+      }
+    } catch (_) {}
+  }
+  return false;
+}
+
+async function extractGoogleResults(page) {
   return page.evaluate(() => {
     const links = [...document.querySelectorAll("a")]
       .map((a) => ({ href: a.href, text: a.textContent?.trim().slice(0, 120) }))
-      .filter((l) => l.href && l.href.startsWith("http") && !l.href.includes("google.com"));
-    // de-dupe by hostname, keep first occurrence
+      .filter((l) => l.href && l.href.startsWith("http") && !l.href.includes("google.com") && !l.href.includes("gstatic.com"));
     const seen = new Set();
     const domains = [];
     for (const l of links) {
@@ -104,48 +137,51 @@ async function reverseImageSearch(page, imageUrl) {
         }
       } catch (_) {}
     }
-    return { pageTitle: document.title, domains: domains.slice(0, 15) };
+    return { pageTitle: document.title, bodyText: document.body.innerText.slice(0, 600), domains: domains.slice(0, 15) };
   });
+}
+
+async function googleSearch(page, url, label) {
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
+  await page.waitForTimeout(2500);
+  await tryAcceptConsent(page);
+  await page.waitForTimeout(1500);
+  const result = await extractGoogleResults(page);
+  const wall = detectWall(result.bodyText, result.pageTitle);
+  return { label, wall, ...result };
+}
+
+async function reverseImageSearch(page, imageUrl) {
+  if (!imageUrl) return { label: "reverse-image", error: "no image URL to search" };
+  const url = `https://www.google.com/searchbyimage?image_url=${encodeURIComponent(imageUrl)}&sbisrc=cr_1_5_2`;
+  return googleSearch(page, url, "reverse-image");
 }
 
 async function textSearch(page, query) {
-  const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-  await page.goto(searchUrl, { waitUntil: "domcontentloaded", timeout: 45000 }).catch(() => {});
-  await page.waitForTimeout(3000);
-  return page.evaluate(() => {
-    const links = [...document.querySelectorAll("a")]
-      .map((a) => a.href)
-      .filter((h) => h && h.startsWith("http") && !h.includes("google.com") && !h.includes("gstatic.com"));
-    const seen = new Set();
-    const domains = [];
-    for (const href of links) {
-      try {
-        const host = new URL(href).hostname.replace(/^www\./, "");
-        if (!seen.has(host)) {
-          seen.add(host);
-          domains.push(host);
-        }
-      } catch (_) {}
-    }
-    return { pageTitle: document.title, domains: domains.slice(0, 15) };
-  });
+  const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+  return googleSearch(page, url, "text-search");
 }
 
 async function main() {
+  console.log("=== Step 1: fetch each Back Vault listing directly (plain fetch) ===");
+  const listings = [];
+  for (const c of CANDIDATES) {
+    const listing = await fetchBackVaultListing(c.bvUrl);
+    listings.push({ ...c, listing });
+    console.log(`\n${c.bvPiece}`);
+    console.log("  image:", listing.img || listing.error);
+    console.log("  price on page:", listing.price);
+    console.log("  text:", listing.textSnippet);
+  }
+
+  console.log("\n\n=== Step 2: Google reverse-image + text search (Browserbase) ===");
   await bb.withPage(async (page) => {
-    for (const c of CANDIDATES) {
+    for (const c of listings) {
       console.log(`\n\n########## ${c.bvPiece} ##########`);
       console.log(`Back Vault: $${c.bvPrice} | ${c.bvUrl}`);
       console.log(`Candidate match: ${c.otherDealer} -- "${c.otherPiece}" -- $${c.otherPrice}${c.otherUrl ? " -- " + c.otherUrl : " (no URL on file)"}`);
 
-      const listing = await extractBackVaultListing(page, c.bvUrl);
-      console.log(`\n-- Back Vault page --`);
-      console.log("title:", listing.title);
-      console.log("displayed price:", listing.price);
-      console.log("main image:", listing.img);
-      console.log("body text (first 500 chars):", (listing.bodyText || "").slice(0, 500).replace(/\s+/g, " "));
-
-      const imgResult = await reverseImageSearch(page, listing.img);
+      const imgResult = await reverseImageSearch(page, c.listing.img);
       console.log(`\n-- Reverse image search --`);
       console.log(JSON.stringify(imgResult, null, 2));
 
