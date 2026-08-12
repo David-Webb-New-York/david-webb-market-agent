@@ -3022,7 +3022,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-cabochon-ruby-crossover-hinged-cuff-bracelet-rr7880",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$10,200 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$10,200 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3033,7 +3033,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-leopard-emerald-eyes-with-box-cuff-links-j10525",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$9,700 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$9,700 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3044,7 +3044,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-square-open-link-nameplate-bracelet-rr7250",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$9,700 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$9,700 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3055,7 +3055,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-tiger-eye-star-pendant-rr7867",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$9,700 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$9,700 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3066,7 +3066,7 @@
     "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-diamond-cuff-bracelet-rr7669",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$9,700 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$9,700 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3077,7 +3077,7 @@
     "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-1-75cts-diamond-cuff-bracelet-rr7668",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$9,700 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$9,700 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3088,7 +3088,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-aries-zodiac-pendant-rr6776",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$9,200 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$9,200 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3099,7 +3099,7 @@
     "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-diamond-0-78cts-bracelet-rr4585",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$9,200 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$9,200 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3110,7 +3110,7 @@
     "url": "https://yafasignedjewels.com/products/18k-yellow-gold-ruby-eye-ram-s-head-bangle",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$9,000 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$9,000 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3121,7 +3121,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-satin-finish-id-tag-chain-bracelet-rr7294",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$8,700 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$8,700 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3132,7 +3132,7 @@
     "url": "https://oakgem.com/products/david-webb-white-enamel-diamond-gold-platinum-skip-bracelet",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$8,500 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$8,500 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3143,7 +3143,18 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-twist-rope-sectional-fishscale-flexible-bracelet-rr6806",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$8,200 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$8,200 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "1.78ctw Diamond & Ruby Rhinoceros Pendant",
+    "category": "necklace",
+    "price": 7790,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/necklaces/pendant-necklace/david-webb-1-78ctw-diamond-ruby-rhinoceros-pendant-v4xdg",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$7,790 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3154,7 +3165,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-red-enamel-lion-heads-cuff-links-rr8006",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$7,400 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$7,400 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3165,40 +3176,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-white-enamel-diamond-necklace-rr8072",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$7,100 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Vintage Ruby Enamel 18 Karat Gold Kingdom Horse Ring",
-    "category": "ring",
-    "price": 6975,
-    "source": "Wilson's Estate Jewelry",
-    "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-ruby-enamel-18-karat-gold-kingdom-horse-ring",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,975 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Platinum & 18K Yellow Gold Bombe Black Enamel Ring",
-    "category": "ring",
-    "price": 6900,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-bombe-black-enamel-ring-rr6410",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,900 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb 18K Yellow Gold Knot Style Button With Diamonds Earrings",
-    "category": "earrings",
-    "price": 6800,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-knot-style-button-with-diamonds-earrings-rr8492",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,800 is in the bottom 5% of all dealer prices on file, regardless of category"
+    "reason": "$7,100 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3209,7 +3187,7 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-1960s-vintage-tahitian-south-sea-pearl-18-karat-gold-tri-gold-necklace",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$6,750 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$6,750 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3220,128 +3198,7 @@
     "url": "https://thebackvault.com/products/david-webb-pearl-platinum-pearl-with-a-diamond-clasp-necklace-rr2729",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$6,700 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Platinum & 18K Yellow Gold Ruby, Emerald, Sapphire Three Gem Ring",
-    "category": "ring",
-    "price": 6700,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-ruby-emerald-sapphire-three-gem-ring-rr4356",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,700 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb 18K Yellow Gold Oval White Enamel Earrings",
-    "category": "earrings",
-    "price": 6700,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-oval-white-enamel-earrings-rr6048",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,700 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Ram's Head Enamel Gold Cufflinks",
-    "category": "cufflinks",
-    "price": 6600,
-    "source": "Oak Gem",
-    "url": "https://oakgem.com/products/david-webb-rams-head-enamel-gold-earrings",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,600 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Platinum & 18K Yellow Gold Hammered Nail Diamond Ring",
-    "category": "ring",
-    "price": 6500,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-hammered-nail-diamond-ring-rr9319",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,500 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "Vintage 1960s David Webb Three Zero Brooch",
-    "category": "brooch",
-    "price": 6450,
-    "source": "Eric Originals & Antiques",
-    "url": "https://ericoriginals.com/products/vintage-1960s-david-webb-three-zero-brooch",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,450 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Circa 1970's 18K Yellow Gold Round Cabochon Green Emerald Earrings",
-    "category": "earrings",
-    "price": 6400,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-circa-1970s-18k-yellow-gold-round-cabochon-green-emerald-earrings-rr2520",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb 18K Yellow Gold Ram Ring",
-    "category": "ring",
-    "price": 6400,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-ram-ring-rr4044",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Circa 1970's Platinum & 18K Yellow Gold Ruby, Emerald, Sapphire Earrings",
-    "category": "earrings",
-    "price": 6400,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-circa-1970s-platinum-18k-yellow-gold-ruby-emerald-sapphire-earrings-rr4391",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Platinum & 18K Yellow Gold Zebra Stripe Bombe Ring",
-    "category": "ring",
-    "price": 6400,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-zebra-stripe-bombe-ring-rr4900",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Platinum & 18K Yellow Gold Diamond Bombe Clip Earrings",
-    "category": "earrings",
-    "price": 6400,
-    "source": "The Back Vault",
-    "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-diamond-bombe-clip-earrings-rr6539",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
-  },
-  {
-    "type": "dealer",
-    "piece_name": "David Webb Emerald Gold Lion Head Cufflinks",
-    "category": "cufflinks",
-    "price": 6400,
-    "source": "Oak Gem",
-    "url": "https://oakgem.com/products/david-webb-emerald-gold-lion-head-cufflinks",
-    "native": "",
-    "flag": "price_anomaly",
-    "reason": "$6,400 is in the bottom 5% of all dealer prices on file, regardless of category"
+    "reason": "$6,700 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3385,7 +3242,7 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-contemporary-18-karat-yellow-gold-taurus-zodiac-pendant-necklace",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$6,200 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$6,200 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3418,7 +3275,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-money-clip-jewelry-rr7249",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$6,100 is well below the typical range for \"brooch\" (121 comparable dealer records, median $25,000)"
+    "reason": "$6,100 is in the bottom 5% of all dealer prices on file, regardless of category"
   },
   {
     "type": "dealer",
@@ -3430,6 +3287,17 @@
     "native": "",
     "flag": "price_anomaly",
     "reason": "$6,100 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Vintage 18K Nephrite Intaglio Cocktail Ring",
+    "category": "ring",
+    "price": 5960,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/details/jewelry/rings/signet-ring/david-webb-vintage-18k-nephrite-intaglio-cocktail-ring-rp0gx",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$5,960 is in the bottom 5% of all dealer prices on file, regardless of category"
   },
   {
     "type": "dealer",
@@ -3565,6 +3433,17 @@
   },
   {
     "type": "dealer",
+    "piece_name": "18K Hammered Small Swirl Earrings",
+    "category": "earrings",
+    "price": 5521,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-hammered-small-swirl-earrings-tyr7l",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$5,521 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
     "piece_name": "David Webb Frog Brooch",
     "category": "brooch",
     "price": 5500,
@@ -3572,7 +3451,7 @@
     "url": "https://ericoriginals.com/products/david-webb-frog-brooch-1",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$5,500 is well below the typical range for \"brooch\" (121 comparable dealer records, median $25,000)"
+    "reason": "$5,500 is well below the typical range for \"brooch\" (130 comparable dealer records, median $24,150)"
   },
   {
     "type": "dealer",
@@ -3587,6 +3466,17 @@
   },
   {
     "type": "dealer",
+    "piece_name": "18K Diamond & Enamel Double Bangle Bracelet",
+    "category": "bracelet",
+    "price": 5350,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/details/jewelry/bracelets/bangle/david-webb-18k-diamond-enamel-double-bangle-bracelet-ushbl",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$5,350 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
+  },
+  {
+    "type": "dealer",
     "piece_name": "David Webb 18K Yellow Gold Frog Green Enamel Ruby Eyes Cuff Links",
     "category": "bracelet",
     "price": 5300,
@@ -3594,7 +3484,18 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-frog-green-enamel-ruby-eyes-cuff-links-rr4499",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$5,300 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$5,300 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Lapis Lazuli Clip-On Earrings",
+    "category": "earrings",
+    "price": 5225,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-lapis-lazuli-clip-on-earrings-v97fa",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$5,225 is in the bottom 5% of all dealer prices on file, regardless of category"
   },
   {
     "type": "dealer",
@@ -3605,7 +3506,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-peace-black-enamel-and-diamonds-round-pendant-necklace-rr7483",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$5,200 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$5,200 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3627,7 +3528,7 @@
     "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-leopard-cabochon-emerald-eyes-cuff-links-rr9344",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$4,800 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$4,800 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3649,7 +3550,18 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-1980s-onyx-rock-crystal-quartz-enamel-18-karat-yellow-gold-bead-strand-vintage-necklace",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$4,800 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$4,800 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Enamel Band",
+    "category": "other",
+    "price": 4800,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/rings/band/david-webb-18k-enamel-band-ubuzf",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$4,800 is in the bottom 5% of all dealer prices on file, regardless of category"
   },
   {
     "type": "dealer",
@@ -3664,6 +3576,17 @@
   },
   {
     "type": "dealer",
+    "piece_name": "18K Enamel Stud Earrings",
+    "category": "earrings",
+    "price": 4584,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/earrings/stud/david-webb-18k-enamel-stud-earrings-u79ha",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$4,584 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
     "piece_name": "David Webb Platinum & 18K Yellow Gold Tiger Brooch",
     "category": "brooch",
     "price": 4500,
@@ -3671,7 +3594,7 @@
     "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-tiger-brooch-rr5894",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$4,500 is well below the typical range for \"brooch\" (121 comparable dealer records, median $25,000)"
+    "reason": "$4,500 is well below the typical range for \"brooch\" (130 comparable dealer records, median $24,150)"
   },
   {
     "type": "dealer",
@@ -3682,7 +3605,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-rose-gold-gemini-horoscope-vintage-cuff-links-rr8383",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$4,500 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$4,500 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3693,7 +3616,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-plain-link-chain-necklace-rr7374",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$4,500 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$4,500 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3716,6 +3639,61 @@
     "native": "",
     "flag": "price_anomaly",
     "reason": "$4,500 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Citrine Carved Clip-On Earrings",
+    "category": "earrings",
+    "price": 4500,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-citrine-carved-clip-on-earrings-vg5mo",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$4,500 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Multistone & Diamond Cocktail Ring",
+    "category": "ring",
+    "price": 4496,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/rings/cocktail-ring/david-webb-multistone-diamond-cocktail-ring-ts1dl",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$4,496 is well below the typical range for \"ring\" (331 comparable dealer records, median $19,500)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Enamel Cufflinks",
+    "category": "cufflinks",
+    "price": 4495,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/cufflinks/david-webb-18k-enamel-cufflinks-vdt01",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$4,495 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Diamond & Enamel Peace Sign Pendant Necklace",
+    "category": "necklace",
+    "price": 4421,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/necklaces/pendant-necklace/david-webb-diamond-enamel-peace-sign-pendant-necklace-v6x74",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$4,421 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Diamond & Enamel Peace Sign Pendant Necklace",
+    "category": "necklace",
+    "price": 4421,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/necklaces/pendant-necklace/david-webb-18k-diamond-enamel-peace-sign-pendant-necklace-ue7o9",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$4,421 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3759,7 +3737,7 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-18-karat-yellow-gold-hammered-swirl-ear-clip-earrings",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$4,250 is well below the typical range for \"earrings\" (417 comparable dealer records, median $18,200)"
+    "reason": "$4,250 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
   },
   {
     "type": "dealer",
@@ -3770,7 +3748,7 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-18-karat-yellow-gold-bamboo-hoop-ear-clip-earrings",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$4,250 is well below the typical range for \"earrings\" (417 comparable dealer records, median $18,200)"
+    "reason": "$4,250 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
   },
   {
     "type": "dealer",
@@ -3781,7 +3759,29 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-18-karat-yellow-gold-hoop-ear-clip-earrings-winter-squash-vegetable-plant",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$4,150 is well below the typical range for \"earrings\" (417 comparable dealer records, median $18,200)"
+    "reason": "$4,150 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Beaded Clip-On Earrings",
+    "category": "earrings",
+    "price": 3995,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-beaded-clip-on-earrings-uz063",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$3,995 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Beaded Clip-On Earrings",
+    "category": "earrings",
+    "price": 3995,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/details/jewelry/earrings/clip-on/david-webb-18k-beaded-clip-on-earrings-uc9e3",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$3,995 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
   },
   {
     "type": "dealer",
@@ -3792,7 +3792,18 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-cultured-pearl-lapis-18-karat-gold-strand-necklace-circa-1960",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,850 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$3,850 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Diamond & Enamel Clip-On earrings",
+    "category": "earrings",
+    "price": 3810,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-diamond-enamel-clip-on-earrings-rm3b1",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$3,810 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
   },
   {
     "type": "dealer",
@@ -3803,7 +3814,7 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-18-karat-gold-brushed-ear-clip-earrings-1",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,800 is well below the typical range for \"earrings\" (417 comparable dealer records, median $18,200)"
+    "reason": "$3,800 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
   },
   {
     "type": "dealer",
@@ -3814,7 +3825,18 @@
     "url": "https://thebackvault.com/products/david-webb-kingdom-platinum-18k-yellow-gold-green-enamel-frog-clip-on-earrings-rr4711",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,700 is well below the typical range for \"earrings\" (417 comparable dealer records, median $18,200)"
+    "reason": "$3,700 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Enamel Jabot Pin",
+    "category": "brooch",
+    "price": 3658,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/brooches/pin/david-webb-18k-enamel-jabot-pin-u79zn",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$3,658 is well below the typical range for \"brooch\" (130 comparable dealer records, median $24,150)"
   },
   {
     "type": "dealer",
@@ -3825,7 +3847,7 @@
     "url": "https://www.estatediamondjewelry.com/product/cufflinks/",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,600 is well below the typical range for \"ring\" (314 comparable dealer records, median $20,050)"
+    "reason": "$3,600 is well below the typical range for \"ring\" (331 comparable dealer records, median $19,500)"
   },
   {
     "type": "dealer",
@@ -3836,7 +3858,40 @@
     "url": "https://thebackvault.com/products/david-webb-tiger-eye-platinum-18k-yellow-gold-tiger-eye-station-chain-circa-1970-necklace-rr4046",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,500 is well below the typical range for \"necklace\" (212 comparable dealer records, median $42,200)"
+    "reason": "$3,500 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Hammered Cufflinks",
+    "category": "cufflinks",
+    "price": 3415,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/cufflinks/david-webb-18k-hammered-cufflinks-uh8k8",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$3,415 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Enamel Umbrella Cufflinks",
+    "category": "cufflinks",
+    "price": 3353,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/cufflinks/david-webb-18k-enamel-umbrella-cufflinks-va4pz",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$3,353 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Vintage Platinum 18K Sapphire & Diamond Station Bracelet",
+    "category": "bracelet",
+    "price": 3209,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/details/jewelry/bracelets/link/david-webb-vintage-platinum-18k-sapphire-diamond-station-bracelet-tbm57",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$3,209 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3847,7 +3902,7 @@
     "url": "https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-zebra-button-cuff-links-rr8879",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,200 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$3,200 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3858,7 +3913,7 @@
     "url": "https://thebackvault.com/products/david-webb-black-enamel-lion-head-with-ruby-eyes-cuff-links-rr7569",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,200 is well below the typical range for \"bracelet\" (289 comparable dealer records, median $42,200)"
+    "reason": "$3,200 is well below the typical range for \"bracelet\" (307 comparable dealer records, median $40,900)"
   },
   {
     "type": "dealer",
@@ -3869,7 +3924,7 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-simple-clip-on-earrings-rr6920",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,200 is well below the typical range for \"earrings\" (417 comparable dealer records, median $18,200)"
+    "reason": "$3,200 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
   },
   {
     "type": "dealer",
@@ -3880,7 +3935,18 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-round-clip-black-enamel-vintage-earrings-rr6594",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,200 is well below the typical range for \"earrings\" (417 comparable dealer records, median $18,200)"
+    "reason": "$3,200 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Diamond & Enamel Scape Pendant Necklace",
+    "category": "necklace",
+    "price": 3146,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/details/jewelry/necklaces/pendant-necklace/david-webb-18k-diamond-enamel-scape-pendant-necklace-szsib",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$3,146 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
   },
   {
     "type": "dealer",
@@ -3891,7 +3957,7 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-1970s-ruby-18-karat-yellow-gold-knotted-snake-vintage-band-ring",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,100 is well below the typical range for \"ring\" (314 comparable dealer records, median $20,050)"
+    "reason": "$3,100 is well below the typical range for \"ring\" (331 comparable dealer records, median $19,500)"
   },
   {
     "type": "dealer",
@@ -3902,7 +3968,7 @@
     "url": "https://wilsonsestatejewelry.com/products/david-webb-vintage-18-karat-yellow-gold-ridged-band-ring-circa-1960s-metal-fashion",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$3,100 is well below the typical range for \"ring\" (314 comparable dealer records, median $20,050)"
+    "reason": "$3,100 is well below the typical range for \"ring\" (331 comparable dealer records, median $19,500)"
   },
   {
     "type": "dealer",
@@ -3917,6 +3983,39 @@
   },
   {
     "type": "dealer",
+    "piece_name": "18K Diamond & Enamel Skip Pendant Necklace",
+    "category": "necklace",
+    "price": 2796,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/necklaces/pendant-necklace/david-webb-18k-diamond-enamel-skip-pendant-necklace-s11bh",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$2,796 is well below the typical range for \"necklace\" (225 comparable dealer records, median $41,600)"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "Bakelite Cufflinks",
+    "category": "cufflinks",
+    "price": 2250,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/jewelry/cufflinks/david-webb-bakelite-cufflinks-r6p6x",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$2,250 is in the bottom 5% of all dealer prices on file, regardless of category"
+  },
+  {
+    "type": "dealer",
+    "piece_name": "18K Hammered Nail Stud Earrings",
+    "category": "earrings",
+    "price": 1995,
+    "source": "The RealReal",
+    "url": "https://www.therealreal.com/products/details/jewelry/earrings/stud/david-webb-18k-hammered-nail-stud-earrings-v3e9h",
+    "native": "",
+    "flag": "price_anomaly",
+    "reason": "$1,995 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
+  },
+  {
+    "type": "dealer",
     "piece_name": "David Webb 18K Yellow Gold Fluted Earrings",
     "category": "earrings",
     "price": 1900,
@@ -3924,6 +4023,6 @@
     "url": "https://thebackvault.com/products/david-webb-18k-yellow-gold-fluted-earrings-rr6921",
     "native": "",
     "flag": "price_anomaly",
-    "reason": "$1,900 is well below the typical range for \"earrings\" (417 comparable dealer records, median $18,200)"
+    "reason": "$1,900 is well below the typical range for \"earrings\" (474 comparable dealer records, median $17,500)"
   }
 ]

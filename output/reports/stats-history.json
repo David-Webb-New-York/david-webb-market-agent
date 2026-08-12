@@ -32,11 +32,11 @@
   {
     "date": "2026-08-12",
     "auctionRecords": 3884,
-    "dealerRecords": 1455,
-    "activeDealerListings": 1447,
-    "newDealerListings4wk": 1455,
-    "closedDealerListings4wk": 8,
-    "dealerAskingMedian": 25000,
+    "dealerRecords": 1578,
+    "activeDealerListings": 1567,
+    "newDealerListings1wk": 1578,
+    "closedDealerListings4wk": 11,
+    "dealerAskingMedian": 24000,
     "recentSalesMedian": 32000
   }
 ]
