@@ -397,6 +397,17 @@
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
+  // Lets report links deep-link straight into a filtered view, e.g.
+  // "?tag=Maltese%20Cross" (weekly report's "Trends by Motif & Material"
+  // links each tag here). Must run after populateFilterOptions() so the
+  // <option> exists to select.
+  function applyUrlFilters() {
+    const tag = new URLSearchParams(location.search).get("tag");
+    if (tag && [...els.filterTag.options].some((o) => o.value === tag)) {
+      els.filterTag.value = tag;
+    }
+  }
+
   // --- Wiring ---------------------------------------------------------------
 
   function debounce(fn, ms) {
@@ -472,6 +483,7 @@
     ]);
     state.records = normalize(history, dealers, buildFlagsByUrl(flagRecords));
     populateFilterOptions();
+    applyUrlFilters();
     wireEvents();
     renderSortIndicators();
     applyFilters();

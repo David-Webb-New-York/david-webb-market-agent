@@ -11,7 +11,12 @@ name: Weekly Dealer Listings Refresh
 on:
   schedule:
     - cron: '30 13 * * 1'  # Monday 13:30 UTC (8:30am ET in winter / 9:30am ET in summer), 15 min after history-refresh.yml
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      banner_note:
+        description: 'Optional banner forwarded to the weekly report''s Slack post, e.g. to flag an extra one-off run this week'
+        type: string
+        default: ''
   push:
     paths:
       - 'import-dealers.js'
@@ -86,6 +91,6 @@ jobs:
             if [ "$status" = "completed" ]; then break; fi
             sleep 60
           done
-          gh workflow run weekly-report.yml --ref main
+          gh workflow run weekly-report.yml --ref main -f banner_note="${{ inputs.banner_note }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
