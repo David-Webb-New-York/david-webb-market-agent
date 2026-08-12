@@ -40,15 +40,49 @@ function money(n) {
   return "$" + Math.round(n).toLocaleString("en-US");
 }
 
+// A brand-new dealer source's very first import stamps first_seen=today
+// on its ENTIRE catalog at once -- that's a one-time backfill artifact,
+// not real day-to-day market activity, and would otherwise flood this
+// alert (confirmed as a real, not theoretical, problem: onboarding The
+// RealReal on 2026-08-11 landed 120 records in one run, 102 of them
+// above the $5K threshold -- every one would have alerted as "new today"
+// on the very next run with no fix). Detected generically so this
+// self-corrects for any future new source too, not just this one: if
+// EVERY currently-active record for a dealer was first seen today, and
+// there's more than a handful of them, it reads as an initial backfill
+// and is excluded from today's alert. Self-limiting -- by tomorrow those
+// records' first_seen dates are in the past, so normal day-to-day
+// new-listing detection resumes automatically, no manual cleanup needed.
+// The weekly report isn't affected -- it has its own isBaselineRun
+// framing for exactly this situation.
+const BACKFILL_SUSPECT_COUNT = 10;
+
 function loadNewListings(today) {
   if (!fs.existsSync(LISTINGS_JSON)) return [];
   const records = JSON.parse(fs.readFileSync(LISTINGS_JSON, "utf8"));
+  const active = records.filter((r) => r.status === "active");
+
+  const byDealer = new Map();
+  for (const r of active) {
+    if (!byDealer.has(r.dealer)) byDealer.set(r.dealer, []);
+    byDealer.get(r.dealer).push(r);
+  }
+  const backfillingDealers = new Set();
+  for (const [dealer, recs] of byDealer) {
+    if (recs.length > BACKFILL_SUSPECT_COUNT && recs.every((r) => r.first_seen === today)) {
+      backfillingDealers.add(dealer);
+      console.log(
+        `  (suppressing ${dealer} from today's alert -- all ${recs.length} of its active listings were first seen today, reads as an initial backfill, not real day-to-day new listings)`
+      );
+    }
+  }
+
   // asking_price_usd (convert-currency.js, computed centrally in
   // dealer-store.js) rather than raw asking_price -- every dealer source
   // is USD-only today, but this keeps the threshold comparison correct if
   // that ever changes, same reasoning as the weekly report's price flags.
-  return records
-    .filter((r) => r.status === "active" && r.first_seen === today)
+  return active
+    .filter((r) => r.first_seen === today && !backfillingDealers.has(r.dealer))
     .map((r) => ({ ...r, asking_price: Number(r.asking_price_usd || r.asking_price) || 0 }))
     .filter((r) => r.asking_price >= PRICE_THRESHOLD)
     .sort((a, b) => b.asking_price - a.asking_price);
