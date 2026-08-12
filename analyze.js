@@ -309,6 +309,7 @@ function computeStats(history, dealers, today) {
     dealerAskingMedian: median(
       activeDealerListings.map((r) => num(r.asking_price_usd)).filter((n) => n !== null)
     ),
+    dealerAskingTotal: activeDealerListings.reduce((sum, r) => sum + (num(r.asking_price_usd) || 0), 0),
   };
 }
 
@@ -361,7 +362,7 @@ function bucketDealers(byDealer, activeRecords) {
   return [...top, { dealer: `Other (${otherNames.size} additional dealers)`, count: otherPrices.length, median: median(otherPrices) }];
 }
 
-function renderCurrentlyAvailable(activeCount, byCategory, byDealer, histogram, activeRecords) {
+function renderCurrentlyAvailable(activeCount, byCategory, byDealer, histogram, activeRecords, totalValue) {
   const top = niceCeil(Math.max(...histogram.map((b) => b.count), 1), 50);
   const chart = [
     "```mermaid",
@@ -390,7 +391,9 @@ function renderCurrentlyAvailable(activeCount, byCategory, byDealer, histogram, 
   return [
     "## Currently Available",
     "",
-    `_${activeCount.toLocaleString()} active listings across all tracked dealer marketplaces (estate jewelers, 1stDibs, Sotheby's Buy Now, The RealReal). This section is dealer inventory only — there is currently no live, biddable David Webb auction inventory to track; every auction-history record on file is a completed, historical sale (see "Recent Auction Sales" below)._`,
+    `_${activeCount.toLocaleString()} active listings across all tracked dealer marketplaces (estate jewelers, 1stDibs, Sotheby's Buy Now, The RealReal), with a combined asking-price total of ${money(totalValue)}. This section is dealer inventory only — there is currently no live, biddable David Webb auction inventory to track; every auction-history record on file is a completed, historical sale (see "Recent Auction Sales" below)._`,
+    "",
+    `_That combined total is a sum of current asking prices, not an appraisal or a market valuation — it will run high wherever the same physical piece is listed on more than one platform (see Data-Quality Caveats)._`,
     "",
     "**By price**",
     "",
@@ -806,7 +809,8 @@ async function generate() {
       stats.dealerByCategory,
       stats.dealerByDealer,
       stats.dealerHistogram,
-      stats.activeDealerRecords
+      stats.activeDealerRecords,
+      stats.dealerAskingTotal
     ),
     renderTagTrends(stats.auctionByTag, stats.dealerByTag, DATABASE_URL),
     renderNewListings(stats.newDealerListings1wk, DATABASE_URL),
