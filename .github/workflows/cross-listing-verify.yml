@@ -1,0 +1,37 @@
+name: Cross-Listing Verification (Claude vision)
+# One-off audit: narrow the full active dataset to plausible cross-dealer
+# duplicate candidates (cheap price/category/title heuristic, ~164 pairs
+# on the current dataset), then have Claude look at each candidate pair's
+# real photos and judge whether they're the same physical piece.
+# Replaces image-dedup-probe.js's dHash approach, which calibration
+# (2026-08-12) showed can't reliably separate same-piece from
+# different-piece photos for this catalog-photography style.
+on:
+  push:
+    paths:
+      - 'verify-cross-listings.js'
+      - '.github/workflows/cross-listing-verify.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: node verify-cross-listings.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Upload verification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cross-listing-verification
+          path: probe-output/cross-listing-verification.json
+          retention-days: 30
+          if-no-files-found: warn
