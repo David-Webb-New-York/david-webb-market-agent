@@ -29,6 +29,21 @@
  * Dispatched via image-dedup-probe.yml (needs a longer timeout than the
  * other debug probes -- downloading/hashing ~1,500 images takes a few
  * minutes even with concurrency).
+ *
+ * RESULT (2026-08-12, first real run): inconclusive. A 64-bit dHash isn't
+ * a fine enough fingerprint for this catalog-photography style (centered
+ * object, plain background, similar studio lighting across many DIFFERENT
+ * pieces) -- it produced ~300 "strong" matches, and manual inspection
+ * found most were false positives (e.g. an earring matched to an unrelated
+ * cufflink). Worse, of the 4 pairs already confirmed real via Google
+ * reverse-image search, only 1 (the Gap Ring / Wilson's Estate Jewelry
+ * pair) showed up in the flagged list at all -- the other 3 didn't hash
+ * close enough to match, likely because each site's own image pipeline
+ * (crop/watermark/compression) diverges more than an 8x8 hash can absorb.
+ * Not deleted -- kept as documented tooling and a base to improve on (a
+ * larger hash grid, or a proper perceptual-hash library with crop/
+ * rotation tolerance) -- but its numbers should NOT be treated as a
+ * reliable duplicate count without that follow-up work.
  */
 const fs = require("fs");
 const sharp = require("sharp");

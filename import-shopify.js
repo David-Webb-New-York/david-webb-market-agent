@@ -50,6 +50,10 @@ const DEALERS = [
   { shop: "wilsonsestatejewelry.com", dealer: "Wilson's Estate Jewelry", currency: "USD" },
   { shop: "schiffmans.com", dealer: "Schiffman's", currency: "USD" },
   { shop: "macklowegallery.com", dealer: "Macklowe Gallery", currency: "USD" },
+  // Surfaced 2026-08-12 via Google reverse-image search while tracing a
+  // Back Vault cross-listing candidate; confirmed Shopify via
+  // scan-dealer-domains.js and confirmed a real dealer by the user.
+  { shop: "greenleafcrosby.com", dealer: "Greenleaf & Crosby", currency: "USD" },
 ];
 
 const PAGE_LIMIT = 250;
