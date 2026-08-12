@@ -121,6 +121,7 @@ function niceCeil(value, step) {
 // (see the same guard, and the reasoning, in flag-listings.js).
 const MIN_PLAUSIBLE_PRICE = 50;
 const FOUR_WEEKS = 28;
+const ONE_WEEK = 7;
 
 function num(v) {
   const n = Number(v);
@@ -251,19 +252,22 @@ function pickDealerFields(r) {
 
 function computeStats(history, dealers, today) {
   const fourWeeksAgo = daysAgoStr(FOUR_WEEKS);
+  const oneWeekAgo = daysAgoStr(ONE_WEEK);
   const recentSaleWindow = daysAgoStr(60);
 
   const newAuctionRecords = history.filter((r) => (r.first_captured || "") >= fourWeeksAgo);
   const activeDealerListings = dealers.filter((r) => r.status === "active");
 
-  // "New" and "closed" are reported in full, not top-N -- these are
-  // naturally bounded windows (4 weeks), unlike "currently available"
-  // (which can be thousands of records and gets a stats breakdown
-  // instead of an item-by-item list).
-  const newDealerListings4wk = dealers
-    .filter((r) => (r.first_seen || "") >= fourWeeksAgo)
+  // "New" is a 1-week window, not 4 -- a 4-week window read as "basically
+  // everything" while the pipeline itself is still young (every record
+  // gets a first_seen within the last few weeks just from the initial
+  // backfill), which isn't a useful signal (2026-08-12 user feedback).
+  // "Closed" stays a 4-week window since delistings are naturally rare
+  // and a wider window doesn't have the same "shows everything" problem.
+  const newDealerListings1wk = dealers
+    .filter((r) => (r.first_seen || "") >= oneWeekAgo)
     .map(pickDealerFields)
-    .sort((a, b) => (b.first_seen || "").localeCompare(a.first_seen || ""));
+    .sort((a, b) => (b.price || 0) - (a.price || 0));
   const closedDealerListings4wk = dealers
     .filter((r) => r.status === "inactive" && (r.last_seen || "") >= fourWeeksAgo)
     .map(pickDealerFields)
@@ -286,8 +290,9 @@ function computeStats(history, dealers, today) {
       dealerRecords: dealers.length,
       activeDealerListings: activeDealerListings.length,
     },
-    newDealerListings4wk,
+    newDealerListings1wk,
     closedDealerListings4wk,
+    activeDealerRecords: activeDealerListings,
     recentSales: {
       windowDays: 60,
       count: recentSaleRecords.length,
@@ -324,7 +329,7 @@ function appendStatsHistory(stats) {
     auctionRecords: stats.totals.auctionRecords,
     dealerRecords: stats.totals.dealerRecords,
     activeDealerListings: stats.totals.activeDealerListings,
-    newDealerListings4wk: stats.newDealerListings4wk.length,
+    newDealerListings1wk: stats.newDealerListings1wk.length,
     closedDealerListings4wk: stats.closedDealerListings4wk.length,
     dealerAskingMedian: stats.dealerAskingMedian,
     recentSalesMedian: stats.recentSales.median,
@@ -338,7 +343,25 @@ function appendStatsHistory(stats) {
 
 // ---------- deterministic report sections ----------
 
-function renderCurrentlyAvailable(activeCount, byCategory, byDealer, histogram) {
+// A dealer table with every dealer ever added gets long and unreadable --
+// this shows the top 20 by listing count (the ones actually worth scanning)
+// and folds the rest into one "Other" row, with an accurate combined
+// median computed from the underlying records rather than averaging
+// per-dealer medians (2026-08-12 user feedback).
+const TOP_DEALERS = 20;
+
+function bucketDealers(byDealer, activeRecords) {
+  if (byDealer.length <= TOP_DEALERS) return byDealer;
+  const top = byDealer.slice(0, TOP_DEALERS);
+  const otherNames = new Set(byDealer.slice(TOP_DEALERS).map((d) => d.dealer));
+  const otherPrices = activeRecords
+    .filter((r) => otherNames.has(r.dealer || "Unknown"))
+    .map((r) => num(r.asking_price_usd))
+    .filter((n) => n !== null);
+  return [...top, { dealer: `Other (${otherNames.size} additional dealers)`, count: otherPrices.length, median: median(otherPrices) }];
+}
+
+function renderCurrentlyAvailable(activeCount, byCategory, byDealer, histogram, activeRecords) {
   const top = niceCeil(Math.max(...histogram.map((b) => b.count), 1), 50);
   const chart = [
     "```mermaid",
@@ -361,7 +384,7 @@ function renderCurrentlyAvailable(activeCount, byCategory, byDealer, histogram) 
   const dealerTable = [
     "| Dealer | Active Listings | Median Asking |",
     "|---|---|---|",
-    ...byDealer.map((d) => `| ${d.dealer} | ${d.count} | ${money(d.median)} |`),
+    ...bucketDealers(byDealer, activeRecords).map((d) => `| ${d.dealer} | ${d.count} | ${money(d.median)} |`),
   ].join("\n");
 
   return [
@@ -378,6 +401,10 @@ function renderCurrentlyAvailable(activeCount, byCategory, byDealer, histogram) 
     catTable,
     "",
     "**By dealer**",
+    "",
+    `_${byDealer.length} dealer(s) currently carry David Webb pieces${
+      byDealer.length > TOP_DEALERS ? ` — showing the top ${TOP_DEALERS} by listing count, the rest bucketed into "Other" below` : ""
+    }._`,
     "",
     dealerTable,
     "",
@@ -398,15 +425,36 @@ function renderDealerItemTable(items) {
   ].join("\n");
 }
 
-function renderNewListings(items) {
+// Capped at the 20 biggest by price -- with the pipeline still young,
+// showing everything first-seen this week can still run long, and the
+// biggest pieces are the ones worth a scan in the report itself. The rest
+// are one click away in the live dashboard, not dropped (2026-08-12 user
+// feedback).
+const TOP_NEW_LISTINGS = 20;
+
+function renderNewListings(items, databaseUrl) {
   const lines = [
-    "## New in the Last 4 Weeks",
+    "## New in the Last Week",
     "",
-    `_${items.length.toLocaleString()} dealer listing(s) first seen in the last 28 days, across all sources and price points._`,
+    `_${items.length.toLocaleString()} dealer listing(s) first seen in the last 7 days, across all sources and price points${
+      items.length > TOP_NEW_LISTINGS ? ` — showing the ${TOP_NEW_LISTINGS} biggest by price` : ""
+    }._`,
     "",
   ];
-  if (items.length) lines.push(renderDealerItemTable(items), "");
-  else lines.push("_None._", "");
+  if (items.length) {
+    lines.push(renderDealerItemTable(items.slice(0, TOP_NEW_LISTINGS)), "");
+    if (items.length > TOP_NEW_LISTINGS) {
+      const link = databaseUrl ? `${databaseUrl}?type=dealer` : null;
+      lines.push(
+        link
+          ? `_...and ${items.length - TOP_NEW_LISTINGS} more. [See the full list in the live dashboard](${link})._`
+          : `_...and ${items.length - TOP_NEW_LISTINGS} more._`,
+        ""
+      );
+    }
+  } else {
+    lines.push("_None._", "");
+  }
   return lines.join("\n");
 }
 
@@ -585,11 +633,11 @@ function buildLlmContext(stats) {
     date: stats.date,
     isBaselineRun: stats.isBaselineRun,
     totals: stats.totals,
-    newDealerListingsCount4wk: stats.newDealerListings4wk.length,
+    newDealerListingsCount1wk: stats.newDealerListings1wk.length,
     closedDealerListingsCount4wk: stats.closedDealerListings4wk.length,
     dealerAskingMedian: stats.dealerAskingMedian,
     recentAuctionSales: { windowDays: 60, count: stats.recentSales.count, median: stats.recentSales.median },
-    topNewDealerListings: [...stats.newDealerListings4wk].sort(byPriceDesc).slice(0, 5),
+    topNewDealerListings: [...stats.newDealerListings1wk].sort(byPriceDesc).slice(0, 5),
     topRecentAuctionSales: [...stats.recentSales.items].sort(byPriceDesc).slice(0, 5),
   };
 }
@@ -671,7 +719,7 @@ function buildSlackPayload(date, stats, slackSummary, flags = []) {
           text:
             `*${stats.totals.auctionRecords}* auction records · *${stats.totals.activeDealerListings}* active dealer listings ` +
             `· *${stats.recentSales.count}* auction sales in the last 60 days (median ${money(stats.recentSales.median)}) ` +
-            `· *${stats.newDealerListings4wk.length}* new / *${stats.closedDealerListings4wk.length}* closed dealer listings in the last 4 weeks`,
+            `· *${stats.newDealerListings1wk.length}* new (last week) / *${stats.closedDealerListings4wk.length}* closed (last 4 weeks) dealer listings`,
         },
       },
       { type: "section", text: { type: "mrkdwn", text: slackSummary || "_No summary generated._" } },
@@ -737,7 +785,7 @@ async function generate() {
 
   console.log(
     `Analyzing ${date}: ${stats.totals.auctionRecords} auction records, ${stats.totals.activeDealerListings} active dealer listings, ` +
-      `${stats.newDealerListings4wk.length} new / ${stats.closedDealerListings4wk.length} closed in the last 4 weeks...`
+      `${stats.newDealerListings1wk.length} new (last week) / ${stats.closedDealerListings4wk.length} closed (last 4 weeks)...`
   );
   const text = await callClaude({
     system: ANALYST_SYSTEM,
@@ -749,16 +797,22 @@ async function generate() {
     process.exit(1);
   }
 
-  // Order matters here (2026-08-13 user request): available -> new ->
-  // closed -> recent/historical auction context -> trends -> flags
-  // (penultimate) -> data-quality caveats (final).
+  // Order matters here (2026-08-12 user request): available -> trends by
+  // motif/material -> new -> closed -> recent/historical auction context
+  // -> flags (penultimate) -> data-quality caveats (final).
   const sections = [
-    renderCurrentlyAvailable(stats.totals.activeDealerListings, stats.dealerByCategory, stats.dealerByDealer, stats.dealerHistogram),
-    renderNewListings(stats.newDealerListings4wk),
+    renderCurrentlyAvailable(
+      stats.totals.activeDealerListings,
+      stats.dealerByCategory,
+      stats.dealerByDealer,
+      stats.dealerHistogram,
+      stats.activeDealerRecords
+    ),
+    renderTagTrends(stats.auctionByTag, stats.dealerByTag, DATABASE_URL),
+    renderNewListings(stats.newDealerListings1wk, DATABASE_URL),
     renderClosedListings(stats.closedDealerListings4wk),
     renderRecentAuctionSales(stats.recentSales),
     renderTopSalesEver(stats.topSalesEver),
-    renderTagTrends(stats.auctionByTag, stats.dealerByTag, DATABASE_URL),
     renderFlags(flags),
     renderDataQualityCaveats(),
   ]

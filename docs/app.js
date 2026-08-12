@@ -399,12 +399,19 @@
 
   // Lets report links deep-link straight into a filtered view, e.g.
   // "?tag=Maltese%20Cross" (weekly report's "Trends by Motif & Material"
-  // links each tag here). Must run after populateFilterOptions() so the
-  // <option> exists to select.
+  // links each tag here) or "?type=dealer" (the "New in the Last Week"
+  // section links here for the full list beyond its top-20 cutoff). Must
+  // run after populateFilterOptions() so dynamically-populated <option>s
+  // (like tags) exist to select.
   function applyUrlFilters() {
-    const tag = new URLSearchParams(location.search).get("tag");
+    const params = new URLSearchParams(location.search);
+    const tag = params.get("tag");
     if (tag && [...els.filterTag.options].some((o) => o.value === tag)) {
       els.filterTag.value = tag;
+    }
+    const type = params.get("type");
+    if (type && [...els.filterType.options].some((o) => o.value === type)) {
+      els.filterType.value = type;
     }
   }
 
