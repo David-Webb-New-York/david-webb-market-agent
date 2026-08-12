@@ -10,6 +10,7 @@ on:
       - 'therealreal-algolia-probe.js'
       - 'import-therealreal.js'
       - 'test-therealreal.js'
+      - 'backvault-model-probe.js'
       - '.github/workflows/dealer-marketplaces-debug.yml'
   workflow_dispatch: {}
 permissions:
@@ -52,3 +53,6 @@ jobs:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
           STEEL_API_KEY: ${{ secrets.STEEL_API_KEY }}
+      - name: The Back Vault -- single retailer or consignment marketplace? (free)
+        if: hashFiles('backvault-model-probe.js') != ''
+        run: node backvault-model-probe.js

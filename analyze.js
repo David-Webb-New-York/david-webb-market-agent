@@ -571,7 +571,7 @@ function renderDataQualityCaveats() {
     "- **Dealer asking prices are not confirmed sale prices** — they're the dealer's current ask, which may be negotiated down or never sell.",
     '- **"Closed" (dealer status: inactive) usually but not always means sold** — could also be a price relist under a new SKU or a data-feed gap.',
     '- **"Currently available" is dealer inventory only.** There is no live, biddable David Webb auction inventory being tracked right now — genuine upcoming auction lots were confirmed absent at the major houses as of the last investigation.',
-    '- **A piece can be listed on more than one platform** (e.g. a dealer\'s own site and 1stDibs) — "total listings" counts platform presence, not unique physical pieces.',
+    '- **A piece can be listed on more than one platform** (e.g. a dealer\'s own site and 1stDibs) — "total listings" counts platform presence, not unique physical pieces. A manual spot-check (2026-08-12, matching active listings across platforms by price ±2%, category, and title-word overlap) found this affects roughly 0.5–1% of current listings, concentrated in a handful of dealers who list on both their own site and 1stDibs under a slightly different display name — not a systematic double-count across the board. This wasn\'t a continuously-computed metric, so treat it as a rough spot-check, not a live figure.',
     "- **Foreign-currency prices are converted to USD** using approximate historical annual-average exchange rates, not settlement-date-precise figures — the original native-currency amount is footnoted wherever it differs from the displayed USD figure.",
     "",
   ].join("\n");
