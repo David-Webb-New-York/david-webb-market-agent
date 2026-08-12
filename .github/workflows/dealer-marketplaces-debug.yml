@@ -4,6 +4,8 @@ on:
     paths:
       - '1stdibs-listing-shape.js'
       - 'therealreal-listing-shape.js'
+      - 'therealreal-plain-fetch-probe.js'
+      - 'therealreal-algolia-probe.js'
       - '.github/workflows/dealer-marketplaces-debug.yml'
   workflow_dispatch: {}
 permissions:
@@ -24,7 +26,13 @@ jobs:
         env:
           BROWSERBASE_API_KEY: ${{ secrets.BROWSERBASE_API_KEY }}
           BROWSERBASE_PROJECT_ID: ${{ secrets.BROWSERBASE_PROJECT_ID }}
-      - name: The RealReal search-results real field shape
+      - name: The RealReal -- plain fetch, no browser (free, no proxy)
+        if: hashFiles('therealreal-plain-fetch-probe.js') != ''
+        run: node therealreal-plain-fetch-probe.js
+      - name: The RealReal -- Algolia direct-query probe (free, no proxy)
+        if: hashFiles('therealreal-algolia-probe.js') != ''
+        run: node therealreal-algolia-probe.js
+      - name: The RealReal search-results real field shape (Browserbase/Steel, paid)
         if: hashFiles('therealreal-listing-shape.js') != ''
         run: node therealreal-listing-shape.js
         env:
