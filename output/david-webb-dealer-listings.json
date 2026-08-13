@@ -15752,6 +15752,28 @@
     "status": "active"
   },
   {
+    "id": "url:www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-enamel-18k-platinum-tire-ring-signed-david-webb-certificate/id-j_30112182",
+    "piece_name": "David Webb Enamel, 18K & Platinum Tire Ring signed with a David Webb Certificate",
+    "category": "ring",
+    "era_or_year": "",
+    "materials_gemstones": "",
+    "price_type": "asking",
+    "asking_price": 25900,
+    "currency_note": "USD",
+    "dealer": "Pierre/Famille",
+    "listing_url": "https://www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-enamel-18k-platinum-tire-ring-signed-david-webb-certificate/id-j_30112182/",
+    "image_url": "https://a.1stdibscdn.com/david-webb-enamel-18k-platinum-tire-ring-signed-with-a-david-webb-certificate-for-sale/j_192/j_301121821785733433840/b3b3fcb8-2d03-468f-81b7-7cd077e7685b/IMG_5103_bg_processed.jpeg",
+    "sku": "j_30112182",
+    "notes": "",
+    "tags": "Enamel",
+    "asking_price_usd": 25900,
+    "source": "1stdibs",
+    "first_seen": "2026-08-13",
+    "last_seen": "2026-08-13",
+    "times_seen": 1,
+    "status": "active"
+  },
+  {
     "id": "url:thebackvault.com/products/david-webb-platinum-18k-yellow-gold-coral-carved-black-enamel-oval-clip-earrings-rr9836",
     "piece_name": "David Webb Platinum & 18K Yellow Gold Coral Carved Black Enamel Oval Clip Earrings",
     "category": "earrings",
@@ -30487,9 +30509,9 @@
     "asking_price_usd": 8800,
     "source": "1stdibs",
     "first_seen": "2026-08-10",
-    "last_seen": "2026-08-10",
-    "times_seen": 1,
-    "status": "inactive"
+    "last_seen": "2026-08-13",
+    "times_seen": 2,
+    "status": "active"
   },
   {
     "id": "url:thebackvault.com/products/david-webb-platinum-18k-yellow-gold-red-enamel-bombe-diamond-ring-rr8895",
@@ -31303,6 +31325,28 @@
     "first_seen": "2026-08-12",
     "last_seen": "2026-08-13",
     "times_seen": 2,
+    "status": "active"
+  },
+  {
+    "id": "url:www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-1970s-18k-gold-enamel-leaf-dome-statement-ring/id-j_25360572",
+    "piece_name": "David Webb 1970s 18K Gold Enamel Leaf Dome Statement Ring",
+    "category": "ring",
+    "era_or_year": "1970s",
+    "materials_gemstones": "",
+    "price_type": "asking",
+    "asking_price": 7700,
+    "currency_note": "USD",
+    "dealer": "Dover Jewelry",
+    "listing_url": "https://www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-1970s-18k-gold-enamel-leaf-dome-statement-ring/id-j_25360572/",
+    "image_url": "https://a.1stdibscdn.com/david-webb-1970s-18k-gold-enamel-leaf-dome-statement-ring-for-sale/j_412/j_253605721738875310802/E1218106BB_master.jpg",
+    "sku": "j_25360572",
+    "notes": "",
+    "tags": "Enamel; 1970s",
+    "asking_price_usd": 7700,
+    "source": "1stdibs",
+    "first_seen": "2026-08-13",
+    "last_seen": "2026-08-13",
+    "times_seen": 1,
     "status": "active"
   },
   {
