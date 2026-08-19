@@ -20,18 +20,19 @@
  *   TWILIO_FROM_NUMBER             a bare sending number (E.164, e.g.
  *                                  +15551234567) -- used only if no
  *                                  messaging service SID is set
- *   SMS_RECIPIENT_PHONE            who receives it (E.164)
+ *   SMS_RECIPIENT_PHONE            who receives it (E.164) -- a comma- or
+ *                                  semicolon-separated list sends to
+ *                                  everyone in it (2026-08-19: adding a
+ *                                  second recipient is editing this one
+ *                                  secret's value, not adding a new
+ *                                  secret or touching code)
  */
 
 const ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const FROM_NUMBER = process.env.TWILIO_FROM_NUMBER;
 const MESSAGING_SERVICE_SID = process.env.TWILIO_MESSAGING_SERVICE_SID;
-const TO_NUMBER = process.env.SMS_RECIPIENT_PHONE;
-
-function smsConfigured() {
-  return Boolean(ACCOUNT_SID && AUTH_TOKEN && TO_NUMBER && (MESSAGING_SERVICE_SID || FROM_NUMBER));
-}
+const TO_NUMBERS_RAW = process.env.SMS_RECIPIENT_PHONE;
 
 // Twilio numbers are expected in E.164 (+15551234567). Accept a bare
 // 10-digit US number too (e.g. from a phone number typed in chat) so a
@@ -43,12 +44,19 @@ function normalizePhone(n) {
   return String(n || "").startsWith("+") ? n : `+${digits}`;
 }
 
-async function sendSms(body) {
-  if (!smsConfigured()) {
-    console.error("Twilio env vars not fully set — skipping SMS.");
-    return false;
-  }
-  const to = normalizePhone(TO_NUMBER);
+function recipients() {
+  return String(TO_NUMBERS_RAW || "")
+    .split(/[,;]/)
+    .map((n) => n.trim())
+    .filter(Boolean)
+    .map(normalizePhone);
+}
+
+function smsConfigured() {
+  return Boolean(ACCOUNT_SID && AUTH_TOKEN && recipients().length && (MESSAGING_SERVICE_SID || FROM_NUMBER));
+}
+
+async function sendOne(to, body) {
   const sender = MESSAGING_SERVICE_SID
     ? { MessagingServiceSid: MESSAGING_SERVICE_SID }
     : { From: normalizePhone(FROM_NUMBER) };
@@ -66,7 +74,24 @@ async function sendSms(body) {
   if (!res.ok) {
     throw new Error(`Twilio API ${res.status}: ${data.message || JSON.stringify(data)}`);
   }
-  return true;
 }
 
-module.exports = { sendSms, smsConfigured, normalizePhone };
+// Sends to every recipient independently -- one bad/unsubscribed number
+// doesn't block delivery to the rest. Returns true if at least one
+// recipient got it; logs each failure so a silent bounce isn't lost.
+async function sendSms(body) {
+  const to = recipients();
+  if (!smsConfigured()) {
+    console.error("Twilio env vars not fully set — skipping SMS.");
+    return false;
+  }
+  const results = await Promise.allSettled(to.map((n) => sendOne(n, body)));
+  let sent = 0;
+  results.forEach((r, i) => {
+    if (r.status === "fulfilled") sent++;
+    else console.error(`SMS to ${to[i]} failed: ${r.reason.message || r.reason}`);
+  });
+  return sent > 0;
+}
+
+module.exports = { sendSms, smsConfigured, normalizePhone, recipients };
