@@ -40,6 +40,12 @@
  *   REPORT_BANNER_NOTE  optional one-off banner shown at the top of the
  *                       Slack post (e.g. "this corrects an earlier post
  *                       today" or "this is an extra run this week for X")
+ *   TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN / TWILIO_FROM_NUMBER /
+ *   SMS_RECIPIENT_PHONE optional -- one recipient (2026-08-17 request)
+ *                       gets a condensed version of this report as a text
+ *                       instead of relying on the shared Slack channel.
+ *                       See sms.js. Missing any of these skips the SMS
+ *                       quietly.
  */
 
 const fs = require("fs");
@@ -47,6 +53,7 @@ const path = require("path");
 const { HISTORY_JSON, HISTORY_CSV } = require("./history-store");
 const { LISTINGS_JSON, LISTINGS_CSV } = require("./dealer-store");
 const { computeFlags } = require("./flag-listings");
+const { sendSms, smsConfigured } = require("./sms");
 
 const args = new Set(process.argv.slice(2));
 const MODE_GENERATE = args.has("--generate") || !args.has("--notify");
@@ -758,10 +765,30 @@ async function postToSlack(payload) {
   return true;
 }
 
+// The full report (tables, charts) obviously can't fit in a text -- one
+// recipient (2026-08-17 request) gets a condensed version by SMS instead
+// of relying on the shared Slack channel: headline numbers + a link to
+// the real report. See sms.js.
+function buildSmsText(date, stats) {
+  const l = links(date);
+  const bannerNote = (process.env.REPORT_BANNER_NOTE || "").trim();
+  const bannerLine = bannerNote ? `${bannerNote}\n` : "";
+  return (
+    `${bannerLine}David Webb weekly — ${date}: ${stats.totals.activeDealerListings} active listings, ` +
+    `${stats.newDealerListings1wk.length} new / ${stats.closedDealerListings4wk.length} closed this week, ` +
+    `${stats.recentSales.count} auction sales in last 60 days (median ${money(stats.recentSales.median)}). ` +
+    `Report: ${l.report}`
+  );
+}
+
 // ---------- modes ----------
 
 function payloadPath(date) {
   return path.join(REPORTS_DIR, `${date}.slack.json`);
+}
+
+function smsPath(date) {
+  return path.join(REPORTS_DIR, `${date}.sms.txt`);
 }
 
 async function generate() {
@@ -835,15 +862,18 @@ async function generate() {
   const payload = buildSlackPayload(date, stats, slack, flags);
   fs.writeFileSync(payloadPath(date), JSON.stringify(payload, null, 2));
 
+  const smsText = buildSmsText(date, stats);
+  fs.writeFileSync(smsPath(date), smsText);
+
   console.log(`Report written: ${reportPath}`);
   console.log(`Slack payload written: ${payloadPath(date)}`);
-  return { date, payload };
+  return { date, payload, smsText };
 }
 
 async function notify(preloaded) {
+  const date = todayStr();
   let payload = preloaded && preloaded.payload;
   if (!payload) {
-    const date = todayStr();
     const p = payloadPath(date);
     if (!fs.existsSync(p)) {
       console.error(`No Slack payload at ${p}. Run 'node analyze.js --generate' first.`);
@@ -851,14 +881,25 @@ async function notify(preloaded) {
     }
     payload = JSON.parse(fs.readFileSync(p, "utf8"));
   }
+  let smsText = preloaded && preloaded.smsText;
+  if (!smsText && fs.existsSync(smsPath(date))) smsText = fs.readFileSync(smsPath(date), "utf8");
 
   if (DRY_RUN) {
     console.log("--- DRY RUN: Slack payload that would be posted ---");
     console.log(JSON.stringify(payload, null, 2));
+    if (smsText && smsConfigured()) {
+      console.log("\n--- DRY RUN: SMS that would be sent ---");
+      console.log(smsText);
+    }
     return;
   }
   const posted = await postToSlack(payload);
   console.log(posted ? "Posted to Slack." : "Slack post skipped.");
+
+  if (smsText) {
+    const texted = await sendSms(smsText);
+    console.log(texted ? "Texted recipient." : "SMS skipped.");
+  }
 }
 
 async function main() {
@@ -890,4 +931,5 @@ module.exports = {
   renderTagTrends,
   renderFlags,
   renderDataQualityCaveats,
+  buildSmsText,
 };

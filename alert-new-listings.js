@@ -21,11 +21,18 @@
  *   SLACK_WEBHOOK_URL       required to actually post (omit for a dry run)
  *   ALERT_PRICE_THRESHOLD   USD; default 5000 -- override for a noisier/
  *                           quieter feed without editing code
+ *   TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN / TWILIO_FROM_NUMBER /
+ *   SMS_RECIPIENT_PHONE     optional -- one recipient (2026-08-17 request)
+ *                           gets this same alert as a text instead of
+ *                           relying on the shared Slack channel. See
+ *                           sms.js. Missing any of these skips the SMS
+ *                           quietly, same as SLACK_WEBHOOK_URL above.
  *
  * Usage: node alert-new-listings.js [--dry-run]
  */
 
 const { LISTINGS_JSON } = require("./dealer-store");
+const { sendSms, smsConfigured } = require("./sms");
 const fs = require("fs");
 
 const DRY_RUN = process.argv.includes("--dry-run");
@@ -125,6 +132,18 @@ function buildPayload(listings, today) {
   };
 }
 
+// Plain-text, trimmed further than the Slack version (top 5, not 15) --
+// SMS gets billed/split per ~160-char segment, and a text is read in a
+// glance, not scrolled like Slack.
+function buildSmsText(listings, today) {
+  const top = listings
+    .slice(0, 5)
+    .map((r) => `${money(r.asking_price)} ${r.piece_name || "(untitled)"} (${r.dealer || "unknown dealer"})`)
+    .join("\n");
+  const overflow = listings.length > 5 ? `\n...and ${listings.length - 5} more.` : "";
+  return `David Webb — ${listings.length} new listing(s) today (${today}) ≥ ${money(PRICE_THRESHOLD)}:\n${top}${overflow}`;
+}
+
 async function postToSlack(payload) {
   if (!SLACK_WEBHOOK_URL) {
     console.error("SLACK_WEBHOOK_URL not set — skipping Slack post.");
@@ -153,13 +172,21 @@ async function main() {
   for (const r of listings) console.log(`  ${money(r.asking_price)} — ${r.piece_name} (${r.dealer})`);
 
   const payload = buildPayload(listings, today);
+  const smsText = buildSmsText(listings, today);
   if (DRY_RUN) {
     console.log("\n--- DRY RUN: Slack payload that would be posted ---");
     console.log(JSON.stringify(payload, null, 2));
+    if (smsConfigured()) {
+      console.log("\n--- DRY RUN: SMS that would be sent ---");
+      console.log(smsText);
+    }
     return;
   }
   const posted = await postToSlack(payload);
   console.log(posted ? "Posted to Slack." : "Slack post skipped.");
+
+  const texted = await sendSms(smsText);
+  console.log(texted ? "Texted recipient." : "SMS skipped.");
 }
 
 main().catch((err) => {
