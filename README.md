@@ -84,11 +84,14 @@ Needs `ANTHROPIC_API_KEY` (report writing), `BROWSERBASE_API_KEY` +
 secrets for the scheduled runs. `VERCEL_TOKEN`/`VERCEL_ORG_ID` are no longer
 used — the GUI deploys via GitHub Pages now (`pages-deploy.yml`).
 
-Optionally, `TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN` + `TWILIO_FROM_NUMBER`
-+ `SMS_RECIPIENT_PHONE` send one recipient a condensed text (via `sms.js`)
-alongside the daily alert and weekly report, instead of relying on the
-shared Slack channel — see `sms.js` for details. Missing any of these skips
-the SMS quietly; nothing else in the pipeline depends on it.
+Optionally, `TWILIO_ACCOUNT_SID` + `TWILIO_AUTH_TOKEN` + `SMS_RECIPIENT_PHONE`
+plus **either** `TWILIO_MESSAGING_SERVICE_SID` (preferred — required for
+A2P 10DLC-registered US traffic) **or** `TWILIO_FROM_NUMBER` (a bare
+sending number, used only if no messaging service SID is set) send one
+recipient a condensed text (via `sms.js`) alongside the daily alert and
+weekly report, instead of relying on the shared Slack channel — see
+`sms.js` for details. Missing any of the required ones skips the SMS
+quietly; nothing else in the pipeline depends on it.
 
 ## Data model
 

@@ -61,5 +61,6 @@ jobs:
           ALERT_PRICE_THRESHOLD: ${{ github.event.inputs.price_threshold }}
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_MESSAGING_SERVICE_SID: ${{ secrets.TWILIO_MESSAGING_SERVICE_SID }}
           TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
           SMS_RECIPIENT_PHONE: ${{ secrets.SMS_RECIPIENT_PHONE }}
