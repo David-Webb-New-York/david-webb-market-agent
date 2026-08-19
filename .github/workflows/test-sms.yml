@@ -1,0 +1,30 @@
+name: Test SMS (Twilio wiring check)
+# One-off manual test: sends a single real text via sms.js to confirm the
+# Twilio secrets are wired correctly end to end. Not part of the
+# scheduled pipeline.
+on:
+  push:
+    paths:
+      - 'test-sms.js'
+      - 'sms.js'
+      - '.github/workflows/test-sms.yml'
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: node test-sms.js
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_MESSAGING_SERVICE_SID: ${{ secrets.TWILIO_MESSAGING_SERVICE_SID }}
+          TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
+          SMS_RECIPIENT_PHONE: ${{ secrets.SMS_RECIPIENT_PHONE }}
