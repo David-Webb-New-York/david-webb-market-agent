@@ -1,0 +1,32 @@
+name: Check Twilio Campaign Status (diagnostic)
+# One-off: fetches the actual saved A2P 10DLC campaign record from Twilio's
+# API to compare against the console UI / rejection emails. Not part of the
+# scheduled pipeline.
+on:
+  workflow_dispatch:
+    inputs:
+      messaging_service_sid:
+        description: 'Messaging Service SID (MG...)'
+        type: string
+        default: 'MGa707175a94ebcde66c136ebac1236873'
+      campaign_sid:
+        description: 'Campaign SID (CM...)'
+        type: string
+        default: 'CMb3cd0e2125e4524890294ed953b7315a'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node check-campaign-status.js
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          MESSAGING_SERVICE_SID: ${{ inputs.messaging_service_sid }}
+          CAMPAIGN_SID: ${{ inputs.campaign_sid }}
