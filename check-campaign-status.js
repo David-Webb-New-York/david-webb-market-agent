@@ -1,33 +1,65 @@
 #!/usr/bin/env node
 /**
- * One-off diagnostic: fetches the actual saved A2P 10DLC campaign record
- * from Twilio's API (not the templated rejection email) so we can see the
- * literal current state -- message_flow, opt-in fields, and often a more
- * specific failureReason than the email gives (2026-08-20, after three
- * console-field checks came back clean but the campaign kept rejecting on
- * the same 30908/30909 codes). Not part of the scheduled pipeline;
- * dispatched by hand via check-campaign-status.yml.
+ * One-off diagnostic (2026-08-20): the campaign's Privacy Policy URL and
+ * Terms of Service URL are confirmed correctly set in the Twilio Console
+ * (screenshot-verified), yet the campaign keeps rejecting on 30908
+ * (privacy policy can't be verified compliant) / 30909 (message flow/CTA
+ * unverified). Testing whether an automated, non-browser client (like
+ * Twilio's compliance crawler) actually sees the real page content, or
+ * gets blocked/challenged the way The RealReal blocks Browserbase-less
+ * fetches elsewhere in this project (see import-therealreal.js). Not part
+ * of the scheduled pipeline; dispatched by hand.
  */
-const ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
-const MESSAGING_SERVICE_SID = process.env.MESSAGING_SERVICE_SID;
-const CAMPAIGN_SID = process.env.CAMPAIGN_SID;
+const URLS = [
+  "https://www.davidwebb.com/policies/privacy-policy",
+  "https://www.davidwebb.com/policies/terms-of-service",
+];
+
+const REQUIRED_PHRASES = [
+  "not be sold",
+  "not sold",
+  "third part",
+  "affiliate",
+  "message and data rates may apply",
+  "message frequency",
+  "reply stop",
+];
+
+async function checkUrl(url) {
+  console.log(`\n=== ${url} ===`);
+  const res = await fetch(url, {
+    headers: {
+      // A generic non-browser UA on purpose -- this is what a compliance
+      // crawler looks like, not what a human's browser sends.
+      "User-Agent": "TwilioComplianceCheck/1.0",
+    },
+    redirect: "follow",
+  });
+  console.log("Status:", res.status, res.statusText);
+  console.log("Final URL:", res.url);
+  console.log("Content-Type:", res.headers.get("content-type"));
+  const body = await res.text();
+  console.log("Body length:", body.length);
+  const lower = body.toLowerCase();
+  const looksBlocked =
+    /just a moment|checking your browser|attention required|access denied|captcha|cloudflare|perimeterx|px-captcha|bot detection/i.test(
+      body
+    );
+  console.log("Looks like a bot-challenge/block page:", looksBlocked);
+  for (const phrase of REQUIRED_PHRASES) {
+    console.log(`  contains "${phrase}":`, lower.includes(phrase));
+  }
+  console.log("First 500 chars of body:\n", body.slice(0, 500));
+}
 
 async function main() {
-  if (!ACCOUNT_SID || !AUTH_TOKEN || !MESSAGING_SERVICE_SID || !CAMPAIGN_SID) {
-    console.error("Missing one of TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN / MESSAGING_SERVICE_SID / CAMPAIGN_SID.");
-    process.exit(1);
-  }
-  const url = `https://messaging.twilio.com/v1/Services/${MESSAGING_SERVICE_SID}/Compliance/Usa2p`;
-  const auth = Buffer.from(`${ACCOUNT_SID}:${AUTH_TOKEN}`).toString("base64");
-  console.log("GET", url);
-  const res = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
-  const text = await res.text();
-  console.log("Status:", res.status);
-  try {
-    console.log(JSON.stringify(JSON.parse(text), null, 2));
-  } catch {
-    console.log(text);
+  for (const url of URLS) {
+    try {
+      await checkUrl(url);
+    } catch (err) {
+      console.log(`\n=== ${url} ===`);
+      console.error("Fetch failed:", err.message || err);
+    }
   }
 }
 
