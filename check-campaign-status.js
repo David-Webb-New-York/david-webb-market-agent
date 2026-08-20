@@ -18,7 +18,7 @@ async function main() {
     console.error("Missing one of TWILIO_ACCOUNT_SID / TWILIO_AUTH_TOKEN / MESSAGING_SERVICE_SID / CAMPAIGN_SID.");
     process.exit(1);
   }
-  const url = `https://messaging.twilio.com/v1/Services/${MESSAGING_SERVICE_SID}/Compliance/Usa2p/${CAMPAIGN_SID}`;
+  const url = `https://messaging.twilio.com/v1/Services/${MESSAGING_SERVICE_SID}/Compliance/Usa2p`;
   const auth = Buffer.from(`${ACCOUNT_SID}:${AUTH_TOKEN}`).toString("base64");
   console.log("GET", url);
   const res = await fetch(url, { headers: { Authorization: `Basic ${auth}` } });
