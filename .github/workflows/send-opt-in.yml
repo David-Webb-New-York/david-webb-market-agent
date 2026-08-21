@@ -1,0 +1,24 @@
+name: Send SMS Opt-In Confirmation (one-off)
+# Sends the registered opt-in confirmation text to everyone in
+# SMS_RECIPIENT_PHONE, now that the A2P 10DLC campaign is approved. Not
+# part of the scheduled pipeline.
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node send-opt-in.js
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_MESSAGING_SERVICE_SID: ${{ secrets.TWILIO_MESSAGING_SERVICE_SID }}
+          TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
+          SMS_RECIPIENT_PHONE: ${{ secrets.SMS_RECIPIENT_PHONE }}
