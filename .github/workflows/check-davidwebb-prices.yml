@@ -1,0 +1,18 @@
+name: Check David Webb Retail Prices (diagnostic)
+# One-off: looks up current davidwebb.com retail prices for specific pieces
+# to compare against secondary-market asking prices. Not part of the
+# scheduled pipeline.
+on:
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node check-davidwebb-prices.js
