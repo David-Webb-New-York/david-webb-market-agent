@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SMS Alerts Opt-In — David Webb Market Agent</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>" />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #faf9f7;
+      --card-bg: #ffffff;
+      --ink: #1f1c18;
+      --muted: #6b645b;
+      --accent: #2f6b3a;
+      --border: #e4e0d8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1rem 4rem;
+    }
+    .card {
+      max-width: 32rem;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    h1 { font-size: 1.4rem; margin: 0 0 0.25rem; }
+    .subtitle { color: var(--muted); margin: 0 0 1.5rem; font-size: 0.95rem; }
+    label { display: block; font-weight: 600; margin: 1rem 0 0.35rem; font-size: 0.9rem; }
+    input[type="tel"], input[type="text"] {
+      width: 100%;
+      padding: 0.6rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .consent {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      margin-top: 1.25rem;
+      padding: 0.9rem;
+      background: #f6f4f0;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .consent input[type="checkbox"] { margin-top: 0.2rem; flex: none; }
+    .consent p { margin: 0; font-size: 0.85rem; color: var(--muted); }
+    .consent a { color: var(--accent); }
+    button {
+      margin-top: 1.25rem;
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .confirmation {
+      display: none;
+      margin-top: 1.25rem;
+      padding: 0.9rem;
+      background: #eaf3ec;
+      border: 1px solid #cfe4d4;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    .confirmation.visible { display: block; }
+    .fine-print { margin-top: 1.5rem; font-size: 0.78rem; color: var(--muted); }
+    .fine-print a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>David Webb Market Agent — Text Alerts</h1>
+    <p class="subtitle">
+      Get a text when a notable new piece hits the secondary market, plus a
+      condensed weekly summary — sent instead of (not in addition to) the
+      team's Slack channel.
+    </p>
+
+    <form id="opt-in-form">
+      <label for="phone">Mobile phone number</label>
+      <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555" required />
+
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Full name" required />
+
+      <div class="consent">
+        <input type="checkbox" id="consent" name="consent" required />
+        <p>
+          I agree to receive automated text messages from David Webb Market
+          Agent (new secondary-market listings and a weekly summary).
+          Message frequency varies. Message and data rates may apply. Reply
+          <strong>STOP</strong> to unsubscribe at any time, or
+          <strong>HELP</strong> for assistance. Consent is not a condition
+          of any purchase. See our
+          <a href="https://www.davidwebb.com/policies/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+          and
+          <a href="https://www.davidwebb.com/policies/terms-of-service" target="_blank" rel="noopener">Terms of Service</a>.
+        </p>
+      </div>
+
+      <button type="submit" id="submit-btn">Sign up for text alerts</button>
+    </form>
+
+    <div class="confirmation" id="confirmation">
+      Thanks — your request has been noted. A team member will confirm your
+      number and add it to the alert list.
+    </div>
+
+    <p class="fine-print">
+      This is an internal alerts program for David Webb team members and
+      vendors who request it directly. Submitting this form records your
+      opt-in request; a team member manually enables SMS delivery for your
+      number. You can also opt in or out at any time by contacting us
+      directly.
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('opt-in-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('confirmation').classList.add('visible');
+      document.getElementById('submit-btn').disabled = true;
+      document.getElementById('submit-btn').textContent = 'Request received';
+    });
+  </script>
+</body>
+</html>
