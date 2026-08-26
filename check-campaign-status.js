@@ -1,32 +1,14 @@
 #!/usr/bin/env node
 /**
- * One-off diagnostic (2026-08-20): combines the two checks from earlier
- * rounds -- (1) pull the actual saved campaign record from Twilio's API,
- * which names the exact `fields` that failed review (more specific than
- * the templated rejection email), and (2) fetch the live privacy-policy
- * and terms-of-service pages the way a non-browser reviewer/crawler would,
- * to confirm the content Twilio actually sees. Not part of the scheduled
- * pipeline; dispatched by hand after each new rejection.
+ * One-off diagnostic (2026-08-26): confirms the new public SMS opt-in
+ * landing page (docs/sms-opt-in.html) is actually live on GitHub Pages
+ * and contains the expected consent checkbox/disclosures, before handing
+ * Twilio the URL as proof of a real opt-in flow. Also re-checks the
+ * campaign record. Not part of the scheduled pipeline.
  */
 const ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const MESSAGING_SERVICE_SID = process.env.MESSAGING_SERVICE_SID;
-
-const URLS = [
-  "https://www.davidwebb.com/policies/privacy-policy",
-  "https://www.davidwebb.com/policies/terms-of-service",
-];
-
-const REQUIRED_PHRASES = [
-  "not be sold",
-  "not sold",
-  "third part",
-  "affiliate",
-  "message and data rates may apply",
-  "message frequency",
-  "reply stop",
-  "reply help",
-];
 
 async function checkCampaignRecord() {
   console.log("========== Twilio campaign record ==========");
@@ -41,39 +23,35 @@ async function checkCampaignRecord() {
     return;
   }
   console.log("campaign_status:", campaign.campaign_status);
-  console.log("date_created:", campaign.date_created);
   console.log("date_updated:", campaign.date_updated);
-  console.log("description:", campaign.description);
   console.log("errors:", JSON.stringify(campaign.errors, null, 2));
-  console.log("message_flow:", campaign.message_flow);
 }
 
-async function checkUrl(url) {
-  console.log(`\n=== ${url} ===`);
-  const res = await fetch(url, {
-    headers: { "User-Agent": "TwilioComplianceCheck/1.0" },
-    redirect: "follow",
-  });
+async function checkOptInPage() {
+  console.log("\n========== Opt-in page ==========");
+  const url = "https://david-webb-new-york.github.io/david-webb-market-agent/sms-opt-in.html";
+  const res = await fetch(url, { headers: { "User-Agent": "TwilioComplianceCheck/1.0" } });
   console.log("Status:", res.status, res.statusText);
   const body = await res.text();
   console.log("Body length:", body.length);
-  const lower = body.toLowerCase();
-  for (const phrase of REQUIRED_PHRASES) {
-    console.log(`  contains "${phrase}":`, lower.includes(phrase));
+  const checks = [
+    ['type="checkbox"', "checkbox present"],
+    ['type="tel"', "phone field present"],
+    ["Message frequency varies", "frequency disclosure"],
+    ["Message and data rates may apply", "rates disclosure"],
+    ["STOP", "STOP mention"],
+    ["HELP", "HELP mention"],
+    ["privacy-policy", "privacy policy link"],
+    ["terms-of-service", "terms link"],
+  ];
+  for (const [needle, label] of checks) {
+    console.log(`  ${label}:`, body.includes(needle));
   }
 }
 
 async function main() {
   await checkCampaignRecord();
-  console.log("\n========== Live page content ==========");
-  for (const url of URLS) {
-    try {
-      await checkUrl(url);
-    } catch (err) {
-      console.log(`\n=== ${url} ===`);
-      console.error("Fetch failed:", err.message || err);
-    }
-  }
+  await checkOptInPage();
 }
 
 main().catch((err) => {
