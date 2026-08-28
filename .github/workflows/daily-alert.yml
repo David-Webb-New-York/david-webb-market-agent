@@ -11,7 +11,7 @@ name: Daily New-Listing Alert
 # same morning. Not scheduled on weekends either (lower signal, lower cost).
 on:
   schedule:
-    - cron: '0 13 * * 2-5'  # 13:00 UTC (8am ET in winter / 9am ET in summer), Tue-Fri
+    - cron: '11 13 * * 2-5'  # 13:11 UTC (8:11am ET in winter / 9:11am ET in summer), Tue-Fri -- offset off :00 (the most congested minute for GitHub's Actions scheduler) after a ~9.7hr delayed run on 2026-08-27
   workflow_dispatch:
     inputs:
       price_threshold:
