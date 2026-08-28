@@ -51,7 +51,9 @@ structured importers above don't know about yet. It doesn't run on a
 schedule and isn't wired into the report; dispatch it by hand from the
 Actions tab when you want to go fishing for something new.
 
-**`daily-alert.yml`** (Tue–Fri, 8am ET) is the near-term complement to the
+**`daily-alert.yml`** (Tue–Fri, 8:11am ET — offset off the top of the hour,
+GitHub's most congested scheduling minute, after a ~9.7hr delayed run on
+2026-08-27) is the near-term complement to the
 weekly digest: refreshes dealer inventory and posts an immediate Slack ping
 for any piece that's new *today* and priced at or above `$5,000` (override
 with the `price_threshold` input on a manual dispatch, or

@@ -604,7 +604,7 @@ docs/                     # Static searchable-database GUI (index.html/style.css
   history-refresh.yml     # Mon 8:15am ET: auction-history importers -> commit -> deploy GUI -> (dealer-refresh chains the report)
   dealer-refresh.yml      # Mon 8:30am ET: dealer importers -> commit -> deploy GUI -> waits for history-refresh -> dispatches weekly-report.yml
   weekly-report.yml       # workflow_dispatch only, chained from dealer-refresh.yml: report -> commit -> Slack
-  daily-alert.yml         # Tue-Fri 8am ET: dealer refresh -> commit -> deploy GUI -> alert-new-listings.js
+  daily-alert.yml         # Tue-Fri 8:11am ET (offset off :00): dealer refresh -> commit -> deploy GUI -> alert-new-listings.js
   pages-deploy.yml        # Deploys docs/ (+ latest output/*.json) to GitHub Pages
   market-scan-llm.yml     # workflow_dispatch only: the original agent.js/library.js sweep, optional/manual
 output/
