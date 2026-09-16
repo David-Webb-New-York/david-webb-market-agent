@@ -18,6 +18,10 @@ const OUTPUT_DIR = path.join(__dirname, "output");
 const HISTORY_JSON = path.join(OUTPUT_DIR, "david-webb-auction-history.json");
 const HISTORY_CSV = path.join(OUTPUT_DIR, "david-webb-auction-history.csv");
 
+// `history_notes` is manually curated (provenance, backstory, research a
+// human adds by hand) -- no importer ever sets it, so upsert()'s "new
+// non-empty value wins" merge never overwrites it on a re-scrape, unlike
+// `notes` (scraper-owned, replaced every time the source re-supplies it).
 const HISTORY_FIELDS = [
   "piece_name",
   "category",
@@ -34,6 +38,7 @@ const HISTORY_FIELDS = [
   "lot_number",
   "listing_url",
   "notes",
+  "history_notes",
   "tags",
   "sold_price_usd",
 ];

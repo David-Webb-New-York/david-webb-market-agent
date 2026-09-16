@@ -78,6 +78,7 @@
         listing_url: r.listing_url || "",
         image_url: "",
         notes: r.notes || "",
+        history_notes: r.history_notes || "",
         tags: splitTags(r.tags),
         flags: flagsByUrl.get(r.listing_url) || [],
       });
@@ -202,7 +203,7 @@
       if (tag && !r.tags.includes(tag)) return false;
       if (flaggedOnly && !r.flags.length) return false;
       if (q) {
-        const hay = `${r.piece_name} ${r.source} ${r.materials_gemstones} ${r.notes} ${r.lot_number} ${r.sale_name}`.toLowerCase();
+        const hay = `${r.piece_name} ${r.source} ${r.materials_gemstones} ${r.notes} ${r.history_notes || ""} ${r.lot_number} ${r.sale_name}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
@@ -362,6 +363,9 @@
       ["Status", r.status],
       ["Notes", r.notes || "—"],
     ];
+    if (r.history_notes) {
+      fields.push(["History", r.history_notes]);
+    }
     if (r.flags.length) {
       fields.splice(2, 0, [
         "Worth a second look",
