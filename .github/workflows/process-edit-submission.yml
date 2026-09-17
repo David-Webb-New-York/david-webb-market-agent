@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   issues: write
+  actions: write # to dispatch pages-deploy.yml after committing new data
 jobs:
   process:
     if: contains(github.event.issue.labels.*.name, 'editor-submission')
