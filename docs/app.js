@@ -375,7 +375,10 @@
       fields.push(["History", r.history_notes]);
     }
     if (r.id) {
-      const editUrl = `${EDITOR_URL}/?type=${encodeURIComponent(r.type)}&id=${encodeURIComponent(r.id)}&name=${encodeURIComponent(r.piece_name)}`;
+      const editParams = new URLSearchParams({ type: r.type, id: r.id, name: r.piece_name });
+      if (r.listing_url) editParams.set("listing_url", r.listing_url);
+      if (r.history_notes) editParams.set("history_notes", r.history_notes);
+      const editUrl = `${EDITOR_URL}/?${editParams.toString()}`;
       fields.push([
         "Suggest an edit",
         `<a class="listing-link" href="${escapeHtml(editUrl)}" target="_blank" rel="noopener">Add a listing URL or history notes ↗</a>`,

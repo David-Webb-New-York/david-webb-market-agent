@@ -107,7 +107,9 @@
     <div id="g_id_onload"
       data-client_id="180509401519-3mc56t8j2vfi0lug8knui318n7tbdv5s.apps.googleusercontent.com"
       data-callback="handleGoogleSignIn"
-      data-hd="davidwebb.com">
+      data-hd="davidwebb.com"
+      data-auto_select="true"
+      data-itp_support="true">
     </div>
     <div id="g_id_signin" class="g_id_signin" data-type="standard"></div>
 
@@ -116,7 +118,7 @@
     <form id="form-section">
       <label for="listing_url">Listing URL</label>
       <input type="url" id="listing_url" name="listing_url" placeholder="https://..." />
-      <div class="hint">Leave empty to skip. Entering a value replaces whatever's there now, whether blank or already set.</div>
+      <div class="hint" id="listing_url_hint">Leave empty to skip. Entering a value replaces whatever's there now, whether blank or already set.</div>
       <div class="clear-row">
         <input type="checkbox" id="clear_listing_url" />
         <label for="clear_listing_url" style="margin: 0; font-weight: 400;">Instead, clear the existing listing URL (remove it entirely)</label>
@@ -124,6 +126,7 @@
 
       <label for="history_notes">History / provenance notes</label>
       <textarea id="history_notes" name="history_notes" placeholder="Backstory, provenance, condition report, etc."></textarea>
+      <div class="hint" id="history_notes_hint">Leave empty to skip. Entering a value replaces whatever's there now, whether blank or already set.</div>
       <div class="clear-row">
         <input type="checkbox" id="clear_history_notes" />
         <label for="clear_history_notes" style="margin: 0; font-weight: 400;">Instead, clear the existing history notes (remove them entirely)</label>
@@ -140,6 +143,8 @@
     const recordType = params.get("type"); // "auction" or "dealer"
     const recordId = params.get("id");
     const pieceName = params.get("name") || "";
+    const currentListingUrl = params.get("listing_url") || "";
+    const currentHistoryNotes = params.get("history_notes") || "";
 
     if (!recordType || !recordId) {
       document.getElementById("no-record").style.display = "block";
@@ -148,6 +153,18 @@
       ctx.style.display = "block";
       document.getElementById("piece-name-display").textContent = pieceName || recordId;
     }
+
+    // Prefill with whatever's currently on the record, so editing means
+    // changing what's already there rather than staring at a blank box
+    // guessing what it might contain.
+    document.getElementById("listing_url").value = currentListingUrl;
+    document.getElementById("history_notes").value = currentHistoryNotes;
+    document.getElementById("listing_url_hint").textContent = currentListingUrl
+      ? "Showing the current value -- edit it, leave it as-is to make no change, or check the box below to clear it."
+      : "Currently blank. Leave empty to skip, or enter a value to set it.";
+    document.getElementById("history_notes_hint").textContent = currentHistoryNotes
+      ? "Showing the current notes -- edit them, leave as-is to make no change, or check the box below to clear them."
+      : "Currently blank. Leave empty to skip, or enter a value to set it.";
 
     let idToken = null;
 
@@ -192,9 +209,10 @@
         msg.textContent = "Please sign in with Google first.";
         return;
       }
-      if (!listingUrl && !historyNotes && !clearListingUrl && !clearHistoryNotes) {
+      const unchanged = listingUrl === currentListingUrl && historyNotes === currentHistoryNotes && !clearListingUrl && !clearHistoryNotes;
+      if (unchanged) {
         msg.className = "message error";
-        msg.textContent = "Enter a value, or check a \"clear\" box, before submitting.";
+        msg.textContent = "Nothing to submit -- edit a field, or check a \"clear\" box, before submitting.";
         return;
       }
 
