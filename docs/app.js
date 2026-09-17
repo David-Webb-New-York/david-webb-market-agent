@@ -3,6 +3,11 @@
 
   const PAGE_SIZE = 50;
 
+  // Vercel-hosted "suggest an edit" page (editor/index.html) -- separate
+  // from this static site since it needs a real server-side write path
+  // (Google-account sign-in + a GitHub token) that GitHub Pages can't hold.
+  const EDITOR_URL = "https://david-webb-market-agent-editor.vercel.app";
+
   const state = {
     records: [],
     filtered: [],
@@ -58,6 +63,7 @@
     const out = [];
     for (const r of history) {
       out.push({
+        id: r.id || "",
         type: "auction",
         date: r.sale_date || "",
         piece_name: r.piece_name || "(untitled)",
@@ -85,6 +91,7 @@
     }
     for (const r of dealers) {
       out.push({
+        id: r.id || "",
         type: "dealer",
         date: r.first_seen || "",
         piece_name: r.piece_name || "(untitled)",
@@ -105,6 +112,7 @@
         listing_url: r.listing_url || "",
         image_url: r.image_url || "",
         notes: r.notes || "",
+        history_notes: r.history_notes || "",
         tags: splitTags(r.tags),
         flags: flagsByUrl.get(r.listing_url) || [],
       });
@@ -366,6 +374,13 @@
     if (r.history_notes) {
       fields.push(["History", r.history_notes]);
     }
+    if (r.id) {
+      const editUrl = `${EDITOR_URL}/?type=${encodeURIComponent(r.type)}&id=${encodeURIComponent(r.id)}&name=${encodeURIComponent(r.piece_name)}`;
+      fields.push([
+        "Suggest an edit",
+        `<a class="listing-link" href="${escapeHtml(editUrl)}" target="_blank" rel="noopener">Add a listing URL or history notes ↗</a>`,
+      ]);
+    }
     if (r.flags.length) {
       fields.splice(2, 0, [
         "Worth a second look",
@@ -374,7 +389,7 @@
           .join("")}</ul>`,
       ]);
     }
-    const rawHtmlFields = new Set(["Listing", "Worth a second look", "Price"]);
+    const rawHtmlFields = new Set(["Listing", "Worth a second look", "Price", "Suggest an edit"]);
     els.modalBody.innerHTML = fields
       .map(([k, v]) => `<dt>${escapeHtml(k)}</dt><dd>${rawHtmlFields.has(k) ? v : escapeHtml(v)}</dd>`)
       .join("");
