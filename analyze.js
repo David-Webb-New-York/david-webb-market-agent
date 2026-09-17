@@ -50,8 +50,8 @@
 
 const fs = require("fs");
 const path = require("path");
-const { HISTORY_JSON, HISTORY_CSV } = require("./history-store");
-const { LISTINGS_JSON, LISTINGS_CSV } = require("./dealer-store");
+const { HISTORY_JSON, HISTORY_CSV, HISTORY_CONFLICTS_JSON } = require("./history-store");
+const { LISTINGS_JSON, LISTINGS_CSV, LISTINGS_CONFLICTS_JSON } = require("./dealer-store");
 const { computeFlags } = require("./flag-listings");
 const { sendSms, smsConfigured } = require("./sms");
 
@@ -567,6 +567,26 @@ function renderFlags(flags) {
   return lines.join("\n");
 }
 
+// Surfaces field-merge conflicts (field-merge.js / conflict-store.js): a
+// source re-scrape and a human edit disagreed on some field, so neither
+// was applied automatically -- these need a person to look and decide.
+function renderConflicts(conflicts) {
+  if (!conflicts.length) return "";
+  const lines = [
+    "## Needs Review — Conflicting Edits",
+    "",
+    `_A source re-scrape and a manually-curated value disagreed on these fields. The manual value was kept automatically, but someone should confirm it's still right rather than a stale correction. (${conflicts.length} total.)_`,
+    "",
+  ];
+  for (const c of conflicts) {
+    lines.push(
+      `- **${c.piece_name || "(untitled)"}** — \`${c.field}\`: kept "${c.human_value}", source now says "${c.new_source_value}" (detected ${c.detected}).`
+    );
+  }
+  lines.push("");
+  return lines.join("\n");
+}
+
 // Static -- this doesn't change week to week, so it's not worth an LLM
 // call to regenerate it (and removes any risk of it drifting/being
 // dropped by the model).
@@ -676,7 +696,7 @@ function links(date) {
   };
 }
 
-function buildSlackPayload(date, stats, slackSummary, flags = []) {
+function buildSlackPayload(date, stats, slackSummary, flags = [], conflicts = []) {
   const l = links(date);
   const linkParts = [
     `*Report:* <${l.report}|View report>`,
@@ -714,6 +734,20 @@ function buildSlackPayload(date, stats, slackSummary, flags = []) {
         ]
       : [];
 
+  const conflictsBlock = conflicts.length
+    ? [
+        {
+          type: "context",
+          elements: [
+            {
+              type: "mrkdwn",
+              text: `:warning: *Needs review:* ${conflicts.length} field conflict(s) — a source re-scrape and a manual edit disagreed, see the report.`,
+            },
+          ],
+        },
+      ]
+    : [];
+
   return {
     text: `David Webb secondary-market report — ${date}`,
     blocks: [
@@ -734,6 +768,7 @@ function buildSlackPayload(date, stats, slackSummary, flags = []) {
       },
       { type: "section", text: { type: "mrkdwn", text: slackSummary || "_No summary generated._" } },
       ...flagsBlock,
+      ...conflictsBlock,
       {
         type: "section",
         text: { type: "mrkdwn", text: linkParts.join("  ·  ") },
@@ -813,6 +848,9 @@ async function generate() {
   fs.writeFileSync(FLAGGED_LISTINGS_JSON, JSON.stringify(flags, null, 2) + "\n");
   console.log(`Flags: ${flags.length} price anomaly`);
 
+  const conflicts = [...loadJson(HISTORY_CONFLICTS_JSON), ...loadJson(LISTINGS_CONFLICTS_JSON)];
+  console.log(`Conflicts: ${conflicts.length} needing review`);
+
   console.log(
     `Analyzing ${date}: ${stats.totals.auctionRecords} auction records, ${stats.totals.activeDealerListings} active dealer listings, ` +
       `${stats.newDealerListings1wk.length} new (last week) / ${stats.closedDealerListings4wk.length} closed (last 4 weeks)...`
@@ -845,6 +883,7 @@ async function generate() {
     renderRecentAuctionSales(stats.recentSales),
     renderTopSalesEver(stats.topSalesEver),
     renderFlags(flags),
+    renderConflicts(conflicts),
     renderDataQualityCaveats(),
   ]
     .filter(Boolean)
@@ -859,7 +898,7 @@ async function generate() {
   fs.writeFileSync(reportPath, reportBody + "\n");
   fs.writeFileSync(path.join(REPORTS_DIR, "latest.md"), reportBody + "\n");
 
-  const payload = buildSlackPayload(date, stats, slack, flags);
+  const payload = buildSlackPayload(date, stats, slack, flags, conflicts);
   fs.writeFileSync(payloadPath(date), JSON.stringify(payload, null, 2));
 
   const smsText = buildSmsText(date, stats);
@@ -930,6 +969,7 @@ module.exports = {
   renderTopSalesEver,
   renderTagTrends,
   renderFlags,
+  renderConflicts,
   renderDataQualityCaveats,
   buildSmsText,
 };
