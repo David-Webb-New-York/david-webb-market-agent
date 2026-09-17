@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { idToken, recordType, recordId, pieceName, listingUrl, historyNotes } = req.body || {};
+    const { idToken, recordType, recordId, pieceName, listingUrl, historyNotes, clearListingUrl, clearHistoryNotes } = req.body || {};
 
     if (!idToken || !recordType || !recordId) {
       res.status(400).json({ error: "Missing idToken, recordType, or recordId" });
@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
       res.status(400).json({ error: "recordType must be 'auction' or 'dealer'" });
       return;
     }
-    if (!listingUrl && !historyNotes) {
+    if (!listingUrl && !historyNotes && !clearListingUrl && !clearHistoryNotes) {
       res.status(400).json({ error: "Nothing to submit" });
       return;
     }
@@ -74,6 +74,8 @@ module.exports = async (req, res) => {
       `record_id: ${recordId}`,
       listingUrl ? `listing_url: ${listingUrl}` : null,
       historyNotes ? `history_notes: ${historyNotes}` : null,
+      clearListingUrl ? `clear_listing_url: true` : null,
+      clearHistoryNotes ? `clear_history_notes: true` : null,
       `submitted_by: ${submittedBy}`,
     ].filter(Boolean);
 

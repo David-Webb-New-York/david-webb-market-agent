@@ -16,6 +16,7 @@
 
 const historyStore = require("./history-store");
 const dealerStore = require("./dealer-store");
+const { clearField } = require("./field-merge");
 
 function parseIssueBody(body) {
   const fields = {};
@@ -48,16 +49,18 @@ async function commentAndClose(issueNumber, body, close) {
 async function main() {
   const issueNumber = process.env.ISSUE_NUMBER;
   const fields = parseIssueBody(process.env.ISSUE_BODY);
-  const { record_type, record_id, listing_url, history_notes, submitted_by } = fields;
+  const { record_type, record_id, listing_url, history_notes, clear_listing_url, clear_history_notes, submitted_by } = fields;
+  const wantsClearUrl = clear_listing_url === "true";
+  const wantsClearNotes = clear_history_notes === "true";
 
   if (!record_type || !record_id) {
     console.error("Missing record_type or record_id in issue body.");
     await commentAndClose(issueNumber, "Could not process: missing `record_type` or `record_id`. No changes made.", false);
     process.exit(1);
   }
-  if (!listing_url && !history_notes) {
+  if (!listing_url && !history_notes && !wantsClearUrl && !wantsClearNotes) {
     console.error("Nothing to apply.");
-    await commentAndClose(issueNumber, "Could not process: no `listing_url` or `history_notes` present. No changes made.", false);
+    await commentAndClose(issueNumber, "Could not process: nothing to set or clear. No changes made.", false);
     process.exit(1);
   }
 
@@ -74,17 +77,34 @@ async function main() {
     process.exit(1);
   }
 
-  const update = { ...rec };
-  if (listing_url) update.listing_url = listing_url;
-  if (history_notes) update.history_notes = history_notes;
+  // Explicit clears bypass the merge entirely and always take effect --
+  // see field-merge.js's clearField(). Applied to the record in place
+  // before any set, so a clear-and-replace in one submission works too.
+  const actions = [];
+  if (wantsClearUrl) {
+    clearField(rec, "listing_url");
+    actions.push("cleared listing_url");
+  }
+  if (wantsClearNotes) {
+    clearField(rec, "history_notes");
+    actions.push("cleared history_notes");
+  }
 
-  store.upsert(map, update, { source: `editor:${submitted_by || "unknown"}` });
+  if (listing_url || history_notes) {
+    const update = { ...rec };
+    if (listing_url) update.listing_url = listing_url;
+    if (history_notes) update.history_notes = history_notes;
+    store.upsert(map, update, { source: `editor:${submitted_by || "unknown"}` });
+    if (listing_url) actions.push("set listing_url");
+    if (history_notes) actions.push("set history_notes");
+  }
+
   store.writeStore(map);
-  console.log(`Applied edit to ${record_id} from ${submitted_by || "unknown"}.`);
+  console.log(`Applied to ${record_id} from ${submitted_by || "unknown"}: ${actions.join(", ")}.`);
 
   await commentAndClose(
     issueNumber,
-    `Applied — updated \`${record_type}\` record \`${record_id}\`${listing_url ? " (listing_url)" : ""}${history_notes ? " (history_notes)" : ""}. It'll be live on the site within a few minutes.`,
+    `Applied — updated \`${record_type}\` record \`${record_id}\` (${actions.join(", ")}). It'll be live on the site within a few minutes.`,
     true
   );
 }
