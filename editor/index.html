@@ -55,6 +55,9 @@
     }
     textarea { min-height: 8rem; resize: vertical; }
     .hint { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+    .clear-row { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem; font-size: 0.85rem; }
+    .clear-row input { width: auto; }
+    input:disabled, textarea:disabled { background: #f2f0ec; color: var(--muted); }
     #g_id_signin { margin: 1rem 0; }
     #signed-in-as { display: none; font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem; }
     #form-section { display: none; }
@@ -113,10 +116,18 @@
     <form id="form-section">
       <label for="listing_url">Listing URL</label>
       <input type="url" id="listing_url" name="listing_url" placeholder="https://..." />
-      <div class="hint">Only fills in if currently blank on this record — leave empty to skip.</div>
+      <div class="hint">Leave empty to skip. Entering a value replaces whatever's there now, whether blank or already set.</div>
+      <div class="clear-row">
+        <input type="checkbox" id="clear_listing_url" />
+        <label for="clear_listing_url" style="margin: 0; font-weight: 400;">Instead, clear the existing listing URL (remove it entirely)</label>
+      </div>
 
       <label for="history_notes">History / provenance notes</label>
       <textarea id="history_notes" name="history_notes" placeholder="Backstory, provenance, condition report, etc."></textarea>
+      <div class="clear-row">
+        <input type="checkbox" id="clear_history_notes" />
+        <label for="clear_history_notes" style="margin: 0; font-weight: 400;">Instead, clear the existing history notes (remove them entirely)</label>
+      </div>
 
       <button type="submit" id="submit-btn">Submit for review</button>
     </form>
@@ -140,6 +151,17 @@
 
     let idToken = null;
 
+    function wireClearToggle(clearId, fieldId) {
+      const clearBox = document.getElementById(clearId);
+      const field = document.getElementById(fieldId);
+      clearBox.addEventListener("change", () => {
+        field.disabled = clearBox.checked;
+        if (clearBox.checked) field.value = "";
+      });
+    }
+    wireClearToggle("clear_listing_url", "listing_url");
+    wireClearToggle("clear_history_notes", "history_notes");
+
     function handleGoogleSignIn(response) {
       idToken = response.credential;
       let email = "";
@@ -160,17 +182,19 @@
       msg.className = "message";
       msg.textContent = "";
 
-      const listingUrl = document.getElementById("listing_url").value.trim();
-      const historyNotes = document.getElementById("history_notes").value.trim();
+      const clearListingUrl = document.getElementById("clear_listing_url").checked;
+      const clearHistoryNotes = document.getElementById("clear_history_notes").checked;
+      const listingUrl = clearListingUrl ? "" : document.getElementById("listing_url").value.trim();
+      const historyNotes = clearHistoryNotes ? "" : document.getElementById("history_notes").value.trim();
 
       if (!idToken) {
         msg.className = "message error";
         msg.textContent = "Please sign in with Google first.";
         return;
       }
-      if (!listingUrl && !historyNotes) {
+      if (!listingUrl && !historyNotes && !clearListingUrl && !clearHistoryNotes) {
         msg.className = "message error";
-        msg.textContent = "Enter a listing URL and/or history notes before submitting.";
+        msg.textContent = "Enter a value, or check a \"clear\" box, before submitting.";
         return;
       }
 
@@ -187,6 +211,8 @@
             pieceName,
             listingUrl: listingUrl || null,
             historyNotes: historyNotes || null,
+            clearListingUrl,
+            clearHistoryNotes,
           }),
         });
         const data = await res.json();
@@ -194,6 +220,8 @@
         msg.className = "message success";
         msg.textContent = "Submitted — it'll be applied automatically within a few minutes.";
         document.getElementById("form-section").reset();
+        document.getElementById("listing_url").disabled = false;
+        document.getElementById("history_notes").disabled = false;
       } catch (err) {
         msg.className = "message error";
         msg.textContent = "Error: " + (err.message || "something went wrong");

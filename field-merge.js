@@ -96,4 +96,20 @@ function initialSnapshot(clean, diffableFields) {
   return snapshot;
 }
 
-module.exports = { mergeFields, initialSnapshot };
+// Explicit human-initiated delete -- bypasses the merge entirely rather
+// than going through mergeFields(), which treats an empty incoming value
+// as "the source reported nothing" and always leaves the field alone (the
+// whole point of that rule is to make an accidental/transient empty
+// scrape harmless). A person intentionally clearing a wrong value is a
+// different, deliberate action and should always take effect. Also drops
+// the field's snapshot entry, so a future scrape can freely fill the
+// now-empty field as a normal gap rather than comparing against a stale
+// snapshot of the value that was just removed.
+function clearField(rec, field) {
+  rec[field] = "";
+  if (rec._source_snapshot && field in rec._source_snapshot) {
+    delete rec._source_snapshot[field];
+  }
+}
+
+module.exports = { mergeFields, initialSnapshot, clearField };
