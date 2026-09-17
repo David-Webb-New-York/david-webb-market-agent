@@ -34,3 +34,11 @@ jobs:
           git commit -m "Apply editor submission from issue #${{ github.event.issue.number }}" || echo "No changes to commit"
           git pull --rebase --autostash origin main
           git push
+
+      - name: Deploy database GUI
+        # A GITHUB_TOKEN-authored push doesn't trigger other workflows'
+        # `on: push` (GitHub's own anti-recursion rule) -- dispatch the
+        # redeploy explicitly, same as daily-alert.yml / dealer-refresh.yml.
+        run: gh workflow run pages-deploy.yml --ref main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
