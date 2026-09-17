@@ -13,15 +13,14 @@ const path = require("path");
 const { inferTags } = require("./infer-tags");
 const { toUsd } = require("./convert-currency");
 const { isExcludedListing } = require("./excluded-listings");
+const { mergeFields, initialSnapshot } = require("./field-merge");
+const { loadConflicts, saveConflicts } = require("./conflict-store");
 
 const OUTPUT_DIR = path.join(__dirname, "output");
 const HISTORY_JSON = path.join(OUTPUT_DIR, "david-webb-auction-history.json");
 const HISTORY_CSV = path.join(OUTPUT_DIR, "david-webb-auction-history.csv");
+const HISTORY_CONFLICTS_JSON = path.join(OUTPUT_DIR, "history-field-conflicts.json");
 
-// `history_notes` is manually curated (provenance, backstory, research a
-// human adds by hand) -- no importer ever sets it, so upsert()'s "new
-// non-empty value wins" merge never overwrites it on a re-scrape, unlike
-// `notes` (scraper-owned, replaced every time the source re-supplies it).
 const HISTORY_FIELDS = [
   "piece_name",
   "category",
@@ -45,6 +44,18 @@ const HISTORY_FIELDS = [
 
 const CSV_HEADER = ["id", ...HISTORY_FIELDS, "source", "first_captured"];
 
+// tags and sold_price_usd are fully derived (recomputed below on every
+// upsert) rather than scraped -- excluded from the diffable set since
+// there's nothing meaningful to snapshot-and-compare for a value that's
+// always overwritten by computation anyway.
+const DIFFABLE_FIELDS = HISTORY_FIELDS.filter((f) => f !== "tags" && f !== "sold_price_usd");
+
+let conflictsCache = null;
+function conflicts() {
+  if (!conflictsCache) conflictsCache = loadConflicts(HISTORY_CONFLICTS_JSON);
+  return conflictsCache;
+}
+
 function normalizeUrl(u) {
   if (!u) return "";
   const raw = String(u).trim();
@@ -56,15 +67,21 @@ function normalizeUrl(u) {
   }
 }
 
-// Stable identity: listing URL if present, else house+lot+sale_date+name.
-function recordKey(r) {
-  const url = normalizeUrl(r.listing_url);
-  if (url) return "url:" + url;
+// The house+lot+sale_date+name form -- always computed this way regardless
+// of whether a URL is present, so a record captured before it had a
+// listing_url can still be found after one is added (see recordKey()).
+function metaKey(r) {
   const house = (r.auction_house || "").toLowerCase().trim();
   const lot = String(r.lot_number || "").toLowerCase().trim();
   const date = String(r.sale_date || "").trim();
   const name = (r.piece_name || "").toLowerCase().replace(/\s+/g, " ").trim();
   return `meta:${house}|${lot}|${date}|${name}`;
+}
+
+// Stable identity: listing URL if present, else house+lot+sale_date+name.
+function recordKey(r) {
+  const url = normalizeUrl(r.listing_url);
+  return url ? "url:" + url : metaKey(r);
 }
 
 // sold_price_usd is fully derived (like tags) -- always recomputed from
@@ -111,13 +128,20 @@ function upsert(map, record, meta = {}) {
   const source = meta.source || record.source || "";
   const clean = { id: key };
   for (const f of HISTORY_FIELDS) clean[f] = record[f] ?? "";
-  if (map.has(key)) {
-    const prev = map.get(key);
-    // Keep non-empty existing values unless the new record fills a gap or updates a price.
-    const merged = { ...prev };
-    for (const f of HISTORY_FIELDS) {
-      if (clean[f] !== "" && clean[f] !== null && clean[f] !== undefined) merged[f] = clean[f];
-    }
+
+  // A record captured before it had a listing_url (meta-keyed) needs to
+  // still be found once one is added -- otherwise it silently duplicates
+  // under the new url-based key instead of merging into the original.
+  const fallbackKey = metaKey(record);
+  const existingKey = map.has(key) ? key : fallbackKey !== key && map.has(fallbackKey) ? fallbackKey : null;
+
+  if (existingKey) {
+    const prev = map.get(existingKey);
+    // Three-way merge per field -- see field-merge.js. Preserves a manual
+    // edit (a human-fixed field, or a curated addition like history_notes)
+    // unless nobody has touched it since the source last supplied a value,
+    // in which case the source's update applies safely.
+    const merged = mergeFields(prev, clean, DIFFABLE_FIELDS, conflicts(), prev.piece_name || clean.piece_name);
     merged.id = key;
     merged.source = prev.source || source;
     merged.first_captured = prev.first_captured || today;
@@ -125,11 +149,13 @@ function upsert(map, record, meta = {}) {
     // rather than carrying over whichever side's (likely empty) raw value won.
     merged.tags = inferTags(`${merged.piece_name} ${merged.notes}`, merged.era_or_year).join("; ");
     merged.sold_price_usd = usdPrice(merged);
+    if (existingKey !== key) map.delete(existingKey);
     map.set(key, merged);
     return false;
   }
   clean.source = source;
   clean.first_captured = today;
+  clean._source_snapshot = initialSnapshot(clean, DIFFABLE_FIELDS);
   clean.tags = inferTags(`${clean.piece_name} ${clean.notes}`, clean.era_or_year).join("; ");
   clean.sold_price_usd = usdPrice(clean);
   map.set(key, clean);
@@ -140,6 +166,7 @@ function writeStore(map) {
   const records = [...map.values()].sort(
     (a, b) => (Number(b.sold_price_usd) || 0) - (Number(a.sold_price_usd) || 0)
   );
+  saveConflicts(HISTORY_CONFLICTS_JSON, conflicts());
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
   fs.writeFileSync(HISTORY_JSON, JSON.stringify(records, null, 2) + "\n");
   const lines = [CSV_HEADER.join(",")];
@@ -152,10 +179,13 @@ module.exports = {
   OUTPUT_DIR,
   HISTORY_JSON,
   HISTORY_CSV,
+  HISTORY_CONFLICTS_JSON,
   HISTORY_FIELDS,
+  DIFFABLE_FIELDS,
   CSV_HEADER,
   normalizeUrl,
   recordKey,
+  metaKey,
   csvEscape,
   loadStore,
   upsert,
