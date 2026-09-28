@@ -108,5 +108,15 @@
     "closedDealerListings4wk": 143,
     "dealerAskingMedian": 24000,
     "recentSalesMedian": 147178
+  },
+  {
+    "date": "2026-09-28",
+    "auctionRecords": 4358,
+    "dealerRecords": 1739,
+    "activeDealerListings": 1592,
+    "newDealerListings1wk": 33,
+    "closedDealerListings4wk": 147,
+    "dealerAskingMedian": 24000,
+    "recentSalesMedian": 62356
   }
 ]
