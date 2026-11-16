@@ -1,12 +1,12 @@
-# David Webb Secondary Market — 2026-11-09
+# David Webb Secondary Market — 2026-11-16
 
 ## Executive Summary
 
-As of November 9, 2026, the David Webb secondary market reflects a healthy but measured pace: six auction results recorded over the past sixty days carry a median hammer of $31,262, with Sotheby's the sole active house across both Asian and European rooms, topped by a Yellow Sapphire, Diamond and Enamel Demi-Parure that cleared $62,356 in Hong Kong on September 17. Dealer-side activity tells an equally constructive story — 131 listings closed over the past four weeks against just 15 new additions this week, a sell-through dynamic that points to genuine demand absorption rather than supply accumulation. The active dealer pool of 1,579 listings carries a median ask of $24,000, though the week's most significant new entries sit well above that level: a Cabochon Sapphire and Emerald Bracelet fresh from Joseph Saidian and Sons at $175,000 and an Important 18k Gold and Diamond Necklace from Tiina Smith Jewelry at $155,000 both signal that top-tier consignors remain willing to bring important pieces to market at assertive prices. The detailed breakdowns that follow cover current availability, new arrivals, and recent closings in full.
+As of 16 November 2026, the David Webb secondary market is showing measured, steady activity across both auction rooms and the dealer channel. Six lots cleared at Sotheby's over the past sixty days — spanning Hong Kong and Paris sales — at a median hammer of $31,262, with the top result, a Yellow Sapphire, Diamond and Enamel Demi-Parure, reaching $62,356 in Hong Kong last September. The dealer market comprises 1,609 active listings drawn from a tracked universe of 1,873 dealer records, sitting at a median ask of $24,000; 22 fresh listings entered the market in the past week and 99 listings closed over the prior four weeks, a pace of turnover that suggests consistent collector demand rather than speculative stacking. Among the week's new arrivals, a Hammered Pendant Necklace offered by Macklowe Gallery and a Pearl, Sapphire and Diamond Bracelet from Joseph Saidian and Sons each carry $65,000 asks, anchoring the upper tier of current dealer supply and setting a useful reference point against recent auction clearing levels.
 
 ## Currently Available
 
-_1,579 active listings across all tracked dealer marketplaces (estate jewelers, 1stDibs, Sotheby's Buy Now, The RealReal), with a combined asking-price total of $53,377,531. This section is dealer inventory only — there is currently no live, biddable David Webb auction inventory to track; every auction-history record on file is a completed, historical sale (see "Recent Auction Sales" below)._
+_1,609 active listings across all tracked dealer marketplaces (estate jewelers, 1stDibs, Sotheby's Buy Now, The RealReal), with a combined asking-price total of $55,354,471. This section is dealer inventory only — there is currently no live, biddable David Webb auction inventory to track; every auction-history record on file is a completed, historical sale (see "Recent Auction Sales" below)._
 
 _That combined total is a sum of current asking prices, not an appraisal or a market valuation — it will run high wherever the same physical piece is listed on more than one platform (see Data-Quality Caveats)._
 
@@ -17,42 +17,48 @@ xychart-beta
     title "Current dealer inventory by asking price"
     x-axis ["Under $5K", "$5K–$15K", "$15K–$30K", "$30K–$60K", "$60K–$120K", "$120K+"]
     y-axis "Listings" 0 --> 600
-    bar [44, 379, 481, 408, 141, 61]
+    bar [45, 385, 486, 417, 146, 65]
 ```
 
 **By category**
 
 | Category | Count | Min | Median | Max |
 |---|---|---|---|---|
-| Earrings | 475 | $1,900 | $17,800 | $227,500 |
-| Ring | 340 | $3,100 | $18,988 | $375,000 |
-| Bracelet | 321 | $3,200 | $42,200 | $280,000 |
-| Necklace | 214 | $2,796 | $39,150 | $289,500 |
-| Brooch | 130 | $3,273 | $25,000 | $114,400 |
-| Cufflinks | 26 | $2,250 | $6,050 | $14,800 |
-| Other | 8 | $4,800 | $27,000 | $150,000 |
+| Earrings | 484 | $1,900 | $17,800 | $227,500 |
+| Ring | 345 | $3,100 | $19,100 | $375,000 |
+| Bracelet | 327 | $3,200 | $43,000 | $288,000 |
+| Necklace | 222 | $2,796 | $40,125 | $345,000 |
+| Brooch | 131 | $4,500 | $25,000 | $114,400 |
+| Cufflinks | 27 | $2,250 | $5,700 | $14,800 |
+| Other | 8 | $8,500 | $27,000 | $150,000 |
 
 **By dealer**
 
-_15 dealer(s) currently carry David Webb pieces._
+_23 dealer(s) currently carry David Webb pieces — showing the top 20 by listing count, the rest bucketed into "Other" below._
 
 | Dealer | Active Listings | Median Asking |
 |---|---|---|
-| The Back Vault | 961 | $24,000 |
-| The RealReal | 115 | $13,496 |
-| Oak Gem | 112 | $27,500 |
-| Eric Originals & Antiques | 78 | $29,625 |
+| The Back Vault | 964 | $24,000 |
+| The RealReal | 120 | $13,246 |
+| Oak Gem | 113 | $28,000 |
+| Eric Originals & Antiques | 79 | $29,750 |
 | Yafa Signed Jewels | 56 | $55,000 |
 | Greenleaf & Crosby | 46 | $26,250 |
 | Wilson's Estate Jewelry | 36 | $11,025 |
 | Saidian & Sons | 31 | $40,000 |
-| Sotheby's (Buy Now) | 30 | $18,250 |
-| Legacy Vintage Jewels | 16 | $80,000 |
+| Sotheby's (Buy Now) | 29 | $18,000 |
+| Legacy Vintage Jewels | 18 | $80,000 |
 | Macklowe Gallery | 11 | $35,000 |
 | Estate Diamond Jewelry | 9 | $15,000 |
 | Kentshire | 6 | $36,000 |
+| Joseph Saidian and Sons | 6 | $62,500 |
+| Eric Originals and Antiques LTD | 4 | $18,485 |
 | Louis Martin | 4 | $24,500 |
 | A. Brandt + Son | 3 | $14,995 |
+| Macklowe Gallery Jewelry | 2 | $40,750 |
+| Lawrence Jeffrey | 2 | $15,400 |
+| Stella Rubin Jewelry | 2 | $9,050 |
+| Other (3 additional dealers) | 3 | $58,000 |
 
 ## Trends by Motif & Material
 
@@ -79,79 +85,79 @@ _Tags are keyword-matched from each piece's own listing text against David Webb'
 
 | Tag | Count | Min | Median | Max |
 |---|---|---|---|---|
-| [Enamel](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Enamel) | 496 | $2,796 | $20,700 | $289,500 |
-| [Carved Hardstone](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Carved%20Hardstone) | 286 | $3,850 | $34,400 | $289,500 |
-| [Cabochon](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Cabochon) | 261 | $3,200 | $27,500 | $240,500 |
-| [Animal/Creature](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Animal%2FCreature) | 233 | $3,100 | $21,400 | $280,000 |
-| [Hammered Gold](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Hammered%20Gold) | 176 | $3,056 | $22,500 | $143,000 |
-| [Cuff/Bangle](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Cuff%2FBangle) | 171 | $3,200 | $37,300 | $250,200 |
-| [1970s](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=1970s) | 145 | $3,100 | $27,900 | $289,500 |
+| [Enamel](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Enamel) | 497 | $2,796 | $20,700 | $289,500 |
+| [Carved Hardstone](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Carved%20Hardstone) | 293 | $3,850 | $34,400 | $289,500 |
+| [Cabochon](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Cabochon) | 260 | $3,200 | $27,400 | $240,500 |
+| [Animal/Creature](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Animal%2FCreature) | 237 | $3,100 | $21,400 | $288,000 |
+| [Hammered Gold](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Hammered%20Gold) | 178 | $2,876 | $22,500 | $143,000 |
+| [Cuff/Bangle](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Cuff%2FBangle) | 173 | $3,200 | $37,300 | $288,000 |
+| [1970s](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=1970s) | 146 | $3,100 | $28,200 | $289,500 |
 | [1960s](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=1960s) | 86 | $3,100 | $29,625 | $265,000 |
-| [Rock Crystal](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Rock%20Crystal) | 63 | $4,800 | $37,000 | $225,000 |
+| [Rock Crystal](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Rock%20Crystal) | 64 | $4,800 | $38,000 | $225,000 |
 | [1980s](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=1980s) | 57 | $4,250 | $22,700 | $81,200 |
 | [Bombé](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Bomb%C3%A9) | 55 | $6,400 | $18,800 | $214,500 |
-| [Door Knocker](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Door%20Knocker) | 48 | $8,713 | $20,750 | $214,500 |
+| [Door Knocker](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Door%20Knocker) | 48 | $8,200 | $20,750 | $214,500 |
 | [Zodiac](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Zodiac) | 20 | $4,500 | $18,150 | $64,300 |
 | [Shell/Starfish](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Shell%2FStarfish) | 14 | $7,200 | $12,100 | $30,700 |
 | [Maltese Cross](https://david-webb-new-york.github.io/david-webb-market-agent/?tag=Maltese%20Cross) | 13 | $27,300 | $35,700 | $65,000 |
 
 ## New in the Last Week
 
-_15 dealer listing(s) first seen in the last 7 days, across all sources and price points._
+_22 dealer listing(s) first seen in the last 7 days, across all sources and price points — showing the 20 biggest by price._
 
 | Piece | Category | Dealer | Price | Date |
 |---|---|---|---|---|
-| [David Webb Cabochon Sapphire & Emerald Bracelet](https://www.1stdibs.com/jewelry/bracelets/modern-bracelets/david-webb-cabochon-sapphire-emerald-bracelet/id-j_19052912/) | Bracelet | Joseph Saidian and Sons | $175,000 | 2026-11-03 |
-| [Important David Webb 18k Gold and Diamond Necklace](https://www.1stdibs.com/jewelry/necklaces/link-necklaces/important-david-webb-18k-gold-diamond-necklace/id-j_31061882/) | Necklace | Tiina Smith Jewelry | $155,000 | 2026-11-03 |
-| [David Webb Opal Diamond Ruby Platinum 18 Karat Yellow Gold Fish Cocktail Ring](https://wilsonsestatejewelry.com/products/david-webb-opal-diamond-ruby-platinum-18-karat-yellow-gold-fish-cocktail-ring) | Ring | Wilson's Estate Jewelry | $36,800 | 2026-11-06 |
-| [David Webb Onyx Platinum & 18K Yellow Gold Onyx Octagon Open Link Chain Necklace](https://thebackvault.com/products/david-webb-onyx-platinum-18k-yellow-gold-onyx-octagon-open-link-chain-necklace-rr7415) | Necklace | The Back Vault | $29,200 | 2026-11-05 |
-| [David Webb Vreeland Diamond Zebra Earrings](https://ericoriginals.com/products/david-webb-vreeland-diamond-zebra-earrings) | Earrings | Eric Originals & Antiques | $26,000 | 2026-11-02 |
-| Gold and Diamond Convertible Pendant Brooch | Necklace | Sotheby's (Buy Now) | $25,000 | 2026-11-06 |
-| [18K Emerald Tiger Pin Brooch](https://www.therealreal.com/products/jewelry/brooches/pin/david-webb-18k-emerald-tiger-pin-brooch-x6a26) | Brooch | The RealReal | $18,500 | 2026-11-05 |
-| Vintage Gold Pendant Brooch | Necklace | Sotheby's (Buy Now) | $16,000 | 2026-11-02 |
-| David Webb Gold and Diamond Earclips | Earrings | Sotheby's (Buy Now) | $16,000 | 2026-11-06 |
+| [David Webb Hammered Pendant Necklace](https://www.1stdibs.com/jewelry/necklaces/link-necklaces/david-webb-hammered-pendant-necklace/id-j_26386522/) | Necklace | Macklowe Gallery Jewelry | $65,000 | 2026-11-16 |
+| [David Webb Pearl, Sapphire and Diamond Bracelet](https://www.1stdibs.com/jewelry/bracelets/beaded-bracelets/david-webb-pearl-sapphire-diamond-bracelet/id-j_30377002/) | Bracelet | Joseph Saidian and Sons | $65,000 | 2026-11-16 |
+| [David Webb Gold Diamond Platinum Vintage Necklace](https://www.1stdibs.com/jewelry/necklaces/choker-necklaces/david-webb-gold-diamond-platinum-vintage-necklace/id-j_9584962/) | Necklace | The Back Vault | $57,700 | 2026-11-16 |
+| [Vintage 1970s David Webb Wood Link Bracelet](https://ericoriginals.com/products/vintage-1970s-david-webb-wood-link-bracelet) | Bracelet | Eric Originals & Antiques | $46,750 | 2026-11-10 |
+| [David Webb Repoussé Gold Lion Cuff Bracelet](https://oakgem.com/products/david-webb-repousse-gold-lion-cuff-bracelet) | Bracelet | Oak Gem | $36,000 | 2026-11-13 |
+| [18K Diamond Hinged Cuff Bracelet](https://www.therealreal.com/products/details/jewelry/bracelets/cuff/david-webb-18k-diamond-hinged-cuff-bracelet-sqi66) | Bracelet | The RealReal | $32,500 | 2026-11-13 |
+| [18K Coral, Diamond & Enamel Cocktail Ring](https://www.therealreal.com/products/jewelry/rings/cocktail-ring/david-webb-18k-coral-diamond-enamel-cocktail-ring-x08cs) | Ring | The RealReal | $22,500 | 2026-11-11 |
+| [Vintage 18K Diamond Convertible Clip-On Earrings](https://www.therealreal.com/products/details/jewelry/earrings/clip-on/david-webb-vintage-18k-diamond-convertible-clip-on-earrings-ubue4) | Earrings | The RealReal | $18,995 | 2026-11-10 |
+| [18K Turquoise & Enamel Cocktail Ring](https://www.therealreal.com/products/jewelry/rings/cocktail-ring/david-webb-18k-turquoise-enamel-cocktail-ring-x1rbt) | Ring | The RealReal | $17,053 | 2026-11-11 |
+| [David Webb Bunny Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-bunny-earrings/id-j_26883682/) | Earrings | Eric Originals and Antiques LTD | $16,100 | 2026-11-16 |
+| [18K Quartz & Diamond Clip-on Earrings](https://www.therealreal.com/products/details/jewelry/earrings/clip-on/david-webb-18k-quartz-diamond-clip-on-earrings-x0f33) | Earrings | The RealReal | $15,795 | 2026-11-13 |
 | [18K Pearl & Diamond Clip-On Earrings](https://www.therealreal.com/products/details/jewelry/earrings/clip-on/david-webb-18k-pearl-diamond-clip-on-earrings-vdo55) | Earrings | The RealReal | $15,500 | 2026-11-09 |
-| [David Webb 1980's 18 Karat Yellow Gold Vintage Hammered Fancy Twist Link Bracelet](https://wilsonsestatejewelry.com/products/david-webb-1980s-18-karat-yellow-gold-vintage-hammered-fancy-twist-link-bracelet) | Bracelet | Wilson's Estate Jewelry | $15,200 | 2026-11-04 |
 | [18K Hammered Doorknockers Large Oversized Earrings](https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-hammered-doorknockers-large-oversized-earrings-wzbgr) | Earrings | The RealReal | $12,995 | 2026-11-09 |
-| [18K Alligator Print Clip-on Earrings](https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-alligator-print-clip-on-earrings-xdspk) | Earrings | The RealReal | $10,500 | 2026-11-04 |
+| [18K Emerald Repousse Alligator Cocktail Ring](https://www.therealreal.com/products/details/jewelry/rings/cocktail-ring/david-webb-18k-emerald-repousse-alligator-cocktail-ring-xdsot) | Ring | The RealReal | $7,995 | 2026-11-16 |
+| [14K Cultured Pearl & Diamond Clip-On Earrings](https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-14k-cultured-pearl-diamond-clip-on-earrings-x6mq7) | Earrings | The RealReal | $7,495 | 2026-11-13 |
+| [18K Nugget Clip-on Earrings](https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-nugget-clip-on-earrings-xcibb) | Earrings | The RealReal | $6,345 | 2026-11-13 |
+| [1.56ctw Diamond & Enamel Drop Earrings](https://www.therealreal.com/products/details/jewelry/earrings/drop/david-webb-1-56ctw-diamond-enamel-drop-earrings-xeect) | Earrings | The RealReal | $5,150 | 2026-11-16 |
+| [1.56ctw Diamond & Enamel Drop Earrings](https://www.therealreal.com/products/details/jewelry/earrings/drop/david-webb-1-56ctw-diamond-enamel-drop-earrings-xeeay) | Earrings | The RealReal | $5,150 | 2026-11-16 |
 | [2.96ctw Sapphire & Ruby Cufflinks](https://www.therealreal.com/products/jewelry/cufflinks/david-webb-2-96ctw-sapphire-ruby-cufflinks-x6a1n) | Cufflinks | The RealReal | $4,750 | 2026-11-09 |
 | [David Webb Gold Enamel Striped Cufflinks](https://oakgem.com/products/david-webb-gold-enamel-striped-cufflinks) | Cufflinks | Oak Gem | $4,400 | 2026-11-09 |
 
+_...and 2 more. [See the full list in the live dashboard](https://david-webb-new-york.github.io/david-webb-market-agent/?type=dealer)._
+
 ## Closed / Sold in the Last 4 Weeks
 
-_131 dealer listing(s) delisted in the last 28 days — "closed" usually but not always means sold (see Data-Quality Caveats)._
+_99 dealer listing(s) delisted in the last 28 days — "closed" usually but not always means sold (see Data-Quality Caveats)._
 
 | Piece | Category | Dealer | Price | Date |
 |---|---|---|---|---|
-| [Iconic David Webb Necklace](https://www.1stdibs.com/jewelry/necklaces/link-necklaces/iconic-david-webb-necklace/id-j_25653002/) | Necklace | Joseph Saidian and Sons | $345,000 | 2026-08-10 |
-| [David Webb Coral Double Lion Head Bangle Bracelet](https://www.1stdibs.com/jewelry/bracelets/bangles/david-webb-coral-double-lion-head-bangle-bracelet/id-j_8543371/) | Bracelet | The Back Vault | $288,000 | 2026-09-14 |
+| [David Webb Oval Cut Sapphire Men's Ring](https://legacyvintagejewels.com/products/david-webb-oval-cut-sapphire-mens-ring) | Ring | Legacy Vintage Jewels | $200,000 | 2026-10-20 |
+| [18K Ruby, Emerald & Sapphire Clip-On Earrings](https://www.therealreal.com/products/details/jewelry/earrings/clip-on/david-webb-18k-ruby-emerald-sapphire-clip-on-earrings-sbzw8) | Earrings | The RealReal | $7,697 | 2026-08-18 |
+| [1.84ctw Emerald & Diamond Pipe Ring](https://www.therealreal.com/products/details/jewelry/rings/band/david-webb-1-84ctw-emerald-diamond-pipe-ring-vrdne) | Ring | The RealReal | $6,495 | 2026-08-12 |
+| [18K Enamel Band](https://www.therealreal.com/products/details/jewelry/rings/band/david-webb-18k-enamel-band-ubuzf) | Other | The RealReal | $4,800 | 2026-08-17 |
+| [18K Enamel Jabot Pin](https://www.therealreal.com/products/jewelry/brooches/pin/david-webb-18k-enamel-jabot-pin-u79zn) | Brooch | The RealReal | $3,273 | 2026-08-12 |
+| [David Webb Platinum & 18K Yellow Gold Dappled White Enamel Diamond Horse Bracelet](https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-dappled-white-enamel-diamond-horse-bracelet-rr8524) | Bracelet | The Back Vault | $63,000 | 2026-08-07 |
+| [18K Diamond Hinged Cuff Bracelet](https://www.therealreal.com/products/jewelry/bracelets/cuff/david-webb-18k-diamond-hinged-cuff-bracelet-sqi66) | Bracelet | The RealReal | $32,500 | 2026-08-12 |
+| Gold, Amethyst and Diamond Ring | Ring | Sotheby's (Buy Now) | $18,875 | 2026-08-10 |
+| Gold, Diamond and White Enamel Ring | Ring | Sotheby's (Buy Now) | $18,500 | 2026-08-10 |
+| [18K Quartz & Diamond Clip-on Earrings](https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-quartz-diamond-clip-on-earrings-x0f33) | Earrings | The RealReal | $15,795 | 2026-10-19 |
+| [Vintage 18K Diamond Convertible Clip-On Earrings](https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-vintage-18k-diamond-convertible-clip-on-earrings-ubue4) | Earrings | The RealReal | $18,995 | 2026-08-12 |
 | [David Webb Emerald and Diamond Earrings](https://www.1stdibs.com/jewelry/earrings/chandelier-earrings/david-webb-emerald-diamond-earrings/id-j_25344112/) | Earrings | Joseph Saidian and Sons | $260,000 | 2026-10-30 |
-| [David Webb Rock Crystal Necklace](https://www.1stdibs.com/jewelry/necklaces/chain-necklaces/david-webb-rock-crystal-necklace/id-j_24965412/) | Necklace | Legacy Vintage Jewels | $220,000 | 2026-08-10 |
-| [David Webb Coral Chimera Bracelet](https://www.1stdibs.com/jewelry/bracelets/bangles/david-webb-coral-chimera-bracelet/id-j_28629522/) | Bracelet | Joseph Saidian and Sons | $185,000 | 2026-09-14 |
 | [David Webb Cabochon Sapphire & Emerald Bracelet](https://www.1stdibs.com/jewelry/bracelets/modern-bracelets/david-webb-cabochon-sapphire-emerald-bracelet/id-j_19052912/) | Bracelet | Joseph Saidian and Sons | $175,000 | 2026-11-03 |
-| [David Webb Ruby Diamond Bracelet](https://www.1stdibs.com/jewelry/bracelets/retro-bracelets/david-webb-ruby-diamond-bracelet/id-j_20812622/) | Bracelet | ISKENDERIAN | $133,900 | 2026-08-10 |
 | [David Webb Turquoise, Ruby, and Diamond Necklace](https://www.1stdibs.com/jewelry/necklaces/beaded-necklaces/david-webb-turquoise-ruby-diamond-necklace/id-j_25225442/) | Necklace | Legacy Vintage Jewels | $110,000 | 2026-08-10 |
-| [David Webb Stud Diamond And Black Enamel Necklace](https://www.1stdibs.com/jewelry/necklaces/link-necklaces/david-webb-stud-diamond-black-enamel-necklace/id-j_15259522/) | Necklace | The Back Vault | $109,000 | 2026-10-22 |
-| [David Webb Emerald & Diamond Pendent Earrings](https://www.1stdibs.com/jewelry/earrings/dangle-earrings/david-webb-emerald-diamond-pendent-earrings/id-j_24936592/) | Earrings | Legacy Vintage Jewels | $104,000 | 2026-08-10 |
-| [David Webb Chestnut Horse Bracelet](https://www.1stdibs.com/jewelry/bracelets/link-bracelets/david-webb-chestnut-horse-bracelet/id-j_29735152/) | Bracelet | Eric Originals and Antiques LTD | $89,700 | 2026-10-30 |
 | [David Webb Emerald Diamond Ring](https://www.1stdibs.com/jewelry/rings/engagement-rings/david-webb-emerald-diamond-ring/id-j_26564002/) | Ring | Select Antique Jewelry Inc | $80,000 | 2026-10-02 |
-| [David Webb Cocktail Dome Ring](https://www.1stdibs.com/jewelry/rings/dome-rings/david-webb-cocktail-dome-ring/id-j_15334282/) | Ring | Joseph Saidian and Sons | $60,000 | 2026-08-10 |
 | [David Webb Jade and Enamel Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-jade-enamel-earrings/id-j_30079972/) | Earrings | Joseph Saidian and Sons | $60,000 | 2026-10-19 |
-| [David Webb Tassel Necklace](https://www.1stdibs.com/jewelry/necklaces/pendant-necklaces/david-webb-tassel-necklace/id-j_29923192/) | Necklace | Joseph Saidian and Sons | $55,000 | 2026-08-10 |
-| [David Webb Carved Coral and Diamond Clip Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-carved-coral-diamond-clip-earrings/id-j_12842542/) | Earrings | The Back Vault | $49,913 | 2026-10-05 |
-| [David Webb Coral, Diamond & Emerald Ring](https://www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-coral-diamond-emerald-ring/id-j_25900962/) | Ring | 66 mint | $47,850 | 2026-08-31 |
 | [David Webb Pearl, Diamond, Onyx & Rock Crystal Necklace](https://www.1stdibs.com/jewelry/necklaces/pendant-necklaces/david-webb-pearl-diamond-onyx-rock-crystal-necklace/id-j_29659532/) | Necklace | Odeon Collection | $42,000 | 2026-09-08 |
 | [David Webb "Lady Justice" Brooch](https://www.1stdibs.com/jewelry/brooches/brooches/david-webb-lady-justice-brooch/id-j_13409562/) | Brooch | NALLY JEWELS | $39,750 | 2026-10-30 |
 | [David Webb Onyx Platinum & 18K Yellow Gold Onyx Octagon Open Link Chain Necklace](https://thebackvault.com/products/david-webb-onyx-platinum-18k-yellow-gold-onyx-octagon-open-link-chain-necklace-rr7415) | Necklace | The Back Vault | $29,200 | 2026-11-05 |
-| [David Webb Modernist Coral Ring](https://www.1stdibs.com/jewelry/rings/fashion-rings/david-webb-modernist-coral-ring/id-j_29089142/) | Ring | Lawrence Jeffrey | $21,000 | 2026-08-10 |
-| [David Webb Frog Brooch](https://www.1stdibs.com/jewelry/brooches/brooches/david-webb-frog-brooch/id-j_30182982/) | Brooch | Eric Originals and Antiques LTD | $18,970 | 2026-08-17 |
 | [David Webb Gem-Set and Diamond Earrings United States, Circa 1970](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-gem-set-diamond-earrings-united-states-circa-1970/id-j_28789232/) | Earrings | Odeon Collection | $18,750 | 2026-09-28 |
-| [David Webb Frog Brooch](https://www.1stdibs.com/jewelry/brooches/brooches/david-webb-frog-brooch/id-j_26026232/) | Brooch | Eric Originals and Antiques LTD | $18,000 | 2026-08-17 |
 | [David Webb Gold Brooch](https://www.1stdibs.com/jewelry/brooches/brooches/david-webb-gold-brooch/id-j_28836742/) | Brooch | Stella Rubin Jewelry | $12,500 | 2026-09-10 |
 | [David Webb Diamond, Ruby and Emerald Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-diamond-ruby-emerald-earrings/id-j_19506002/) | Earrings | Stella Rubin Jewelry | $12,500 | 2026-09-30 |
-| [David Webb Diamond Hoop Earrings](https://www.1stdibs.com/jewelry/earrings/hoop-earrings/david-webb-diamond-hoop-earrings/id-j_29089102/) | Earrings | Lawrence Jeffrey | $9,800 | 2026-08-10 |
-| [David Webb Oval Hoop Earrings](https://www.1stdibs.com/jewelry/earrings/lever-back-earrings/david-webb-oval-hoop-earrings/id-j_17350342/) | Earrings | Stella Rubin Jewelry | $9,600 | 2026-08-10 |
-| [David Webb Trio of Gemstone Rings](https://www.1stdibs.com/jewelry/rings/fashion-rings/david-webb-trio-gemstone-rings/id-j_17080732/) | Other | Stella Rubin Jewelry | $8,500 | 2026-08-10 |
 | [David Webb Gold and Diamonds Ring](https://www.1stdibs.com/jewelry/rings/fashion-rings/david-webb-gold-diamonds-ring/id-j_25886562/) | Ring | Stella Rubin Jewelry | $6,800 | 2026-09-18 |
 | [David Webb Large Gold Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-large-gold-earrings/id-j_29850792/) | Earrings | Stella Rubin Jewelry | $5,200 | 2026-10-02 |
 | [David Webb Diamond Zebra Bracelet](https://ericoriginals.com/products/david-webb-diamond-zebra-bracelet) | Bracelet | Eric Originals & Antiques | $335,000 | 2026-08-27 |
@@ -178,13 +184,11 @@ _131 dealer listing(s) delisted in the last 28 days — "closed" usually but not
 | [David Webb 0.50 Carat Round Brilliant Diamond and Striped Enamel Cocktail Ring](https://www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-050-carat-round-brilliant-diamond-striped-enamel-cocktail-ring/id-j_17092542/) | Ring | Charles Schwartz & Son | $13,500 | 2026-08-17 |
 | [David Webb White Enamel, Diamond and Lapis Fish Bracelet In 18k](https://www.1stdibs.com/jewelry/bracelets/cuff-bracelets/david-webb-white-enamel-diamond-lapis-fish-bracelet-18k/id-j_28110872/) | Bracelet | NALLY JEWELS | $79,500 | 2026-10-08 |
 | [David Webb Diamond, Coral & White Enamel Frog Brooch](https://www.1stdibs.com/jewelry/brooches/brooches/david-webb-diamond-coral-white-enamel-frog-brooch/id-j_24885662/) | Brooch | NALLY JEWELS | $58,000 | 2026-10-08 |
-| [David Webb Pearl Amethyst and Chalcedony Necklace](https://www.1stdibs.com/jewelry/necklaces/multi-strand-necklaces/david-webb-pearl-amethyst-chalcedony-necklace/id-j_25791342/) | Necklace | Joseph Saidian and Sons | $55,000 | 2026-10-26 |
 | [David Webb "VIRGO"  Diamond & Gold Brooch/Pendant](https://www.1stdibs.com/jewelry/brooches/brooches/david-webb-virgo-diamond-gold-brooch-pendant/id-j_24196512/) | Necklace | NALLY JEWELS | $32,500 | 2026-10-08 |
 | [David Webb Tutti Frutti Earrings](https://www.1stdibs.com/jewelry/earrings/chandelier-earrings/david-webb-tutti-frutti-earrings/id-j_30070212/) | Earrings | Joseph Saidian and Sons | $150,000 | 2026-08-31 |
 | [David Webb Rock Crystal Coral and Onyx Necklace](https://saidiansons.com/products/david-webb-rock-crystal-coral-and-onyx-necklace) | Necklace | Saidian & Sons | $100,000 | 2026-08-19 |
 | [David Webb 18kt White Gold Coral and Diamond Dome Cocktail Ring, Circa 1970](https://www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-18kt-white-gold-coral-diamond-dome-cocktail-ring-circa-1970/id-j_28970402/) | Ring | Sperlich Jewelry | $21,118 | 2026-10-30 |
 | [David Webb Star Natural Star Sapphire & Diamond Ring](https://www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-star-natural-star-sapphire-diamond-ring/id-j_24981562/) | Ring | Legacy Vintage Jewels | $20,500 | 2026-08-13 |
-| [18K Zigzag Hammered Ring](https://www.therealreal.com/products/jewelry/rings/band/david-webb-18k-zigzag-hammered-ring-wzj6t) | Ring | The RealReal | $8,995 | 2026-10-12 |
 | [18K Crescent Clip On Earrings](https://www.therealreal.com/products/details/jewelry/earrings/clip-on/david-webb-18k-crescent-clip-on-earrings-v37f7) | Earrings | The RealReal | $6,495 | 2026-08-12 |
 | [David Webb Tutti Frutti Earrings](https://saidiansons.com/products/david-webb-tutti-frutti-earrings) | Earrings | Saidian & Sons | n/a | 2026-08-07 |
 | [David Webb Green Enamel, Diamond and Ruby Frog Bracelet](https://www.1stdibs.com/jewelry/bracelets/bangles/david-webb-green-enamel-diamond-ruby-frog-bracelet/id-j_17166932/) | Bracelet | The Back Vault | $68,000 | 2026-10-29 |
@@ -206,13 +210,11 @@ _131 dealer listing(s) delisted in the last 28 days — "closed" usually but not
 | [Pearl & Diamond Earclip Earrings](https://www.therealreal.com/products/jewelry/earrings/earclip/david-webb-pearl-diamond-earclip-earrings-uc44z) | Earrings | The RealReal | $8,921 | 2026-08-12 |
 | [David Webb 18k Gold Enamel Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-18k-gold-enamel-earrings/id-j_30054762/) | Earrings | Jewelry Grove | $8,000 | 2026-09-02 |
 | [David Webb Girandole Carved Emerald And Diamond Dangle Earrings](https://thebackvault.com/products/david-webb-girandole-carved-emerald-and-diamond-dangle-earrings-rr8426) | Earrings | The Back Vault | $149,500 | 2026-08-07 |
-| [Vintage Pair of David Webb Baroque Pearl Diamond Pendant Earrings](https://www.1stdibs.com/jewelry/earrings/dangle-earrings/vintage-pair-of-david-webb-baroque-pearl-diamond-pendant-earrings/id-j_30159182/) | Necklace | Keyamour | $58,000 | 2026-08-10 |
 | [David Webb Pair of Emerald and Diamond Pendent Ear Clips](https://legacyvintagejewels.com/products/pair-of-emerald-and-diamond-pendent-ear-clips) | Necklace | Legacy Vintage Jewels | $130,000 | 2026-08-07 |
 | [David Webb Multigem and Diamond Floral Gold Brooch](https://www.1stdibs.com/jewelry/brooches/brooches/david-webb-multigem-diamond-floral-gold-brooch/id-j_30067222/) | Brooch | Legacy Vintage Jewels | $125,000 | 2026-08-11 |
 | [David Webb Carved Emerald and Diamond Ring](https://www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-carved-emerald-diamond-ring/id-j_27931262/) | Ring | Joseph Saidian and Sons | $95,000 | 2026-10-19 |
 | [David Webb Convertible Yellow Gold Chain](https://www.1stdibs.com/jewelry/necklaces/chain-necklaces/david-webb-convertible-yellow-gold-chain/id-j_24467672/) | Necklace | M.S. Rau | $54,500 | 2026-09-04 |
 | [David Webb Enamel, 18K & Platinum Tire Ring signed with a David Webb Certificate](https://www.1stdibs.com/jewelry/rings/dome-rings/david-webb-enamel-18k-platinum-tire-ring-signed-david-webb-certificate/id-j_24069042/) | Ring | Pierre/Famille | $22,320 | 2026-08-10 |
-| [David Webb Diamond Leaf Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-diamond-leaf-earrings/id-j_27874372/) | Earrings | Macklowe Gallery Jewelry | $16,500 | 2026-08-17 |
 | [David Webb Ruby and Diamond Lion Bangle Bracelet](https://saidiansons.com/products/david-webb-ruby-and-diamond-lion-bangle-bracelet) | Bracelet | Saidian & Sons | n/a | 2026-08-07 |
 | [David Webb Rubellite &amp; Turquoise Diamond Necklace & Earrings Set](https://saidiansons.com/products/david-webb-rubellite-amp-turquoise-diamond-necklace-amp-earrings-set) | Necklace | Saidian & Sons | n/a | 2026-08-07 |
 | [David Webb Carved Emerald and Diamond Ring](https://saidiansons.com/products/david-webb-carved-emerald-and-diamond-ring-1) | Ring | Saidian & Sons | n/a | 2026-08-07 |
@@ -233,27 +235,6 @@ _131 dealer listing(s) delisted in the last 28 days — "closed" usually but not
 | [Vintage David Webb Enamel 18K Yellow Gold Statement Ring](https://www.1stdibs.com/jewelry/rings/cocktail-rings/vintage-david-webb-enamel-18k-yellow-gold-statement-ring/id-j_29898252/) | Ring | Antinori di Sanpietro | $15,600 | 2026-09-21 |
 | [David Webb Black Enamel Pyramid Trellis Dome Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-black-enamel-pyramid-trellis-dome-earrings/id-j_16698822/) | Earrings | Greenleaf & Crosby | $11,600 | 2026-09-21 |
 | [David Webb 1970s 18K Gold Enamel Leaf Dome Statement Ring](https://www.1stdibs.com/jewelry/rings/cocktail-rings/david-webb-1970s-18k-gold-enamel-leaf-dome-statement-ring/id-j_25360572/) | Ring | Dover Jewelry | $11,700 | 2026-08-13 |
-| [David Webb Cabochon Emerald and Diamond Bracelet](https://ericoriginals.com/products/david-webb-cabochon-emerald-and-diamond-bracelet) | Bracelet | Eric Originals & Antiques | $410,000 | 2026-08-07 |
-| [18K Twisted Link Bracelet](https://www.therealreal.com/products/jewelry/bracelets/link/david-webb-18k-twisted-link-bracelet-vdsys) | Bracelet | The RealReal | $35,500 | 2026-08-12 |
-| [Diamond Hinged Cuff Bracelet](https://www.therealreal.com/products/jewelry/bracelets/bangle/david-webb-diamond-hinged-cuff-bracelet-vysvr) | Bracelet | The RealReal | $28,495 | 2026-08-28 |
-| [Vintage David Webb 18K Gold Black Enamel and Diamond Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/vintage-david-webb-18k-gold-black-enamel-diamond-earrings/id-j_27375042/) | Earrings | Benchmark of Palm Beach | $19,750 | 2026-10-16 |
-| [Vintage David Webb Yellow Gold, Platinum, Diamond, Enamel & South Sea Pearl Ring](https://www.1stdibs.com/jewelry/rings/cocktail-rings/vintage-david-webb-yellow-gold-platinum-diamond-enamel-south-sea-pearl-ring/id-j_29395322/) | Ring | Benchmark of Palm Beach | $15,500 | 2026-10-16 |
-| [Vintage David Webb 18K Yellow Gold Bamboo Motif White Enamel Large Scale Ring](https://www.1stdibs.com/jewelry/rings/cocktail-rings/vintage-david-webb-18k-yellow-gold-bamboo-motif-white-enamel-large-scale-ring/id-j_26265432/) | Ring | Benchmark of Palm Beach | $15,500 | 2026-10-16 |
-| [Vintage David Webb Leopard Ring in 18K Yellow Gold and Enamel](https://www.1stdibs.com/jewelry/rings/cocktail-rings/vintage-david-webb-leopard-ring-18k-yellow-gold-enamel/id-j_22730542/) | Ring | Benchmark of Palm Beach | $14,500 | 2026-10-16 |
-| [David Webb Ruby and Enamel Frog Pin in 18K Yellow Gold](https://www.1stdibs.com/jewelry/brooches/brooches/david-webb-ruby-enamel-frog-pin-18k-yellow-gold/id-j_23891282/) | Brooch | Skibell Fine Jewelry | $13,200 | 2026-08-10 |
-| [David Webb 18K Yellow Gold Bold Hammered Scroll Motif Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-18k-yellow-gold-bold-hammered-scroll-motif-earrings/id-j_18270272/) | Earrings | Benchmark of Palm Beach | $12,750 | 2026-10-16 |
-| [Unusual and Outstanding David Webb 18K Gold and Black Enamel Hoop Earrings](https://www.1stdibs.com/jewelry/earrings/hoop-earrings/unusual-outstanding-david-webb-18k-gold-black-enamel-hoop-earrings/id-j_20154212/) | Earrings | Benchmark of Palm Beach | $9,500 | 2026-10-16 |
-| [David Webb Carved Topaz and Black Enamel Earrings](https://www.1stdibs.com/jewelry/earrings/clip-on-earrings/david-webb-carved-topaz-black-enamel-earrings/id-j_8517041/) | Earrings | Skibell Fine Jewelry | $8,800 | 2026-08-10 |
-| [David Webb Carved Jade and Ruby Cufflinks](https://www.1stdibs.com/jewelry/cufflinks/cufflinks/david-webb-carved-jade-ruby-cufflinks/id-j_10808282/) | Cufflinks | Joseph Saidian and Sons | $7,500 | 2026-10-14 |
-| [David Webb Emerald Bangle Bracelet](https://www.1stdibs.com/jewelry/bracelets/bangles/david-webb-emerald-bangle-bracelet/id-j_29923222/) | Bracelet | Joseph Saidian and Sons | $125,000 | 2026-09-07 |
-| [David Webb Platinum & 18K Yellow Gold Dinner Roll Necklace](https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-dinner-roll-necklace-rr8521) | Necklace | The Back Vault | $84,500 | 2026-08-07 |
-| [David Webb 1980's Diamond 18 Karat Yellow Gold Platinum Vintage Pavé Station Necklace](https://wilsonsestatejewelry.com/products/david-webb-1980s-diamond-18-karat-yellow-gold-platinum-vintage-pave-station-necklace) | Necklace | Wilson's Estate Jewelry | $48,800 | 2026-08-07 |
-| [David Webb Platinum & 18K Yellow Gold Soft Cushion Shaped Pearl And Diamond Earrings](https://thebackvault.com/products/david-webb-platinum-18k-yellow-gold-soft-cushion-shaped-pearl-and-diamond-earrings-rr7061) | Earrings | The Back Vault | $16,500 | 2026-08-07 |
-| [David Webb Kingdom Platinum & 18K Yellow Gold Green Enamel Frog Brooch](https://thebackvault.com/products/david-webb-kingdom-platinum-18k-yellow-gold-green-enamel-frog-brooch-rr5151) | Brooch | The Back Vault | $15,700 | 2026-08-07 |
-| [David Webb Enamel, 18K & Platinum Tire Ring signed with a David Webb Certificate](https://www.1stdibs.com/jewelry/rings/dome-rings/david-webb-enamel-18k-platinum-tire-ring-signed-david-webb-certificate/id-j_30111972/) | Ring | Pierre/Famille | $27,900 | 2026-09-29 |
-| [Vintage 1960s David Webb Swirl Brooch](https://www.1stdibs.com/jewelry/brooches/brooches/vintage-1960s-david-webb-swirl-brooch/id-j_26675002/) | Brooch | Eric Originals and Antiques LTD | $12,250 | 2026-09-28 |
-| [Platinum & 18kt Yellow Gold Diamond Pig Ring by David Webb](https://www.1stdibs.com/jewelry/rings/fashion-rings/platinum-18kt-yellow-gold-diamond-pig-ring-david-webb/id-j_17177362/) | Ring | Bernardo Antichita' | $11,968 | 2026-10-02 |
-| [18K Hammered Small Swirl Earrings](https://www.therealreal.com/products/jewelry/earrings/clip-on/david-webb-18k-hammered-small-swirl-earrings-tyr7l) | Earrings | The RealReal | $4,871 | 2026-08-12 |
 
 ## Recent Auction Sales (Past 60 Days)
 
@@ -282,7 +263,7 @@ These benchmark results provide context for current dealer asking prices and col
 
 ## Worth a Second Look
 
-_Implausibly low price for the category — a heuristic signal for a human to check, not a fraud determination. A flagged piece may well be genuine; this just surfaces things worth a closer look before relying on the listing. Click through to validate each one. (371 total, showing the 10 cheapest.)_
+_Implausibly low price for the category — a heuristic signal for a human to check, not a fraud determination. A flagged piece may well be genuine; this just surfaces things worth a closer look before relying on the listing. Click through to validate each one. (375 total, showing the 10 cheapest.)_
 
 - [Pair of Gold Necklace Shorteners, David Webb](https://www.doyle.com/auction/lot/lot-142---pair-of-gold-necklace-shorteners-david-webb/?lot=1044120&so=4&st=david webb&sto=0&au=&ef=&et=&ic=False&sd=1&mc=409&mc=9&mc=4&mc=25&mc=167&mc=5&mc=173&mc=410&mc=554&mc=3&mc=209&mc=31&mc=219&mc=188&mc=325&mc=190&mc=146&pp=96&pn=11&g=1) — $375 via Doyle. $375 is well below the typical range for "necklace" (611 comparable auction records, median $17,920).
 - [Gold Leaf Brooch, David Webb](https://www.doyle.com/auction/lot/lot-534---gold-leaf-brooch-david-webb/?lot=1020224&so=4&st=david webb&sto=0&au=&ef=&et=&ic=False&sd=1&mc=409&mc=9&mc=4&mc=25&mc=167&mc=5&mc=173&mc=410&mc=554&mc=3&mc=209&mc=31&mc=219&mc=188&mc=325&mc=190&mc=146&pp=96&pn=12&g=1) — $562 via Doyle. $562 is well below the typical range for "brooch" (390 comparable auction records, median $10,713).
